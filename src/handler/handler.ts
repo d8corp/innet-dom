@@ -90,6 +90,7 @@ declare global {
       portal: PortalProps
       for: LoopProps
       context: ContextProps
+      [elemName: string]: any;
     }
   }
 }

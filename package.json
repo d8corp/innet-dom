@@ -1,6 +1,6 @@
 {
   "name": "@innet/dom",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tools to build Web Site",
   "main": "index.js",
   "module": "index.es6.js",
