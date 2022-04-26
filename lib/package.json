@@ -1,0 +1,31 @@
+{
+  "name": "@innet/dom",
+  "version": "0.1.0",
+  "description": "Tools to build Web Site",
+  "main": "index.js",
+  "module": "index.es6.js",
+  "jsnext:main": "index.es6.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d8corp/innet-dom.git"
+  },
+  "keywords": [
+    "innet",
+    "server",
+    "front-end"
+  ],
+  "author": "Mikhail Lysikov <d8corp@mail.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/d8corp/innet-dom/issues"
+  },
+  "homepage": "https://github.com/d8corp/innet-dom",
+  "dependencies": {
+    "tslib": "^2.4.0",
+    "@innet/jsx": "^0.1.1",
+    "@innet/utils": "^1.1.1",
+    "innet": "^1.0.0",
+    "watch-state": "^3.4.3"
+  }
+}

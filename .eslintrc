@@ -1,0 +1,46 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "simple-import-sort"
+  ],
+  "extends": [
+    "standard",
+    "plugin:react/recommended"
+  ],
+  "env": {
+    "jest": true
+  },
+  "rules": {
+    "node/no-callback-literal": "off",
+    "react/no-unknown-property": "off",
+    "react/jsx-key": "off",
+    "no-new": "off",
+    "no-undef": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-max-props-per-line": ["error", {
+      "maximum": 3
+    }],
+    "react/jsx-closing-bracket-location": ["error", {
+      "nonEmpty": "after-props"
+    }],
+    "react/jsx-indent": [2, 2, {
+      "checkAttributes": true,
+      "indentLogicalExpressions": true
+    }],
+    "indent": ["error", 2],
+    "comma-dangle": ["error", "always-multiline"],
+    "simple-import-sort/imports": "error",
+    "no-console": "off",
+    "import/no-absolute-path": "off",
+    "no-use-before-define": "off",
+    "no-redeclare": "off",
+    "no-unused-vars": "off",
+    "new-cap": "off",
+    "symbol-description": "off",
+    "no-useless-constructor": "off",
+    "multiline-ternary": "off",
+    "no-cond-assign": "off"
+  }
+}
