@@ -23,7 +23,7 @@ Based on [innet](https://www.npmjs.com/package/innet).
 [![watchers](https://img.shields.io/github/watchers/d8corp/innet-dom?style=social)](https://github.com/d8corp/innet-dom/watchers)
 
 ## Install
-The simplest way is using `innetjs`
+The simplest way is using [innetjs](https://www.npmjs.com/package/innetjs)
 
 ```shell
 npx innetjs init my-app -t fe
@@ -200,7 +200,7 @@ Any component gets 3 arguments:
 #### props
 
 The first argument of a component is `props`.
-If `props` are not provided the argument equals `undefined`, otherways you get an object that contains the props.
+If props have not provided the argument equals `undefined` else you get an object that contains the props.
 
 Change `Content.tsx`
 ```typescript jsx
@@ -331,6 +331,29 @@ async function Content () {
   )
 }
 ```
+
+[innetjs](https://www.npmjs.com/package/innetjs) helps to make code splitting
+```typescript jsx
+async function Content () {
+  const { Test } = await import('./Test')
+
+  return (
+    <div>
+      <Test />
+    </div>
+  )
+}
+```
+
+`Test.tsx`
+```typescript jsx
+export const Test = () => (
+  <div>
+    Test success!
+  </div>
+)
+```
+
 While it's loading nothing can be shown.
 If you want to show something, use `Generic Async Component`
 
@@ -419,7 +442,7 @@ import { Content } from './Content'
 const show = new State(true)
 
 const handleChange = e => {
-  darkMode.value = e.target.checked
+  show.value = e.target.checked
 }
 
 export default (
