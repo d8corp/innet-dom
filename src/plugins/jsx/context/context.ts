@@ -1,5 +1,10 @@
 import innet, { Handler } from 'innet'
 
+export interface ContextProps <D = any> {
+  for: Context<D>
+  set?: D
+}
+
 export class Context <D = any, Def = D> {
   readonly key: string
 
@@ -12,14 +17,12 @@ export class Context <D = any, Def = D> {
   }
 }
 
-export interface ContextProps <D = any> {
-  for: Context<D>
-  set?: D
+export function createContextHandler <D> (handler: Handler, context: Context<D>, value: D): Handler {
+  const childrenHandler = Object.create(handler)
+  childrenHandler[context.key] = value
+  return childrenHandler
 }
 
-export function context ({ props, children }, handler) {
-  const childrenHandler = Object.create(handler)
-  childrenHandler[props.for.key] = props.set
-
-  return innet(children, childrenHandler)
+export function context ({ props, children }, handler: Handler) {
+  return innet(children, createContextHandler(handler, props.for, props.set))
 }

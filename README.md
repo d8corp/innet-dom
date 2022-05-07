@@ -15,7 +15,7 @@
 ## Abstract
 This is an `innet` tool, that helps to create frontend-side application.
 
-Here you can find JSX components, state-management, portals, context and more.
+Here you can find JSX components, state-management, portals, context, slots and more.
 
 Based on [innet](https://www.npmjs.com/package/innet).
 
@@ -23,7 +23,7 @@ Based on [innet](https://www.npmjs.com/package/innet).
 [![watchers](https://img.shields.io/github/watchers/d8corp/innet-dom?style=social)](https://github.com/d8corp/innet-dom/watchers)
 
 ## Install
-The simplest way is using [innetjs](https://www.npmjs.com/package/innetjs)
+Use [innetjs](https://www.npmjs.com/package/innetjs) to start `innet-dom` app development.
 
 ```shell
 npx innetjs init my-app -t fe
@@ -50,7 +50,7 @@ innet(app, dom)
 You can use xml-like syntax to create and append elements into the DOM.
 More information about JSX [here](https://www.typescriptlang.org/docs/handbook/jsx.html).
 
-Create `app.tsx`
+Create `app.tsx` in `src` folder.
 ```typescript jsx
 export default (
   <h1>
@@ -60,11 +60,11 @@ export default (
 ```
 
 Everything, that you provide as the first argument of `innet` function with the `dom` handler,
-will fall into the `body` after running `npm start`
+will fall into the `body` DOM-element after running `npm start`.
 
 ## portal
 
-If you want to insert your content into another element (not `body`), use portal element.
+If you want to put your content into another element (not `body`), use portal element.
 
 For example, you can change `index.html` from `public` folder
 ```html
@@ -73,6 +73,7 @@ For example, you can change `index.html` from `public` folder
 <head ... >
 <body>
   <div id="app"></div>
+  <!-- add this ^ -->
 </body>
 </html>
 ```
@@ -91,7 +92,7 @@ export default (
 )
 ```
 
-Also, you can use `portal` everywhere inside the app
+You can use `portal` everywhere inside the app
 
 Change `app.tsx`
 ```typescript jsx
@@ -110,7 +111,7 @@ export default (
 )
 ```
 
-Then the `myElement` contains `This is content of myElement` and `app` element contains the next code.
+`myElement` should contain `This is content of myElement` and `app` should contain the next code.
 ```html
 <h1>
   Hello World!
@@ -119,9 +120,9 @@ Then the `myElement` contains `This is content of myElement` and `app` element c
 
 ## State Management
 
-Usually, state management using is available only inside a component.
+Usually, state management is available only inside a component.
 
-`innet` gives you a possible fully exclude component approach, but state management still to be available.
+With `innet` you can fully exclude component approach, but state management still to be available.
 
 The state management based on [watch-state](https://github.com/d8corp/watch-state)
 
@@ -129,6 +130,8 @@ To bind state and content, use a function as a content.
 
 Turn back `index.html` and change `app.tsx`
 ```typescript jsx
+import { State } from 'watch-state'
+
 const count = new State(0)
 
 export default (
@@ -143,10 +146,12 @@ export default (
 )
 ```
 
-To bind state and prop use a function as a prop.
+To bind a state and a prop use a function as the prop.
 
 Change `app.tsx`
 ```typescript jsx
+import { State } from 'watch-state'
+
 const darkMode = new State(false)
 
 const handleChange = e => {
@@ -172,13 +177,11 @@ Component is just a function you can use as JSX element.
 
 Create `Content.tsx`
 ```typescript jsx
-export function Content () {
-  return (
-    <h1>
-      Hello World!
-    </h1>
-  )
-}
+export const Content = () => (
+  <h1>
+    Hello World!
+  </h1>
+)
 ```
 
 Change `app.tsx`
@@ -266,26 +269,37 @@ A component awaits a return:
   const Test1 = () => 123
   const Test2 = () => '123'
   ```
-- `null`, `undefined`, `boolean`, `symbol` - ignored
+- `null`, `undefined`, `boolean`, `symbol` - ignore
   ```typescript jsx
   const Test1 = () => null
   const Test2 = () => {}
   const Test3 = () => true
   const Test4 = () => Symbol()
   ```
-- DOM Element - render as is
+- DOM Element - put in the DOM
   ```typescript jsx
   const Test = () => document.createElement('div')
   ```
-- JSX Element, `array` - render by content
+- JSX Fragment, `array` - render content
   ```typescript jsx
   const Test1 = () => <>content</>
   const Test2 = () => ['content']
   ```
+- JSX Element - put in the DOM
+  ```typescript jsx
+  const Test1 = () => <div>content</div>
+  const Test2 = () => <br />
+  ```
+- JSX Plugin - run plugin
+  ```typescript jsx
+  const Test1 = () => <portal parent={app}>content</portal>
+  const Test2 = () => <slot>content</slot>
+  ```
 - function - observable children
   ```typescript jsx
   const state = new State()
-  const Test = () => () => state.value
+  const Test1 = () => () => state.value
+  const Test2 = () => <>{() => state.value}</>
   ```
 
 ### Life Cycle
@@ -324,11 +338,7 @@ Innet supports async components, you can simplify previous code
 async function Content () {
   const { text } = await fetch('...').then(e => e.json())
 
-  return (
-    <div>
-      {text}
-    </div>
-  )
+  return <div>{text}</div>
 }
 ```
 
@@ -366,11 +376,7 @@ async function* Content () {
 
   const { text } = await fetch('...').then(e => e.json())
 
-  yield (
-    <div>
-      {text}
-    </div>
-  )
+  yield <div>{text}</div>
 }
 ```
 
@@ -522,6 +528,105 @@ export default (
       )}
     </for>
   </ul>
+)
+```
+
+## slots
+
+You can use slots to provide a couple of named child elements.
+```typescript jsx
+export const Content = (props, children) => (
+  <slots from={children}>
+    <div class='header'>
+      <slot name='header'>
+        default header
+      </slot>
+    </div>
+    <div class='content'>
+      <slot>
+        default content
+      </slot>
+    </div>
+    <div class='footer'>
+      <slot name='footer'>
+        default footer
+      </slot>
+    </div>
+  </slots>
+)
+```
+
+```typescript jsx
+export default (
+  <Content>
+    <slot>Custom content</slot>
+    <slot name='header'>
+      Custom header
+    </slot>
+  </Content>
+)
+```
+
+You get `Custom header`, `Custom content` and `default footer`
+
+## getSlots
+
+`getSlots` is another way to use slots.
+```typescript jsx
+import { getSlots } from '@innet/dom'
+
+export const Content = (props, children, handler) => {
+  const {
+    '': content,
+    header,
+    footer
+  } = getSlots(handler, children)
+
+  return (
+    <>
+      {header && (
+        <div class='header'>
+          {header}
+        </div>
+      )}
+      <div class='content'>
+        {content}
+      </div>
+      {footer && (
+        <div class='footer'>
+          {footer}
+        </div>
+      )}
+    </>
+  )
+}
+```
+
+Any slots without name or with name equals empty string and any content outside slots collect into empty string slot.
+
+```typescript jsx
+export default (
+  <Content>
+    <slot name='header'>
+      Custom header
+    </slot>
+    Custom content
+  </Content>
+)
+```
+
+You can use a couple of slots with the same name.
+```typescript jsx
+export default (
+  <Content>
+    <slot name='header'>
+      Custom header1 <br />
+    </slot>
+    <slot name='header'>
+      Custom header2
+    </slot>
+    Custom content
+  </Content>
 )
 ```
 

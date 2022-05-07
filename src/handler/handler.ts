@@ -29,6 +29,10 @@ import {
   LoopProps,
   portal,
   PortalProps,
+  slot,
+  SlotProps,
+  slots,
+  SlotsProps,
 } from '../plugins'
 
 export const arrayPlugins = [
@@ -39,6 +43,8 @@ export const JSXPlugins = {
   context,
   portal,
   for: loop,
+  slots,
+  slot,
 }
 
 export const objectPlugins = [
@@ -90,6 +96,8 @@ declare global {
       portal: PortalProps
       for: LoopProps
       context: ContextProps
+      slots: SlotsProps
+      slot: SlotProps
       [elemName: string]: any;
     }
   }
