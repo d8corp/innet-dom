@@ -2,6 +2,9 @@
 
 ## v0.3
 
+### v0.3.1 [![28.05.2022](https://img.shields.io/date/1653754141)](https://github.com/d8corp/innet-server/tree/v0.3.1)
+- fixed circular dependency
+
 ### v0.3.0 [![28.05.2022](https://img.shields.io/date/1653753542)](https://github.com/d8corp/innet-server/tree/v0.3.0)
 - added History Api routing
 

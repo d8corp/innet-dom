@@ -1,7 +1,7 @@
 import { JSXPluginElement } from '@innet/jsx'
 import innet, { Handler } from 'innet'
 
-import { slotsContext } from '../slots'
+import { slotsContext } from '../slots/constants'
 
 export interface SlotProps {
   name?: string
