@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.3
+
+### v0.3.0 [![28.05.2022](https://img.shields.io/date/1653753542)](https://github.com/d8corp/innet-server/tree/v0.3.0)
+- added History Api routing
+
 ## v0.2
 
 ### v0.2.0 [![07.05.2022](https://img.shields.io/date/1651909929)](https://github.com/d8corp/innet-server/tree/v0.2.0)

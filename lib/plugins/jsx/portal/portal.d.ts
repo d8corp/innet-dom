@@ -1,7 +1,6 @@
+import { JSXPluginElement } from '@innet/jsx';
+import { TargetElements } from '../../../types';
 export interface PortalProps {
-    parent: Node;
+    parent: TargetElements | DocumentFragment;
 }
-export declare function portal({ props, children }: {
-    props: any;
-    children: any;
-}, handler: any): any;
+export declare function portal({ props, children }: JSXPluginElement<PortalProps>, handler: any): any;

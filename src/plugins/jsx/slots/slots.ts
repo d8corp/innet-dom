@@ -1,3 +1,4 @@
+import { JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
 
 import { Context, createContextHandler } from '../context'
@@ -9,6 +10,6 @@ export interface SlotsProps {
 
 export const slotsContext = new Context({})
 
-export function slots ({ props: { from }, children }, handler) {
+export function slots ({ props: { from }, children }: JSXPluginElement<SlotsProps>, handler) {
   return innet(children, createContextHandler(handler, slotsContext, getSlots(handler, from)))
 }

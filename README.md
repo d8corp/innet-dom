@@ -15,7 +15,7 @@
 ## Abstract
 This is an `innet` tool, that helps to create frontend-side application.
 
-Here you can find JSX components, state-management, portals, context, slots and more.
+Here you can find JSX components, state-management, portals, context, slots, routing and more.
 
 Based on [innet](https://www.npmjs.com/package/innet).
 
@@ -170,6 +170,33 @@ export default (
   </div>
 )
 ```
+
+Or use `get:` prefix on the prop.
+```typescript jsx
+import { State } from 'watch-state'
+
+const theme = new State('light')
+
+const handleChange = e => {
+  theme.value = e.target.checked ? 'dark' : 'light'
+}
+
+export default (
+  <div get:class={theme.value}>
+    <h1>
+      Hello World!
+    </h1>
+    <label>
+      <input type="checkbox" onchange={handleChange} />
+      Dark Mode
+    </label>
+  </div>
+)
+```
+
+`get:class={theme.value}` the same as `class={() => theme.value}`
+
+> Danger: do not use `this` inside a prop with get prefix.
 
 ## Components
 
@@ -629,6 +656,254 @@ export default (
   </Content>
 )
 ```
+
+## router
+You can render content by url.
+
+```typescript jsx
+export const Content = () => (
+  <router>
+    <slot name='/'>
+      Home page
+    </slot>
+    <slot name='settings'>
+      Settings page
+    </slot>
+    Not Found
+  </router>
+)
+```
+
+There are strong matching by default, so you can see
+
+`/` - Home page  
+`/settings` - Settings page  
+`/settings/test` - Not Found  
+`/any-other` - Not Found
+
+If you want to show `Settings page` on `/settings/test`, use `ish` prop on router element
+```typescript jsx
+export const Content = () => (
+  <router ish>
+    <slot name='/'>
+      Home page
+    </slot>
+    <slot name='settings'>
+      Settings page
+    </slot>
+    Not Found
+  </router>
+)
+```
+
+When you use a router, that is inside a slot of another router, the route checks the next peace of url path.
+```typescript jsx
+export const Content = () => (
+  <router ish>
+    <slot name='/'>
+      Home page
+    </slot>
+    <slot name='settings'>
+      <router>
+        <slot name='main'>
+          Main Settings
+        </slot>
+        <slot name='user'>
+          User Settings
+        </slot>
+        Settings
+      </router>
+    </slot>
+    Not Found
+  </router>
+)
+```
+
+`/` - Home page  
+`/settings` - Settings  
+`/settings/main` - Main Settings  
+`/settings/user` - User Settings  
+`/settings/any-other` - Settings  
+`/any-other` - Not Found
+
+You can use `search` prop to make router binds on query search params
+```typescript jsx
+export const Content = () => (
+  <router search='modal'>
+    <slot name='login'>
+      Login
+    </slot>
+    <slot name='logout'>
+      Logout
+    </slot>
+  </router>
+)
+```
+
+`?modal=login` - Login  
+`/settings?modal=logout` - Logout  
+`/settings?user=1&modal=logout` - Logout  
+`/any-other?any-params&modal=any-other` - render nothing
+
+## getRoute
+You can handle dynamic routes by `getRoute`.
+```typescript jsx
+const Test = (props, children, handler) => {
+  const route = getRoute(handler)
+  return () => route.value
+}
+
+export const Content = () => (
+  <router ish>
+    <slot name='/'>
+      Home page: <Test />
+    </slot>
+    <slot name='settings'>
+      Settings: <Test />
+    </slot>
+    Other: <Test />
+  </router>
+)
+```
+
+`/` - Home page: /  
+`/settings` - Settings: /  
+`/settings/test` - Settings: test    
+`/any-other` - Other: any-other
+
+## a
+The tag `a` has a couple of features.
+
+> `rel="noopener noreferrer nofollow"` and `target="_blank"` are default for external links.
+
+### href
+If `href` starts from `/`, `?` or `#` then the Link will use [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
+
+```typescript jsx
+export const Content = () => (
+  <div>
+    <a href="/">home</a>
+    <a href="/test">test</a>
+    <a href="/home">unknown</a>
+    <a href="?modal=test">modal</a>
+    <div>
+      <router>
+        <slot name='/'>
+          Home Page
+        </slot>
+        <slot name='test'>
+          Test Page
+        </slot>
+        404
+      </router>
+      <router search='modal'>
+        <slot name='test'>
+          Test Modal
+        </slot>
+      </router>
+    </div>
+  </div>
+)
+```
+
+### replace
+By default, it pushes to history, but you may use `replace` to replace current history state.
+
+```typescript jsx
+export const Content = () => (
+  <a replace href="/">
+    home
+  </a>
+)
+```
+
+### classes
+You can add active link class
+
+```typescript jsx
+const classes = { root: 'link', active: 'active' }
+
+export const Content = () => (
+  <div>
+    <a
+      href="/"
+      classes={classes}>
+      home
+    </a>
+    <a
+      href="/test"
+      classes={classes}>
+      test
+    </a>
+  </div>
+)
+```
+
+### exact
+By default, active class appends if URL starts with `href` prop value, but use `exact` to compare exactly.
+
+```typescript jsx
+const classes = { root: 'link', active: 'active' }
+
+export const Content = () => (
+  <div>
+    <a
+      href="/"
+      exact
+      classes={classes}>
+      home
+    </a>
+    <a
+      href="/test"
+      classes={classes}>
+      test
+    </a>
+  </div>
+)
+```
+
+### scroll
+You can use smooth scroll
+```css
+body, html {
+  scroll-behavior: smooth;
+}
+```
+The property of `scroll` says should we scroll on click and how.
+
+```typescript jsx
+export const Content = () => (
+  <div>
+    <a href="/" scroll='before'>
+      home
+    </a>
+    <a href="/test" scroll='after'>
+      test
+    </a>
+    <a href="?modal" scroll='none'>
+      test
+    </a>
+  </div>
+)
+```
+
+### scrollTo
+If you wanna scroll the page to custom position (by default it's up of the page) use `scrollTo`
+
+```typescript jsx
+export const Content = () => (
+  <div>
+    <a href="/" scrollTo={100}>
+      home
+    </a>
+    <a href="/test" scrollTo='#root'>
+      test
+    </a>
+  </div>
+)
+```
+
+Use a string to scroll under an element relates to the CSS selector you provide or use `-1` to stop scrolling.
 
 ## getParent
 

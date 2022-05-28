@@ -1,4 +1,4 @@
-import { jsxPlugins, jsxTemplate } from '@innet/jsx'
+import { JSXPlugin, jsxPlugins, jsxTemplate } from '@innet/jsx'
 import {
   array,
   arraySync,
@@ -25,10 +25,14 @@ import {
   domJSX,
   domNode,
   domText,
+  link,
+  LinkProps,
   loop,
   LoopProps,
   portal,
   PortalProps,
+  router,
+  RouterProps,
   slot,
   SlotProps,
   slots,
@@ -39,12 +43,14 @@ export const arrayPlugins = [
   arraySync,
 ]
 
-export const JSXPlugins = {
+export const JSXPlugins: Record<string, JSXPlugin> = {
   context,
   portal,
   for: loop,
   slots,
   slot,
+  router,
+  a: link,
 }
 
 export const objectPlugins = [
@@ -98,6 +104,8 @@ declare global {
       context: ContextProps
       slots: SlotsProps
       slot: SlotProps
+      a: LinkProps
+      router: RouterProps
       [elemName: string]: any;
     }
   }

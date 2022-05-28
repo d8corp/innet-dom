@@ -1,7 +1,7 @@
+import { JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
 import { globalEvent, onDestroy, State, Watch } from 'watch-state'
 
-import { PARENT } from '../../../constants'
 import { after, clear, prepend, remove, setParent, useComment } from '../../../utils'
 
 interface LoopMap<T> {
@@ -22,6 +22,8 @@ export interface LoopProps<T = any> {
   size?: number | WatchTarget<number>
   key?: keyof T | ((item: T) => any)
 }
+export type LoopCallback<T> = (item: LoopItem<T>) => any
+export type LoopChildren<T> = [ LoopCallback<T>, ...any[] ]
 
 export class LoopItem<T> {
   private _value: State<T>
@@ -59,13 +61,6 @@ function getKey (key, value) {
   }
 }
 
-export type LoopCallback<T> = (item: LoopItem<T>) => any
-
-interface Loop<T = any> {
-  props: LoopProps<T>
-  children: [ LoopCallback<T>, ...any[] ]
-}
-
 export function loop <T> ({
   props: {
     size: sizeProp = Infinity,
@@ -76,7 +71,7 @@ export function loop <T> ({
     callback,
     ...elseProp
   ],
-}: Loop<T>, handler) {
+}: JSXPluginElement<LoopProps<T>, LoopChildren<T>>, handler) {
   if (typeof ofProp === 'function' || typeof sizeProp === 'function') {
     const [childHandler, mainComment] = useComment(handler, 'for')
 

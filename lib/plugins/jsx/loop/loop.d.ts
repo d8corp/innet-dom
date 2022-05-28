@@ -1,3 +1,4 @@
+import { JSXPluginElement } from '@innet/jsx';
 interface WatchTarget<R = any> {
     (update?: boolean): R;
 }
@@ -8,6 +9,8 @@ export interface LoopProps<T = any> {
     size?: number | WatchTarget<number>;
     key?: keyof T | ((item: T) => any);
 }
+export declare type LoopCallback<T> = (item: LoopItem<T>) => any;
+export declare type LoopChildren<T> = [LoopCallback<T>, ...any[]];
 export declare class LoopItem<T> {
     private _value;
     private _index;
@@ -17,10 +20,5 @@ export declare class LoopItem<T> {
     get index(): number;
     set index(index: number);
 }
-export declare type LoopCallback<T> = (item: LoopItem<T>) => any;
-interface Loop<T = any> {
-    props: LoopProps<T>;
-    children: [LoopCallback<T>, ...any[]];
-}
-export declare function loop<T>({ props: { size: sizeProp, key, of: ofProp, }, children: [callback, ...elseProp], }: Loop<T>, handler: any): any;
+export declare function loop<T>({ props: { size: sizeProp, key, of: ofProp, }, children: [callback, ...elseProp], }: JSXPluginElement<LoopProps<T>, LoopChildren<T>>, handler: any): any;
 export {};

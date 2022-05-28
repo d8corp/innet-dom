@@ -1,3 +1,4 @@
+import { JSXPluginElement } from '@innet/jsx';
 import { Handler } from 'innet';
 export interface ContextProps<D = any> {
     for: Context<D>;
@@ -10,7 +11,4 @@ export declare class Context<D = any, Def = D> {
     get(handler: Handler): D | Def;
 }
 export declare function createContextHandler<D>(handler: Handler, context: Context<D>, value: D): Handler;
-export declare function context({ props, children }: {
-    props: any;
-    children: any;
-}, handler: Handler): any;
+export declare function context({ props, children }: JSXPluginElement<ContextProps>, handler: Handler): any;

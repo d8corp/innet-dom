@@ -1,13 +1,8 @@
+import { JSXPlugin } from '@innet/jsx';
 import { arraySync } from '@innet/utils';
-import { context, ContextProps, domAsync, domFn, domNode, domText, loop, LoopProps, portal, PortalProps, slot, SlotProps, slots, SlotsProps } from '../plugins';
+import { ContextProps, domAsync, domFn, domNode, domText, LinkProps, LoopProps, PortalProps, RouterProps, SlotProps, SlotsProps } from '../plugins';
 export declare const arrayPlugins: (typeof arraySync)[];
-export declare const JSXPlugins: {
-    context: typeof context;
-    portal: typeof portal;
-    for: typeof loop;
-    slots: typeof slots;
-    slot: typeof slot;
-};
+export declare const JSXPlugins: Record<string, JSXPlugin>;
 export declare const objectPlugins: ((handler: any) => import("innet").PluginHandler)[];
 export declare const fnPlugins: (typeof domFn)[];
 export declare const stringPlugins: (typeof domText)[];
@@ -23,6 +18,8 @@ declare global {
             context: ContextProps;
             slots: SlotsProps;
             slot: SlotProps;
+            a: LinkProps;
+            router: RouterProps;
             [elemName: string]: any;
         }
     }

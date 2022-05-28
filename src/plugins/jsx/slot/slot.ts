@@ -1,3 +1,4 @@
+import { JSXPluginElement } from '@innet/jsx'
 import innet, { Handler } from 'innet'
 
 import { slotsContext } from '../slots'
@@ -38,7 +39,7 @@ export function getSlots (handler: Handler, from): Record<string, any> {
   return result
 }
 
-export function slot ({ props, children }, handler) {
+export function slot ({ props, children }: JSXPluginElement<SlotProps>, handler) {
   const slots = slotsContext.get(handler)
   const name = props?.name || ''
   return innet(name in slots ? slots[name] : children, handler)
