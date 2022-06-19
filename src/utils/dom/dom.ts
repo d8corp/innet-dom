@@ -1,4 +1,5 @@
 import { ContentElements, TargetElements } from '../../types'
+import { REMOVE_DELAY } from './constants'
 
 function removeParentChild (target: ContentElements) {
   if (target._parent) {
@@ -7,10 +8,15 @@ function removeParentChild (target: ContentElements) {
     target._parent = undefined
   }
 }
-function removeElements (target: ContentElements) {
-  target.remove()
+function removeElements (target: ContentElements, delay: number = target[REMOVE_DELAY]) {
+  if (delay) {
+    setTimeout(() => target.remove(), delay)
+  } else {
+    target.remove()
+  }
+
   if (target instanceof Comment) {
-    clear(target)
+    clear(target, delay)
   }
 }
 function updateChildren (target: ContentElements) {
@@ -30,8 +36,8 @@ function insertChild (target: TargetElements, node: ContentElements, offset = 0)
   }
 }
 
-export function clear (target: Comment) {
-  target._children.forEach(removeElements)
+export function clear (target: Comment, delay?: number) {
+  target._children.forEach(target => removeElements(target, delay))
   target._children = []
 }
 export function remove (target: ContentElements) {

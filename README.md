@@ -171,33 +171,6 @@ export default (
 )
 ```
 
-Or use `get:` prefix on the prop.
-```typescript jsx
-import { State } from 'watch-state'
-
-const theme = new State('light')
-
-const handleChange = e => {
-  theme.value = e.target.checked ? 'dark' : 'light'
-}
-
-export default (
-  <div get:class={theme.value}>
-    <h1>
-      Hello World!
-    </h1>
-    <label>
-      <input type="checkbox" onchange={handleChange} />
-      Dark Mode
-    </label>
-  </div>
-)
-```
-
-`get:class={theme.value}` the same as `class={() => theme.value}`
-
-> Danger: do not use `this` inside a prop with get prefix.
-
 ## Components
 
 Component is just a function you can use as JSX element.
@@ -220,16 +193,8 @@ export default (
 )
 ```
 
-### Arguments
-
-Any component gets 3 arguments:
-- **props** - list of params
-- **children** - content
-- **handler** - current handler
-
 #### props
-
-The first argument of a component is `props`.
+Any component gets an argument `props`.  
 If props have not provided the argument equals `undefined` else you get an object that contains the props.
 
 Change `Content.tsx`
@@ -254,13 +219,17 @@ export default (
 )
 ```
 
-#### children
+#### useChildren
 
-The second argument of a component is `children`.
+To get children elements you have `useChildren`.
 
 Change `Content.tsx`
 ```typescript jsx
-export function Content ({ color }, children) {
+import { useChildren } from '@innet/jsx'
+
+export function Content ({ color }) {
+  const children = useChildren()
+
   return (
     <h1 style={`color: ${color}`}>
       {children}
@@ -281,12 +250,6 @@ export default (
   </Content>
 )
 ```
-
-#### handler
-
-The third argument of a component is `handler`.
-
-This is a current handler, you can use it for different features you can see below.
 
 ### Return
 
@@ -447,10 +410,11 @@ function* Content () {
 You can subscribe on destroy of a component by `onDestroy` from `watch-state`
 
 Change `Content.tsx`
+
 ```typescript jsx
 import { State, onDestroy } from 'watch-state'
 
-export function Content (props, children, handler) {
+export function Content() {
   const count = new State(0)
   // create a state
 
@@ -492,13 +456,15 @@ You can pass a value from a parent element through any children to the place you
 
 Change `Content.tsx`
 ```typescript jsx
-import { Context } from '@innet/dom'
+import { Context, useContext } from '@innet/dom'
 
 export const color = new Context('blue')
 
-export function Content (props, children, handler) {
+export function Content () {
+  const currentColor = useContext(color)
+
   return (
-    <h1 style={`color: ${color.get(handler)}`}>
+    <h1 style={`color: ${currentColor}`}>
       {children}
     </h1>
   )
@@ -562,8 +528,10 @@ export default (
 
 You can use slots to provide a couple of named child elements.
 ```typescript jsx
-export const Content = (props, children) => (
-  <slots from={children}>
+import { useChildren } from '@innet/jsx'
+
+export const Content = () => (
+  <slots from={useChildren()}>
     <div class='header'>
       <slot name='header'>
         default header
@@ -596,18 +564,18 @@ export default (
 
 You get `Custom header`, `Custom content` and `default footer`
 
-## getSlots
+## useSlots
 
-`getSlots` is another way to use slots.
+`useSlots` is a way to get slots.
 ```typescript jsx
-import { getSlots } from '@innet/dom'
+import { useSlots } from '@innet/dom'
 
-export const Content = (props, children, handler) => {
+export const Content = () => {
   const {
     '': content,
     header,
     footer
-  } = getSlots(handler, children)
+  } = useSlots()
 
   return (
     <>
@@ -745,11 +713,12 @@ export const Content = () => (
 `/settings?user=1&modal=logout` - Logout  
 `/any-other?any-params&modal=any-other` - render nothing
 
-## getRoute
-You can handle dynamic routes by `getRoute`.
+## useRoute
+You can handle dynamic routes by `useRoute`.
 ```typescript jsx
-const Test = (props, children, handler) => {
-  const route = getRoute(handler)
+const Test = () => {
+  const route = useRoute()
+
   return () => route.value
 }
 
@@ -905,20 +874,65 @@ export const Content = () => (
 
 Use a string to scroll under an element relates to the CSS selector you provide or use `-1` to stop scrolling.
 
-## getParent
+## delay
+You can show and hide elements with delay.
+
+```typescript jsx
+export function Content () {
+  return (
+    <delay show={1000}>
+      Works
+      <delay show={1000}>
+        fine!
+      </delay>
+    </delay>
+  )
+}
+```
+
+### useHidden
+You can react on removing of elements
+
+Change `Content.tsx`
+```typescript jsx
+import { useHidden } from '@innet/dom'
+
+export function Content () {
+  const hidden = useHidden()
+
+  return () => hidden.value ? 'hidden' : 'shown'
+}
+```
+
+And change `app.tsx`
+```typescript jsx
+import { State } from 'watch-state'
+
+const show = new State(true)
+
+const handleClick = () => {
+  show.value = false
+}
+
+export default () => show.value && (
+  <delay hide={1000}>
+    <Content />
+    <button
+      onclick={handleClick}>
+      Hide
+    </button>
+  </delay>
+)
+```
+
+## useParent
 
 You can get parent HTML element inside a component
 ```typescript jsx
 import { getParent } from '@innet/dom'
 
-export function Content (props, children, handler) {
-  console.log(getParent(handler))
-
-  return (
-    <h1>
-      {children}
-    </h1>
-  )
+export function Content () {
+  console.log(useParent())
 }
 ```
 

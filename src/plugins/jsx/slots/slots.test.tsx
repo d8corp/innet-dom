@@ -1,11 +1,13 @@
+import { useChildren } from '@innet/jsx'
+
 import { getHTML, render } from '../../../test'
-import { getSlots } from '../slot'
+import { useSlots } from '../slot'
 
 describe('slots', () => {
   it('should work', () => {
-    function Content (props, children) {
+    function Content () {
       return (
-        <slots from={children}>
+        <slots from={useChildren()}>
           <div>
             <slot name='header' />
           </div>
@@ -37,9 +39,9 @@ describe('slots', () => {
       .toBe('<div>header</div><div>custom<br>content</div><div>footer</div>')
   })
   it('should work with default value', () => {
-    function Content (props, children) {
+    function Content () {
       return (
-        <slots from={children}>
+        <slots from={useChildren()}>
           <div>
             <slot name='header'>
               default header
@@ -69,9 +71,9 @@ describe('slots', () => {
       .toBe('<div>default header</div><div>custom content</div><div>default footer</div>')
   })
   it('should work with couple same slots', () => {
-    function Content (props, children) {
+    function Content () {
       return (
-        <slots from={children}>
+        <slots from={useChildren()}>
           <div>
             <slot name='header'>
               default header
@@ -107,8 +109,8 @@ describe('slots', () => {
       .toBe('<div><span>first header</span><span>second header</span></div><div>custom content</div><div>default footer</div>')
   })
   it('should work with getSlots', () => {
-    function Content (props, children, handler) {
-      const { '': content, header, footer } = getSlots(handler, children)
+    function Content () {
+      const { '': content, header, footer } = useSlots()
 
       return (
         <>

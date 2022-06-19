@@ -14,5 +14,6 @@ export declare const pathDeep: Cache<any>;
 export declare const routes: Cache<string>[];
 export declare const routesIsh: Cache<string>[];
 export declare function getStrongRoute(handler: Handler, deep?: any): Cache<string>;
+export declare function useRoute(): Cache<string>;
 export declare function getRoute(handler: Handler, deep?: any): Cache<string>;
 export declare function router({ props, children }: JSXPluginElement<RouterProps>, handler: any): any;

@@ -1,4 +1,4 @@
-import { JSXPluginElement } from '@innet/jsx'
+import { JSXPluginElement, useHandler } from '@innet/jsx'
 import History from '@watch-state/history-api'
 import innet, { Handler } from 'innet'
 import { Cache } from 'watch-state'
@@ -33,6 +33,11 @@ export function getStrongRoute (handler: Handler, deep = routerContext.get(handl
 
   return routes[routeIndex]
 }
+
+export function useRoute (): Cache<string> {
+  return getRoute(useHandler())
+}
+
 export function getRoute (handler: Handler, deep = routerContext.get(handler)): Cache<string> {
   const routeIndex = deep - 1
   if (!routesIsh[routeIndex]) {
@@ -53,8 +58,8 @@ export function router ({ props, children }: JSXPluginElement<RouterProps>, hand
 
     if (route && route in slots) {
       return search ? slots[route] : {
-        type: (_, __, handler) => {
-          innet(slots[route], createContextHandler(handler, routerContext, deep + 1))
+        type: () => {
+          innet(slots[route], createContextHandler(useHandler(), routerContext, deep + 1))
         },
       }
     }

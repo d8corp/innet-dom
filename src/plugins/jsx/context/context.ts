@@ -1,9 +1,14 @@
-import { JSXPluginElement } from '@innet/jsx'
+import { JSXPluginElement, useHandler } from '@innet/jsx'
 import innet, { Handler } from 'innet'
 
 export interface ContextProps <D = any> {
   for: Context<D>
   set?: D
+}
+
+export function useContext <D = any, Def = D> (context: Context<D, Def>): D | Def {
+  const handler = useHandler()
+  return context.get(handler)
 }
 
 export class Context <D = any, Def = D> {

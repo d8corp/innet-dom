@@ -1,6 +1,6 @@
 import { JSXPlugin } from '@innet/jsx';
 import { arraySync } from '@innet/utils';
-import { ContextProps, domAsync, domFn, domNode, domText, LinkProps, LoopProps, PortalProps, RouterProps, SlotProps, SlotsProps } from '../plugins';
+import { ContextProps, DelayProps, domAsync, domFn, domNode, domText, LinkProps, LoopProps, PortalProps, RouterProps, SlotProps, SlotsProps } from '../plugins';
 export declare const arrayPlugins: (typeof arraySync)[];
 export declare const JSXPlugins: Record<string, JSXPlugin>;
 export declare const objectPlugins: ((handler: any) => import("innet").PluginHandler)[];
@@ -20,6 +20,7 @@ declare global {
             slot: SlotProps;
             a: LinkProps;
             router: RouterProps;
+            delay: DelayProps;
             [elemName: string]: any;
         }
     }

@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.4
+
+### v0.4.0 [![19.06.2022](https://img.shields.io/date/1655634639)](https://github.com/d8corp/innet-server/tree/v0.4.0)
+- added `delay`
+- updated `@innet/jsx` for hooks
+- removed `children` and `handler` arguments on components
+
 ## v0.3
 
 ### v0.3.1 [![28.05.2022](https://img.shields.io/date/1653754141)](https://github.com/d8corp/innet-server/tree/v0.3.1)

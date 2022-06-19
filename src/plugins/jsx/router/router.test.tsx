@@ -1,9 +1,16 @@
-import { JsxTemplate } from '@innet/jsx'
+import { JsxComponent } from '@innet/jsx'
 
 import { getHTML, render } from '../../../test'
-import { getRoute, history } from './router'
+import { history, useRoute } from './router'
 
 describe('router', () => {
+  it('should work if the router is empty', () => {
+    const result = render(
+      <router />,
+    )
+
+    expect(getHTML(result)).toBe('')
+  })
   it('should work', () => {
     const result = render(
       <router>
@@ -160,11 +167,11 @@ describe('router', () => {
     history.push('?modal=test2')
     expect(getHTML(result)).toBe('Test2')
   })
-  it('getRoute', () => {
+  it('useRoute', () => {
     history.push('/')
 
-    const App: JsxTemplate = (props, children, handler) => {
-      const route = getRoute(handler)
+    const App: JsxComponent = () => {
+      const route = useRoute()
       return route.value
     }
 

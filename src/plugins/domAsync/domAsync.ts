@@ -4,7 +4,7 @@ import { onDestroy } from 'watch-state'
 import { useComment } from '../../utils/useComment'
 
 export function domAsync (): PluginHandler {
-  return (app, next, handler) => {
+  return (app: Promise<any>, next, handler) => {
     const [childHandler] = useComment(handler, 'async')
 
     let removed = false

@@ -1,4 +1,4 @@
-import { JSXPluginElement } from '@innet/jsx'
+import { JSXPluginElement, useChildren, useHandler } from '@innet/jsx'
 import innet, { Handler } from 'innet'
 
 import { slotsContext } from '../slots/constants'
@@ -7,32 +7,38 @@ export interface SlotProps {
   name?: string
 }
 
+export function useSlots () {
+  return getSlots(useHandler(), useChildren())
+}
+
 export function getSlots (handler: Handler, from): Record<string, any> {
   const result = {}
 
-  for (let i = 0; i < from.length; i++) {
-    const child = from[i]
+  if (Array.isArray(from)) {
+    for (let i = 0; i < from.length; i++) {
+      const child = from[i]
 
-    if (child && typeof child === 'object' && !Array.isArray(child)) {
-      const { type, props, children } = child
+      if (child && typeof child === 'object' && !Array.isArray(child)) {
+        const { type, props, children } = child
 
-      if (typeof type === 'string' && handler[type] === slot) {
-        const name = props?.name || ''
+        if (typeof type === 'string' && handler[type] === slot) {
+          const name = props?.name || ''
 
-        if (name in result) {
-          result[name].push(...children)
-        } else {
-          result[name] = children
+          if (name in result) {
+            result[name].push(...children)
+          } else {
+            result[name] = children
+          }
+
+          continue
         }
-
-        continue
       }
-    }
 
-    if ('' in result) {
-      result[''].push(child)
-    } else {
-      result[''] = [child]
+      if ('' in result) {
+        result[''].push(child)
+      } else {
+        result[''] = [child]
+      }
     }
   }
 

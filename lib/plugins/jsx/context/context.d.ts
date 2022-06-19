@@ -4,6 +4,7 @@ export interface ContextProps<D = any> {
     for: Context<D>;
     set?: D;
 }
+export declare function useContext<D = any, Def = D>(context: Context<D, Def>): D | Def;
 export declare class Context<D = any, Def = D> {
     readonly defaultValue?: Def;
     readonly key: string;

@@ -1,4 +1,4 @@
-import { JSXPlugin, jsxPlugins, jsxTemplate } from '@innet/jsx'
+import { jsxComponent, JSXPlugin, jsxPlugins } from '@innet/jsx'
 import {
   array,
   arraySync,
@@ -18,6 +18,8 @@ import { createHandler } from 'innet'
 import {
   context,
   ContextProps,
+  delay,
+  DelayProps,
   domAsync,
   domAsyncIterable,
   domFn,
@@ -51,11 +53,12 @@ export const JSXPlugins: Record<string, JSXPlugin> = {
   slot,
   router,
   a: link,
+  delay,
 }
 
 export const objectPlugins = [
   jsxPlugins(JSXPlugins),
-  jsxTemplate,
+  jsxComponent,
   domJSX,
   asyncIterable([
     domAsyncIterable,
@@ -106,6 +109,7 @@ declare global {
       slot: SlotProps
       a: LinkProps
       router: RouterProps
+      delay: DelayProps
       [elemName: string]: any;
     }
   }
