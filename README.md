@@ -925,6 +925,43 @@ export default () => show.value && (
 )
 ```
 
+### ref
+You can use `ref` to get the hidden state.
+
+Change `Content.tsx`
+```typescript jsx
+export function Content () {
+  const hidden = new Ref()
+
+  return (
+    <delay ref={hidden} hide={1000}>
+      {() => hidden.value.value ? 'hidden' : 'shown'}
+    </delay>
+  )
+}
+```
+
+And change `app.tsx`
+```typescript jsx
+import { State } from 'watch-state'
+
+const show = new State(true)
+
+const handleClick = () => {
+  show.value = false
+}
+
+export default () => show.value && (
+  <>
+    <Content />
+    <button
+      onclick={handleClick}>
+      Hide
+    </button>
+  </>
+)
+```
+
 ## useParent
 
 You can get parent HTML element inside a component

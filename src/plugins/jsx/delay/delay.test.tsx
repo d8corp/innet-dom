@@ -2,6 +2,7 @@ import { JsxComponent } from '@innet/jsx'
 import { State } from 'watch-state'
 
 import { getHTML, render } from '../../../test'
+import { Ref } from '../../../utils'
 import { useHidden } from './delay'
 
 describe('delay', () => {
@@ -132,6 +133,35 @@ describe('delay', () => {
     expect(getHTML(result)).toBe('')
 
     await new Promise(resolve => setTimeout(resolve, 100))
+
+    expect(getHTML(result)).toBe('shown')
+
+    show.value = false
+
+    expect(getHTML(result)).toBe('hidden')
+
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(getHTML(result)).toBe('hidden')
+
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(getHTML(result)).toBe('')
+  })
+  it('should work with ref', async () => {
+    const Component: JsxComponent = () => {
+      const hidden = new Ref<State<boolean>>()
+
+      return (
+        <delay ref={hidden} hide={100}>
+          {() => hidden.value.value ? 'hidden' : 'shown'}
+        </delay>
+      )
+    }
+
+    const show = new State(true)
+
+    const result = render(() => show.value && <Component />)
 
     expect(getHTML(result)).toBe('shown')
 
