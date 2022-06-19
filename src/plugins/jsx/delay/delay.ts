@@ -18,7 +18,7 @@ export function useHidden (): undefined | State<boolean> {
 }
 
 export function delay ({ props, children }: JSXPluginElement<DelayProps>, handler: Handler) {
-  let run = () => innet(children, handler)
+  const run = () => innet(children, handler)
 
   if (props) {
     const { show, hide } = props
@@ -30,23 +30,24 @@ export function delay ({ props, children }: JSXPluginElement<DelayProps>, handle
       const hideState = childHandler[delayContext.key] = new State(false)
       comment[REMOVE_DELAY] = hide
 
-      run = () => {
-        let result
-        const watcher = new Watch(() => {
-          result = innet(children, handler)
-        }, true)
+      const watcher = new Watch(() => {
+        if (show > 0) {
+          setTimeout(run, show)
+        } else {
+          run()
+        }
+      }, true)
 
-        onDestroy(() => {
-          hideState.value = true
-          setTimeout(() => watcher.destroy(), hide)
-        })
+      onDestroy(() => {
+        hideState.value = true
+        setTimeout(() => watcher.destroy(), hide)
+      })
 
-        return result
-      }
+      return
     }
 
     if (show > 0) {
-      return setTimeout(() => run(), show)
+      return setTimeout(run, show)
     }
   }
 

@@ -2,6 +2,9 @@
 
 ## v0.4
 
+### v0.4.1 [![19.06.2022](https://img.shields.io/date/1655656208)](https://github.com/d8corp/innet-server/tree/v0.4.1)
+- fixed `delay` bug
+
 ### v0.4.0 [![19.06.2022](https://img.shields.io/date/1655634639)](https://github.com/d8corp/innet-server/tree/v0.4.0)
 - added `delay`
 - updated `@innet/jsx` for hooks

@@ -114,6 +114,39 @@ describe('delay', () => {
 
     expect(getHTML(result)).toBe('')
   })
+  it('should work with context and show', async () => {
+    const Component: JsxComponent = () => {
+      const hidden = useHidden()
+
+      return () => hidden.value ? 'hidden' : 'shown'
+    }
+
+    const show = new State(true)
+
+    const result = render(() => show.value && (
+      <delay show={100} hide={100}>
+        <Component />
+      </delay>
+    ))
+
+    expect(getHTML(result)).toBe('')
+
+    await new Promise(resolve => setTimeout(resolve, 100))
+
+    expect(getHTML(result)).toBe('shown')
+
+    show.value = false
+
+    expect(getHTML(result)).toBe('hidden')
+
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(getHTML(result)).toBe('hidden')
+
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(getHTML(result)).toBe('')
+  })
   it('should work deep', async () => {
     const result = render(
       <delay show={100}>
