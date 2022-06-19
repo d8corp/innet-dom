@@ -2,6 +2,9 @@
 
 ## v0.4
 
+### v0.4.3 [![19.06.2022](https://img.shields.io/date/1655670970)](https://github.com/d8corp/innet-server/tree/v0.4.3)
+- fix `delay` bug
+
 ### v0.4.2 [![19.06.2022](https://img.shields.io/date/1655656976)](https://github.com/d8corp/innet-server/tree/v0.4.2)
 - add `ref` for `delay`
 

@@ -37,7 +37,11 @@ export function delay ({ props, children }: JSXPluginElement<DelayProps>, handle
 
       const watcher = new Watch(() => {
         if (show > 0) {
-          setTimeout(run, show)
+          setTimeout(() => {
+            if (!hideState.value) {
+              run()
+            }
+          }, show)
         } else {
           run()
         }
@@ -52,7 +56,15 @@ export function delay ({ props, children }: JSXPluginElement<DelayProps>, handle
     }
 
     if (show > 0) {
-      return setTimeout(run, show)
+      let destroyed = false
+      onDestroy(() => {
+        destroyed = true
+      })
+      return setTimeout(() => {
+        if (!destroyed) {
+          run()
+        }
+      }, show)
     }
   }
 
