@@ -1,4 +1,5 @@
 import { jsxComponent, JSXPlugin, jsxPlugins } from '@innet/jsx'
+import { Catch, CatchProps } from '@innet/jsx/catch'
 import {
   array,
   arrayAsync,
@@ -54,6 +55,7 @@ export const JSXPlugins: Record<string, JSXPlugin> = {
   router,
   a: link,
   delay,
+  catch: Catch,
 }
 
 export const objectPlugins = [
@@ -110,6 +112,7 @@ declare global {
       a: LinkProps
       router: RouterProps
       delay: DelayProps
+      catch: CatchProps
       [elemName: string]: any;
     }
   }
