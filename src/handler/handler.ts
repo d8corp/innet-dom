@@ -1,7 +1,7 @@
 import { jsxComponent, JSXPlugin, jsxPlugins } from '@innet/jsx'
 import {
   array,
-  arraySync,
+  arrayAsync,
   asyncIterable,
   fn,
   iterable,
@@ -42,7 +42,7 @@ import {
 } from '../plugins'
 
 export const arrayPlugins = [
-  arraySync,
+  arrayAsync,
 ]
 
 export const JSXPlugins: Record<string, JSXPlugin> = {
