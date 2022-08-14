@@ -2,6 +2,9 @@
 
 ## v0.4
 
+### v0.4.6 [![14.08.2022](https://img.shields.io/date/1660498631)](https://github.com/d8corp/innet-server/tree/v0.4.6)
+- removed `catch` and used `arraySync`
+
 ### v0.4.5 [![14.08.2022](https://img.shields.io/date/1660485923)](https://github.com/d8corp/innet-server/tree/v0.4.5)
 - add jsx plugin `catch`
 

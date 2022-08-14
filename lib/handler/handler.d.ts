@@ -1,8 +1,7 @@
 import { JSXPlugin } from '@innet/jsx';
-import { CatchProps } from '@innet/jsx/catch';
-import { arrayAsync } from '@innet/utils';
+import { arraySync } from '@innet/utils';
 import { ContextProps, DelayProps, domAsync, domFn, domNode, domText, LinkProps, LoopProps, PortalProps, RouterProps, SlotProps, SlotsProps } from '../plugins';
-export declare const arrayPlugins: (typeof arrayAsync)[];
+export declare const arrayPlugins: (typeof arraySync)[];
 export declare const JSXPlugins: Record<string, JSXPlugin>;
 export declare const objectPlugins: ((handler: any) => import("innet").PluginHandler)[];
 export declare const fnPlugins: (typeof domFn)[];
@@ -22,7 +21,6 @@ declare global {
             a: LinkProps;
             router: RouterProps;
             delay: DelayProps;
-            catch: CatchProps;
             [elemName: string]: any;
         }
     }
