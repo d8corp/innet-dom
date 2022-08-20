@@ -2,7 +2,7 @@ import { JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
 import { globalEvent, onDestroy, State, Watch } from 'watch-state'
 
-import { after, clear, prepend, remove, setParent, useComment } from '../../../utils'
+import { after, before, clear, dif, remove, setParent, useComment } from '../../../utils'
 
 interface LoopMap<T> {
   watcher: Watch
@@ -14,7 +14,7 @@ interface WatchTarget <R = any> {
   (update?: boolean): R;
 }
 
-type OfPropStatic<T = any> = T[] | Set<T>
+type OfPropStatic<T = any> = T[]
 type OfProp<T = any> = OfPropStatic<T> | WatchTarget<OfPropStatic<T>>
 
 export interface LoopProps<T = any> {
@@ -62,6 +62,7 @@ function getKey (key, value) {
 }
 
 export function loop <T> ({
+  type,
   props: {
     size: sizeProp = Infinity,
     key,
@@ -73,10 +74,10 @@ export function loop <T> ({
   ],
 }: JSXPluginElement<LoopProps<T>, LoopChildren<T>>, handler) {
   if (typeof ofProp === 'function' || typeof sizeProp === 'function') {
-    const [childHandler, mainComment] = useComment(handler, 'for')
+    const [childHandler, mainComment] = useComment(handler, type)
 
     let map = new Map<any, LoopMap<T>>()
-    let valuesList: any[] = []
+    let keysList: any[] = []
     let isElse = false
 
     onDestroy(() => {
@@ -91,13 +92,19 @@ export function loop <T> ({
       const size = typeof sizeProp === 'function' ? sizeProp(update) : sizeProp
 
       if (update) {
-        const oldValuesList = valuesList
+        const oldKeysList = keysList
+        keysList = values.map(value => getKey(key, value))
+        const keepKeys = dif(oldKeysList, keysList)
+
         const oldMap = map
         map = new Map()
-        valuesList = []
-        let i = 0
-        for (const value of values) {
-          if (size <= i) {
+
+        let index = 0
+
+        for (; index < values.length; index++) {
+          const value = values[index]
+
+          if (size <= index) {
             break
           }
 
@@ -106,41 +113,43 @@ export function loop <T> ({
             clear(mainComment)
           }
 
-          const valueKey = getKey(key, value)
+          const valueKey = keysList[index]
 
           if (map.has(valueKey)) {
             continue
           }
 
-          if (valueKey === oldValuesList[i]) {
+          const keep = keepKeys.includes(valueKey)
+          const wasBefore = oldMap.has(valueKey)
+
+          if (wasBefore) {
             const data = oldMap.get(valueKey)
 
             globalEvent.start()
             data.item.value = value
+            data.item.index = index
             map.set(valueKey, data)
-            oldMap.delete(valueKey)
-            globalEvent.end()
-          } else if (oldMap.has(value)) {
-            const data = oldMap.get(value)
+
+            if (!keep && wasBefore) {
+              if (index) {
+                after(map.get(keysList[index - 1]).comment, data.comment)
+              } else {
+                before(oldMap.get(oldKeysList[0]).comment, data.comment)
+              }
+            }
 
             oldMap.delete(valueKey)
-            data.item.index = i
-            map.set(valueKey, data)
-            if (i) {
-              after(map.get(valuesList[i - 1]).comment, data.comment)
-            } else {
-              prepend(mainComment, data.comment)
-            }
+            globalEvent.end()
           } else {
-            const item = new LoopItem(value, i)
+            const item = new LoopItem(value, index)
             const comment = document.createComment(valueKey)
             const deepHandler = Object.create(childHandler)
             setParent(deepHandler, comment)
 
-            if (i) {
-              after(map.get(valuesList[i - 1]).comment, comment)
+            if (index) {
+              after(map.get(keysList[index - 1]).comment, comment)
             } else {
-              prepend(mainComment, comment)
+              before(oldMap.get(oldKeysList[0]).comment, comment)
             }
 
             const watcher = new Watch(update => {
@@ -152,36 +161,32 @@ export function loop <T> ({
 
             map.set(valueKey, { comment, item, watcher })
           }
-
-          valuesList.push(valueKey)
-          i++
         }
+
         oldMap.forEach(({ comment, watcher }) => {
           watcher.destroy()
           remove(comment)
         })
-        if (!i && elseProp.length && !isElse) {
+
+        if (!index && elseProp.length && !isElse) {
           isElse = true
           innet(elseProp, childHandler)
         }
       } else {
-        let i = 0
+        let index = 0
 
-        for (const value of values) {
-          if (size <= i) {
-            break
-          }
+        for (; index < values.length; index++) {
+          if (size <= index) break
 
+          const value = values[index]
           const valueKey = getKey(key, value)
 
-          if (map.has(valueKey)) {
-            continue
-          }
+          if (map.has(valueKey)) continue
+
+          keysList.push(valueKey)
 
           const [deepHandler, comment] = useComment(childHandler, valueKey, true)
-          const item = new LoopItem(value, i++)
-
-          valuesList.push(valueKey)
+          const item = new LoopItem(value, index)
 
           const watcher = new Watch(update => {
             if (update) {
@@ -193,7 +198,7 @@ export function loop <T> ({
           map.set(valueKey, { comment, item, watcher })
         }
 
-        if (!i && elseProp.length) {
+        if (!index && elseProp.length && !isElse) {
           isElse = true
           innet(elseProp, childHandler)
         }

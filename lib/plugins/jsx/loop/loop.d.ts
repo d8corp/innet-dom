@@ -2,7 +2,7 @@ import { JSXPluginElement } from '@innet/jsx';
 interface WatchTarget<R = any> {
     (update?: boolean): R;
 }
-declare type OfPropStatic<T = any> = T[] | Set<T>;
+declare type OfPropStatic<T = any> = T[];
 declare type OfProp<T = any> = OfPropStatic<T> | WatchTarget<OfPropStatic<T>>;
 export interface LoopProps<T = any> {
     of: OfProp<T>;
@@ -20,5 +20,5 @@ export declare class LoopItem<T> {
     get index(): number;
     set index(index: number);
 }
-export declare function loop<T>({ props: { size: sizeProp, key, of: ofProp, }, children: [callback, ...elseProp], }: JSXPluginElement<LoopProps<T>, LoopChildren<T>>, handler: any): any;
+export declare function loop<T>({ type, props: { size: sizeProp, key, of: ofProp, }, children: [callback, ...elseProp], }: JSXPluginElement<LoopProps<T>, LoopChildren<T>>, handler: any): any;
 export {};
