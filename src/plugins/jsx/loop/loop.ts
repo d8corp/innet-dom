@@ -2,7 +2,7 @@ import { JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
 import { globalEvent, onDestroy, State, Watch } from 'watch-state'
 
-import { after, before, clear, dif, remove, setParent, useComment } from '../../../utils'
+import { after, before, clear, dif, prepend, remove, setParent, useComment } from '../../../utils'
 
 interface LoopMap<T> {
   watcher: Watch
@@ -133,8 +133,10 @@ export function loop <T> ({
             if (!keep && wasBefore) {
               if (index) {
                 after(map.get(keysList[index - 1]).comment, data.comment)
-              } else {
+              } else if (oldKeysList.length) {
                 before(oldMap.get(oldKeysList[0]).comment, data.comment)
+              } else {
+                prepend(mainComment, data.comment)
               }
             }
 
@@ -148,8 +150,10 @@ export function loop <T> ({
 
             if (index) {
               after(map.get(keysList[index - 1]).comment, comment)
-            } else {
+            } else if (oldKeysList.length) {
               before(oldMap.get(oldKeysList[0]).comment, comment)
+            } else {
+              prepend(mainComment, comment)
             }
 
             const watcher = new Watch(update => {
