@@ -2,6 +2,10 @@
 
 ## v0.5
 
+### v0.5.1 [![21.08.2022](https://img.shields.io/date/1661087882)](https://github.com/d8corp/innet-server/tree/v0.5.1)
+
+- fix a bug relates to `v0.5.0` release
+
 ### v0.5.0 [![21.08.2022](https://img.shields.io/date/1661037162)](https://github.com/d8corp/innet-server/tree/v0.5.0)
 
 - implement new algorithm to handle `for` plugin

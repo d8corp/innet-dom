@@ -119,7 +119,7 @@ export function loop <T> ({
             continue
           }
 
-          const keep = keepKeys.includes(valueKey)
+          const keep = keepKeys?.includes(valueKey)
           const wasBefore = oldMap.has(valueKey)
 
           if (wasBefore) {

@@ -7,4 +7,10 @@ describe('dif', () => {
       ['4', '3', '2', '1', '5'],
     )).toEqual(['4', '3', '2'])
   })
+  it('should return undefined', () => {
+    expect(dif(
+      [],
+      ['5'],
+    )).toBe(undefined)
+  })
 })

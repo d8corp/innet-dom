@@ -1,4 +1,4 @@
-export function dif <T> (values1: T[], values2: T[]): T[] {
+export function dif <T> (values1: T[], values2: T[]): T[] | undefined {
   let maxLength = 0
   let result: T[]
 
