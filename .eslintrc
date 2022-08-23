@@ -13,6 +13,7 @@
     "jest": true
   },
   "rules": {
+    "react/display-name": "off",
     "node/no-callback-literal": "off",
     "react/no-unknown-property": "off",
     "react/jsx-key": "off",

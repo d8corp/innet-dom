@@ -194,4 +194,41 @@ describe('delay', () => {
 
     expect(getHTML(result)).toBe('Worksfine!')
   })
+  it('should works with async', async () => {
+    async function Test1 () {
+      const hidden = new Ref<State<boolean>>()
+
+      return (
+        <delay ref={hidden} hide={300}>
+          <div>
+            {() => String(hidden.value?.value)}
+          </div>
+        </delay>
+      )
+    }
+
+    function Test () {
+      const show = new State(true)
+
+      setTimeout(() => {
+        show.value = false
+      }, 300)
+
+      return () => show.value && <Test1 />
+    }
+
+    const result = render(<Test />)
+
+    await new Promise(resolve => setTimeout(resolve))
+
+    expect(getHTML(result)).toBe('<div>false</div>')
+
+    await new Promise(resolve => setTimeout(resolve, 300))
+
+    expect(getHTML(result)).toBe('<div>true</div>')
+
+    await new Promise(resolve => setTimeout(resolve, 300))
+
+    expect(getHTML(result)).toBe('')
+  })
 })
