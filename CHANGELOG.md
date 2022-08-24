@@ -2,6 +2,10 @@
 
 ## v0.5
 
+### v0.5.4 [![24.08.2022](https://img.shields.io/date/1661335174)](https://github.com/d8corp/innet-server/tree/v0.5.4)
+
+- fix a bug of watchers in generic async components
+
 ### v0.5.3 [![23.08.2022](https://img.shields.io/date/1661249139)](https://github.com/d8corp/innet-server/tree/v0.5.3)
 
 - fix a bug of watchers in async components
