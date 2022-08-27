@@ -1,12 +1,12 @@
 import innet, { PluginHandler } from 'innet'
-import { onDestroy, scope } from 'watch-state'
+import { onDestroy, scope, Watch } from 'watch-state'
 
 import { clear, useComment } from '../../utils'
 
 export const domAsyncIterable = (): PluginHandler => async (apps, next, handler) => {
   const [childrenHandler, comment] = useComment(handler, 'asyncIterable')
   const { activeWatcher } = scope
-  let update = false
+  let watcher: Watch
   let deleted = false
 
   onDestroy(() => {
@@ -14,16 +14,23 @@ export const domAsyncIterable = (): PluginHandler => async (apps, next, handler)
   })
 
   for await (const app of apps) {
-    scope.activeWatcher = activeWatcher
     if (deleted) return
 
-    if (update) {
+    scope.activeWatcher = activeWatcher
+
+    if (watcher) {
+      watcher.destroy()
       clear(comment)
     }
 
-    innet(app, childrenHandler)
+    watcher = new Watch(update => {
+      if (update) {
+        clear(comment)
+      }
 
-    update = true
+      innet(app, childrenHandler)
+    })
+
     scope.activeWatcher = undefined
   }
 
