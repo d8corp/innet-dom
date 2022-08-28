@@ -2,6 +2,10 @@
 
 ## v0.5
 
+### v0.5.6 [![28.08.2022](https://img.shields.io/date/1661677576)](https://github.com/d8corp/innet-server/tree/v0.5.6)
+
+- fix watch bug of `delay`
+
 ### v0.5.5 [![27.08.2022](https://img.shields.io/date/1661613685)](https://github.com/d8corp/innet-server/tree/v0.5.5)
 
 - fix a bug of destroying in generic async components

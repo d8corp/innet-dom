@@ -231,4 +231,45 @@ describe('delay', () => {
 
     expect(getHTML(result)).toBe('')
   })
+  it('should works inside each other', async () => {
+    const show = new State(true)
+
+    function Test () {
+      const hidden = new Ref<State<boolean>>()
+
+      return () => show.value && (
+        <delay show={300}>
+          <delay ref={hidden} hide={300}>
+            <div>
+              {() => String(hidden.value?.value)}
+            </div>
+          </delay>
+        </delay>
+      )
+    }
+
+    const result = render(<Test />)
+
+    expect(getHTML(result)).toBe('')
+
+    await new Promise(resolve => setTimeout(resolve, 150))
+
+    expect(getHTML(result)).toBe('')
+
+    await new Promise(resolve => setTimeout(resolve, 150))
+
+    expect(getHTML(result)).toBe('<div>false</div>')
+
+    show.value = false
+
+    expect(getHTML(result)).toBe('<div>true</div>')
+
+    await new Promise(resolve => setTimeout(resolve, 150))
+
+    expect(getHTML(result)).toBe('<div>true</div>')
+
+    await new Promise(resolve => setTimeout(resolve, 150))
+
+    expect(getHTML(result)).toBe('')
+  })
 })

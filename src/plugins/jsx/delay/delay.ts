@@ -1,6 +1,6 @@
 import { JSXPluginElement, useHandler } from '@innet/jsx'
 import innet, { Handler } from 'innet'
-import { onDestroy, State, Watch } from 'watch-state'
+import { onDestroy, scope, State, Watch } from 'watch-state'
 
 import { Ref, useComment } from '../../../utils'
 import { REMOVE_DELAY } from '../../../utils/dom/constants'
@@ -57,12 +57,15 @@ export function delay ({ props, children }: JSXPluginElement<DelayProps>, handle
 
     if (show > 0) {
       let destroyed = false
+      const { activeWatcher } = scope
       onDestroy(() => {
         destroyed = true
       })
       return setTimeout(() => {
         if (!destroyed) {
+          scope.activeWatcher = activeWatcher
           run()
+          scope.activeWatcher = undefined
         }
       }, show)
     }
