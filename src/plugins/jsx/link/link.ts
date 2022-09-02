@@ -76,7 +76,7 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
       return onclick?.(e)
     }
     e.preventDefault()
-    const { scrollTo = page ? 0 : -1, scroll, replace } = props
+    const { scrollTo = page ? 0 : -1, scroll = 'before', replace } = props
     history[replace ? 'replace' : 'push'](url, scroll === 'none' ? -1 : scrollTo, scroll === 'before')
     onclick?.(e)
   }
