@@ -2,6 +2,10 @@
 
 ## v0.6
 
+### v0.6.1 [![03.09.2022](https://img.shields.io/date/1662202621)](https://github.com/d8corp/innet-server/tree/v0.6.1)
+
+- fix watch bug of `delay`
+
 ### v0.6.0 [![03.09.2022](https://img.shields.io/date/1662192543)](https://github.com/d8corp/innet-server/tree/v0.6.0)
 
 - added `HTMLProps` type

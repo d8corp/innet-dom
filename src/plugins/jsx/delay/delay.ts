@@ -39,7 +39,9 @@ export function delay ({ props, children }: JSXPluginElement<DelayProps>, handle
         if (show > 0) {
           setTimeout(() => {
             if (!hideState.value) {
+              scope.activeWatcher = watcher
               run()
+              scope.activeWatcher = undefined
             }
           }, show)
         } else {
