@@ -1084,7 +1084,7 @@ const handleClick = () => {
   show.value = !show.value
 }
 
-export default () => show.value && (
+export default (
   <>
     <Content
       class={{
