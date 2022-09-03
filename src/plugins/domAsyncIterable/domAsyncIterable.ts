@@ -1,10 +1,10 @@
 import innet, { PluginHandler } from 'innet'
 import { onDestroy, scope, Watch } from 'watch-state'
 
-import { clear, useComment } from '../../utils'
+import { clear, getComment } from '../../utils'
 
 export const domAsyncIterable = (): PluginHandler => async (apps, next, handler) => {
-  const [childrenHandler, comment] = useComment(handler, 'asyncIterable')
+  const [childrenHandler, comment] = getComment(handler, 'asyncIterable')
   const { activeWatcher } = scope
   let watcher: Watch
   let deleted = false

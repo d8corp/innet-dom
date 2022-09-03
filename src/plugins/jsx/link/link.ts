@@ -1,70 +1,68 @@
 import { JSXPluginElement } from '@innet/jsx'
+import classes from 'html-classes'
 import innet from 'innet'
 
+import { getStyles, Style } from '../../../hooks/useStyle'
+import { HTMLProps } from '../../../types'
 import { Ref } from '../../../utils'
 import { history } from '../router'
 
-export interface LinkClasses {
-  root: string
-  active: string
+export const defaultClass = {
+  root: undefined,
+  active: undefined,
 }
 
-export interface LinkProps {
-  href?: string
-  class?: string
-  classes?: Partial<LinkClasses>
-  id?: string
+type OmitProps = 'scroll' | 'scrollTo'
+
+export interface LinkProps extends Style<typeof defaultClass>, Omit<HTMLProps<HTMLLinkElement>, OmitProps> {
   target?: '_blank' | '_parent' | '_self' | '_top'
-  hidden?: boolean
-  autofocus?: boolean
-  type?: string
-  push?: boolean
-  exact?: boolean
-  rel?: string
   ref?: Ref<HTMLAnchorElement>
   scroll?: 'after' | 'before' | 'none'
   scrollTo?: number | string
   replace?: boolean
-  onclick?: (e: MouseEvent) => any
-  [key: string]: any
+  exact?: boolean
+  onclick?: (e: MouseEvent) => void
 }
 
 export function link ({ type, props, children }: JSXPluginElement<LinkProps, void>, oldHandler) {
   const handler = Object.create(oldHandler)
   handler[type] = undefined
 
-  if (!props || !props.href) {
+  if (!props) return innet({ type: 'a', children }, handler)
+
+  const styles = getStyles(defaultClass, props)
+  const { onclick, href, scroll, scrollTo, replace, exact, ...rest } = props
+
+  if (!href || href.startsWith('http')) {
     return innet({
       type: 'a',
-      props,
+      props: {
+        ...rest,
+        class: () => styles.root,
+        href,
+        rel: rest.rel ?? (href ? 'noopener noreferrer nofollow' : undefined),
+        target: rest.target ?? (href ? '_blank' : undefined),
+        onclick,
+      },
       children,
     }, handler)
   }
 
-  const { onclick, href, classes } = props
+  const getClass = () => {
+    if (!rest.class) return
 
-  if (classes) {
-    const { class: className, exact } = props
-    delete props.classes
-    delete props.exact
+    const prefix = href.startsWith('?')
+      ? '[^?]*'
+      : href.startsWith('#')
+        ? '[^#]*' : ''
 
-    if (classes.active) {
-      const postfix = className && classes.root ? `${className} ${classes.root}` : className || classes.root
-      let prefix = ''
-      if (href.startsWith('?')) {
-        prefix = '[^?]*'
-      } else if (href.startsWith('#')) {
-        prefix = '[^#]*'
-      } else if (!href.startsWith('/')) {
-        return false
-      }
-      props.class = (() => !history.is(`^${prefix}${href}${exact ? '$' : ''}`) ? postfix : postfix ? `${postfix} ${classes.active}` : classes.active) as unknown as string
-    } else if (classes.root) {
-      props.class = className ? `${className} ${classes.root}` : classes.root
-    }
+    return () => classes([
+      styles.root,
+      history.is(`^${prefix}${href}${exact ? '$' : ''}`) && styles.active,
+    ])
   }
 
-  props.onclick = (e) => {
+  const handleClick = e => {
     let url = href
     const page = href.startsWith('/')
 
@@ -81,23 +79,17 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
     onclick?.(e)
   }
 
-  if (href.startsWith('http')) {
-    if (!props.rel) {
-      props.rel = 'noopener noreferrer nofollow'
-    }
-    if (!props.target) {
-      props.target = '_blank'
-    }
-  } else {
-    props.href = (() => {
-      const { locale } = history
-      return !locale ? href : href === '/' ? `/${locale}` : `/${locale}${href}`
-    }) as unknown as string
-  }
-
   return innet({
     type: 'a',
-    props,
+    props: {
+      ...rest,
+      class: getClass(),
+      href: () => {
+        const { locale } = history
+        return !locale ? href : href === '/' ? `/${locale}` : `/${locale}${href}`
+      },
+      onclick: handleClick,
+    },
     children,
   }, handler)
 }

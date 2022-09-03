@@ -1,11 +1,11 @@
 import innet, { PluginHandler } from 'innet'
 import { onDestroy, scope } from 'watch-state'
 
-import { useComment } from '../../utils/useComment'
+import { getComment } from '../../utils'
 
 export function domAsync (): PluginHandler {
   return (app: Promise<any>, next, handler) => {
-    const [childHandler] = useComment(handler, 'async')
+    const [childHandler] = getComment(handler, 'async')
 
     let removed = false
 

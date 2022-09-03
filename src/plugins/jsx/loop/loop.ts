@@ -2,7 +2,7 @@ import { JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
 import { globalEvent, onDestroy, State, Watch } from 'watch-state'
 
-import { after, before, clear, dif, prepend, remove, setParent, useComment } from '../../../utils'
+import { after, before, clear, dif, getComment, prepend, remove, setParent } from '../../../utils'
 
 interface LoopMap<T> {
   watcher: Watch
@@ -74,7 +74,7 @@ export function loop <T> ({
   ],
 }: JSXPluginElement<LoopProps<T>, LoopChildren<T>>, handler) {
   if (typeof ofProp === 'function' || typeof sizeProp === 'function') {
-    const [childHandler, mainComment] = useComment(handler, type)
+    const [childHandler, mainComment] = getComment(handler, type)
 
     let map = new Map<any, LoopMap<T>>()
     let keysList: any[] = []
@@ -189,7 +189,7 @@ export function loop <T> ({
 
           keysList.push(valueKey)
 
-          const [deepHandler, comment] = useComment(childHandler, valueKey, true)
+          const [deepHandler, comment] = getComment(childHandler, valueKey, true)
           const item = new LoopItem(value, index)
 
           const watcher = new Watch(update => {

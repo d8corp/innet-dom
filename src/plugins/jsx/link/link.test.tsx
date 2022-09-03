@@ -3,7 +3,7 @@ import { Ref } from '../../../utils'
 import { history } from '../router'
 
 describe('link', () => {
-  it('should work', () => {
+  it('should work', async () => {
     history.push('/')
 
     const homeLink = new Ref<HTMLAnchorElement>()
@@ -33,9 +33,13 @@ describe('link', () => {
     expect(getHTML(content.value)).toBe('<div>Home Page</div>')
 
     testLink.value.click()
+    await new Promise(resolve => setTimeout(resolve, 100))
+
     expect(getHTML(content.value)).toBe('<div>Test Page</div>')
 
     unknownLink.value.click()
+    await new Promise(resolve => setTimeout(resolve, 100))
+
     expect(getHTML(content.value)).toBe('<div>404</div>')
   })
   it('should work without props', () => {
@@ -52,6 +56,23 @@ describe('link', () => {
 
     expect(getHTML(app)).toBe('<a href="https://cantinc.com" rel="noopener noreferrer nofollow" target="_blank">CANT inc.</a>')
   })
+  it('should have self class', () => {
+    expect(getHTML(render(
+      <a href='/' class='test'>
+        CANT inc.
+      </a>,
+    ))).toBe(
+      '<a class="test" href="/">CANT inc.</a>',
+    )
+
+    expect(getHTML(render(
+      <a href='/' class={['test1', false, 0, 'test2']}>
+        CANT inc.
+      </a>,
+    ))).toBe(
+      '<a class="test1 test2" href="/">CANT inc.</a>',
+    )
+  })
   it('should have active class', () => {
     history.push('/')
 
@@ -59,20 +80,19 @@ describe('link', () => {
       <a
         href='/'
         exact
-        class='test1'
-        classes={{ root: 'test2', active: 'active' }}>
+        class={{ root: 'test', active: 'active' }}>
         CANT inc.
       </a>,
     )
 
-    expect(getHTML(app)).toBe('<a href="/" class="test1 test2 active">CANT inc.</a>')
+    expect(getHTML(app)).toBe('<a class="test active" href="/">CANT inc.</a>')
 
     history.push('/test')
 
-    expect(getHTML(app)).toBe('<a href="/" class="test1 test2">CANT inc.</a>')
+    expect(getHTML(app)).toBe('<a class="test" href="/">CANT inc.</a>')
 
     history.push('/')
 
-    expect(getHTML(app)).toBe('<a href="/" class="test1 test2 active">CANT inc.</a>')
+    expect(getHTML(app)).toBe('<a class="test active" href="/">CANT inc.</a>')
   })
 })

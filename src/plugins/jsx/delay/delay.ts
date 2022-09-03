@@ -2,7 +2,7 @@ import { JSXPluginElement, useHandler } from '@innet/jsx'
 import innet, { Handler } from 'innet'
 import { onDestroy, scope, State, Watch } from 'watch-state'
 
-import { Ref, useComment } from '../../../utils'
+import { getComment, Ref } from '../../../utils'
 import { REMOVE_DELAY } from '../../../utils/dom/constants'
 import { Context } from '../context'
 
@@ -24,7 +24,7 @@ export function delay ({ props, children }: JSXPluginElement<DelayProps>, handle
   if (props) {
     const { show, hide, ref } = props
 
-    const [childHandler, comment] = useComment(handler, 'delay', true)
+    const [childHandler, comment] = getComment(handler, 'delay', true)
     handler = childHandler
 
     if (hide > 0) {

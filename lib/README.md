@@ -219,9 +219,46 @@ export default (
 )
 ```
 
-#### useChildren
+### Hooks
+You can use hooks inside a component. Sync hooks should be used before `await`,
+async hooks should be used as the first `await`.
 
-To get children elements you have `useChildren`.
+```typescript jsx
+export async function Content (props1) {
+  const sync1 = useSyncHook1()
+  const sync2 = useSyncHook2()
+  
+  const [
+    async1,
+    async2,
+  ] = await Promise.all([
+    useAsyncHook1(),
+    useAsyncHook2(),
+  ])
+  
+  // other
+}
+```
+
+#### useProps
+You can get props with `useProps` hook
+
+```typescript jsx
+import { useProps } from '@innet/jsx'
+
+export function Content (props1) {
+  const props2 = useProps()
+
+  return (
+    <h1 style={`color: ${color}`}>
+      {props1 === props2 ? 'same' : 'different'}
+    </h1>
+  )
+}
+```
+
+#### useChildren
+To get children elements you can take `useChildren`.
 
 Change `Content.tsx`
 ```typescript jsx
@@ -361,7 +398,7 @@ If you want to show something, use `Generic Async Component`
 
 Just add a star and use `yield` instead of `return`
 ```typescript jsx
-async function* Content () {
+async function * Content () {
   yield 'Loading...'
 
   const { text } = await fetch('...').then(e => e.json())
@@ -375,7 +412,7 @@ async function* Content () {
 It can be useful when you want to do something after a content deployed.
 
 ```typescript jsx
-function* Content () {
+function * Content () {
   yield (
     <div id='test'>
       Hello World!
@@ -392,7 +429,7 @@ Ref helps to get an HTML element
 ```typescript jsx
 import { Ref } from '@innet/dom'
 
-function* Content () {
+function * Content () {
   const wrapper = new Ref()
   
   yield (
@@ -786,22 +823,49 @@ export const Content = () => (
 )
 ```
 
-### classes
-You can add active link class
+### class
+You can add root or active link class
 
 ```typescript jsx
-const classes = { root: 'link', active: 'active' }
+const classes = {
+  root: 'link',
+  active: 'active',
+}
 
 export const Content = () => (
   <div>
     <a
       href="/"
-      classes={classes}>
+      class='only-root'>
       home
     </a>
     <a
       href="/test"
-      classes={classes}>
+      class={classes}>
+      test
+    </a>
+  </div>
+)
+```
+
+You can use all features from [html-classes](https://www.npmjs.com/package/html-classes) for the `class` prop.
+
+```typescript jsx
+const classes = {
+  root: ['link1', 'link2', () => 'dynamic-class'],
+  active: { active: true },
+}
+
+export const Content = () => (
+  <div>
+    <a
+      href="/"
+      class={() => 'dynamic-root'}>
+      home
+    </a>
+    <a
+      href="/test"
+      class={classes}>
       test
     </a>
   </div>
@@ -840,6 +904,8 @@ body, html {
 ```
 The property of `scroll` says should we scroll on click and how.
 
+> by default equals `before`
+
 ```typescript jsx
 export const Content = () => (
   <div>
@@ -857,7 +923,7 @@ export const Content = () => (
 ```
 
 ### scrollTo
-If you wanna scroll the page to custom position (by default it's up of the page) use `scrollTo`
+If you want to scroll the page to custom position (by default it's up of the page) use `scrollTo`
 
 ```typescript jsx
 export const Content = () => (
@@ -965,12 +1031,77 @@ export default () => show.value && (
 ## useParent
 
 You can get parent HTML element inside a component
+
 ```typescript jsx
 import { getParent } from '@innet/dom'
 
 export function Content () {
   console.log(useParent())
 }
+```
+
+## style
+
+You can style components with `style` function.
+The function returns `useStyle` hook.
+Use this hook inside a component to get [html-classes](https://www.npmjs.com/package/html-classes) features on `class` prop.
+
+```typescript jsx
+import { style, Style } from '@innet/dom'
+
+import styles from './Content.scss'
+// or you can use an object like
+// { root: '...', header: '...', content: '...' }
+
+const useContentStyles = style(styles)
+
+export interface ContentProps extends Style {}
+
+export function Content (props: ContentProps) {
+  const styles = useContentStyles()
+
+  return (
+    <div class={() => styles.root}>
+      <header class={() => styles.header}>
+        header
+      </header>
+      <main class={() => styles.content}>
+        content
+      </main>
+    </div>
+  )
+}
+```
+
+Then you can use `class` prop to define classes.
+
+```typescript jsx
+import { State } from 'watch-state'
+
+const show = new State(true)
+
+const handleClick = () => {
+  show.value = !show.value
+}
+
+export default () => show.value && (
+  <>
+    <Content
+      class={{
+        root: 'root',
+        header: ['header', 'another-class'],
+        content: [
+          'content',
+          () => show.value && 'show'
+        ],
+      }}
+    />
+    <button
+      onclick={handleClick}>
+      Hide
+    </button>
+  </>
+)
 ```
 
 ## Issues

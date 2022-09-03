@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.6
+
+### v0.6.0 [![03.09.2022](https://img.shields.io/date/1662192543)](https://github.com/d8corp/innet-server/tree/v0.6.0)
+
+- added `HTMLProps` type
+- refactored `link` plugin
+- added `useStyle` hook creator
+
 ## v0.5
 
 ### v0.5.7 [![02.09.2022](https://img.shields.io/date/1662119199)](https://github.com/d8corp/innet-server/tree/v0.5.7)

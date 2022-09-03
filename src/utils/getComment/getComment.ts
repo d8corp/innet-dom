@@ -6,7 +6,7 @@ import { append, remove } from '../dom'
 import { getParent } from '../getParent'
 import { setParent } from '../setParent'
 
-export function useComment (handler: Handler, name: string, freeParent = false): UseComment {
+export function getComment (handler: Handler, name: string, freeParent = false): UseComment {
   const comment = document.createComment(name)
   const parent = getParent(handler)
   const childHandler = Object.create(handler)
