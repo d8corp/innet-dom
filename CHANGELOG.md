@@ -2,6 +2,10 @@
 
 ## v0.6
 
+### v0.6.2 [![03.09.2022](https://img.shields.io/date/1662989248)](https://github.com/d8corp/innet-server/tree/v0.6.2)
+
+- fix input bug
+
 ### v0.6.1 [![03.09.2022](https://img.shields.io/date/1662202621)](https://github.com/d8corp/innet-server/tree/v0.6.1)
 
 - fix watch bug of `delay`

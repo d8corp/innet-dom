@@ -29,7 +29,7 @@ export function domJSX (): PluginHandler {
               if (typeof value === 'function') {
                 new Watch(update => {
                   const result = value(update)
-                  if (fieldSet) {
+                  if (fieldSet && element[key] !== result) {
                     element[key] = result
                   }
                   if (attributeSet) {
