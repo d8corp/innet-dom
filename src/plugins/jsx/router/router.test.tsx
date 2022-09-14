@@ -11,7 +11,9 @@ describe('router', () => {
 
     expect(getHTML(result)).toBe('')
   })
-  it('should work', () => {
+  it('should work', async () => {
+    history.push('/')
+
     const result = render(
       <router>
         <slot name='/'>
@@ -27,6 +29,7 @@ describe('router', () => {
     expect(getHTML(result)).toBe('Home')
 
     history.push('/test')
+
     expect(getHTML(result)).toBe('Test')
 
     history.push('/404')
@@ -167,7 +170,7 @@ describe('router', () => {
     history.push('?modal=test2')
     expect(getHTML(result)).toBe('Test2')
   })
-  it('useRoute', () => {
+  test('useRoute', () => {
     history.push('/')
 
     const App: JsxComponent = () => {
@@ -197,5 +200,45 @@ describe('router', () => {
 
     history.push('/any-other')
     expect(getHTML(result)).toBe('Other:any-other')
+  })
+  it('should render one with ish', () => {
+    history.push('/')
+
+    let count = 0
+
+    const Settings = () => {
+      count++
+
+      return 'Settings'
+    }
+
+    const result = render(
+      <router>
+        <slot name='/'>
+          Home
+        </slot>
+        <router ish>
+          <slot name='settings'>
+            <Settings />
+          </slot>
+          Not Found
+        </router>
+      </router>,
+    )
+
+    expect(getHTML(result)).toBe('Home')
+    expect(count).toBe(0)
+
+    history.push('/settings')
+    expect(getHTML(result)).toBe('Settings')
+    expect(count).toBe(1)
+
+    history.push('/settings/test')
+    expect(getHTML(result)).toBe('Settings')
+    expect(count).toBe(1)
+
+    history.push('/any-other')
+    expect(getHTML(result)).toBe('Not Found')
+    expect(count).toBe(1)
   })
 })

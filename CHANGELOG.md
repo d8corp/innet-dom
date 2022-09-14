@@ -2,6 +2,10 @@
 
 ## v0.7
 
+### v0.7.2 [![14.09.2022](https://img.shields.io/date/1663172067)](https://github.com/d8corp/innet-server/tree/v0.7.2)
+
+- fix router bug
+
 ### v0.7.1 [![14.09.2022](https://img.shields.io/date/1663166529)](https://github.com/d8corp/innet-server/tree/v0.7.1)
 
 - tag `a` can get a function as `href` prop

@@ -52,18 +52,25 @@ export function router ({ props, children }: JSXPluginElement<RouterProps>, hand
   const deep = props?.search || routerContext.get(handler)
   const search = props && props.search
   const ish = props && props.ish
+  const slot = new Cache(() => {
+    const route = search ? history.getSearch(String(search)) : ish ? getRoute(handler, deep).value : getStrongRoute(handler, deep).value
+    if (route && route in slots) {
+      return slots[route]
+    }
+    return slots['']
+  })
 
   return innet(() => {
-    const route = search ? history.getSearch(String(search)) : ish ? getRoute(handler, deep).value : getStrongRoute(handler, deep).value
+    const currentSlot = slot.value
 
-    if (route && route in slots) {
-      return search ? slots[route] : {
+    if (currentSlot !== slots['']) {
+      return search ? currentSlot : {
         type: () => {
-          innet(slots[route], createContextHandler(useHandler(), routerContext, deep + 1))
+          innet(currentSlot, createContextHandler(useHandler(), routerContext, deep + 1))
         },
       }
     }
 
-    return slots['']
+    return currentSlot
   }, handler)
 }
