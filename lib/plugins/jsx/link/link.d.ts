@@ -6,10 +6,11 @@ export declare const defaultClass: {
     root: any;
     active: any;
 };
-declare type OmitProps = 'scroll' | 'scrollTo';
+declare type OmitProps = 'scroll' | 'scrollTo' | 'href';
 export interface LinkProps extends Style<typeof defaultClass>, Omit<HTMLProps<HTMLLinkElement>, OmitProps> {
     target?: '_blank' | '_parent' | '_self' | '_top';
     ref?: Ref<HTMLAnchorElement>;
+    href?: string | (() => string);
     scroll?: 'after' | 'before' | 'none';
     scrollTo?: number | string;
     replace?: boolean;

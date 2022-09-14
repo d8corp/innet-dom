@@ -12,11 +12,12 @@ export const defaultClass = {
   active: undefined,
 }
 
-type OmitProps = 'scroll' | 'scrollTo'
+type OmitProps = 'scroll' | 'scrollTo' | 'href'
 
 export interface LinkProps extends Style<typeof defaultClass>, Omit<HTMLProps<HTMLLinkElement>, OmitProps> {
   target?: '_blank' | '_parent' | '_self' | '_top'
   ref?: Ref<HTMLAnchorElement>
+  href?: string | (() => string)
   scroll?: 'after' | 'before' | 'none'
   scrollTo?: number | string
   replace?: boolean
@@ -32,8 +33,9 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
 
   const styles = getStyles(defaultClass, props)
   const { onclick, href, scroll, scrollTo, replace, exact, ...rest } = props
+  const getHref = typeof href === 'function' ? href : () => href
 
-  if (!href || href.startsWith('http')) {
+  if (!href || (typeof href === 'string' && href.startsWith('http'))) {
     return innet({
       type: 'a',
       props: {
@@ -51,18 +53,22 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
   const getClass = () => {
     if (!rest.class) return
 
-    const prefix = href.startsWith('?')
-      ? '[^?]*'
-      : href.startsWith('#')
-        ? '[^#]*' : ''
+    return () => {
+      const href = getHref()
+      const prefix = href.startsWith('?')
+        ? '[^?]*'
+        : href.startsWith('#')
+          ? '[^#]*' : ''
 
-    return () => classes([
-      styles.root,
-      history.is(`^${prefix}${href}${exact ? '$' : ''}`) && styles.active,
-    ])
+      return classes([
+        styles.root,
+        history.is(`^${prefix}${href.replace('?', '\\?')}${exact ? '$' : ''}`) && styles.active,
+      ])
+    }
   }
 
   const handleClick = e => {
+    const href = getHref()
     let url = href
     const page = href.startsWith('/')
 
@@ -86,7 +92,13 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
       class: getClass(),
       href: () => {
         const { locale } = history
-        return !locale ? href : href === '/' ? `/${locale}` : `/${locale}${href}`
+        const href = getHref()
+
+        if (!locale) {
+          return href
+        }
+
+        return href === '/' ? `/${locale}` : `/${locale}${href}`
       },
       onclick: handleClick,
     },

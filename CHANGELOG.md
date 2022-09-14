@@ -2,6 +2,10 @@
 
 ## v0.7
 
+### v0.7.1 [![14.09.2022](https://img.shields.io/date/1663166529)](https://github.com/d8corp/innet-server/tree/v0.7.1)
+
+- tag `a` can get a function as `href` prop
+
 ### v0.7.0 [![14.09.2022](https://img.shields.io/date/1663154703)](https://github.com/d8corp/innet-server/tree/v0.7.0)
 
 - update [@watch-state/history-api](https://www.npmjs.com/package/@watch-state/history-api)
