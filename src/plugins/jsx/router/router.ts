@@ -54,7 +54,7 @@ export function router ({ props, children }: JSXPluginElement<RouterProps>, hand
   const ish = props && props.ish
 
   return innet(() => {
-    const route = search ? history.search(String(search)) : ish ? getRoute(handler, deep).value : getStrongRoute(handler, deep).value
+    const route = search ? history.getSearch(String(search)) : ish ? getRoute(handler, deep).value : getStrongRoute(handler, deep).value
 
     if (route && route in slots) {
       return search ? slots[route] : {

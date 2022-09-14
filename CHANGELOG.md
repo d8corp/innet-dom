@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7
+
+### v0.7.0 [![14.09.2022](https://img.shields.io/date/1663154703)](https://github.com/d8corp/innet-server/tree/v0.7.0)
+
+- update [@watch-state/history-api](https://www.npmjs.com/package/@watch-state/history-api)
+
 ## v0.6
 
 ### v0.6.2 [![03.09.2022](https://img.shields.io/date/1662989248)](https://github.com/d8corp/innet-server/tree/v0.6.2)

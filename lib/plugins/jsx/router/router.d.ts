@@ -9,8 +9,8 @@ export interface RouterProps {
 }
 export declare const history: History;
 export declare const routerContext: Context<any, number>;
-export declare const parsedPath: Cache<any>;
-export declare const pathDeep: Cache<any>;
+export declare const parsedPath: Cache<string[]>;
+export declare const pathDeep: Cache<number>;
 export declare const routes: Cache<string>[];
 export declare const routesIsh: Cache<string>[];
 export declare function getStrongRoute(handler: Handler, deep?: any): Cache<string>;
