@@ -1,14 +1,15 @@
-import { JSXPluginElement } from '@innet/jsx';
+import { Context, JSXPluginElement } from '@innet/jsx';
 import History from '@watch-state/history-api';
 import { Handler } from 'innet';
+import qs from 'qs';
 import { Cache } from 'watch-state';
-import { Context } from '../context';
 export interface RouterProps {
     search?: string | number;
     ish?: boolean;
 }
 export declare const history: History;
 export declare const routerContext: Context<any, number>;
+export declare const parsedSearch: Cache<qs.ParsedQs>;
 export declare const parsedPath: Cache<string[]>;
 export declare const pathDeep: Cache<number>;
 export declare const routes: Cache<string>[];

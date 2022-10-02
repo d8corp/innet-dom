@@ -1,4 +1,14 @@
-import { jsxComponent, JSXPlugin, jsxPlugins } from '@innet/jsx'
+import {
+  context,
+  ContextProps,
+  jsxComponent,
+  JSXPlugin,
+  jsxPlugins,
+  slot,
+  SlotProps,
+  slots,
+  SlotsProps,
+} from '@innet/jsx'
 import {
   array,
   arraySync,
@@ -16,8 +26,6 @@ import {
 import { createHandler } from 'innet'
 
 import {
-  context,
-  ContextProps,
   delay,
   DelayProps,
   domAsync,
@@ -35,10 +43,6 @@ import {
   PortalProps,
   router,
   RouterProps,
-  slot,
-  SlotProps,
-  slots,
-  SlotsProps,
 } from '../plugins'
 
 export const arrayPlugins = [

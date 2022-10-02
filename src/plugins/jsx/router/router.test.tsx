@@ -1,7 +1,10 @@
 import { JsxComponent } from '@innet/jsx'
+import { scope } from 'watch-state'
 
 import { getHTML, render } from '../../../test'
 import { history, useRoute } from './router'
+
+let parentTest: any
 
 describe('router', () => {
   it('should work if the router is empty', () => {
@@ -11,7 +14,7 @@ describe('router', () => {
 
     expect(getHTML(result)).toBe('')
   })
-  it('should work', async () => {
+  it('should work', () => {
     history.push('/')
 
     const result = render(
@@ -137,6 +140,37 @@ describe('router', () => {
     history.push('?modal=test2')
     expect(getHTML(result)).toBe('Test2')
   })
+  it('should work with search and ish', () => {
+    history.push('/')
+
+    const result = render(
+      <router ish search='modal'>
+        <slot name='test1'>
+          Test1
+        </slot>
+        <slot name='test2'>
+          Test2
+        </slot>
+      </router>,
+    )
+
+    parentTest = result
+
+    expect(getHTML(result)).toBe('')
+
+    history.push('?modal=test1')
+    expect(getHTML(result)).toBe('Test1')
+
+    history.push('?modal=test2')
+    expect(getHTML(result)).toBe('Test2')
+
+    history.push('?modal=test2&modal=test1')
+
+    expect(getHTML(result)).toBe('Test2Test1')
+
+    history.push('?modal=test1&modal=test2')
+    expect(getHTML(result)).toBe('Test1Test2')
+  })
   it('should work with mix of source', () => {
     history.push('/')
 
@@ -159,6 +193,7 @@ describe('router', () => {
     expect(getHTML(result)).toBe('')
 
     history.push('?modal=test1')
+
     expect(getHTML(result)).toBe('Test1 on home page')
 
     history.push('/test?modal=test1')

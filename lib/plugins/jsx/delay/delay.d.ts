@@ -1,8 +1,7 @@
-import { JSXPluginElement } from '@innet/jsx';
+import { Context, JSXPluginElement } from '@innet/jsx';
 import { Handler } from 'innet';
 import { State } from 'watch-state';
 import { Ref } from '../../../utils';
-import { Context } from '../context';
 export interface DelayProps {
     show?: number;
     hide?: number;

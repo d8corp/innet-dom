@@ -1,6 +1,6 @@
-import { JSXPlugin } from '@innet/jsx';
+import { ContextProps, JSXPlugin, SlotProps, SlotsProps } from '@innet/jsx';
 import { arraySync } from '@innet/utils';
-import { ContextProps, DelayProps, domAsync, domFn, domNode, domText, LinkProps, LoopProps, PortalProps, RouterProps, SlotProps, SlotsProps } from '../plugins';
+import { DelayProps, domAsync, domFn, domNode, domText, LinkProps, LoopProps, PortalProps, RouterProps } from '../plugins';
 export declare const arrayPlugins: (typeof arraySync)[];
 export declare const JSXPlugins: Record<string, JSXPlugin>;
 export declare const objectPlugins: ((handler: any) => import("innet").PluginHandler)[];

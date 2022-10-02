@@ -125,7 +125,6 @@ export function loop <T> ({
           if (wasBefore) {
             const data = oldMap.get(valueKey)
 
-            globalEvent.start()
             data.item.value = value
             data.item.index = index
             map.set(valueKey, data)
@@ -141,7 +140,6 @@ export function loop <T> ({
             }
 
             oldMap.delete(valueKey)
-            globalEvent.end()
           } else {
             const item = new LoopItem(value, index)
             const comment = document.createComment(valueKey)
@@ -207,7 +205,8 @@ export function loop <T> ({
           innet(elseProp, childHandler)
         }
       }
-    })
+      // @ts-ignore
+    }).d8 = true
 
     return mainComment
   } else {

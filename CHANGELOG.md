@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.8
+
+### v0.8.0 [![02.10.2022](https://img.shields.io/date/1664721881)](https://github.com/d8corp/innet-server/tree/v0.8.0)
+
+- update dependencies
+- `context`, `slot` and `slots` are moved into [@innet/jsx](https://www.npmjs.com/package/@innet/jsx)
+- support `ish` prop on `router` with `search`
+- fix `loop` bug
+
 ## v0.7
 
 ### v0.7.2 [![14.09.2022](https://img.shields.io/date/1663172067)](https://github.com/d8corp/innet-server/tree/v0.7.2)
