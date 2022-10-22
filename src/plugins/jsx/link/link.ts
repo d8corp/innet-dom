@@ -25,6 +25,12 @@ export interface LinkProps extends Style<typeof defaultClass>, Omit<HTMLProps<HT
   onclick?: (e: MouseEvent) => void
 }
 
+const CLEAR_HREF = /([?#].*)?$/
+
+function clearHref (url: string) {
+  return url.replace(CLEAR_HREF, '')
+}
+
 export function link ({ type, props, children }: JSXPluginElement<LinkProps, void>, oldHandler) {
   const handler = Object.create(oldHandler)
   handler[type] = undefined
@@ -62,7 +68,7 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
 
       return classes([
         styles.root,
-        history.is(`^${prefix}${href.replace('?', '\\?')}${exact ? '$' : ''}`) && styles.active,
+        history.is(`^${prefix}${clearHref(href)}${exact ? '$' : ''}`) && styles.active,
       ])
     }
   }

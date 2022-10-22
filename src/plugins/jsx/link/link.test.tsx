@@ -95,4 +95,19 @@ describe('link', () => {
 
     expect(getHTML(app)).toBe('<a class="test active" href="/">CANT inc.</a>')
   })
+  it('should work with any search', () => {
+    history.push('/')
+
+    const app = render(
+      <a class={{ root: 'test', active: 'active' }} href='/test?phone=+7%20(999)%20999-99-99'>
+        CANT inc.
+      </a>,
+    )
+
+    expect(getHTML(app)).toBe('<a class="test" href="/test?phone=+7%20(999)%20999-99-99">CANT inc.</a>')
+
+    history.push('/test?phone=+7%20(999)%20999-99-99')
+
+    expect(getHTML(app)).toBe('<a class="test active" href="/test?phone=+7%20(999)%20999-99-99">CANT inc.</a>')
+  })
 })

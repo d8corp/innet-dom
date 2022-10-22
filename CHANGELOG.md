@@ -2,6 +2,10 @@
 
 ## v0.8
 
+### v0.8.1 [![22.10.2022](https://img.shields.io/date/1666449715)](https://github.com/d8corp/innet-server/tree/v0.8.1)
+
+- fix link bug
+
 ### v0.8.0 [![02.10.2022](https://img.shields.io/date/1664721881)](https://github.com/d8corp/innet-server/tree/v0.8.0)
 
 - update dependencies
