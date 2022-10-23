@@ -2,6 +2,10 @@
 
 ## v0.8
 
+### v0.8.2 [![22.10.2022](https://img.shields.io/date/1666538364)](https://github.com/d8corp/innet-server/tree/v0.8.2)
+
+- add `parseSearch` and `stringifySearch`
+
 ### v0.8.1 [![22.10.2022](https://img.shields.io/date/1666449715)](https://github.com/d8corp/innet-server/tree/v0.8.1)
 
 - fix link bug

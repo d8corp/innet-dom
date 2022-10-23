@@ -1,9 +1,9 @@
 import { Context, createContextHandler, getSlots, JSXPluginElement, useHandler } from '@innet/jsx'
 import History from '@watch-state/history-api'
 import innet, { Handler } from 'innet'
-import qs from 'qs'
 import { Cache } from 'watch-state'
 
+import { parseSearch } from '../../../utils/parseSearch'
 import { loop } from '../loop'
 
 export interface RouterProps {
@@ -14,7 +14,7 @@ export interface RouterProps {
 export const history = new History()
 export const routerContext = new Context(1)
 
-export const parsedSearch = new Cache(() => qs.parse(history.search))
+export const parsedSearch = new Cache(() => parseSearch(history.search))
 
 export const parsedPath = new Cache(() => history.path.split('/').map(e => e || '/'), true)
 export const pathDeep = new Cache(() => parsedPath.value.length, true)
