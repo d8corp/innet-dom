@@ -1,11 +1,11 @@
 {
   "name": "@innet/dom",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Tools to build Web Site",
   "main": "index.js",
-  "module": "index.mjs",
-  "esnext": "index.mjs",
-  "jsnext:main": "index.mjs",
+  "module": "index.es6.js",
+  "esnext": "index.es6.js",
+  "jsnext:main": "index.es6.js",
   "types": "index.d.ts",
   "private": true,
   "scripts": {

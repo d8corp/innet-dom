@@ -8,6 +8,7 @@ require('./utils/index.js');
 require('./hooks/index.js');
 var constants = require('./constants.js');
 require('./types.js');
+require('./test/index.js');
 var handler = require('./handler/handler.js');
 var loop = require('./plugins/jsx/loop/loop.js');
 var portal = require('./plugins/jsx/portal/portal.js');
@@ -32,6 +33,8 @@ var dif = require('./utils/dif/dif.js');
 var useParent = require('./hooks/useParent/useParent.js');
 var useStyle = require('./hooks/useStyle/useStyle.js');
 var useShow = require('./hooks/useShow/useShow.js');
+var getHTML = require('./test/getHTML/getHTML.js');
+var render = require('./test/render/render.js');
 
 
 
@@ -89,3 +92,5 @@ exports.useParent = useParent.useParent;
 exports.getStyles = useStyle.getStyles;
 exports.style = useStyle.style;
 exports.useShow = useShow.useShow;
+exports.getHTML = getHTML.getHTML;
+exports.render = render.render;

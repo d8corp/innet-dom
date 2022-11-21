@@ -2,7 +2,11 @@
 
 ## v0.9
 
-### v0.9.0 [![21.10.2022](https://img.shields.io/date/1669033731)](https://github.com/d8corp/innet-dom/tree/v0.9.0)
+### v0.9.1 [![21.11.2022](https://img.shields.io/date/1669036751)](https://github.com/d8corp/innet-dom/tree/v0.9.1)
+
+- fix `v0.9.0` release bugs
+
+### v0.9.0 [![21.11.2022](https://img.shields.io/date/1669033731)](https://github.com/d8corp/innet-dom/tree/v0.9.0)
 
 - add `useShow`
 - update environment
