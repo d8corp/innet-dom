@@ -1,10 +1,7 @@
 import { JsxComponent } from '@innet/jsx'
-import { scope } from 'watch-state'
 
 import { getHTML, render } from '../../../test'
 import { history, useRoute } from './router'
-
-let parentTest: any
 
 describe('router', () => {
   it('should work if the router is empty', () => {
@@ -153,8 +150,6 @@ describe('router', () => {
         </slot>
       </router>,
     )
-
-    parentTest = result
 
     expect(getHTML(result)).toBe('')
 

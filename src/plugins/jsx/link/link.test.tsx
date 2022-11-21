@@ -13,9 +13,9 @@ describe('link', () => {
 
     render(
       <div>
-        <a ref={homeLink} href="/">home</a>
-        <a ref={testLink} href="/test">test</a>
-        <a ref={unknownLink} href="/home">unknown</a>
+        <a ref={homeLink} href='/'>home</a>
+        <a ref={testLink} href='/test'>test</a>
+        <a ref={unknownLink} href='/home'>unknown</a>
         <div ref={content}>
           <router>
             <slot name='/'>

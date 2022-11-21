@@ -6,42 +6,48 @@
     "simple-import-sort"
   ],
   "extends": [
-    "standard",
-    "plugin:react/recommended"
+    "standard-with-typescript",
+    "standard-jsx"
   ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "tsconfigRootDir": ".",
+    "project": "./tsconfig.json"
+  },
   "env": {
     "jest": true
   },
   "rules": {
-    "react/display-name": "off",
-    "node/no-callback-literal": "off",
-    "react/no-unknown-property": "off",
-    "react/jsx-key": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "n/no-callback-literal": "off",
+    "no-redeclare": "off",
     "no-new": "off",
-    "no-undef": "off",
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-max-props-per-line": ["error", {
-      "maximum": 3
-    }],
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "no-control-regex": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/prefer-function-type": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/promise-function-async": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "@typescript-eslint/array-type": "off",
+    "@typescript-eslint/no-invalid-void-type": "off",
+    "@typescript-eslint/no-dynamic-delete": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
+    "no-unused-vars": "off",
+    "one-var": "off",
+    "react/jsx-key": "off",
+    "import/no-absolute-path": "off",
+    "react/no-children-prop": "off",
+    "comma-dangle": ["error", "always-multiline"],
     "react/jsx-closing-bracket-location": ["error", {
       "nonEmpty": "after-props"
     }],
-    "react/jsx-indent": [2, 2, {
-      "checkAttributes": true,
-      "indentLogicalExpressions": true
-    }],
-    "indent": ["error", 2],
-    "comma-dangle": ["error", "always-multiline"],
-    "simple-import-sort/imports": "error",
-    "no-console": "off",
-    "import/no-absolute-path": "off",
-    "no-use-before-define": "off",
-    "no-redeclare": "off",
-    "no-unused-vars": "off",
-    "new-cap": "off",
-    "symbol-description": "off",
-    "no-useless-constructor": "off",
-    "multiline-ternary": "off",
-    "no-cond-assign": "off"
+    "simple-import-sort/imports": "error"
   }
 }

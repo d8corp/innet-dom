@@ -64,7 +64,8 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
       const prefix = href.startsWith('?')
         ? '[^?]*'
         : href.startsWith('#')
-          ? '[^#]*' : ''
+          ? '[^#]*'
+          : ''
 
       return classes([
         styles.root,

@@ -69,8 +69,8 @@ function renderSearchIsh (key: string, slots: Record<string, any>, handler: Hand
 export function router ({ props, children }: JSXPluginElement<RouterProps>, handler) {
   const slots = getSlots(handler, children)
   const deep = props?.search || routerContext.get(handler)
-  const search = props && props.search
-  const ish = props && props.ish
+  const search = props?.search
+  const ish = props?.ish
 
   if (search && ish) {
     return renderSearchIsh(String(search), slots, handler)
@@ -88,11 +88,13 @@ export function router ({ props, children }: JSXPluginElement<RouterProps>, hand
     const currentSlot = slot.value
 
     if (currentSlot !== slots['']) {
-      return search ? currentSlot : {
-        type: () => {
-          innet(currentSlot, createContextHandler(useHandler(), routerContext, deep + 1))
-        },
-      }
+      return search
+        ? currentSlot
+        : {
+            type: () => {
+              innet(currentSlot, createContextHandler(useHandler(), routerContext, deep + 1))
+            },
+          }
     }
 
     return currentSlot

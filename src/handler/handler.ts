@@ -114,7 +114,7 @@ declare global {
       a: LinkProps
       router: RouterProps
       delay: DelayProps
-      [elemName: string]: any;
+      [elemName: string]: any
     }
   }
 }

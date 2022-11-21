@@ -1,16 +1,23 @@
 # Changelog
 
+## v0.9
+
+### v0.9.0 [![21.10.2022](https://img.shields.io/date/1669033731)](https://github.com/d8corp/innet-dom/tree/v0.9.0)
+
+- add `useShow`
+- update environment
+
 ## v0.8
 
-### v0.8.2 [![22.10.2022](https://img.shields.io/date/1666538364)](https://github.com/d8corp/innet-server/tree/v0.8.2)
+### v0.8.2 [![22.10.2022](https://img.shields.io/date/1666538364)](https://github.com/d8corp/innet-dom/tree/v0.8.2)
 
 - add `parseSearch` and `stringifySearch`
 
-### v0.8.1 [![22.10.2022](https://img.shields.io/date/1666449715)](https://github.com/d8corp/innet-server/tree/v0.8.1)
+### v0.8.1 [![22.10.2022](https://img.shields.io/date/1666449715)](https://github.com/d8corp/innet-dom/tree/v0.8.1)
 
 - fix link bug
 
-### v0.8.0 [![02.10.2022](https://img.shields.io/date/1664721881)](https://github.com/d8corp/innet-server/tree/v0.8.0)
+### v0.8.0 [![02.10.2022](https://img.shields.io/date/1664721881)](https://github.com/d8corp/innet-dom/tree/v0.8.0)
 
 - update dependencies
 - `context`, `slot` and `slots` are moved into [@innet/jsx](https://www.npmjs.com/package/@innet/jsx)
@@ -19,29 +26,29 @@
 
 ## v0.7
 
-### v0.7.2 [![14.09.2022](https://img.shields.io/date/1663172067)](https://github.com/d8corp/innet-server/tree/v0.7.2)
+### v0.7.2 [![14.09.2022](https://img.shields.io/date/1663172067)](https://github.com/d8corp/innet-dom/tree/v0.7.2)
 
 - fix router bug
 
-### v0.7.1 [![14.09.2022](https://img.shields.io/date/1663166529)](https://github.com/d8corp/innet-server/tree/v0.7.1)
+### v0.7.1 [![14.09.2022](https://img.shields.io/date/1663166529)](https://github.com/d8corp/innet-dom/tree/v0.7.1)
 
 - tag `a` can get a function as `href` prop
 
-### v0.7.0 [![14.09.2022](https://img.shields.io/date/1663154703)](https://github.com/d8corp/innet-server/tree/v0.7.0)
+### v0.7.0 [![14.09.2022](https://img.shields.io/date/1663154703)](https://github.com/d8corp/innet-dom/tree/v0.7.0)
 
 - update [@watch-state/history-api](https://www.npmjs.com/package/@watch-state/history-api)
 
 ## v0.6
 
-### v0.6.2 [![03.09.2022](https://img.shields.io/date/1662989248)](https://github.com/d8corp/innet-server/tree/v0.6.2)
+### v0.6.2 [![03.09.2022](https://img.shields.io/date/1662989248)](https://github.com/d8corp/innet-dom/tree/v0.6.2)
 
 - fix input bug
 
-### v0.6.1 [![03.09.2022](https://img.shields.io/date/1662202621)](https://github.com/d8corp/innet-server/tree/v0.6.1)
+### v0.6.1 [![03.09.2022](https://img.shields.io/date/1662202621)](https://github.com/d8corp/innet-dom/tree/v0.6.1)
 
 - fix watch bug of `delay`
 
-### v0.6.0 [![03.09.2022](https://img.shields.io/date/1662192543)](https://github.com/d8corp/innet-server/tree/v0.6.0)
+### v0.6.0 [![03.09.2022](https://img.shields.io/date/1662192543)](https://github.com/d8corp/innet-dom/tree/v0.6.0)
 
 - added `HTMLProps` type
 - refactored `link` plugin
@@ -49,66 +56,66 @@
 
 ## v0.5
 
-### v0.5.7 [![02.09.2022](https://img.shields.io/date/1662119199)](https://github.com/d8corp/innet-server/tree/v0.5.7)
+### v0.5.7 [![02.09.2022](https://img.shields.io/date/1662119199)](https://github.com/d8corp/innet-dom/tree/v0.5.7)
 
 - scroll `before` by default
 
-### v0.5.6 [![28.08.2022](https://img.shields.io/date/1661677576)](https://github.com/d8corp/innet-server/tree/v0.5.6)
+### v0.5.6 [![28.08.2022](https://img.shields.io/date/1661677576)](https://github.com/d8corp/innet-dom/tree/v0.5.6)
 
 - fix watch bug of `delay`
 
-### v0.5.5 [![27.08.2022](https://img.shields.io/date/1661613685)](https://github.com/d8corp/innet-server/tree/v0.5.5)
+### v0.5.5 [![27.08.2022](https://img.shields.io/date/1661613685)](https://github.com/d8corp/innet-dom/tree/v0.5.5)
 
 - fix a bug of destroying in generic async components
 
-### v0.5.4 [![24.08.2022](https://img.shields.io/date/1661335174)](https://github.com/d8corp/innet-server/tree/v0.5.4)
+### v0.5.4 [![24.08.2022](https://img.shields.io/date/1661335174)](https://github.com/d8corp/innet-dom/tree/v0.5.4)
 
 - fix a bug of watchers in generic async components
 
-### v0.5.3 [![23.08.2022](https://img.shields.io/date/1661249139)](https://github.com/d8corp/innet-server/tree/v0.5.3)
+### v0.5.3 [![23.08.2022](https://img.shields.io/date/1661249139)](https://github.com/d8corp/innet-dom/tree/v0.5.3)
 
 - fix a bug of watchers in async components
 
-### v0.5.2 [![21.08.2022](https://img.shields.io/date/1661089182)](https://github.com/d8corp/innet-server/tree/v0.5.2)
+### v0.5.2 [![21.08.2022](https://img.shields.io/date/1661089182)](https://github.com/d8corp/innet-dom/tree/v0.5.2)
 
 - fix a bug relates to `v0.5.0` release
 
-### v0.5.1 [![21.08.2022](https://img.shields.io/date/1661087882)](https://github.com/d8corp/innet-server/tree/v0.5.1)
+### v0.5.1 [![21.08.2022](https://img.shields.io/date/1661087882)](https://github.com/d8corp/innet-dom/tree/v0.5.1)
 
 - fix a bug relates to `v0.5.0` release
 
-### v0.5.0 [![21.08.2022](https://img.shields.io/date/1661037162)](https://github.com/d8corp/innet-server/tree/v0.5.0)
+### v0.5.0 [![21.08.2022](https://img.shields.io/date/1661037162)](https://github.com/d8corp/innet-dom/tree/v0.5.0)
 
 - implement new algorithm to handle `for` plugin
   > The algorithm looks for minimal changes of DOM, when you mix data list.
 
 ## v0.4
 
-### v0.4.6 [![14.08.2022](https://img.shields.io/date/1660498631)](https://github.com/d8corp/innet-server/tree/v0.4.6)
+### v0.4.6 [![14.08.2022](https://img.shields.io/date/1660498631)](https://github.com/d8corp/innet-dom/tree/v0.4.6)
 
 - removed `catch` and used `arraySync`
 
-### v0.4.5 [![14.08.2022](https://img.shields.io/date/1660485923)](https://github.com/d8corp/innet-server/tree/v0.4.5)
+### v0.4.5 [![14.08.2022](https://img.shields.io/date/1660485923)](https://github.com/d8corp/innet-dom/tree/v0.4.5)
 
 - add jsx plugin `catch`
 
-### v0.4.4 [![14.08.2022](https://img.shields.io/date/1660485321)](https://github.com/d8corp/innet-server/tree/v0.4.4)
+### v0.4.4 [![14.08.2022](https://img.shields.io/date/1660485321)](https://github.com/d8corp/innet-dom/tree/v0.4.4)
 
 - switch array handler to `arrayAsync`
 
-### v0.4.3 [![19.06.2022](https://img.shields.io/date/1655670970)](https://github.com/d8corp/innet-server/tree/v0.4.3)
+### v0.4.3 [![19.06.2022](https://img.shields.io/date/1655670970)](https://github.com/d8corp/innet-dom/tree/v0.4.3)
 
 - fix `delay` bug
 
-### v0.4.2 [![19.06.2022](https://img.shields.io/date/1655656976)](https://github.com/d8corp/innet-server/tree/v0.4.2)
+### v0.4.2 [![19.06.2022](https://img.shields.io/date/1655656976)](https://github.com/d8corp/innet-dom/tree/v0.4.2)
 
 - add `ref` for `delay`
 
-### v0.4.1 [![19.06.2022](https://img.shields.io/date/1655656208)](https://github.com/d8corp/innet-server/tree/v0.4.1)
+### v0.4.1 [![19.06.2022](https://img.shields.io/date/1655656208)](https://github.com/d8corp/innet-dom/tree/v0.4.1)
 
 - fixed `delay` bug
 
-### v0.4.0 [![19.06.2022](https://img.shields.io/date/1655634639)](https://github.com/d8corp/innet-server/tree/v0.4.0)
+### v0.4.0 [![19.06.2022](https://img.shields.io/date/1655634639)](https://github.com/d8corp/innet-dom/tree/v0.4.0)
 
 - added `delay`
 - updated `@innet/jsx` for hooks
@@ -116,26 +123,26 @@
 
 ## v0.3
 
-### v0.3.1 [![28.05.2022](https://img.shields.io/date/1653754141)](https://github.com/d8corp/innet-server/tree/v0.3.1)
+### v0.3.1 [![28.05.2022](https://img.shields.io/date/1653754141)](https://github.com/d8corp/innet-dom/tree/v0.3.1)
 
 - fixed circular dependency
 
-### v0.3.0 [![28.05.2022](https://img.shields.io/date/1653753542)](https://github.com/d8corp/innet-server/tree/v0.3.0)
+### v0.3.0 [![28.05.2022](https://img.shields.io/date/1653753542)](https://github.com/d8corp/innet-dom/tree/v0.3.0)
 
 - added History Api routing
 
 ## v0.2
 
-### v0.2.0 [![07.05.2022](https://img.shields.io/date/1651909929)](https://github.com/d8corp/innet-server/tree/v0.2.0)
+### v0.2.0 [![07.05.2022](https://img.shields.io/date/1651909929)](https://github.com/d8corp/innet-dom/tree/v0.2.0)
 
 - added slots
 
 ## v0.1
 
-### v0.1.1 [![26.04.2022](https://img.shields.io/date/1651005778)](https://github.com/d8corp/innet-server/tree/v0.1.1)
+### v0.1.1 [![26.04.2022](https://img.shields.io/date/1651005778)](https://github.com/d8corp/innet-dom/tree/v0.1.1)
 
 - fixed types
 
-### v0.1.0 [![26.04.2022](https://img.shields.io/date/1651004778)](https://github.com/d8corp/innet-server/tree/v0.1.0)
+### v0.1.0 [![26.04.2022](https://img.shields.io/date/1651004778)](https://github.com/d8corp/innet-dom/tree/v0.1.0)
 
 - first implementation

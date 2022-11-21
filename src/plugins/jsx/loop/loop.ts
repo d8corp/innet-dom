@@ -1,6 +1,6 @@
 import { JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
-import { globalEvent, onDestroy, State, Watch } from 'watch-state'
+import { onDestroy, State, Watch } from 'watch-state'
 
 import { after, before, clear, dif, getComment, prepend, remove, setParent } from '../../../utils'
 
@@ -11,7 +11,7 @@ interface LoopMap<T> {
 }
 
 interface WatchTarget <R = any> {
-  (update?: boolean): R;
+  (update?: boolean): R
 }
 
 type OfPropStatic<T = any> = T[]
@@ -205,7 +205,7 @@ export function loop <T> ({
           innet(elseProp, childHandler)
         }
       }
-      // @ts-ignore
+      // @ts-expect-error
     }).d8 = true
 
     return mainComment

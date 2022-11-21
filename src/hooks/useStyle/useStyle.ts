@@ -6,7 +6,7 @@ export interface Style<S = any> {
 }
 
 export function getStyles<S> (styles: S, props: any): S {
-  if (!props || !props.class) {
+  if (!props?.class) {
     return styles
   }
 
@@ -16,7 +16,7 @@ export function getStyles<S> (styles: S, props: any): S {
     const result = { ...styles }
     Object.defineProperty(result, 'root', {
       get () {
-        // @ts-ignore
+        // @ts-expect-error
         return classes([styles.root, className])
       },
     })
