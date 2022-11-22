@@ -3,7 +3,7 @@ import { render } from '../../test'
 
 describe('Ref', () => {
   it('works', () => {
-    const element = new Ref()
+    const element = new Ref<HTMLDivElement>()
 
     const div = render(<div ref={element} />)
 
