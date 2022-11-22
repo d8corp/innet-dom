@@ -8,6 +8,7 @@ export type HTMLProps<E extends HTMLElement = HTMLElement, K extends keyof E = k
     ref?: Ref<E>;
     [prop: string]: any;
 };
+export type WatchProp<T> = T | ((update: boolean) => T);
 declare global {
     interface Comment {
         _children: ContentElements[];

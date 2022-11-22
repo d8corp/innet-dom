@@ -8,4 +8,5 @@ require('./getComment/index.js');
 require('./stringifySearch/index.js');
 require('./parseSearch/index.js');
 require('./dif/index.js');
+require('./use/index.js');
 

@@ -2,6 +2,10 @@
 
 ## v0.9
 
+### v0.9.3 [![22.11.2022](https://img.shields.io/date/1669144348)](https://github.com/d8corp/innet-dom/tree/v0.9.3)
+
+- add `use` and `WatchProp`
+
 ### v0.9.2 [![22.11.2022](https://img.shields.io/date/1669137112)](https://github.com/d8corp/innet-dom/tree/v0.9.2)
 
 - improve `HTMLProps`
