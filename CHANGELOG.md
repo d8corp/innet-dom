@@ -2,6 +2,10 @@
 
 ## v0.9
 
+### v0.9.5 [![26.11.2022](https://img.shields.io/date/1669470664)](https://github.com/d8corp/innet-dom/tree/v0.9.5)
+
+- fix types
+
 ### v0.9.4 [![23.11.2022](https://img.shields.io/date/1669207857)](https://github.com/d8corp/innet-dom/tree/v0.9.4)
 
 - improve `HTMLProps`

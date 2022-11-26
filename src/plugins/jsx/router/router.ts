@@ -42,6 +42,7 @@ export function useRoute (): Cache<string> {
 
 export function getRoute (handler: Handler, deep = routerContext.get(handler)): Cache<string> {
   const routeIndex = deep - 1
+
   if (!routesIsh[routeIndex]) {
     routesIsh[routeIndex] = new Cache(() => parsedPath.value[deep] || '/', true)
   }
