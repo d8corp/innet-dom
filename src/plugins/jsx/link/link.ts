@@ -4,7 +4,6 @@ import innet from 'innet'
 
 import { getStyles, Style } from '../../../hooks/useStyle'
 import { HTMLProps } from '../../../types'
-import { Ref } from '../../../utils'
 import { history } from '../router'
 
 export const defaultClass = {
@@ -12,17 +11,12 @@ export const defaultClass = {
   active: undefined,
 }
 
-type OmitProps = 'scroll' | 'scrollTo' | 'href'
-
-export interface LinkProps extends Style<typeof defaultClass>, Omit<HTMLProps<HTMLLinkElement>, OmitProps> {
+export interface LinkProps extends Style<typeof defaultClass>, HTMLProps<HTMLAnchorElement> {
   target?: '_blank' | '_parent' | '_self' | '_top'
-  ref?: Ref<HTMLAnchorElement>
-  href?: string | (() => string)
   scroll?: 'after' | 'before' | 'none'
   scrollTo?: number | string
   replace?: boolean
   exact?: boolean
-  onclick?: (e: MouseEvent) => void
 }
 
 const CLEAR_HREF = /([?#].*)?$/
@@ -59,8 +53,8 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
   const getClass = () => {
     if (!rest.class) return
 
-    return () => {
-      const href = getHref()
+    return (update: boolean) => {
+      const href = getHref(update)
       const prefix = href.startsWith('?')
         ? '[^?]*'
         : href.startsWith('#')
@@ -75,7 +69,7 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
   }
 
   const handleClick = e => {
-    const href = getHref()
+    const href = getHref(false)
     let url = href
     const page = href.startsWith('/')
 
@@ -84,12 +78,12 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
     } else if (href.startsWith('#')) {
       url = history.path + location.search + (href === '#' ? '' : href)
     } else if (!page) {
-      return onclick?.(e)
+      return onclick?.apply(window, e)
     }
     e.preventDefault()
     const { scrollTo = page ? 0 : -1, scroll = 'before', replace } = props
     history[replace ? 'replace' : 'push'](url, scroll === 'none' ? -1 : scrollTo, scroll === 'before')
-    onclick?.(e)
+    onclick?.apply(window, e)
   }
 
   return innet({
@@ -97,9 +91,9 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
     props: {
       ...rest,
       class: getClass(),
-      href: () => {
+      href: (update) => {
         const { locale } = history
-        const href = getHref()
+        const href = getHref(update)
 
         if (!locale) {
           return href

@@ -33,8 +33,8 @@ function link({ type, props, children }, oldHandler) {
     const getClass = () => {
         if (!rest.class)
             return;
-        return () => {
-            const href = getHref();
+        return (update) => {
+            const href = getHref(update);
             const prefix = href.startsWith('?')
                 ? '[^?]*'
                 : href.startsWith('#')
@@ -47,7 +47,7 @@ function link({ type, props, children }, oldHandler) {
         };
     };
     const handleClick = e => {
-        const href = getHref();
+        const href = getHref(false);
         let url = href;
         const page = href.startsWith('/');
         if (href.startsWith('?')) {
@@ -57,18 +57,18 @@ function link({ type, props, children }, oldHandler) {
             url = history.path + location.search + (href === '#' ? '' : href);
         }
         else if (!page) {
-            return onclick === null || onclick === void 0 ? void 0 : onclick(e);
+            return onclick === null || onclick === void 0 ? void 0 : onclick.apply(window, e);
         }
         e.preventDefault();
         const { scrollTo = page ? 0 : -1, scroll = 'before', replace } = props;
         history[replace ? 'replace' : 'push'](url, scroll === 'none' ? -1 : scrollTo, scroll === 'before');
-        onclick === null || onclick === void 0 ? void 0 : onclick(e);
+        onclick === null || onclick === void 0 ? void 0 : onclick.apply(window, e);
     };
     return innet({
         type: 'a',
-        props: Object.assign(Object.assign({}, rest), { class: getClass(), href: () => {
+        props: Object.assign(Object.assign({}, rest), { class: getClass(), href: (update) => {
                 const { locale } = history;
-                const href = getHref();
+                const href = getHref(update);
                 if (!locale) {
                     return href;
                 }

@@ -12,8 +12,8 @@ export interface LoopProps<T = any> {
 export type LoopCallback<T> = (item: LoopItem<T>) => any;
 export type LoopChildren<T> = [LoopCallback<T>, ...any[]];
 export declare class LoopItem<T> {
-    private _value;
-    private _index;
+    private readonly _value;
+    private readonly _index;
     constructor(value: T, index: number);
     get value(): T;
     set value(value: T);

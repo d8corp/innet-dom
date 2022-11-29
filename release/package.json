@@ -1,6 +1,6 @@
 {
   "name": "@innet/dom",
-  "version": "0.9.5",
+  "version": "0.10.1",
   "description": "Tools to build Web Site",
   "main": "index.js",
   "module": "index.es6.js",
@@ -40,7 +40,7 @@
     "html-classes": "^2.0.2",
     "innet": "^1.0.1",
     "qs": "^6.11.0",
-    "tslib": "^2.4.0",
+    "tslib": "^2.4.1",
     "watch-state": "^3.4.5"
   }
 }

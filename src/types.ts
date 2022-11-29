@@ -9,13 +9,14 @@ export type UseComment = [Handler, Comment]
 
 export type WatchProp <T> = T | ((update: boolean) => T)
 
-export type HTMLProps<E extends HTMLElement = HTMLElement, K extends keyof E = keyof E> =
-  Partial<Record<`${'_' | '$'}${Exclude<K, symbol | `on${string}`>}`, any>> &
-  Partial<Record<Extract<K, `on${string}`>, (e: any) => void>> & {
-    style?: WatchProp<string>
-    ref?: Ref<E>
-    [prop: string]: any
-  }
+export type HTMLProps<E extends HTMLElement = HTMLElement> = {
+  [K in Extract<keyof E, `on${string}`>]?: E[K];
+} & {
+  [K in Exclude<keyof E, symbol> as E[K] extends Function ? never : `${'' | '_' | '$'}${K}`]?: WatchProp<E[K]>;
+} & {
+  style?: WatchProp<string>
+  ref?: Ref<E>
+}
 
 declare global {
   interface Comment {

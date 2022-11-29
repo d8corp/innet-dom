@@ -26,8 +26,8 @@ export type LoopCallback<T> = (item: LoopItem<T>) => any
 export type LoopChildren<T> = [ LoopCallback<T>, ...any[] ]
 
 export class LoopItem<T> {
-  private _value: State<T>
-  private _index: State<number>
+  private readonly _value: State<T>
+  private readonly _index: State<number>
 
   constructor (value: T, index: number) {
     this._index = new State(index)
