@@ -1,9 +1,12 @@
 import { useProps } from '@innet/jsx'
 import classes, { ClassesArgument } from 'html-classes'
 
+import { HTMLProps } from '../../types'
+
 export interface Style<S = any> {
   class?: ClassesArgument<keyof S> | Record<keyof S, ClassesArgument<keyof S>>
 }
+export type HTMLStyleProps<E extends HTMLElement = HTMLElement, S = any> = Omit<HTMLProps<E>, 'class'> & Style<S>
 
 export function getStyles<S> (styles: S, props: any): S {
   if (!props?.class) {

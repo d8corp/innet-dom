@@ -2,6 +2,10 @@
 
 ## v0.10
 
+### v0.10.2 [![29.11.2022](https://img.shields.io/date/1669731592)](https://github.com/d8corp/innet-dom/tree/v0.10.2)
+
+- improve types
+
 ### v0.10.1 [![29.11.2022](https://img.shields.io/date/1669727997)](https://github.com/d8corp/innet-dom/tree/v0.10.1)
 
 - improve types

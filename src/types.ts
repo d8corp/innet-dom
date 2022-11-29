@@ -9,14 +9,17 @@ export type UseComment = [Handler, Comment]
 
 export type WatchProp <T> = T | ((update: boolean) => T)
 
-export type HTMLProps<E extends HTMLElement = HTMLElement> = {
-  [K in Extract<keyof E, `on${string}`>]?: E[K];
-} & {
-  [K in Exclude<keyof E, symbol> as E[K] extends Function ? never : `${'' | '_' | '$'}${K}`]?: WatchProp<E[K]>;
-} & {
+export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> {
+  class?: WatchProp<string>
   style?: WatchProp<string>
   ref?: Ref<E>
 }
+
+export type HTMLProps<E extends HTMLElement = HTMLElement> = Omit<{
+  [K in Extract<keyof E, `on${string}`>]?: E[K];
+} & {
+  [K in Exclude<keyof E, symbol> as E[K] extends Function ? never : `${'' | '_' | '$'}${K}`]?: WatchProp<E[K] | undefined>;
+}, keyof HTMLDefaultProps> & HTMLDefaultProps<E>
 
 declare global {
   interface Comment {

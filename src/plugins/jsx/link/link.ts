@@ -2,8 +2,7 @@ import { JSXPluginElement } from '@innet/jsx'
 import classes from 'html-classes'
 import innet from 'innet'
 
-import { getStyles, Style } from '../../../hooks/useStyle'
-import { HTMLProps } from '../../../types'
+import { getStyles, HTMLStyleProps } from '../../../hooks/useStyle'
 import { history } from '../router'
 
 export const defaultClass = {
@@ -11,7 +10,7 @@ export const defaultClass = {
   active: undefined,
 }
 
-export interface LinkProps extends Style<typeof defaultClass>, HTMLProps<HTMLAnchorElement> {
+export interface LinkProps extends HTMLStyleProps<HTMLAnchorElement, typeof defaultClass> {
   target?: '_blank' | '_parent' | '_self' | '_top'
   scroll?: 'after' | 'before' | 'none'
   scrollTo?: number | string

@@ -1,11 +1,10 @@
 import { JSXPluginElement } from '@innet/jsx';
-import { Style } from '../../../hooks/useStyle';
-import { HTMLProps } from '../../../types';
+import { HTMLStyleProps } from '../../../hooks/useStyle';
 export declare const defaultClass: {
     root: any;
     active: any;
 };
-export interface LinkProps extends Style<typeof defaultClass>, HTMLProps<HTMLAnchorElement> {
+export interface LinkProps extends HTMLStyleProps<HTMLAnchorElement, typeof defaultClass> {
     target?: '_blank' | '_parent' | '_self' | '_top';
     scroll?: 'after' | 'before' | 'none';
     scrollTo?: number | string;
