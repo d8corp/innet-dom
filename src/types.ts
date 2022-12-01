@@ -15,11 +15,15 @@ export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> {
   ref?: Ref<E>
 }
 
+export interface HTMLDataProps {
+  [key: `data-${string}`]: WatchProp<string>
+}
+
 export type HTMLProps<E extends HTMLElement = HTMLElement> = Omit<{
   [K in Extract<keyof E, `on${string}`>]?: E[K];
 } & {
   [K in Exclude<keyof E, symbol> as E[K] extends Function ? never : `${'' | '_' | '$'}${K}`]?: WatchProp<E[K] | undefined>;
-}, keyof HTMLDefaultProps> & HTMLDefaultProps<E>
+}, keyof HTMLDefaultProps> & HTMLDefaultProps<E> & HTMLDataProps
 
 declare global {
   interface Comment {
