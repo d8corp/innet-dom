@@ -11,7 +11,9 @@ export function domJSX (): PluginHandler {
       if (props) {
         for (let key in props) {
           if (key === 'ref') {
-            props.ref.value = element
+            if (props.ref) {
+              props.ref.value = element
+            }
           } else {
             const value = props[key]
 

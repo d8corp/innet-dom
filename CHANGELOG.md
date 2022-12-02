@@ -2,6 +2,10 @@
 
 ## v0.10
 
+### v0.10.4 [![02.12.2022](https://img.shields.io/date/1669995541)](https://github.com/d8corp/innet-dom/tree/v0.10.4)
+
+- fix undefined ref bug
+
 ### v0.10.3 [![02.12.2022](https://img.shields.io/date/1669936775)](https://github.com/d8corp/innet-dom/tree/v0.10.3)
 
 - fix types of data attributes
