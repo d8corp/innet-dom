@@ -250,7 +250,7 @@ export function Content (props1) {
   const props2 = useProps()
 
   return (
-    <h1 style={`color: ${color}`}>
+    <h1 style={`color: ${props1.color}`}>
       {props1 === props2 ? 'same' : 'different'}
     </h1>
   )
@@ -526,6 +526,27 @@ export default (
 )
 ```
 
+## show
+
+You can use `show` element to show/hide content by state.
+
+```typescript jsx
+const show = new State(true)
+
+export default (
+  <show state={show}>
+    <button
+      onclick={() => {
+        show.value = false
+      }}>
+      Click Me
+    </button>
+  </show>
+)
+```
+
+> `state` can be: `State` | `Cache` | `() => any` | `any`
+
 ## for
 
 You can use `map` method of an array to put view on data.
@@ -616,19 +637,19 @@ export const Content = () => {
 
   return (
     <>
-      {header && (
+      <show state={header}>
         <div class='header'>
           {header}
         </div>
-      )}
+      </show>
       <div class='content'>
         {content}
       </div>
-      {footer && (
+      <show state={footer}>
         <div class='footer'>
           {footer}
         </div>
-      )}
+      </show>
     </>
   )
 }

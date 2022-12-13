@@ -18,11 +18,13 @@ describe('delay', () => {
   it('should work', async () => {
     const show = new State(true)
 
-    const result = render(() => show.value && (
-      <delay show={100} hide={100}>
-        works
-      </delay>
-    ))
+    const result = render(
+      <show state={show}>
+        <delay show={100} hide={100}>
+          works
+        </delay>
+      </show>,
+    )
 
     expect(getHTML(result)).toBe('')
 
@@ -58,15 +60,15 @@ describe('delay', () => {
   it('should set elements to the right place with hide', async () => {
     const show = new State(true)
 
-    const result = render(() => show.value && (
-      <>
+    const result = render(
+      <show state={show}>
         before
         <delay show={100} hide={100}>
           works
         </delay>
         after
-      </>
-    ))
+      </show>,
+    )
 
     expect(getHTML(result)).toBe('beforeafter')
 
@@ -91,11 +93,13 @@ describe('delay', () => {
 
     const show = new State(true)
 
-    const result = render(() => show.value && (
-      <delay hide={100}>
-        <Component />
-      </delay>
-    ))
+    const result = render(
+      <show state={show}>
+        <delay hide={100}>
+          <Component />
+        </delay>
+      </show>,
+    )
 
     expect(getHTML(result)).toBe('shown')
 
@@ -124,11 +128,13 @@ describe('delay', () => {
 
     const show = new State(true)
 
-    const result = render(() => show.value && (
-      <delay show={100} hide={100}>
-        <Component />
-      </delay>
-    ))
+    const result = render(
+      <show state={show}>
+        <delay show={100} hide={100}>
+          <Component />
+        </delay>
+      </show>,
+    )
 
     expect(getHTML(result)).toBe('')
 
@@ -161,7 +167,11 @@ describe('delay', () => {
 
     const show = new State(true)
 
-    const result = render(() => show.value && <Component />)
+    const result = render(
+      <show state={show}>
+        <Component />
+      </show>,
+    )
 
     expect(getHTML(result)).toBe('shown')
 

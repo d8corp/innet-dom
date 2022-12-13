@@ -7,6 +7,7 @@ import { loop } from '../plugins/jsx/loop/loop.es6.js';
 import { router } from '../plugins/jsx/router/router.es6.js';
 import { link } from '../plugins/jsx/link/link.es6.js';
 import { delay } from '../plugins/jsx/delay/delay.es6.js';
+import { show } from '../plugins/jsx/show/show.es6.js';
 import { domJSX } from '../plugins/domJSX/domJSX.es6.js';
 import { domAsyncIterable } from '../plugins/domAsyncIterable/domAsyncIterable.es6.js';
 import { domIterable } from '../plugins/domIterable/domIterable.es6.js';
@@ -27,6 +28,7 @@ const JSXPlugins = {
     router,
     a: link,
     delay,
+    show,
 };
 const objectPlugins = [
     jsxPlugins(JSXPlugins),

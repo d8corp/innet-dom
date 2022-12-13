@@ -11,6 +11,7 @@ export { portal } from './plugins/jsx/portal/portal.es6.js';
 export { getRoute, getStrongRoute, history, parsedPath, parsedSearch, pathDeep, router, routerContext, routes, routesIsh, useRoute } from './plugins/jsx/router/router.es6.js';
 export { defaultClass, link } from './plugins/jsx/link/link.es6.js';
 export { delay, delayContext, useHidden } from './plugins/jsx/delay/delay.es6.js';
+export { show } from './plugins/jsx/show/show.es6.js';
 export { domAsync } from './plugins/domAsync/domAsync.es6.js';
 export { domIterable } from './plugins/domIterable/domIterable.es6.js';
 export { domJSX } from './plugins/domJSX/domJSX.es6.js';

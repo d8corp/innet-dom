@@ -11,6 +11,7 @@ var loop = require('../plugins/jsx/loop/loop.js');
 var router = require('../plugins/jsx/router/router.js');
 var link = require('../plugins/jsx/link/link.js');
 var delay = require('../plugins/jsx/delay/delay.js');
+var show = require('../plugins/jsx/show/show.js');
 var domJSX = require('../plugins/domJSX/domJSX.js');
 var domAsyncIterable = require('../plugins/domAsyncIterable/domAsyncIterable.js');
 var domIterable = require('../plugins/domIterable/domIterable.js');
@@ -31,6 +32,7 @@ const JSXPlugins = {
     router: router.router,
     a: link.link,
     delay: delay.delay,
+    show: show.show,
 };
 const objectPlugins = [
     jsx.jsxPlugins(JSXPlugins),

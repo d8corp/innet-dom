@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.11
+
+### v0.11.0 [![13.12.2022](https://img.shields.io/date/1670956888)](https://github.com/d8corp/innet-dom/tree/v0.11.0)
+
+- add `show` element
+
 ## v0.10
 
 ### v0.10.4 [![02.12.2022](https://img.shields.io/date/1669995541)](https://github.com/d8corp/innet-dom/tree/v0.10.4)

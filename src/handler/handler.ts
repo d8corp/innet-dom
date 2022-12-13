@@ -43,6 +43,8 @@ import {
   PortalProps,
   router,
   RouterProps,
+  show,
+  ShowProps,
 } from '../plugins'
 import { HTMLProps } from '../types'
 
@@ -59,6 +61,7 @@ export const JSXPlugins: Record<string, JSXPlugin> = {
   router,
   a: link,
   delay,
+  show,
 }
 
 export const objectPlugins = [
@@ -114,6 +117,7 @@ declare global {
       slot: SlotProps
       router: RouterProps
       delay: DelayProps
+      show: ShowProps
       a: LinkProps
       div: HTMLProps<HTMLDivElement>
       span: HTMLProps<HTMLSpanElement>
