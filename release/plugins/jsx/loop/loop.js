@@ -5,6 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var innet = require('innet');
 var watchState = require('watch-state');
 require('../../../utils/index.js');
+var statePropToWatchProp = require('../../../utils/statePropToWatchProp/statePropToWatchProp.js');
 var getComment = require('../../../utils/getComment/getComment.js');
 var dom = require('../../../utils/dom/dom.js');
 var dif = require('../../../utils/dif/dif.js');
@@ -43,7 +44,9 @@ function getKey(key, value) {
         return value[key];
     }
 }
-function loop({ type, props: { size: sizeProp = Infinity, key, of: ofProp, }, children: [callback, ...elseProp], }, handler) {
+function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, children: [callback, ...elseProp], }, handler) {
+    const sizeProp = statePropToWatchProp.statePropToWatchProp(sizeState);
+    const ofProp = statePropToWatchProp.statePropToWatchProp(ofState);
     if (typeof ofProp === 'function' || typeof sizeProp === 'function') {
         const [childHandler, mainComment] = getComment.getComment(handler, type);
         let map = new Map();

@@ -126,7 +126,7 @@ With `innet` you can fully exclude component approach, but state management stil
 
 The state management based on [watch-state](https://github.com/d8corp/watch-state)
 
-To bind state and content, use a function as a content.
+To bind state and content, use a State, a Cache or a function as a content.
 
 Turn back `index.html` and change `app.tsx`
 ```typescript jsx
@@ -137,7 +137,7 @@ const count = new State(0)
 export default (
   <>
     <h1>
-      Count: {() => count.value}
+      Count: {count}
     </h1>
     <button onclick={() => count.value++}>
       Click Me
@@ -146,7 +146,7 @@ export default (
 )
 ```
 
-To bind a state and a prop use a function as the prop.
+To bind a state and a prop use a State, a Cache or a function as the prop.
 
 Change `app.tsx`
 ```typescript jsx
@@ -250,7 +250,7 @@ export function Content (props1) {
   const props2 = useProps()
 
   return (
-    <h1 style={`color: ${props1.color}`}>
+    <h1>
       {props1 === props2 ? 'same' : 'different'}
     </h1>
   )
@@ -326,7 +326,8 @@ A component awaits a return:
   ```typescript jsx
   const state = new State()
   const Test1 = () => () => state.value
-  const Test2 = () => <>{() => state.value}</>
+  const Test2 = () => state
+  const Test3 = () => <>{() => state.value}</>
   ```
 
 ### Life Cycle
@@ -352,7 +353,7 @@ function Content () {
 
   return (
     <div>
-      {() => state.value}
+      {state}
     </div>
   )
 }
@@ -481,7 +482,9 @@ const handleChange = e => {
 
 export default (
   <>
-    {() => show.value && <Content />}
+    <show state={show}>
+      <Content />
+    </show>
     <input type="checkbox" checked onchange={handleChange} />
   </>
 )
@@ -570,7 +573,7 @@ const names = new State(['Mike', 'Alex', 'Dan'])
 
 export default (
   <ul>
-    <for of={() => names.value}>
+    <for of={names}>
       {name => (
         <li>
           #{() => name.index}:

@@ -2,9 +2,13 @@
 
 ## v0.11
 
+### v0.11.2 [![15.12.2022](https://img.shields.io/date/1671123828)](https://github.com/d8corp/innet-dom/tree/v0.11.2)
+
+- add `StateProp` for children and props of html elements, `for` and `a` plugins
+
 ### v0.11.1 [![15.12.2022](https://img.shields.io/date/1671115613)](https://github.com/d8corp/innet-dom/tree/v0.11.1)
 
-- add `ShowProp` type
+- add `StateProp` type
 - `use` for `ShowProp` 
 
 ### v0.11.0 [![13.12.2022](https://img.shields.io/date/1670956888)](https://github.com/d8corp/innet-dom/tree/v0.11.0)

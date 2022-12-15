@@ -7,3 +7,4 @@ export * from './stringifySearch';
 export * from './parseSearch';
 export * from './dif';
 export * from './use';
+export * from './statePropToWatchProp';

@@ -2,8 +2,10 @@ import { __rest } from 'tslib';
 import classes from 'html-classes';
 import innet from 'innet';
 import '../../../hooks/useStyle/index.es6.js';
+import '../../../utils/index.es6.js';
 import '../router/index.es6.js';
 import { getStyles } from '../../../hooks/useStyle/useStyle.es6.js';
+import { use } from '../../../utils/use/use.es6.js';
 import { history } from '../router/router.es6.js';
 
 const defaultClass = {
@@ -22,7 +24,7 @@ function link({ type, props, children }, oldHandler) {
         return innet({ type: 'a', children }, handler);
     const styles = getStyles(defaultClass, props);
     const { onclick, href, scroll, scrollTo, replace, exact } = props, rest = __rest(props, ["onclick", "href", "scroll", "scrollTo", "replace", "exact"]);
-    const getHref = typeof href === 'function' ? href : () => href;
+    const getHref = (update) => use(href, update);
     if (!href || (typeof href === 'string' && href.startsWith('http'))) {
         return innet({
             type: 'a',

@@ -3,6 +3,7 @@ import classes from 'html-classes'
 import innet from 'innet'
 
 import { getStyles, HTMLStyleProps } from '../../../hooks/useStyle'
+import { use } from '../../../utils'
 import { history } from '../router'
 
 export const defaultClass = {
@@ -32,7 +33,7 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
 
   const styles = getStyles(defaultClass, props)
   const { onclick, href, scroll, scrollTo, replace, exact, ...rest } = props
-  const getHref = typeof href === 'function' ? href : () => href
+  const getHref = (update: boolean) => use(href, update)
 
   if (!href || (typeof href === 'string' && href.startsWith('http'))) {
     return innet({

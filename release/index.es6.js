@@ -19,6 +19,7 @@ export { domNode } from './plugins/domNode/domNode.es6.js';
 export { domFn } from './plugins/domFn/domFn.es6.js';
 export { domText } from './plugins/domText/domText.es6.js';
 export { domAsyncIterable } from './plugins/domAsyncIterable/domAsyncIterable.es6.js';
+export { state } from './plugins/state/state.es6.js';
 export { Ref } from './utils/Ref/Ref.es6.js';
 export { after, append, before, clear, prepend, remove } from './utils/dom/dom.es6.js';
 export { getParent } from './utils/getParent/getParent.es6.js';
@@ -28,6 +29,7 @@ export { stringifySearch } from './utils/stringifySearch/stringifySearch.es6.js'
 export { parseSearch } from './utils/parseSearch/parseSearch.es6.js';
 export { dif } from './utils/dif/dif.es6.js';
 export { use } from './utils/use/use.es6.js';
+export { statePropToWatchProp } from './utils/statePropToWatchProp/statePropToWatchProp.es6.js';
 export { useParent } from './hooks/useParent/useParent.es6.js';
 export { getStyles, style } from './hooks/useStyle/useStyle.es6.js';
 export { useShow } from './hooks/useShow/useShow.es6.js';

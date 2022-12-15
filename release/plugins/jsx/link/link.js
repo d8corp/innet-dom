@@ -6,8 +6,10 @@ var tslib = require('tslib');
 var classes = require('html-classes');
 var innet = require('innet');
 require('../../../hooks/useStyle/index.js');
+require('../../../utils/index.js');
 require('../router/index.js');
 var useStyle = require('../../../hooks/useStyle/useStyle.js');
+var use = require('../../../utils/use/use.js');
 var router = require('../router/router.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -31,7 +33,7 @@ function link({ type, props, children }, oldHandler) {
         return innet__default["default"]({ type: 'a', children }, handler);
     const styles = useStyle.getStyles(defaultClass, props);
     const { onclick, href, scroll, scrollTo, replace, exact } = props, rest = tslib.__rest(props, ["onclick", "href", "scroll", "scrollTo", "replace", "exact"]);
-    const getHref = typeof href === 'function' ? href : () => href;
+    const getHref = (update) => use.use(href, update);
     if (!href || (typeof href === 'string' && href.startsWith('http'))) {
         return innet__default["default"]({
             type: 'a',

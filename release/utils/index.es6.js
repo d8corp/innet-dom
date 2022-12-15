@@ -7,3 +7,4 @@ import './stringifySearch/index.es6.js';
 import './parseSearch/index.es6.js';
 import './dif/index.es6.js';
 import './use/index.es6.js';
+import './statePropToWatchProp/index.es6.js';

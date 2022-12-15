@@ -2,7 +2,8 @@ import { JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
 import { onDestroy, State, Watch } from 'watch-state'
 
-import { after, before, clear, dif, getComment, prepend, remove, setParent } from '../../../utils'
+import { StateProp } from '../../../types'
+import { after, before, clear, dif, getComment, prepend, remove, setParent, statePropToWatchProp } from '../../../utils'
 
 interface LoopMap<T> {
   watcher: Watch
@@ -10,16 +11,9 @@ interface LoopMap<T> {
   item: LoopItem<T>
 }
 
-interface WatchTarget <R = any> {
-  (update?: boolean): R
-}
-
-type OfPropStatic<T = any> = T[]
-type OfProp<T = any> = OfPropStatic<T> | WatchTarget<OfPropStatic<T>>
-
 export interface LoopProps<T = any> {
-  of: OfProp<T>
-  size?: number | WatchTarget<number>
+  of: StateProp<T[]>
+  size?: StateProp<number>
   key?: keyof T | ((item: T) => any)
 }
 export type LoopCallback<T> = (item: LoopItem<T>) => any
@@ -64,15 +58,18 @@ function getKey (key, value) {
 export function loop <T> ({
   type,
   props: {
-    size: sizeProp = Infinity,
+    size: sizeState = Infinity,
     key,
-    of: ofProp,
+    of: ofState,
   },
   children: [
     callback,
     ...elseProp
   ],
 }: JSXPluginElement<LoopProps<T>, LoopChildren<T>>, handler) {
+  const sizeProp = statePropToWatchProp(sizeState)
+  const ofProp = statePropToWatchProp(ofState)
+
   if (typeof ofProp === 'function' || typeof sizeProp === 'function') {
     const [childHandler, mainComment] = getComment(handler, type)
 

@@ -1,6 +1,7 @@
 import innet from 'innet';
 import { State, onDestroy, Watch } from 'watch-state';
 import '../../../utils/index.es6.js';
+import { statePropToWatchProp } from '../../../utils/statePropToWatchProp/statePropToWatchProp.es6.js';
 import { getComment } from '../../../utils/getComment/getComment.es6.js';
 import { remove, clear, after, before, prepend } from '../../../utils/dom/dom.es6.js';
 import { dif } from '../../../utils/dif/dif.es6.js';
@@ -35,7 +36,9 @@ function getKey(key, value) {
         return value[key];
     }
 }
-function loop({ type, props: { size: sizeProp = Infinity, key, of: ofProp, }, children: [callback, ...elseProp], }, handler) {
+function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, children: [callback, ...elseProp], }, handler) {
+    const sizeProp = statePropToWatchProp(sizeState);
+    const ofProp = statePropToWatchProp(ofState);
     if (typeof ofProp === 'function' || typeof sizeProp === 'function') {
         const [childHandler, mainComment] = getComment(handler, type);
         let map = new Map();

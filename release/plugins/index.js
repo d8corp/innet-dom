@@ -8,4 +8,5 @@ require('./domNode/index.js');
 require('./domFn/index.js');
 require('./domText/index.js');
 require('./domAsyncIterable/index.js');
+require('./state/index.js');
 

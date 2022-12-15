@@ -45,6 +45,7 @@ import {
   RouterProps,
   show,
   ShowProps,
+  state,
 } from '../plugins'
 import { HTMLProps } from '../types'
 
@@ -65,6 +66,7 @@ export const JSXPlugins: Record<string, JSXPlugin> = {
 }
 
 export const objectPlugins = [
+  state,
   jsxPlugins(JSXPlugins),
   jsxComponent,
   domJSX,

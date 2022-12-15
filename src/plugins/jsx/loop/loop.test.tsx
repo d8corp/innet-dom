@@ -45,6 +45,27 @@ describe('for', () => {
 
       const result = render(
         <ul>
+          <for of={names}>
+            {name => (
+              <li>
+                #{name.index}: {name.value}
+              </li>
+            )}
+          </for>
+        </ul>,
+      )
+
+      expect(getHTML(result)).toBe('<ul><li>#0: Mike</li><li>#1: Alex</li><li>#2: Dan</li></ul>')
+
+      names.value = ['Alex', 'Dan', 'Mike']
+
+      expect(getHTML(result)).toBe('<ul><li>#0: Alex</li><li>#1: Dan</li><li>#2: Mike</li></ul>')
+    })
+    it('should re-render with a function', () => {
+      const names = new State(['Mike', 'Alex', 'Dan'])
+
+      const result = render(
+        <ul>
           <for of={() => names.value}>
             {name => (
               <li>
@@ -66,7 +87,7 @@ describe('for', () => {
 
       const result = render(
         <ul>
-          <for of={() => names.value}>
+          <for of={names}>
             {name => (
               <li>
                 #{() => name.index}: {name.value}
@@ -91,7 +112,7 @@ describe('for', () => {
 
       const result = render(
         <ul>
-          <for of={() => names.value}>
+          <for of={names}>
             {name => (
               <li>
                 {name.value}
@@ -120,7 +141,7 @@ describe('for', () => {
 
       const result = render(
         <ul>
-          <for of={() => people.value} key='id'>
+          <for of={people} key='id'>
             {body => (
               <li>
                 {() => body.value.name}
