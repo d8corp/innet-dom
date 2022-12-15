@@ -1,2 +1,2 @@
-import { WatchProp } from '../../types';
-export declare function use<T>(prop: WatchProp<T>, update?: boolean): T;
+import { StateProp } from '../../types';
+export declare function use<T>(prop: StateProp<T>, update?: boolean): T;

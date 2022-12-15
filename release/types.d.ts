@@ -1,9 +1,11 @@
 import { Handler } from 'innet';
+import { Cache, State } from 'watch-state';
 import { Ref } from './utils';
 export type ContentElements = TargetElements | Text;
 export type TargetElements = Element | Comment;
 export type UseComment = [Handler, Comment];
 export type WatchProp<T> = T | ((update: boolean) => T);
+export type StateProp<T> = WatchProp<T> | State<T> | Cache<T>;
 export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> {
     class?: WatchProp<string>;
     style?: WatchProp<string>;
