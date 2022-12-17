@@ -44,13 +44,13 @@ function domJSX() {
                             element[key] = result;
                         }
                         if (attributeSet) {
-                            if (result === undefined) {
+                            if (result === undefined || result === false) {
                                 if (update) {
                                     element.removeAttribute(key);
                                 }
                             }
                             else {
-                                element.setAttribute(key, result);
+                                element.setAttribute(key, result === true ? '' : result);
                             }
                         }
                     });

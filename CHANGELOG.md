@@ -2,6 +2,10 @@
 
 ## v0.11
 
+### v0.11.3 [![17.12.2022](https://img.shields.io/date/1671281344)](https://github.com/d8corp/innet-dom/tree/v0.11.3)
+
+- improve boolean props of HTML elements
+
 ### v0.11.2 [![15.12.2022](https://img.shields.io/date/1671123828)](https://github.com/d8corp/innet-dom/tree/v0.11.2)
 
 - add `StateProp` for children and props of html elements, `for` and `a` plugins
