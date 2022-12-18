@@ -3,6 +3,7 @@ import { Cache, State } from 'watch-state';
 import { Ref } from './utils';
 export type ContentElements = TargetElements | Text;
 export type TargetElements = Element | Comment;
+export type ParentElements = TargetElements | DocumentFragment;
 export type UseComment = [Handler, Comment];
 export type WatchProp<T> = T | ((update: boolean) => T);
 export type StateProp<T> = WatchProp<T> | State<T> | Cache<T>;

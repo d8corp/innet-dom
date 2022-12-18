@@ -2,6 +2,10 @@
 
 ## v0.11
 
+### v0.11.4 [![18.12.2022](https://img.shields.io/date/1671370427)](https://github.com/d8corp/innet-dom/tree/v0.11.4)
+
+- fix dynamic portals bug
+
 ### v0.11.3 [![17.12.2022](https://img.shields.io/date/1671281344)](https://github.com/d8corp/innet-dom/tree/v0.11.3)
 
 - improve boolean props of HTML elements

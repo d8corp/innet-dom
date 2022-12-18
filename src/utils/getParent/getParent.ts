@@ -1,8 +1,8 @@
 import { Handler } from 'innet'
 
 import { PARENT } from '../../constants'
-import { TargetElements } from '../../types'
+import { ParentElements } from '../../types'
 
-export function getParent<T extends TargetElements> (handler: Handler): T {
+export function getParent<T extends ParentElements> (handler: Handler): T {
   return handler[PARENT] || document.body
 }

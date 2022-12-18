@@ -5,6 +5,7 @@ import { Ref } from './utils'
 
 export type ContentElements = TargetElements | Text
 export type TargetElements = Element | Comment
+export type ParentElements = TargetElements | DocumentFragment
 
 export type UseComment = [Handler, Comment]
 
