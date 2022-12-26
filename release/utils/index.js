@@ -10,4 +10,5 @@ require('./parseSearch/index.js');
 require('./dif/index.js');
 require('./use/index.js');
 require('./statePropToWatchProp/index.js');
+require('./inject/index.js');
 

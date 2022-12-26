@@ -30,6 +30,7 @@ export { parseSearch } from './utils/parseSearch/parseSearch.es6.js';
 export { dif } from './utils/dif/dif.es6.js';
 export { use } from './utils/use/use.es6.js';
 export { statePropToWatchProp } from './utils/statePropToWatchProp/statePropToWatchProp.es6.js';
+export { inject } from './utils/inject/inject.es6.js';
 export { useParent } from './hooks/useParent/useParent.es6.js';
 export { getStyles, style } from './hooks/useStyle/useStyle.es6.js';
 export { useShow } from './hooks/useShow/useShow.es6.js';

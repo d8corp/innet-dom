@@ -2,6 +2,11 @@
 
 ## v0.11
 
+### v0.11.5 [![27.12.2022](https://img.shields.io/date/1672090337)](https://github.com/d8corp/innet-dom/tree/v0.11.5)
+
+- add `inject`
+- improve `show`
+
 ### v0.11.4 [![18.12.2022](https://img.shields.io/date/1671370427)](https://github.com/d8corp/innet-dom/tree/v0.11.4)
 
 - fix dynamic portals bug
