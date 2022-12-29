@@ -2,6 +2,10 @@
 
 ## v0.11
 
+### v0.11.6 [![29.12.2022](https://img.shields.io/date/1672338747)](https://github.com/d8corp/innet-dom/tree/v0.11.6)
+
+- `svg` support
+
 ### v0.11.5 [![27.12.2022](https://img.shields.io/date/1672090337)](https://github.com/d8corp/innet-dom/tree/v0.11.5)
 
 - add `inject`

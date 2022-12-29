@@ -1,1 +1,1 @@
-export { domJSX } from './domJSX.es6.js';
+export { NAMESPACE_URI, domJSX } from './domJSX.es6.js';

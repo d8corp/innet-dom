@@ -14,7 +14,7 @@ export { delay, delayContext, useHidden } from './plugins/jsx/delay/delay.es6.js
 export { show } from './plugins/jsx/show/show.es6.js';
 export { domAsync } from './plugins/domAsync/domAsync.es6.js';
 export { domIterable } from './plugins/domIterable/domIterable.es6.js';
-export { domJSX } from './plugins/domJSX/domJSX.es6.js';
+export { NAMESPACE_URI, domJSX } from './plugins/domJSX/domJSX.es6.js';
 export { domNode } from './plugins/domNode/domNode.es6.js';
 export { domFn } from './plugins/domFn/domFn.es6.js';
 export { domText } from './plugins/domText/domText.es6.js';

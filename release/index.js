@@ -76,6 +76,7 @@ exports.useHidden = delay.useHidden;
 exports.show = show.show;
 exports.domAsync = domAsync.domAsync;
 exports.domIterable = domIterable.domIterable;
+exports.NAMESPACE_URI = domJSX.NAMESPACE_URI;
 exports.domJSX = domJSX.domJSX;
 exports.domNode = domNode.domNode;
 exports.domFn = domFn.domFn;

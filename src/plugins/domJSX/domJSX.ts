@@ -3,11 +3,20 @@ import { Watch } from 'watch-state'
 
 import { setParent, statePropToWatchProp } from '../../utils'
 
+export const NAMESPACE_URI = Symbol('NAMESPACE_URI') as unknown as string
+
 export function domJSX (): PluginHandler {
   return ({ type, props, children }, next, handler) => {
     if (typeof type !== 'string') return next()
 
-    const element = document.createElement(type)
+    if (type === 'svg') {
+      handler = Object.create(handler)
+      handler[NAMESPACE_URI] = 'http://www.w3.org/2000/svg'
+    }
+
+    const element = handler[NAMESPACE_URI]
+      ? document.createElementNS(handler[NAMESPACE_URI], type)
+      : document.createElement(type)
 
     if (props) {
       for (let key in props) {

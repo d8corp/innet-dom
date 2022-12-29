@@ -6,4 +6,5 @@ var domJSX = require('./domJSX.js');
 
 
 
+exports.NAMESPACE_URI = domJSX.NAMESPACE_URI;
 exports.domJSX = domJSX.domJSX;

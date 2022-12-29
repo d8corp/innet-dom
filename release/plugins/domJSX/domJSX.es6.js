@@ -4,11 +4,18 @@ import '../../utils/index.es6.js';
 import { statePropToWatchProp } from '../../utils/statePropToWatchProp/statePropToWatchProp.es6.js';
 import { setParent } from '../../utils/setParent/setParent.es6.js';
 
+const NAMESPACE_URI = Symbol('NAMESPACE_URI');
 function domJSX() {
     return ({ type, props, children }, next, handler) => {
         if (typeof type !== 'string')
             return next();
-        const element = document.createElement(type);
+        if (type === 'svg') {
+            handler = Object.create(handler);
+            handler[NAMESPACE_URI] = 'http://www.w3.org/2000/svg';
+        }
+        const element = handler[NAMESPACE_URI]
+            ? document.createElementNS(handler[NAMESPACE_URI], type)
+            : document.createElement(type);
         if (props) {
             for (let key in props) {
                 if (key === 'ref') {
@@ -67,4 +74,4 @@ function domJSX() {
     };
 }
 
-export { domJSX };
+export { NAMESPACE_URI, domJSX };

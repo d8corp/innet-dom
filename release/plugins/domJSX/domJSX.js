@@ -12,11 +12,18 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
+const NAMESPACE_URI = Symbol('NAMESPACE_URI');
 function domJSX() {
     return ({ type, props, children }, next, handler) => {
         if (typeof type !== 'string')
             return next();
-        const element = document.createElement(type);
+        if (type === 'svg') {
+            handler = Object.create(handler);
+            handler[NAMESPACE_URI] = 'http://www.w3.org/2000/svg';
+        }
+        const element = handler[NAMESPACE_URI]
+            ? document.createElementNS(handler[NAMESPACE_URI], type)
+            : document.createElement(type);
         if (props) {
             for (let key in props) {
                 if (key === 'ref') {
@@ -75,4 +82,5 @@ function domJSX() {
     };
 }
 
+exports.NAMESPACE_URI = NAMESPACE_URI;
 exports.domJSX = domJSX;
