@@ -9,7 +9,7 @@ export type WatchProp<T> = T | ((update: boolean) => T);
 export type StateProp<T> = WatchProp<T> | State<T> | Cache<T>;
 export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> {
     class?: StateProp<string>;
-    style?: StateProp<string>;
+    style?: Partial<Record<string, StateProp<string>>>;
     ref?: Ref<E>;
 }
 export interface HTMLDataProps {

@@ -25,6 +25,20 @@ function domJSX() {
                     continue;
                 }
                 let value = props[key];
+                if (key === 'style') {
+                    for (const property in value) {
+                        const rawValue = statePropToWatchProp(value[property]);
+                        if (typeof rawValue === 'function') {
+                            new Watch(update => {
+                                element.style.setProperty(property, rawValue(update));
+                            });
+                        }
+                        else {
+                            element.style.setProperty(property, rawValue);
+                        }
+                    }
+                    continue;
+                }
                 if (key.startsWith('on')) {
                     element[key] = value;
                     continue;

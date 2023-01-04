@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.12
+
+### v0.12.0 [![04.01.2023](https://img.shields.io/date/1672863465)](https://github.com/d8corp/innet-dom/tree/v0.12.0)
+
+- improve `style` property
+
 ## v0.11
 
 ### v0.11.6 [![29.12.2022](https://img.shields.io/date/1672338747)](https://github.com/d8corp/innet-dom/tree/v0.11.6)

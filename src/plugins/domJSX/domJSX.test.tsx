@@ -27,4 +27,27 @@ describe('domJSX', () => {
 
     expect(getHTML(result)).toBe('<div></div>')
   })
+  it('should handle style', () => {
+    const result = render(<div style={{ color: 'red' }} />)
+
+    expect(getHTML(result)).toBe('<div style="color: red;"></div>')
+  })
+  it('should handle dynamic style', () => {
+    const style = {
+      color: new State('red'),
+      background: new State('blue'),
+    }
+
+    const result = render(<div style={style} />)
+
+    expect(getHTML(result)).toBe('<div style="color: red; background: blue;"></div>')
+
+    style.color.value = 'black'
+
+    expect(getHTML(result)).toBe('<div style="color: black; background: blue;"></div>')
+
+    style.background.value = 'white'
+
+    expect(getHTML(result)).toBe('<div style="color: black; background: white;"></div>')
+  })
 })

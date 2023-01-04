@@ -201,7 +201,7 @@ Change `Content.tsx`
 ```typescript jsx
 export function Content ({ color }) {
   return (
-    <h1 style={`color: ${color}`}>
+    <h1 style={{ color }}>
       Hello World!
     </h1>
   )
@@ -268,7 +268,7 @@ export function Content ({ color }) {
   const children = useChildren()
 
   return (
-    <h1 style={`color: ${color}`}>
+    <h1 style={{ color }}>
       {children}
     </h1>
   )
@@ -504,7 +504,7 @@ export function Content () {
   const currentColor = useContext(color)
 
   return (
-    <h1 style={`color: ${currentColor}`}>
+    <h1 style={{ color: currentColor }}>
       {children}
     </h1>
   )
