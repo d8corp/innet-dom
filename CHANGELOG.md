@@ -2,6 +2,10 @@
 
 ## v0.12
 
+### v0.12.1 [![05.01.2023](https://img.shields.io/date/1672870266)](https://github.com/d8corp/innet-dom/tree/v0.12.1)
+
+- improve `style` types
+
 ### v0.12.0 [![04.01.2023](https://img.shields.io/date/1672863465)](https://github.com/d8corp/innet-dom/tree/v0.12.0)
 
 - improve `style` property

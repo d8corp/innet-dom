@@ -1,15 +1,21 @@
 import { Handler } from 'innet';
 import { Cache, State } from 'watch-state';
 import { Ref } from './utils';
+type CamelToKebabCase<S extends string> = S extends `${infer T}${infer U}` ? `${T extends Capitalize<T> ? '-' : ''}${Lowercase<T>}${CamelToKebabCase<U>}` : S;
+type KeysToKebabCase<T> = {
+    [K in keyof T as CamelToKebabCase<string & K>]: T[K];
+};
 export type ContentElements = TargetElements | Text;
 export type TargetElements = Element | Comment;
 export type ParentElements = TargetElements | DocumentFragment;
 export type UseComment = [Handler, Comment];
 export type WatchProp<T> = T | ((update: boolean) => T);
 export type StateProp<T> = WatchProp<T> | State<T> | Cache<T>;
+export type HTMLStyleKeys = keyof KeysToKebabCase<Omit<HTMLElement['style'], 'getPropertyPriority' | 'getPropertyValue' | 'item' | 'removeProperty' | 'setProperty'>> | `--${string}`;
+export type HTMLStyleProp = Partial<Record<HTMLStyleKeys, StateProp<string>>>;
 export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> {
     class?: StateProp<string>;
-    style?: Partial<Record<string, StateProp<string>>>;
+    style?: HTMLStyleProp;
     ref?: Ref<E>;
 }
 export interface HTMLDataProps {
@@ -32,3 +38,4 @@ declare global {
         _parent?: Comment;
     }
 }
+export {};
