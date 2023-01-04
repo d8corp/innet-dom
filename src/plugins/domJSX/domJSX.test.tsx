@@ -32,6 +32,11 @@ describe('domJSX', () => {
 
     expect(getHTML(result)).toBe('<div style="color: red;"></div>')
   })
+  it('should skip empty value', () => {
+    const result = render(<div style={{ color: '' }} />)
+
+    expect(getHTML(result)).toBe('<div></div>')
+  })
   it('should handle dynamic style', () => {
     const style = {
       color: new State('red'),
@@ -46,8 +51,8 @@ describe('domJSX', () => {
 
     expect(getHTML(result)).toBe('<div style="color: black; background: blue;"></div>')
 
-    style.background.value = 'white'
+    style.background.value = ''
 
-    expect(getHTML(result)).toBe('<div style="color: black; background: white;"></div>')
+    expect(getHTML(result)).toBe('<div style="color: black;"></div>')
   })
 })
