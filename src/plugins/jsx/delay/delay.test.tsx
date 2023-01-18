@@ -37,6 +37,7 @@ describe('delay', () => {
     expect(getHTML(result)).toBe('works')
 
     await new Promise(resolve => setTimeout(resolve, 100))
+    await new Promise(resolve => setTimeout(resolve))
 
     expect(getHTML(result)).toBe('')
   })
@@ -81,6 +82,7 @@ describe('delay', () => {
     expect(getHTML(result)).toBe('works')
 
     await new Promise(resolve => setTimeout(resolve, 100))
+    await new Promise(resolve => setTimeout(resolve))
 
     expect(getHTML(result)).toBe('')
   })
@@ -138,7 +140,7 @@ describe('delay', () => {
 
     expect(getHTML(result)).toBe('')
 
-    await new Promise(resolve => setTimeout(resolve, 100))
+    await new Promise(resolve => setTimeout(resolve, 105))
 
     expect(getHTML(result)).toBe('shown')
 
@@ -147,10 +149,12 @@ describe('delay', () => {
     expect(getHTML(result)).toBe('hidden')
 
     await new Promise(resolve => setTimeout(resolve, 50))
+    await new Promise(resolve => setTimeout(resolve))
 
     expect(getHTML(result)).toBe('hidden')
 
     await new Promise(resolve => setTimeout(resolve, 50))
+    await new Promise(resolve => setTimeout(resolve))
 
     expect(getHTML(result)).toBe('')
   })
@@ -180,10 +184,12 @@ describe('delay', () => {
     expect(getHTML(result)).toBe('hidden')
 
     await new Promise(resolve => setTimeout(resolve, 50))
+    await new Promise(resolve => setTimeout(resolve))
 
     expect(getHTML(result)).toBe('hidden')
 
     await new Promise(resolve => setTimeout(resolve, 50))
+    await new Promise(resolve => setTimeout(resolve))
 
     expect(getHTML(result)).toBe('')
   })

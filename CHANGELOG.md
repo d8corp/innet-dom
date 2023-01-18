@@ -2,6 +2,10 @@
 
 ## v0.12
 
+### v0.12.3 [![18.01.2023](https://img.shields.io/date/1674068169)](https://github.com/d8corp/innet-dom/tree/v0.12.3)
+
+- improve `delay` hide element algorithm
+
 ### v0.12.2 [![18.01.2023](https://img.shields.io/date/1674049614)](https://github.com/d8corp/innet-dom/tree/v0.12.2)
 
 - fix `loop` bug

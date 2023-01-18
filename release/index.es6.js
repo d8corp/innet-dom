@@ -21,7 +21,7 @@ export { domText } from './plugins/domText/domText.es6.js';
 export { domAsyncIterable } from './plugins/domAsyncIterable/domAsyncIterable.es6.js';
 export { state } from './plugins/state/state.es6.js';
 export { Ref } from './utils/Ref/Ref.es6.js';
-export { after, append, before, clear, prepend, remove } from './utils/dom/dom.es6.js';
+export { after, append, before, clear, prepend, pushSync, remove } from './utils/dom/dom.es6.js';
 export { getParent } from './utils/getParent/getParent.es6.js';
 export { setParent } from './utils/setParent/setParent.es6.js';
 export { getComment } from './utils/getComment/getComment.es6.js';

@@ -8,6 +8,7 @@ var watchState = require('watch-state');
 require('../../../utils/index.js');
 var constants = require('../../../utils/dom/constants.js');
 var getComment = require('../../../utils/getComment/getComment.js');
+var dom = require('../../../utils/dom/dom.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -45,7 +46,7 @@ function delay({ props, children }, handler) {
             }, true);
             watchState.onDestroy(() => {
                 hideState.value = true;
-                setTimeout(() => watcher.destroy(), hide);
+                setTimeout(() => dom.pushSync(() => watcher.destroy()), hide);
             });
             return;
         }

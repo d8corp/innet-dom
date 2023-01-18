@@ -1,5 +1,17 @@
 import { REMOVE_DELAY } from './constants.es6.js';
 
+const sync = {
+    scope: [],
+};
+function pushSync(run) {
+    sync.scope.push(run);
+    clearTimeout(sync.timer);
+    sync.timer = setTimeout(() => {
+        const { scope } = sync;
+        sync.scope = [];
+        scope.forEach(run => run());
+    });
+}
 function removeParentChild(target) {
     if (target._parent) {
         const children = target._parent._children;
@@ -9,7 +21,7 @@ function removeParentChild(target) {
 }
 function removeElements(target, delay = target[REMOVE_DELAY]) {
     if (delay) {
-        setTimeout(() => target.remove(), delay);
+        setTimeout(() => pushSync(() => target.remove()), delay);
     }
     else {
         target.remove();
@@ -99,4 +111,4 @@ function after(target, node) {
     updateChildren(node);
 }
 
-export { after, append, before, clear, prepend, remove };
+export { after, append, before, clear, prepend, pushSync, remove };
