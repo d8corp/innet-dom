@@ -1,4 +1,4 @@
-import { State } from 'watch-state'
+import { Cache, State } from 'watch-state'
 
 import { getHTML, render } from '../../../test'
 
@@ -167,6 +167,42 @@ describe('for', () => {
       expect(elements1[2]).toBe(elements2[2])
 
       expect(getHTML(result)).toBe('<ul><li>Michael</li><li>Alex</li><li>Dan</li></ul>')
+    })
+    it('should work with delay', async () => {
+      const min = new State(1)
+      const max = new State(2)
+      const data = new Cache(() => {
+        const result = []
+
+        for (let i = min.value; i < max.value; i++) {
+          result.push(i)
+        }
+
+        return result
+      })
+
+      const result = render(
+        <ul>
+          <for of={data}>
+            {body => (
+              <delay hide={300}>
+                <li>
+                  {() => body.value}
+                </li>
+              </delay>
+            )}
+          </for>
+        </ul>,
+      )
+
+      expect(getHTML(result)).toBe('<ul><li>1</li></ul>')
+
+      min.value = 0
+
+      await new Promise(resolve => setTimeout(resolve, 300))
+
+      expect(data.value).toEqual([0, 1])
+      expect(getHTML(result)).toBe('<ul><li>0</li><li>1</li></ul>')
     })
   })
 })
