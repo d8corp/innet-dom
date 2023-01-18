@@ -2,6 +2,10 @@
 
 ## v0.12
 
+### v0.12.2 [![18.01.2023](https://img.shields.io/date/1674049614)](https://github.com/d8corp/innet-dom/tree/v0.12.2)
+
+- fix `loop` bug
+
 ### v0.12.1 [![05.01.2023](https://img.shields.io/date/1672870266)](https://github.com/d8corp/innet-dom/tree/v0.12.1)
 
 - improve `style` types

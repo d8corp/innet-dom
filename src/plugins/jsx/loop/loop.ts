@@ -126,7 +126,7 @@ export function loop <T> ({
             data.item.index = index
             map.set(valueKey, data)
 
-            if (!keep && wasBefore) {
+            if (!keep) {
               if (index) {
                 after(map.get(keysList[index - 1]).comment, data.comment)
               } else if (oldKeysList.length) {

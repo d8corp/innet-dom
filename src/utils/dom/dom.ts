@@ -44,14 +44,22 @@ export function remove (target: ContentElements) {
   removeParentChild(target)
   removeElements(target)
 }
-export function before (target: TargetElements, node: ContentElements) {
-  removeParentChild(node)
-  insertChild(target, node, 1)
+
+function simpleBefore (target: TargetElements, node: ContentElements) {
   if (target instanceof Comment) {
-    (target._children[0] || target).before(node)
+    if (target._children.length) {
+      simpleBefore(target._children[0] as TargetElements, node)
+    } else {
+      target.before(node)
+    }
   } else {
     target.before(node)
   }
+}
+export function before (target: TargetElements, node: ContentElements) {
+  removeParentChild(node)
+  insertChild(target, node, 1)
+  simpleBefore(target, node)
   updateChildren(node)
 }
 export function prepend (target: TargetElements | DocumentFragment, node: ContentElements) {

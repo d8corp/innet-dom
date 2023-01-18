@@ -47,15 +47,23 @@ function remove(target) {
     removeParentChild(target);
     removeElements(target);
 }
-function before(target, node) {
-    removeParentChild(node);
-    insertChild(target, node, 1);
+function simpleBefore(target, node) {
     if (target instanceof Comment) {
-        (target._children[0] || target).before(node);
+        if (target._children.length) {
+            simpleBefore(target._children[0], node);
+        }
+        else {
+            target.before(node);
+        }
     }
     else {
         target.before(node);
     }
+}
+function before(target, node) {
+    removeParentChild(node);
+    insertChild(target, node, 1);
+    simpleBefore(target, node);
     updateChildren(node);
 }
 function prepend(target, node) {

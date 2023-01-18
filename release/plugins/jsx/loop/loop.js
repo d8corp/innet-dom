@@ -88,7 +88,7 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
                         data.item.value = value;
                         data.item.index = index;
                         map.set(valueKey, data);
-                        if (!keep && wasBefore) {
+                        if (!keep) {
                             if (index) {
                                 dom.after(map.get(keysList[index - 1]).comment, data.comment);
                             }
