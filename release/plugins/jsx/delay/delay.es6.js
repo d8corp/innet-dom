@@ -4,7 +4,7 @@ import { State, Watch, scope, onDestroy } from 'watch-state';
 import '../../../utils/index.es6.js';
 import { REMOVE_DELAY } from '../../../utils/dom/constants.es6.js';
 import { getComment } from '../../../utils/getComment/getComment.es6.js';
-import { pushSync } from '../../../utils/dom/dom.es6.js';
+import { setTimeoutSync } from '../../../utils/setTimeoutSync/setTimeoutSync.es6.js';
 
 const delayContext = new Context();
 function useHidden() {
@@ -38,7 +38,7 @@ function delay({ props, children }, handler) {
             }, true);
             onDestroy(() => {
                 hideState.value = true;
-                setTimeout(() => pushSync(() => watcher.destroy()), hide);
+                setTimeoutSync(() => watcher.destroy(), hide);
             });
             return;
         }

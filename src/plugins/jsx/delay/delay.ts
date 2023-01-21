@@ -2,7 +2,7 @@ import { Context, JSXPluginElement, useHandler } from '@innet/jsx'
 import innet, { Handler } from 'innet'
 import { onDestroy, scope, State, Watch } from 'watch-state'
 
-import { getComment, pushSync, Ref } from '../../../utils'
+import { getComment, Ref, setTimeoutSync } from '../../../utils'
 import { REMOVE_DELAY } from '../../../utils/dom/constants'
 
 export interface DelayProps {
@@ -50,7 +50,7 @@ export function delay ({ props, children }: JSXPluginElement<DelayProps>, handle
 
       onDestroy(() => {
         hideState.value = true
-        setTimeout(() => pushSync(() => watcher.destroy()), hide)
+        setTimeoutSync(() => watcher.destroy(), hide)
       })
 
       return

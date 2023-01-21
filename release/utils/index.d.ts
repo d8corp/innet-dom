@@ -9,3 +9,4 @@ export * from './dif';
 export * from './use';
 export * from './statePropToWatchProp';
 export * from './inject';
+export * from './setTimeoutSync';

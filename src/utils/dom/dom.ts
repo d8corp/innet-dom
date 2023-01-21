@@ -1,27 +1,6 @@
 import { ContentElements, TargetElements } from '../../types'
+import { setTimeoutSync } from '../setTimeoutSync'
 import { REMOVE_DELAY } from './constants'
-
-export type SyncRun = () => void
-export interface Sync {
-  scope: SyncRun[]
-  timer?: any
-}
-
-const sync: Sync = {
-  scope: [],
-}
-
-export function pushSync (run: SyncRun) {
-  sync.scope.push(run)
-
-  clearTimeout(sync.timer)
-
-  sync.timer = setTimeout(() => {
-    const { scope } = sync
-    sync.scope = []
-    scope.forEach(run => run())
-  })
-}
 
 function removeParentChild (target: ContentElements) {
   if (target._parent) {
@@ -32,7 +11,7 @@ function removeParentChild (target: ContentElements) {
 }
 function removeElements (target: ContentElements, delay: number = target[REMOVE_DELAY]) {
   if (delay) {
-    setTimeout(() => pushSync(() => target.remove()), delay)
+    setTimeoutSync(() => target.remove(), delay)
   } else {
     target.remove()
   }

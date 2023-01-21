@@ -2,6 +2,11 @@
 
 ## v0.12
 
+### v0.12.4 [![21.01.2023](https://img.shields.io/date/1674304281)](https://github.com/d8corp/innet-dom/tree/v0.12.4)
+
+- improve `delay` hide element algorithm
+- add `setTimeoutSync`
+
 ### v0.12.3 [![18.01.2023](https://img.shields.io/date/1674068169)](https://github.com/d8corp/innet-dom/tree/v0.12.3)
 
 - improve `delay` hide element algorithm

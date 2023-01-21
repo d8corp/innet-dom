@@ -11,5 +11,4 @@ exports.append = dom.append;
 exports.before = dom.before;
 exports.clear = dom.clear;
 exports.prepend = dom.prepend;
-exports.pushSync = dom.pushSync;
 exports.remove = dom.remove;
