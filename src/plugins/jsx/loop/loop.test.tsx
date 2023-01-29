@@ -1,6 +1,7 @@
 import { Cache, State } from 'watch-state'
 
 import { getHTML, render } from '../../../test'
+import { LoopItem } from './loop'
 
 describe('for', () => {
   describe('static', () => {
@@ -10,9 +11,9 @@ describe('for', () => {
       const result = render(
         <ul>
           <for of={names}>
-            {name => (
+            {({ index, value }: LoopItem<string>) => (
               <li>
-                #{name.index}: {name.value}
+                #{index}: {value}
               </li>
             )}
           </for>
@@ -20,41 +21,6 @@ describe('for', () => {
       )
 
       expect(getHTML(result, true)).toBe('<ul><li>#0: Mike</li><li>#1: Alex</li><li>#2: Dan</li></ul>')
-    })
-    it('should limit by size', () => {
-      const names = ['Mike', 'Alex', 'Dan']
-
-      const result = render(
-        <ul>
-          <for of={names} size={2}>
-            {name => (
-              <li>
-                #{name.index}: {name.value}
-              </li>
-            )}
-          </for>
-        </ul>,
-      )
-
-      expect(getHTML(result, true)).toBe('<ul><li>#0: Mike</li><li>#1: Alex</li></ul>')
-    })
-    it('should render other if empty', () => {
-      const names = []
-
-      const result = render(
-        <ul>
-          <for of={names}>
-            {name => (
-              <li>
-                #{name.index}: {name.value}
-              </li>
-            )}
-            <li>Empty</li>
-          </for>
-        </ul>,
-      )
-
-      expect(getHTML(result, true)).toBe('<ul><li>Empty</li></ul>')
     })
   })
   describe('dynamic', () => {
@@ -221,28 +187,6 @@ describe('for', () => {
 
       expect(data.value).toEqual([0, 1])
       expect(getHTML(result)).toBe('<ul><li>0</li><li>1</li></ul>')
-    })
-    it('should limit by size', () => {
-      const size = new State(1)
-      const values = ['Test1', 'Test2']
-
-      const result = render(
-        <ul>
-          <for of={values} size={size}>
-            {body => (
-              <li>
-                {() => body.value}
-              </li>
-            )}
-          </for>
-        </ul>,
-      )
-
-      expect(getHTML(result)).toBe('<ul><li>Test1</li></ul>')
-
-      size.value++
-
-      expect(getHTML(result)).toBe('<ul><li>Test1</li><li>Test2</li></ul>')
     })
   })
 })

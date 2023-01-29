@@ -1,5 +1,5 @@
 import innet from 'innet';
-import { State, onDestroy, Watch } from 'watch-state';
+import { State, onDestroy, Watch, unwatch } from 'watch-state';
 import '../../../utils/index.es6.js';
 import { statePropToWatchProp } from '../../../utils/statePropToWatchProp/statePropToWatchProp.es6.js';
 import { getComment } from '../../../utils/getComment/getComment.es6.js';
@@ -36,10 +36,9 @@ function getKey(key, value) {
         return value[key];
     }
 }
-function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, children: [callback, ...elseProp], }, handler) {
-    const sizeProp = statePropToWatchProp(sizeState);
+function loop({ type, props: { key, of: ofState, }, children: [callback,], }, handler) {
     const ofProp = statePropToWatchProp(ofState);
-    if (typeof ofProp === 'function' || typeof sizeProp === 'function') {
+    if (typeof ofProp === 'function') {
         const [childHandler, mainComment] = getComment(handler, type);
         let map = new Map();
         let keysList = [];
@@ -52,7 +51,6 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
         });
         new Watch(update => {
             const values = typeof ofProp === 'function' ? ofProp(update) : ofProp;
-            const size = typeof sizeProp === 'function' ? sizeProp(update) : sizeProp;
             if (update) {
                 const oldKeysList = keysList;
                 keysList = values.map(value => getKey(key, value));
@@ -62,9 +60,6 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
                 let index = 0;
                 for (; index < values.length; index++) {
                     const value = values[index];
-                    if (size <= index) {
-                        break;
-                    }
                     if (isElse) {
                         isElse = false;
                         clear(mainComment);
@@ -77,8 +72,10 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
                     const wasBefore = oldMap.has(valueKey);
                     if (wasBefore) {
                         const data = oldMap.get(valueKey);
-                        data.item.value = value;
-                        data.item.index = index;
+                        unwatch(() => {
+                            data.item.value = value;
+                            data.item.index = index;
+                        });
                         map.set(valueKey, data);
                         if (!keep) {
                             if (index) {
@@ -120,16 +117,10 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
                     watcher.destroy();
                     remove(comment);
                 });
-                if (!index && elseProp.length && !isElse) {
-                    isElse = true;
-                    innet(elseProp, childHandler);
-                }
             }
             else {
                 let index = 0;
                 for (; index < values.length; index++) {
-                    if (size <= index)
-                        break;
                     const value = values[index];
                     const valueKey = getKey(key, value);
                     if (map.has(valueKey))
@@ -145,33 +136,16 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
                     }, true);
                     map.set(valueKey, { comment, item, watcher });
                 }
-                if (!index && elseProp.length && !isElse) {
-                    isElse = true;
-                    innet(elseProp, childHandler);
-                }
             }
-            // @ts-expect-error
-        }).d8 = true;
+        });
         return mainComment;
     }
     else {
         const result = [];
-        let index = 0;
         for (const value of ofProp) {
-            if (sizeProp <= index) {
-                break;
-            }
-            result.push(callback({ value, index }));
-            index++;
+            result.push(callback({ value, index: result.length }));
         }
-        if (!index) {
-            if (elseProp.length) {
-                return innet(elseProp, handler);
-            }
-        }
-        else {
-            return innet(result, handler);
-        }
+        return innet(result, handler);
     }
 }
 

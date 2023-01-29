@@ -36,7 +36,7 @@ Go into `my-app` and check `README.md`
 
 Use `dom` handler to start an application.
 
-Clear `src` folder and create `index.ts` inside
+Clear `src` folder and create `index.ts` inside.
 ```typescript
 import innet from 'innet'
 import dom from '@innet/dom'
@@ -60,13 +60,13 @@ export default (
 ```
 
 Everything, that you provide as the first argument of `innet` function with the `dom` handler,
-will fall into the `body` DOM-element after running `npm start`.
+will fall into the `body` DOM-element.
 
 ## portal
 
 If you want to put your content into another element (not `body`), use portal element.
 
-For example, you can change `index.html` from `public` folder
+For example, you can change `index.html` from `public` folder.
 ```html
 <!doctype html>
 <html lang="en">
@@ -92,7 +92,7 @@ export default (
 )
 ```
 
-You can use `portal` everywhere inside the app
+You can use `portal` everywhere inside the app.
 
 Change `app.tsx`
 ```typescript jsx
@@ -126,7 +126,7 @@ With `innet` you can fully exclude component approach, but state management stil
 
 The state management based on [watch-state](https://github.com/d8corp/watch-state)
 
-To bind state and content, use a State, a Cache or a function as a content.
+To bind state and content, use `State`, `Cache` or a function as the content.
 
 Turn back `index.html` and change `app.tsx`
 ```typescript jsx
@@ -134,19 +134,23 @@ import { State } from 'watch-state'
 
 const count = new State(0)
 
+const increase = () => {
+  count.value++
+}
+
 export default (
   <>
     <h1>
       Count: {count}
     </h1>
-    <button onclick={() => count.value++}>
+    <button onclick={increase}>
       Click Me
     </button>
   </>
 )
 ```
 
-To bind a state and a prop use a State, a Cache or a function as the prop.
+To bind a state and a prop use `State`, `Cache` or a function as a value of the prop.
 
 Change `app.tsx`
 ```typescript jsx
@@ -154,7 +158,7 @@ import { State } from 'watch-state'
 
 const darkMode = new State(false)
 
-const handleChange = e => {
+const handleChange = (e: Event) => {
   darkMode.value = e.target.checked
 }
 
@@ -164,7 +168,10 @@ export default (
       Hello World!
     </h1>
     <label>
-      <input type="checkbox" onchange={handleChange} />
+      <input
+        type="checkbox"
+        onchange={handleChange}
+      />
       Dark Mode
     </label>
   </div>
@@ -173,7 +180,8 @@ export default (
 
 ## Components
 
-Component is just a function you can use as JSX element.
+Component is a function.
+You can use it as JSX element.
 
 Create `Content.tsx`
 ```typescript jsx
@@ -208,7 +216,7 @@ export function Content ({ color }) {
 }
 ```
 
-Then you should use the prop outside.
+Then you should use the `color` prop outside.
 
 Change `app.tsx`
 ```typescript jsx
@@ -241,7 +249,7 @@ export async function Content (props1) {
 ```
 
 #### useProps
-You can get props with `useProps` hook
+You can get props with `useProps` hook.
 
 ```typescript jsx
 import { useProps } from '@innet/jsx'
@@ -361,7 +369,7 @@ function Content () {
 
 ### Async Component
 
-Innet supports async components, you can simplify previous code
+Innet supports async components, you can simplify previous code.
 ```typescript jsx
 async function Content () {
   const { text } = await fetch('...').then(e => e.json())
@@ -370,7 +378,7 @@ async function Content () {
 }
 ```
 
-[innetjs](https://www.npmjs.com/package/innetjs) helps to make code splitting
+[innetjs](https://www.npmjs.com/package/innetjs) helps to make code splitting.
 ```typescript jsx
 async function Content () {
   const { Test } = await import('./Test')
@@ -393,7 +401,7 @@ export const Test = () => (
 ```
 
 While it's loading nothing can be shown.
-If you want to show something, use `Generic Async Component`
+If you want to show something, use `Generic Async Component`.
 
 ### Generic Async Component
 
@@ -426,12 +434,12 @@ function * Content () {
 
 ## Ref
 
-Ref helps to get an HTML element
+`Ref` helps to get an HTML element.
 ```typescript jsx
 import { Ref } from '@innet/dom'
 
 function * Content () {
-  const wrapper = new Ref()
+  const wrapper = new Ref<HTMLDivElement>()
   
   yield (
     <div ref={wrapper}>
@@ -476,7 +484,7 @@ import { Content } from './Content'
 
 const show = new State(true)
 
-const handleChange = e => {
+const handleChange = (e: Event) => {
   show.value = e.target.checked
 }
 
@@ -485,7 +493,11 @@ export default (
     <show state={show}>
       <Content />
     </show>
-    <input type="checkbox" checked onchange={handleChange} />
+    <input
+      type="checkbox"
+      checked
+      onchange={handleChange}
+    />
   </>
 )
 ```
@@ -534,6 +546,8 @@ export default (
 You can use `show` element to show/hide content by state.
 
 ```typescript jsx
+import { State } from 'watch-state'
+
 const show = new State(true)
 
 export default (
@@ -569,11 +583,38 @@ export default (
 
 It's ok for static data, but if you use a state, it's better to use `for` element.
 ```typescript jsx
+import { State } from 'watch-state'
+
 const names = new State(['Mike', 'Alex', 'Dan'])
 
 export default (
   <ul>
     <for of={names}>
+      {name => (
+        <li>
+          #{() => name.index}:
+          {() => name.value}
+        </li>
+      )}
+    </for>
+  </ul>
+)
+```
+
+Use `key` property to improve `DOM` changes when you use an array of objects.
+
+```typescript jsx
+import { State } from 'watch-state'
+
+const names = new State([
+  { id: 1, text: 'test1' },
+  { id: 2, text: 'test2' },
+  { id: 3, text: 'test3' },
+])
+
+export default (
+  <ul>
+    <for of={names} key='id'>
       {name => (
         <li>
           #{() => name.index}:
@@ -658,7 +699,7 @@ export const Content = () => {
 }
 ```
 
-Any slots without name or with name equals empty string and any content outside slots collect into empty string slot.
+> Any slots without name or with name equals empty string and any content outside slots collect into empty string slot.
 
 ```typescript jsx
 export default (

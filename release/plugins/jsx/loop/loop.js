@@ -44,10 +44,9 @@ function getKey(key, value) {
         return value[key];
     }
 }
-function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, children: [callback, ...elseProp], }, handler) {
-    const sizeProp = statePropToWatchProp.statePropToWatchProp(sizeState);
+function loop({ type, props: { key, of: ofState, }, children: [callback,], }, handler) {
     const ofProp = statePropToWatchProp.statePropToWatchProp(ofState);
-    if (typeof ofProp === 'function' || typeof sizeProp === 'function') {
+    if (typeof ofProp === 'function') {
         const [childHandler, mainComment] = getComment.getComment(handler, type);
         let map = new Map();
         let keysList = [];
@@ -60,7 +59,6 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
         });
         new watchState.Watch(update => {
             const values = typeof ofProp === 'function' ? ofProp(update) : ofProp;
-            const size = typeof sizeProp === 'function' ? sizeProp(update) : sizeProp;
             if (update) {
                 const oldKeysList = keysList;
                 keysList = values.map(value => getKey(key, value));
@@ -70,9 +68,6 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
                 let index = 0;
                 for (; index < values.length; index++) {
                     const value = values[index];
-                    if (size <= index) {
-                        break;
-                    }
                     if (isElse) {
                         isElse = false;
                         dom.clear(mainComment);
@@ -85,8 +80,10 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
                     const wasBefore = oldMap.has(valueKey);
                     if (wasBefore) {
                         const data = oldMap.get(valueKey);
-                        data.item.value = value;
-                        data.item.index = index;
+                        watchState.unwatch(() => {
+                            data.item.value = value;
+                            data.item.index = index;
+                        });
                         map.set(valueKey, data);
                         if (!keep) {
                             if (index) {
@@ -128,16 +125,10 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
                     watcher.destroy();
                     dom.remove(comment);
                 });
-                if (!index && elseProp.length && !isElse) {
-                    isElse = true;
-                    innet__default["default"](elseProp, childHandler);
-                }
             }
             else {
                 let index = 0;
                 for (; index < values.length; index++) {
-                    if (size <= index)
-                        break;
                     const value = values[index];
                     const valueKey = getKey(key, value);
                     if (map.has(valueKey))
@@ -153,33 +144,16 @@ function loop({ type, props: { size: sizeState = Infinity, key, of: ofState, }, 
                     }, true);
                     map.set(valueKey, { comment, item, watcher });
                 }
-                if (!index && elseProp.length && !isElse) {
-                    isElse = true;
-                    innet__default["default"](elseProp, childHandler);
-                }
             }
-            // @ts-expect-error
-        }).d8 = true;
+        });
         return mainComment;
     }
     else {
         const result = [];
-        let index = 0;
         for (const value of ofProp) {
-            if (sizeProp <= index) {
-                break;
-            }
-            result.push(callback({ value, index }));
-            index++;
+            result.push(callback({ value, index: result.length }));
         }
-        if (!index) {
-            if (elseProp.length) {
-                return innet__default["default"](elseProp, handler);
-            }
-        }
-        else {
-            return innet__default["default"](result, handler);
-        }
+        return innet__default["default"](result, handler);
     }
 }
 

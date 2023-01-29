@@ -601,50 +601,26 @@ export default (
 )
 ```
 
-You can control size of elements inside `for`.
+Use `key` property to improve `DOM` changes when you use an array of objects.
 
 ```typescript jsx
 import { State } from 'watch-state'
 
-const names = new State(['Mike', 'Alex', 'Dan'])
-const size = new State(1)
+const names = new State([
+  { id: 1, text: 'test1' },
+  { id: 2, text: 'test2' },
+  { id: 3, text: 'test3' },
+])
 
-const increase = () => {
-  size.value++
-}
-
-export default (
-  <>
-    <button onclick={increase}>
-      Increase
-    </button>
-    <ul>
-      <for of={names} size={size}>
-        {name => (
-          <li>
-            #{() => name.index}:
-            {() => name.value}
-          </li>
-        )}
-      </for>
-    </ul>
-  </>
-)
-```
-
-Everything, after the child function, shows for empty lists.
-
-```typescript jsx
 export default (
   <ul>
-    <for of={[]}>
+    <for of={names} key='id'>
       {name => (
         <li>
           #{() => name.index}:
           {() => name.value}
         </li>
       )}
-      <li>Empty</li>
     </for>
   </ul>
 )

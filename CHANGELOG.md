@@ -2,6 +2,11 @@
 
 ## v0.12
 
+### v0.12.5 [![29.01.2023](https://img.shields.io/date/1675009017)](https://github.com/d8corp/innet-dom/tree/v0.12.5)
+
+- reduce `for` element functionality
+- fix `for` bug
+
 ### v0.12.4 [![21.01.2023](https://img.shields.io/date/1674304281)](https://github.com/d8corp/innet-dom/tree/v0.12.4)
 
 - improve `delay` hide element algorithm

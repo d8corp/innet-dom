@@ -1,6 +1,6 @@
 import { JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
-import { onDestroy, State, Watch } from 'watch-state'
+import { onDestroy, State, unwatch, Watch } from 'watch-state'
 
 import { StateProp } from '../../../types'
 import { after, before, clear, dif, getComment, prepend, remove, setParent, statePropToWatchProp } from '../../../utils'
@@ -13,7 +13,6 @@ interface LoopMap<T> {
 
 export interface LoopProps<T = any> {
   of: StateProp<T[]>
-  size?: StateProp<number>
   key?: keyof T | ((item: T) => any)
 }
 export type LoopCallback<T> = (item: LoopItem<T>) => any
@@ -58,19 +57,16 @@ function getKey (key, value) {
 export function loop <T> ({
   type,
   props: {
-    size: sizeState = Infinity,
     key,
     of: ofState,
   },
   children: [
     callback,
-    ...elseProp
   ],
 }: JSXPluginElement<LoopProps<T>, LoopChildren<T>>, handler) {
-  const sizeProp = statePropToWatchProp(sizeState)
   const ofProp = statePropToWatchProp(ofState)
 
-  if (typeof ofProp === 'function' || typeof sizeProp === 'function') {
+  if (typeof ofProp === 'function') {
     const [childHandler, mainComment] = getComment(handler, type)
 
     let map = new Map<any, LoopMap<T>>()
@@ -86,7 +82,6 @@ export function loop <T> ({
 
     new Watch(update => {
       const values = typeof ofProp === 'function' ? ofProp(update) : ofProp
-      const size = typeof sizeProp === 'function' ? sizeProp(update) : sizeProp
 
       if (update) {
         const oldKeysList = keysList
@@ -100,10 +95,6 @@ export function loop <T> ({
 
         for (; index < values.length; index++) {
           const value = values[index]
-
-          if (size <= index) {
-            break
-          }
 
           if (isElse) {
             isElse = false
@@ -122,8 +113,10 @@ export function loop <T> ({
           if (wasBefore) {
             const data = oldMap.get(valueKey)
 
-            data.item.value = value
-            data.item.index = index
+            unwatch(() => {
+              data.item.value = value
+              data.item.index = index
+            })
             map.set(valueKey, data)
 
             if (!keep) {
@@ -166,17 +159,10 @@ export function loop <T> ({
           watcher.destroy()
           remove(comment)
         })
-
-        if (!index && elseProp.length && !isElse) {
-          isElse = true
-          innet(elseProp, childHandler)
-        }
       } else {
         let index = 0
 
         for (; index < values.length; index++) {
-          if (size <= index) break
-
           const value = values[index]
           const valueKey = getKey(key, value)
 
@@ -196,36 +182,17 @@ export function loop <T> ({
 
           map.set(valueKey, { comment, item, watcher })
         }
-
-        if (!index && elseProp.length && !isElse) {
-          isElse = true
-          innet(elseProp, childHandler)
-        }
       }
-      // @ts-expect-error
-    }).d8 = true
+    })
 
     return mainComment
   } else {
     const result = []
-    let index = 0
 
     for (const value of ofProp) {
-      if (sizeProp <= index) {
-        break
-      }
-
-      result.push(callback({ value, index } as LoopItem<T>))
-
-      index++
+      result.push(callback({ value, index: result.length } as LoopItem<T>))
     }
 
-    if (!index) {
-      if (elseProp.length) {
-        return innet(elseProp, handler)
-      }
-    } else {
-      return innet(result, handler)
-    }
+    return innet(result, handler)
   }
 }
