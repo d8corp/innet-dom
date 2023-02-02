@@ -1,4 +1,4 @@
-import innet, { PluginHandler } from 'innet'
+import innet, { type PluginHandler } from 'innet'
 import { Cache, State } from 'watch-state'
 
 export function state (): PluginHandler {

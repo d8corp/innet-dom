@@ -12,7 +12,7 @@ function getComment(handler, name, freeParent = false, parent = getParent(handle
     setParent(childHandler, comment);
     append(parent, comment);
     if (!freeParent) {
-        onDestroy(() => remove(comment));
+        onDestroy(() => { remove(comment); });
     }
     return [childHandler, comment];
 }

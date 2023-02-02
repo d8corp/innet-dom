@@ -1,7 +1,7 @@
-import { JSXPluginElement } from '@innet/jsx'
+import { type JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
 
-import { StateProp } from '../../../types'
+import { type StateProp } from '../../../types'
 import { inject, use } from '../../../utils'
 
 export interface ShowProps {

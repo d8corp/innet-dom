@@ -1,4 +1,4 @@
-import { ContentElements, TargetElements } from '../../types';
+import { type ContentElements, type TargetElements } from '../../types';
 export declare function clear(target: Comment, delay?: number): void;
 export declare function remove(target: ContentElements): void;
 export declare function before(target: TargetElements, node: ContentElements): void;

@@ -1,6 +1,6 @@
 import { useHandler } from '@innet/jsx'
 
-import { TargetElements } from '../../types'
+import { type TargetElements } from '../../types'
 import { getParent } from '../../utils'
 
 export function useParent<T extends TargetElements> (): T {

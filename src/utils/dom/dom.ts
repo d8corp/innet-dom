@@ -1,4 +1,4 @@
-import { ContentElements, TargetElements } from '../../types'
+import { type ContentElements, type TargetElements } from '../../types'
 import { setTimeoutSync } from '../setTimeoutSync'
 import { REMOVE_DELAY } from './constants'
 
@@ -11,7 +11,7 @@ function removeParentChild (target: ContentElements) {
 }
 function removeElements (target: ContentElements, delay: number = target[REMOVE_DELAY]) {
   if (delay) {
-    setTimeoutSync(() => target.remove(), delay)
+    setTimeoutSync(() => { target.remove() }, delay)
   } else {
     target.remove()
   }
@@ -38,7 +38,7 @@ function insertChild (target: TargetElements, node: ContentElements, offset = 0)
 }
 
 export function clear (target: Comment, delay?: number) {
-  target._children.forEach(target => removeElements(target, delay))
+  target._children.forEach(target => { removeElements(target, delay) })
   target._children = []
 }
 export function remove (target: ContentElements) {

@@ -1,7 +1,7 @@
-import { JSXPluginElement } from '@innet/jsx'
+import { type JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
 
-import { TargetElements } from '../../../types'
+import { type TargetElements } from '../../../types'
 import { getComment } from '../../../utils'
 
 export interface PortalProps {

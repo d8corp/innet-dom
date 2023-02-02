@@ -11,7 +11,7 @@ function removeParentChild(target) {
 }
 function removeElements(target, delay = target[REMOVE_DELAY]) {
     if (delay) {
-        setTimeoutSync(() => target.remove(), delay);
+        setTimeoutSync(() => { target.remove(); }, delay);
     }
     else {
         target.remove();
@@ -38,7 +38,7 @@ function insertChild(target, node, offset = 0) {
     }
 }
 function clear(target, delay) {
-    target._children.forEach(target => removeElements(target, delay));
+    target._children.forEach(target => { removeElements(target, delay); });
     target._children = [];
 }
 function remove(target) {

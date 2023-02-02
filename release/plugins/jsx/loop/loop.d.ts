@@ -1,5 +1,5 @@
-import { JSXPluginElement } from '@innet/jsx';
-import { StateProp } from '../../../types';
+import { type JSXPluginElement } from '@innet/jsx';
+import { type StateProp } from '../../../types';
 export interface LoopProps<T = any> {
     of: StateProp<T[]>;
     key?: keyof T | ((item: T) => any);

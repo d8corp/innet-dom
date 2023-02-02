@@ -1,7 +1,7 @@
 /// <reference types="qs" />
-import { Context, JSXPluginElement } from '@innet/jsx';
+import { Context, type JSXPluginElement } from '@innet/jsx';
 import History from '@watch-state/history-api';
-import { Handler } from 'innet';
+import { type Handler } from 'innet';
 import { Cache } from 'watch-state';
 export interface RouterProps {
     search?: string | number;

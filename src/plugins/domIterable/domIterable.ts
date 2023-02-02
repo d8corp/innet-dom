@@ -1,4 +1,4 @@
-import innet, { PluginHandler } from 'innet'
+import innet, { type PluginHandler } from 'innet'
 
 export const domIterable = (): PluginHandler => (apps, next, handler) => {
   let update = false

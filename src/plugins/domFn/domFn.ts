@@ -1,4 +1,4 @@
-import innet, { PluginHandler } from 'innet'
+import innet, { type PluginHandler } from 'innet'
 import { Watch } from 'watch-state'
 
 import { clear, getComment } from '../../utils'

@@ -1,4 +1,4 @@
-import innet, { PluginHandler } from 'innet'
+import innet, { type PluginHandler } from 'innet'
 import { onDestroy, scope } from 'watch-state'
 
 import { getComment } from '../../utils'

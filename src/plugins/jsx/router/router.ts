@@ -1,6 +1,6 @@
-import { Context, createContextHandler, getSlots, JSXPluginElement, useHandler } from '@innet/jsx'
+import { Context, createContextHandler, getSlots, type JSXPluginElement, useHandler } from '@innet/jsx'
 import History from '@watch-state/history-api'
-import innet, { Handler } from 'innet'
+import innet, { type Handler } from 'innet'
 import { Cache } from 'watch-state'
 
 import { parseSearch } from '../../../utils/parseSearch'

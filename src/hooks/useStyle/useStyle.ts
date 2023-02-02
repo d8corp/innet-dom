@@ -1,14 +1,16 @@
 import { useProps } from '@innet/jsx'
-import classes, { ClassesArgument } from 'html-classes'
+import classes, { type ClassesArgument } from 'html-classes'
 
-import { HTMLProps } from '../../types'
+import { type HTMLProps } from '../../types'
+
+export type Styles = Record<string, any>
 
 export interface Style<S = any> {
   class?: ClassesArgument<keyof S> | Record<keyof S, ClassesArgument<keyof S>>
 }
 export type HTMLStyleProps<E extends HTMLElement = HTMLElement, S = any> = Omit<HTMLProps<E>, 'class'> & Style<S>
 
-export function getStyles<S> (styles: S, props: any): S {
+export function getStyles<S extends Styles> (styles: S, props: any): S {
   if (!props?.class) {
     return styles
   }
@@ -19,7 +21,6 @@ export function getStyles<S> (styles: S, props: any): S {
     const result = { ...styles }
     Object.defineProperty(result, 'root', {
       get () {
-        // @ts-expect-error
         return classes([styles.root, className])
       },
     })

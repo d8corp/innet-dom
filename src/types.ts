@@ -1,7 +1,8 @@
-import { Handler } from 'innet'
-import { Cache, State } from 'watch-state'
+import { type Handler } from 'innet'
+import { type Cache, type State } from 'watch-state'
+import { type Watcher } from 'watch-state/types'
 
-import { Ref } from './utils'
+import { type Ref } from './utils'
 
 type CamelToKebabCase<S extends string> = S extends `${infer T}${infer U}` ?
   `${T extends Capitalize<T> ? '-' : ''}${Lowercase<T>}${CamelToKebabCase<U>}` :
@@ -17,7 +18,7 @@ export type ParentElements = TargetElements | DocumentFragment
 
 export type UseComment = [Handler, Comment]
 
-export type WatchProp <T> = T | ((update: boolean) => T)
+export type WatchProp <T> = T | Watcher<T>
 export type StateProp <T> = WatchProp<T> | State<T> | Cache<T>
 
 export type HTMLStyleKeys = keyof KeysToKebabCase<Omit<
@@ -32,9 +33,7 @@ export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> {
   ref?: Ref<E>
 }
 
-export interface HTMLDataProps {
-  [key: `data-${string}`]: StateProp<string>
-}
+export type HTMLDataProps = Record<`data-${string}`, StateProp<string>>
 
 export type HTMLProps<E extends HTMLElement = HTMLElement> = Omit<{
   [K in Extract<keyof E, `on${string}`>]?: E[K];

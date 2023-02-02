@@ -1,7 +1,7 @@
-import { Handler } from 'innet'
+import { type Handler } from 'innet'
 import { onDestroy } from 'watch-state'
 
-import { UseComment } from '../../types'
+import { type UseComment } from '../../types'
 import { append, remove } from '../dom'
 import { getParent } from '../getParent'
 import { setParent } from '../setParent'
@@ -13,7 +13,7 @@ export function getComment (handler: Handler, name: string, freeParent = false, 
   append(parent, comment)
 
   if (!freeParent) {
-    onDestroy(() => remove(comment))
+    onDestroy(() => { remove(comment) })
   }
 
   return [childHandler, comment]

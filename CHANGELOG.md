@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.13
+
+### v0.13.0 [![02.02.2023](https://img.shields.io/date/1675353741)](https://github.com/d8corp/innet-dom/tree/v0.13.0)
+
+- update dependencies
+
 ## v0.12
 
 ### v0.12.5 [![29.01.2023](https://img.shields.io/date/1675009017)](https://github.com/d8corp/innet-dom/tree/v0.12.5)

@@ -10,7 +10,6 @@ function getStyles(styles, props) {
         const result = Object.assign({}, styles);
         Object.defineProperty(result, 'root', {
             get() {
-                // @ts-expect-error
                 return classes([styles.root, className]);
             },
         });

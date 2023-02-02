@@ -1,13 +1,13 @@
 import {
   context,
-  ContextProps,
+  type ContextProps,
   jsxComponent,
-  JSXPlugin,
+  type JSXPlugin,
   jsxPlugins,
   slot,
-  SlotProps,
+  type SlotProps,
   slots,
-  SlotsProps,
+  type SlotsProps,
 } from '@innet/jsx'
 import {
   array,
@@ -27,7 +27,7 @@ import { createHandler } from 'innet'
 
 import {
   delay,
-  DelayProps,
+  type DelayProps,
   domAsync,
   domAsyncIterable,
   domFn,
@@ -36,18 +36,18 @@ import {
   domNode,
   domText,
   link,
-  LinkProps,
+  type LinkProps,
   loop,
-  LoopProps,
+  type LoopProps,
   portal,
-  PortalProps,
+  type PortalProps,
   router,
-  RouterProps,
+  type RouterProps,
   show,
-  ShowProps,
+  type ShowProps,
   state,
 } from '../plugins'
-import { HTMLProps } from '../types'
+import { type HTMLProps } from '../types'
 
 export const arrayPlugins = [
   arraySync,
@@ -111,6 +111,7 @@ export const handler = createHandler([
 
 declare global {
   namespace JSX {
+    // @ts-expect-error: need to be redeclared
     interface IntrinsicElements {
       portal: PortalProps
       for: LoopProps

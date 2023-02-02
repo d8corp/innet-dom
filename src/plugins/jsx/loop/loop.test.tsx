@@ -1,7 +1,7 @@
 import { Cache, State } from 'watch-state'
 
 import { getHTML, render } from '../../../test'
-import { LoopItem } from './loop'
+import { type LoopItem } from './loop'
 
 describe('for', () => {
   describe('static', () => {

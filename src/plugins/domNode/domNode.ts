@@ -1,4 +1,4 @@
-import { PluginHandler } from 'innet'
+import { type PluginHandler } from 'innet'
 
 import { append } from '../../utils/dom'
 import { getParent } from '../../utils/getParent'

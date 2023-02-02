@@ -16,7 +16,7 @@ function getComment(handler, name, freeParent = false, parent = getParent.getPar
     setParent.setParent(childHandler, comment);
     dom.append(parent, comment);
     if (!freeParent) {
-        watchState.onDestroy(() => dom.remove(comment));
+        watchState.onDestroy(() => { dom.remove(comment); });
     }
     return [childHandler, comment];
 }

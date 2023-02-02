@@ -1,4 +1,4 @@
-import { JsxComponent } from '@innet/jsx'
+import { type JsxComponent } from '@innet/jsx'
 
 import { getHTML, render } from '../../../test'
 import { history, useRoute } from './router'

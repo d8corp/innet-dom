@@ -1,7 +1,7 @@
-import { Handler } from 'innet'
+import { type Handler } from 'innet'
 
 import { PARENT } from '../../constants'
-import { ParentElements } from '../../types'
+import { type ParentElements } from '../../types'
 
 export function setParent (handler: Handler, parent: ParentElements) {
   handler[PARENT] = parent

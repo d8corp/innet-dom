@@ -1,4 +1,4 @@
-import { JsxComponent } from '@innet/jsx'
+import { type JsxComponent } from '@innet/jsx'
 import { State } from 'watch-state'
 
 import { getHTML, render } from '../../../test'

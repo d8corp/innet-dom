@@ -1,8 +1,8 @@
-import { JSXPluginElement } from '@innet/jsx'
+import { type JSXPluginElement } from '@innet/jsx'
 import classes from 'html-classes'
 import innet from 'innet'
 
-import { getStyles, HTMLStyleProps } from '../../../hooks/useStyle'
+import { getStyles, type HTMLStyleProps } from '../../../hooks/useStyle'
 import { use } from '../../../utils'
 import { history } from '../router'
 

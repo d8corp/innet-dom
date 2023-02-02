@@ -1,6 +1,6 @@
 import { Cache, State } from 'watch-state'
 
-import { StateProp } from '../../types'
+import { type StateProp } from '../../types'
 import { use } from '../use'
 
 export type InjectCallback <V, R> = (value: V) => R

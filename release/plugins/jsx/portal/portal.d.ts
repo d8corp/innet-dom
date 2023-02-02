@@ -1,5 +1,5 @@
-import { JSXPluginElement } from '@innet/jsx';
-import { TargetElements } from '../../../types';
+import { type JSXPluginElement } from '@innet/jsx';
+import { type TargetElements } from '../../../types';
 export interface PortalProps {
     parent: TargetElements | DocumentFragment;
 }

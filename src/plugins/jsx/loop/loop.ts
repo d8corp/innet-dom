@@ -1,8 +1,8 @@
-import { JSXPluginElement } from '@innet/jsx'
+import { type JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
 import { onDestroy, State, unwatch, Watch } from 'watch-state'
 
-import { StateProp } from '../../../types'
+import { type StateProp } from '../../../types'
 import { after, before, clear, dif, getComment, prepend, remove, setParent, statePropToWatchProp } from '../../../utils'
 
 interface LoopMap<T> {

@@ -21,6 +21,7 @@
   "rules": {
     "@typescript-eslint/no-namespace": "off",
     "n/no-callback-literal": "off",
+    "@typescript-eslint/ban-types": "off",
     "no-redeclare": "off",
     "no-new": "off",
     "@typescript-eslint/restrict-plus-operands": "off",

@@ -1,5 +1,5 @@
-import { JSXPluginElement } from '@innet/jsx';
-import { HTMLStyleProps } from '../../../hooks/useStyle';
+import { type JSXPluginElement } from '@innet/jsx';
+import { type HTMLStyleProps } from '../../../hooks/useStyle';
 export declare const defaultClass: {
     root: any;
     active: any;

@@ -46,7 +46,7 @@ function delay({ props, children }, handler) {
             }, true);
             watchState.onDestroy(() => {
                 hideState.value = true;
-                setTimeoutSync.setTimeoutSync(() => watcher.destroy(), hide);
+                setTimeoutSync.setTimeoutSync(() => { watcher.destroy(); }, hide);
             });
             return;
         }
