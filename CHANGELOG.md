@@ -2,6 +2,10 @@
 
 ## v0.13
 
+### v0.13.1 [![04.02.2023](https://img.shields.io/date/1675515287)](https://github.com/d8corp/innet-dom/tree/v0.13.1)
+
+- update dependencies
+
 ### v0.13.0 [![02.02.2023](https://img.shields.io/date/1675353741)](https://github.com/d8corp/innet-dom/tree/v0.13.0)
 
 - update dependencies
