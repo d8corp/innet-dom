@@ -9,7 +9,7 @@ function setTimeoutSync(handler, timeout = 0) {
         return scope[timeout].timer;
     }
     const timer = scope[timeout] = {
-        handlers: [],
+        handlers: [handler],
         timer: setTimeout(() => {
             timer.handlers.forEach(run => run());
         }, timeout),

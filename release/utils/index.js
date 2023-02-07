@@ -12,4 +12,5 @@ require('./use/index.js');
 require('./statePropToWatchProp/index.js');
 require('./inject/index.js');
 require('./setTimeoutSync/index.js');
+require('./onMounted/index.js');
 

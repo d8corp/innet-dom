@@ -2,6 +2,11 @@
 
 ## v0.13
 
+### v0.13.2 [![07.02.2023](https://img.shields.io/date/1675767398)](https://github.com/d8corp/innet-dom/tree/v0.13.2)
+
+- fix `setTimeoutSync` bug
+- add `onMounted`
+
 ### v0.13.1 [![04.02.2023](https://img.shields.io/date/1675515287)](https://github.com/d8corp/innet-dom/tree/v0.13.1)
 
 - update dependencies

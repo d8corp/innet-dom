@@ -10,3 +10,4 @@ export * from './use';
 export * from './statePropToWatchProp';
 export * from './inject';
 export * from './setTimeoutSync';
+export * from './onMounted';

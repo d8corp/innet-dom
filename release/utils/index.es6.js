@@ -10,3 +10,4 @@ import './use/index.es6.js';
 import './statePropToWatchProp/index.es6.js';
 import './inject/index.es6.js';
 import './setTimeoutSync/index.es6.js';
+import './onMounted/index.es6.js';
