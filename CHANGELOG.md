@@ -2,6 +2,10 @@
 
 ## v0.13
 
+### v0.13.3 [![10.03.2023](https://img.shields.io/date/1678440616)](https://github.com/d8corp/innet-dom/tree/v0.13.3)
+
+- fix link `onclick` bug
+
 ### v0.13.2 [![07.02.2023](https://img.shields.io/date/1675767398)](https://github.com/d8corp/innet-dom/tree/v0.13.2)
 
 - fix `setTimeoutSync` bug
