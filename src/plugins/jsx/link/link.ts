@@ -78,12 +78,12 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
     } else if (href.startsWith('#')) {
       url = history.path + location.search + (href === '#' ? '' : href)
     } else if (!page) {
-      return onclick?.apply(window, e)
+      return onclick?.call(window, e)
     }
     e.preventDefault()
     const { scrollTo = page ? 0 : -1, scroll = 'before', replace } = props
     history[replace ? 'replace' : 'push'](url, scroll === 'none' ? -1 : scrollTo, scroll === 'before')
-    onclick?.apply(window, e)
+    onclick?.call(window, e)
   }
 
   return innet({
