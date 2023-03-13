@@ -57,7 +57,10 @@ function link({ type, props, children }, oldHandler) {
             ]);
         };
     };
-    const handleClick = e => {
+    function handleClick(e) {
+        if (e.ctrlKey || e.metaKey) {
+            return onclick === null || onclick === void 0 ? void 0 : onclick.call(this, e);
+        }
         const href = getHref(false);
         let url = href;
         const page = href.startsWith('/');
@@ -68,13 +71,13 @@ function link({ type, props, children }, oldHandler) {
             url = router.history.path + location.search + (href === '#' ? '' : href);
         }
         else if (!page) {
-            return onclick === null || onclick === void 0 ? void 0 : onclick.call(window, e);
+            return onclick === null || onclick === void 0 ? void 0 : onclick.call(this, e);
         }
         e.preventDefault();
         const { scrollTo = page ? 0 : -1, scroll = 'before', replace } = props;
         router.history[replace ? 'replace' : 'push'](url, scroll === 'none' ? -1 : scrollTo, scroll === 'before');
-        onclick === null || onclick === void 0 ? void 0 : onclick.call(window, e);
-    };
+        return onclick === null || onclick === void 0 ? void 0 : onclick.call(this, e);
+    }
     return innet__default["default"]({
         type: 'a',
         props: Object.assign(Object.assign({}, rest), { class: getClass(), href: (update) => {

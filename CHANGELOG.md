@@ -2,6 +2,10 @@
 
 ## v0.13
 
+### v0.13.4 [![13.03.2023](https://img.shields.io/date/1678712428)](https://github.com/d8corp/innet-dom/tree/v0.13.4)
+
+- fix `link` plugin bug
+
 ### v0.13.3 [![10.03.2023](https://img.shields.io/date/1678440616)](https://github.com/d8corp/innet-dom/tree/v0.13.3)
 
 - fix link `onclick` bug
