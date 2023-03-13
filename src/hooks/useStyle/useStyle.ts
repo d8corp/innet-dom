@@ -44,10 +44,10 @@ export function getStyles<S extends Styles> (styles: S, props: any): S {
   return result
 }
 
-export function style<S> (styles: S) {
+export function style<S> (styles: S, rest?: Record<string, any>) {
   return function useStyle (): S {
     const props = useProps()
 
-    return getStyles(styles, props)
+    return getStyles(rest ? Object.assign({}, styles, rest) : styles, props)
   }
 }

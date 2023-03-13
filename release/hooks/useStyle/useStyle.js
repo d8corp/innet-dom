@@ -36,10 +36,10 @@ function getStyles(styles, props) {
     }
     return result;
 }
-function style(styles) {
+function style(styles, rest) {
     return function useStyle() {
         const props = jsx.useProps();
-        return getStyles(styles, props);
+        return getStyles(rest ? Object.assign({}, styles, rest) : styles, props);
     };
 }
 

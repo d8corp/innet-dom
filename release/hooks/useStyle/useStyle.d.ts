@@ -6,4 +6,4 @@ export interface Style<S = any> {
 }
 export type HTMLStyleProps<E extends HTMLElement = HTMLElement, S = any> = Omit<HTMLProps<E>, 'class'> & Style<S>;
 export declare function getStyles<S extends Styles>(styles: S, props: any): S;
-export declare function style<S>(styles: S): () => S;
+export declare function style<S>(styles: S, rest?: Record<string, any>): () => S;

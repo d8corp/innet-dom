@@ -28,10 +28,10 @@ function getStyles(styles, props) {
     }
     return result;
 }
-function style(styles) {
+function style(styles, rest) {
     return function useStyle() {
         const props = useProps();
-        return getStyles(styles, props);
+        return getStyles(rest ? Object.assign({}, styles, rest) : styles, props);
     };
 }
 
