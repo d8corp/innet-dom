@@ -68,7 +68,10 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
     }
   }
 
-  const handleClick = e => {
+  function handleClick (e: MouseEvent) {
+    if (e.ctrlKey || e.metaKey) {
+      return onclick?.call(this, e)
+    }
     const href = getHref(false)
     let url = href
     const page = href.startsWith('/')
@@ -78,12 +81,12 @@ export function link ({ type, props, children }: JSXPluginElement<LinkProps, voi
     } else if (href.startsWith('#')) {
       url = history.path + location.search + (href === '#' ? '' : href)
     } else if (!page) {
-      return onclick?.call(window, e)
+      return onclick?.call(this, e)
     }
     e.preventDefault()
     const { scrollTo = page ? 0 : -1, scroll = 'before', replace } = props
     history[replace ? 'replace' : 'push'](url, scroll === 'none' ? -1 : scrollTo, scroll === 'before')
-    onclick?.call(window, e)
+    return onclick?.call(this, e)
   }
 
   return innet({
