@@ -2,6 +2,10 @@
 
 ## v0.13
 
+### v0.13.6 [![27.03.2023](https://img.shields.io/date/1679913810)](https://github.com/d8corp/innet-dom/tree/v0.13.6)
+
+- fix `for` plugin bug
+
 ### v0.13.5 [![13.03.2023](https://img.shields.io/date/1678719135)](https://github.com/d8corp/innet-dom/tree/v0.13.5)
 
 - improve `style`

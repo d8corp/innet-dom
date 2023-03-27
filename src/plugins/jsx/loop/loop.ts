@@ -1,6 +1,6 @@
 import { type JSXPluginElement } from '@innet/jsx'
 import innet from 'innet'
-import { onDestroy, State, unwatch, Watch } from 'watch-state'
+import { createEvent, onDestroy, State, unwatch, Watch } from 'watch-state'
 
 import { type StateProp } from '../../../types'
 import { after, before, clear, dif, getComment, prepend, remove, setParent, statePropToWatchProp } from '../../../utils'
@@ -113,10 +113,10 @@ export function loop <T> ({
           if (wasBefore) {
             const data = oldMap.get(valueKey)
 
-            unwatch(() => {
+            unwatch(createEvent(() => {
               data.item.value = value
               data.item.index = index
-            })
+            }))
             map.set(valueKey, data)
 
             if (!keep) {

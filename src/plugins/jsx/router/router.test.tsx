@@ -260,8 +260,8 @@ describe('router', () => {
     expect(count).toBe(0)
 
     history.push('/settings')
-    expect(getHTML(result)).toBe('Settings')
     expect(count).toBe(1)
+    expect(getHTML(result)).toBe('Settings')
 
     history.push('/settings/test')
     expect(getHTML(result)).toBe('Settings')

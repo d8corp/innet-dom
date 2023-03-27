@@ -1,5 +1,5 @@
 import innet from 'innet';
-import { State, onDestroy, Watch, unwatch } from 'watch-state';
+import { State, onDestroy, Watch, unwatch, createEvent } from 'watch-state';
 import '../../../utils/index.es6.js';
 import { statePropToWatchProp } from '../../../utils/statePropToWatchProp/statePropToWatchProp.es6.js';
 import { getComment } from '../../../utils/getComment/getComment.es6.js';
@@ -72,10 +72,10 @@ function loop({ type, props: { key, of: ofState, }, children: [callback,], }, ha
                     const wasBefore = oldMap.has(valueKey);
                     if (wasBefore) {
                         const data = oldMap.get(valueKey);
-                        unwatch(() => {
+                        unwatch(createEvent(() => {
                             data.item.value = value;
                             data.item.index = index;
-                        });
+                        }));
                         map.set(valueKey, data);
                         if (!keep) {
                             if (index) {

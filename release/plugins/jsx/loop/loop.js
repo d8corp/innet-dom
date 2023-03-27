@@ -80,10 +80,10 @@ function loop({ type, props: { key, of: ofState, }, children: [callback,], }, ha
                     const wasBefore = oldMap.has(valueKey);
                     if (wasBefore) {
                         const data = oldMap.get(valueKey);
-                        watchState.unwatch(() => {
+                        watchState.unwatch(watchState.createEvent(() => {
                             data.item.value = value;
                             data.item.index = index;
-                        });
+                        }));
                         map.set(valueKey, data);
                         if (!keep) {
                             if (index) {
