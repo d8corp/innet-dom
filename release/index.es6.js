@@ -12,6 +12,8 @@ export { getRoute, getStrongRoute, history, parsedPath, parsedSearch, pathDeep, 
 export { defaultClass, link } from './plugins/jsx/link/link.es6.js';
 export { delay, delayContext, useHidden } from './plugins/jsx/delay/delay.es6.js';
 export { show } from './plugins/jsx/show/show.es6.js';
+export { hide } from './plugins/jsx/hide/hide.es6.js';
+export { switchPlugin } from './plugins/jsx/switch/switch.es6.js';
 export { domAsync } from './plugins/domAsync/domAsync.es6.js';
 export { domIterable } from './plugins/domIterable/domIterable.es6.js';
 export { NAMESPACE_URI, domJSX } from './plugins/domJSX/domJSX.es6.js';

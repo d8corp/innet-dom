@@ -490,7 +490,7 @@ const handleChange = (e: Event) => {
 
 export default (
   <>
-    <show state={show}>
+    <show when={show}>
       <Content />
     </show>
     <input
@@ -551,7 +551,7 @@ import { State } from 'watch-state'
 const show = new State(true)
 
 export default (
-  <show state={show}>
+  <show when={show}>
     <button
       onclick={() => {
         show.value = false
@@ -562,7 +562,70 @@ export default (
 )
 ```
 
-> `state` can be: `State` | `Cache` | `() => any` | `any`
+> `when` can be: `State` | `Cache` | `() => any` | `any`
+
+## hide
+
+You can use `hide` element to show/hide content by state.
+
+```typescript jsx
+import { State } from 'watch-state'
+
+const isHidden = new State(false)
+
+export default (
+  <hide when={isHidden}>
+    <button
+      onclick={() => {
+        isHidden.value = true
+      }}>
+      Click Me
+    </button>
+  </hide>
+)
+```
+
+> `when` can be: `State` | `Cache` | `() => any` | `any`
+
+## switch
+
+You can use `switch` element to show a content by string state.
+
+```typescript jsx
+import { State } from 'watch-state'
+
+const str = new State('')
+
+const case1 = () => {
+  str.value = 'case1'
+}
+
+const case2 = () => {
+  str.value = 'case2'
+}
+
+export default (
+  <switch of={str}>
+    <slot name='case1'>
+      Case 1
+      <button
+        onclick={case2}>
+        Next
+      </button>
+    </slot>
+    <slot name='case2'>
+      Case 2
+    </slot>
+    Default content
+    <button
+      onclick={case1}>
+      Next
+    </button>
+  </switch>
+)
+```
+
+> `of` can be: `State<string | number>` | `Cache<string | number>` | `() => (string | number)` | `string | number`
 
 ## for
 
@@ -681,7 +744,7 @@ export const Content = () => {
 
   return (
     <>
-      <show state={header}>
+      <show when={header}>
         <div class='header'>
           {header}
         </div>
@@ -689,7 +752,7 @@ export const Content = () => {
       <div class='content'>
         {content}
       </div>
-      <show state={footer}>
+      <show when={footer}>
         <div class='footer'>
           {footer}
         </div>

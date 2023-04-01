@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.14
+
+### v0.14.0 [![27.03.2023](https://img.shields.io/date/1680385628)](https://github.com/d8corp/innet-dom/tree/v0.14.0)
+
+- change `state` prop of `show` element to `when`
+- add `hide` plugin
+- add `switch` plugin
+
 ## v0.13
 
 ### v0.13.6 [![27.03.2023](https://img.shields.io/date/1679913810)](https://github.com/d8corp/innet-dom/tree/v0.13.6)

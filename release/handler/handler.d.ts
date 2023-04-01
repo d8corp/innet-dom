@@ -1,6 +1,6 @@
 import { type ContextProps, type JSXPlugin, type SlotProps, type SlotsProps } from '@innet/jsx';
 import { arraySync } from '@innet/utils';
-import { type DelayProps, domAsync, domFn, domNode, domText, type LinkProps, type LoopProps, type PortalProps, type RouterProps, type ShowProps } from '../plugins';
+import { type DelayProps, domAsync, domFn, domNode, domText, type HideProps, type LinkProps, type LoopProps, type PortalProps, type RouterProps, type ShowProps, type SwitchProps } from '../plugins';
 import { type HTMLProps } from '../types';
 export declare const arrayPlugins: (typeof arraySync)[];
 export declare const JSXPlugins: Record<string, JSXPlugin>;
@@ -22,6 +22,8 @@ declare global {
             router: RouterProps;
             delay: DelayProps;
             show: ShowProps;
+            hide: HideProps;
+            switch: SwitchProps;
             a: LinkProps;
             div: HTMLProps<HTMLDivElement>;
             span: HTMLProps<HTMLSpanElement>;

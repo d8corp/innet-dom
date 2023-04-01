@@ -8,6 +8,8 @@ import { router } from '../plugins/jsx/router/router.es6.js';
 import { link } from '../plugins/jsx/link/link.es6.js';
 import { delay } from '../plugins/jsx/delay/delay.es6.js';
 import { show } from '../plugins/jsx/show/show.es6.js';
+import { hide } from '../plugins/jsx/hide/hide.es6.js';
+import { switchPlugin } from '../plugins/jsx/switch/switch.es6.js';
 import { state } from '../plugins/state/state.es6.js';
 import { domJSX } from '../plugins/domJSX/domJSX.es6.js';
 import { domAsyncIterable } from '../plugins/domAsyncIterable/domAsyncIterable.es6.js';
@@ -30,6 +32,8 @@ const JSXPlugins = {
     a: link,
     delay,
     show,
+    hide,
+    switch: switchPlugin,
 };
 const objectPlugins = [
     state,
