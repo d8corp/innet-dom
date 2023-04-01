@@ -490,7 +490,7 @@ const handleChange = (e: Event) => {
 
 export default (
   <>
-    <show state={show}>
+    <show when={show}>
       <Content />
     </show>
     <input
@@ -551,7 +551,7 @@ import { State } from 'watch-state'
 const show = new State(true)
 
 export default (
-  <show state={show}>
+  <show when={show}>
     <button
       onclick={() => {
         show.value = false
@@ -681,7 +681,7 @@ export const Content = () => {
 
   return (
     <>
-      <show state={header}>
+      <show when={header}>
         <div class='header'>
           {header}
         </div>
@@ -689,7 +689,7 @@ export const Content = () => {
       <div class='content'>
         {content}
       </div>
-      <show state={footer}>
+      <show when={footer}>
         <div class='footer'>
           {footer}
         </div>
