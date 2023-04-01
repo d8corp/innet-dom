@@ -7,7 +7,7 @@ describe('show', () => {
     const show = new State(false)
 
     const result = render(
-      <show state={show}>
+      <show when={show}>
         Shown
       </show>,
     )
@@ -24,7 +24,7 @@ describe('show', () => {
     const show = new Cache(() => show1.value && show2.value)
 
     const result = render(
-      <show state={show}>
+      <show when={show}>
         Shown
       </show>,
     )
@@ -43,7 +43,7 @@ describe('show', () => {
     const show = new State(false)
 
     const result = render(
-      <show state={() => show.value}>
+      <show when={() => show.value}>
         Shown
       </show>,
     )
