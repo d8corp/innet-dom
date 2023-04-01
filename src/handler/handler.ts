@@ -35,6 +35,8 @@ import {
   domJSX,
   domNode,
   domText,
+  hide,
+  type HideProps,
   link,
   type LinkProps,
   loop,
@@ -63,6 +65,7 @@ export const JSXPlugins: Record<string, JSXPlugin> = {
   a: link,
   delay,
   show,
+  hide,
 }
 
 export const objectPlugins = [
@@ -121,6 +124,7 @@ declare global {
       router: RouterProps
       delay: DelayProps
       show: ShowProps
+      hide: HideProps
       a: LinkProps
       div: HTMLProps<HTMLDivElement>
       span: HTMLProps<HTMLSpanElement>
