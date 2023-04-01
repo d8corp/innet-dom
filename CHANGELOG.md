@@ -2,7 +2,7 @@
 
 ## v0.14
 
-### v0.14.0 [![27.03.2023](https://img.shields.io/date/1680385628)](https://github.com/d8corp/innet-dom/tree/v0.14.0)
+### v0.14.0 [![02.04.2023](https://img.shields.io/date/1680385628)](https://github.com/d8corp/innet-dom/tree/v0.14.0)
 
 - change `state` prop of `show` element to `when`
 - add `hide` plugin
