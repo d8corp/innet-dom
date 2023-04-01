@@ -48,6 +48,8 @@ import {
   show,
   type ShowProps,
   state,
+  switchPlugin,
+  type SwitchProps,
 } from '../plugins'
 import { type HTMLProps } from '../types'
 
@@ -66,6 +68,7 @@ export const JSXPlugins: Record<string, JSXPlugin> = {
   delay,
   show,
   hide,
+  switch: switchPlugin,
 }
 
 export const objectPlugins = [
@@ -125,6 +128,7 @@ declare global {
       delay: DelayProps
       show: ShowProps
       hide: HideProps
+      switch: SwitchProps
       a: LinkProps
       div: HTMLProps<HTMLDivElement>
       span: HTMLProps<HTMLSpanElement>

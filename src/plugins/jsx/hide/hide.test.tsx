@@ -2,7 +2,7 @@ import { Cache, State } from 'watch-state'
 
 import { getHTML, render } from '../../../test'
 
-describe('show', () => {
+describe('hide', () => {
   it('should render with a state', () => {
     const hide = new State(true)
 
