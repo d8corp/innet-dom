@@ -432,6 +432,65 @@ function * Content () {
 }
 ```
 
+You can use `queueMicrotask` instead of a generic component, but there are a small difference:
+
+`queueMicrotask` runs after whole content is available and generic component runs right after the content of the component rendered.
+```typescript jsx
+function * A () {
+  queueMicrotask(() => {
+    console.log(
+      'queueMicrotask A',
+      document.getElementById('a'),
+      document.getElementById('b'),
+    )
+  })
+
+  yield <span id='a' />
+
+  console.log(
+    'generic A',
+    document.getElementById('a'),
+    document.getElementById('b'),
+  )
+}
+
+function * B () {
+  queueMicrotask(() => {
+    console.log(
+      'queueMicrotask B',
+      document.getElementById('a'),
+      document.getElementById('b'),
+    )
+  })
+
+  yield <span id='b' />
+
+  console.log(
+    'generic B',
+    document.getElementById('a'),
+    document.getElementById('b'),
+  )
+}
+
+function Content () {
+  return (
+    <>
+      <A />
+      <B />
+    </>
+  )
+}
+```
+
+You get the next output:
+
+```
+generic A <span id="a"></span> null
+generic B <span id="a"></span> <span id="b"></span>
+queueMicrotask A <span id="a"></span> <span id="b"></span>
+queueMicrotask B <span id="a"></span> <span id="b"></span>
+```
+
 ## Ref
 
 `Ref` helps to get an HTML element.
