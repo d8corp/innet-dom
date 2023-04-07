@@ -18,6 +18,7 @@ export interface LoopProps<T = any> {
 export type LoopCallback<T> = (item: LoopItem<T>) => any
 export type LoopChildren<T> = [ LoopCallback<T>, ...any[] ]
 
+/** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
 export class LoopItem<T> {
   private readonly _value: State<T>
   private readonly _index: State<number>
@@ -54,6 +55,7 @@ function getKey (key, value) {
   }
 }
 
+/** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
 export function loop <T> ({
   type,
   props: {

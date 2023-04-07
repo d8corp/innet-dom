@@ -20,7 +20,7 @@ describe('portal', () => {
     const show = new State(true)
 
     const result = render(
-      <show state={show}>
+      <show when={show}>
         <portal parent={div}>
           works
         </portal>

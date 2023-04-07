@@ -41,6 +41,8 @@ import {
   type LinkProps,
   loop,
   type LoopProps,
+  map,
+  type MapProps,
   portal,
   type PortalProps,
   router,
@@ -61,6 +63,7 @@ export const JSXPlugins: Record<string, JSXPlugin> = {
   context,
   portal,
   for: loop,
+  map,
   slots,
   slot,
   router,
@@ -120,7 +123,9 @@ declare global {
     // @ts-expect-error: need to be redeclared
     interface IntrinsicElements {
       portal: PortalProps
+      /** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
       for: LoopProps
+      map: MapProps
       context: ContextProps
       slots: SlotsProps
       slot: SlotProps

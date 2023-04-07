@@ -19,7 +19,7 @@ describe('delay', () => {
     const show = new State(true)
 
     const result = render(
-      <show state={show}>
+      <show when={show}>
         <delay show={100} hide={100}>
           works
         </delay>
@@ -61,7 +61,7 @@ describe('delay', () => {
     const show = new State(true)
 
     const result = render(
-      <show state={show}>
+      <show when={show}>
         before
         <delay show={100} hide={100}>
           works
@@ -94,7 +94,7 @@ describe('delay', () => {
     const show = new State(true)
 
     const result = render(
-      <show state={show}>
+      <show when={show}>
         <delay hide={100}>
           <Component />
         </delay>
@@ -129,7 +129,7 @@ describe('delay', () => {
     const show = new State(true)
 
     const result = render(
-      <show state={show}>
+      <show when={show}>
         <delay show={100} hide={100}>
           <Component />
         </delay>
@@ -168,7 +168,7 @@ describe('delay', () => {
     const show = new State(true)
 
     const result = render(
-      <show state={show}>
+      <show when={show}>
         <Component />
       </show>,
     )
