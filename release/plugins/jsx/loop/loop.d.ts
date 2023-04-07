@@ -6,6 +6,7 @@ export interface LoopProps<T = any> {
 }
 export type LoopCallback<T> = (item: LoopItem<T>) => any;
 export type LoopChildren<T> = [LoopCallback<T>, ...any[]];
+/** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
 export declare class LoopItem<T> {
     private readonly _value;
     private readonly _index;
@@ -15,4 +16,5 @@ export declare class LoopItem<T> {
     get index(): number;
     set index(index: number);
 }
+/** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
 export declare function loop<T>({ type, props: { key, of: ofState, }, children: [callback,], }: JSXPluginElement<LoopProps<T>, LoopChildren<T>>, handler: any): any;

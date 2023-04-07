@@ -8,6 +8,7 @@ var innet = require('innet');
 require('../plugins/index.js');
 var portal = require('../plugins/jsx/portal/portal.js');
 var loop = require('../plugins/jsx/loop/loop.js');
+var map = require('../plugins/jsx/map/map.js');
 var router = require('../plugins/jsx/router/router.js');
 var link = require('../plugins/jsx/link/link.js');
 var delay = require('../plugins/jsx/delay/delay.js');
@@ -30,6 +31,7 @@ const JSXPlugins = {
     context: jsx.context,
     portal: portal.portal,
     for: loop.loop,
+    map: map.map,
     slots: jsx.slots,
     slot: jsx.slot,
     router: router.router,

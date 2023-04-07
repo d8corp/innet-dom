@@ -2,6 +2,10 @@
 
 ## v0.14
 
+### v0.14.1 [![07.04.2023](https://img.shields.io/date/1680866119)](https://github.com/d8corp/innet-dom/tree/v0.14.1)
+
+- add `map` JSX plugin
+
 ### v0.14.0 [![02.04.2023](https://img.shields.io/date/1680385628)](https://github.com/d8corp/innet-dom/tree/v0.14.0)
 
 - change `state` prop of `show` element to `when`

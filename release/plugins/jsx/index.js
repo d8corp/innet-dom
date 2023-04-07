@@ -8,4 +8,5 @@ require('./delay/index.js');
 require('./show/index.js');
 require('./hide/index.js');
 require('./switch/index.js');
+require('./map/index.js');
 

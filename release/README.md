@@ -432,6 +432,65 @@ function * Content () {
 }
 ```
 
+You can use `queueMicrotask` instead of a generic component, but there are a small difference:
+
+`queueMicrotask` runs after whole content is available and generic component runs right after the content of the component rendered.
+```typescript jsx
+function * A () {
+  queueMicrotask(() => {
+    console.log(
+      'queueMicrotask A',
+      document.getElementById('a'),
+      document.getElementById('b'),
+    )
+  })
+
+  yield <span id='a' />
+
+  console.log(
+    'generic A',
+    document.getElementById('a'),
+    document.getElementById('b'),
+  )
+}
+
+function * B () {
+  queueMicrotask(() => {
+    console.log(
+      'queueMicrotask B',
+      document.getElementById('a'),
+      document.getElementById('b'),
+    )
+  })
+
+  yield <span id='b' />
+
+  console.log(
+    'generic B',
+    document.getElementById('a'),
+    document.getElementById('b'),
+  )
+}
+
+function Content () {
+  return (
+    <>
+      <A />
+      <B />
+    </>
+  )
+}
+```
+
+You get the next output:
+
+```
+generic A <span id="a"></span> null
+generic B <span id="a"></span> <span id="b"></span>
+queueMicrotask A <span id="a"></span> <span id="b"></span>
+queueMicrotask B <span id="a"></span> <span id="b"></span>
+```
+
 ## Ref
 
 `Ref` helps to get an HTML element.
@@ -627,7 +686,7 @@ export default (
 
 > `of` can be: `State<string | number>` | `Cache<string | number>` | `() => (string | number)` | `string | number`
 
-## for
+## map
 
 You can use `map` method of an array to put view on data.
 ```typescript jsx
@@ -644,27 +703,35 @@ export default (
 )
 ```
 
-It's ok for static data, but if you use a state, it's better to use `for` element.
+It's ok for static data, but if you use a state, it's better to use `map` element.
 ```typescript jsx
 import { State } from 'watch-state'
+import { useMapValue, useMapIndex } from '@innet/dom'
 
 const names = new State(['Mike', 'Alex', 'Dan'])
 
+function User () {
+  const name = useMapValue()
+  const index = useMapIndex()
+  
+  return (
+    <li>
+      #{index}:
+      {name}
+    </li>
+  )
+}
+
 export default (
   <ul>
-    <for of={names}>
-      {name => (
-        <li>
-          #{() => name.index}:
-          {() => name.value}
-        </li>
-      )}
-    </for>
+    <map of={names}>
+      <User />
+    </map>
   </ul>
 )
 ```
 
-Use `key` property to improve `DOM` changes when you use an array of objects.
+Use `key` property to improve `DOM` changes when you use an array of objects with some uniq field, like id.
 
 ```typescript jsx
 import { State } from 'watch-state'
@@ -675,16 +742,23 @@ const names = new State([
   { id: 3, text: 'test3' },
 ])
 
+function User () {
+  const name = useMapValue()
+  const index = useMapIndex()
+
+  return (
+    <li>
+      #{index}:
+      {name}
+    </li>
+  )
+}
+
 export default (
   <ul>
-    <for of={names} key='id'>
-      {name => (
-        <li>
-          #{() => name.index}:
-          {() => name.value}
-        </li>
-      )}
-    </for>
+    <map of={names} key='id'>
+      <User />
+    </map>
   </ul>
 )
 ```

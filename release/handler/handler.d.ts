@@ -1,6 +1,6 @@
 import { type ContextProps, type JSXPlugin, type SlotProps, type SlotsProps } from '@innet/jsx';
 import { arraySync } from '@innet/utils';
-import { type DelayProps, domAsync, domFn, domNode, domText, type HideProps, type LinkProps, type LoopProps, type PortalProps, type RouterProps, type ShowProps, type SwitchProps } from '../plugins';
+import { type DelayProps, domAsync, domFn, domNode, domText, type HideProps, type LinkProps, type LoopProps, type MapProps, type PortalProps, type RouterProps, type ShowProps, type SwitchProps } from '../plugins';
 import { type HTMLProps } from '../types';
 export declare const arrayPlugins: (typeof arraySync)[];
 export declare const JSXPlugins: Record<string, JSXPlugin>;
@@ -15,7 +15,9 @@ declare global {
     namespace JSX {
         interface IntrinsicElements {
             portal: PortalProps;
+            /** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
             for: LoopProps;
+            map: MapProps;
             context: ContextProps;
             slots: SlotsProps;
             slot: SlotProps;

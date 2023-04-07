@@ -4,6 +4,7 @@ import { createHandler } from 'innet';
 import '../plugins/index.es6.js';
 import { portal } from '../plugins/jsx/portal/portal.es6.js';
 import { loop } from '../plugins/jsx/loop/loop.es6.js';
+import { map } from '../plugins/jsx/map/map.es6.js';
 import { router } from '../plugins/jsx/router/router.es6.js';
 import { link } from '../plugins/jsx/link/link.es6.js';
 import { delay } from '../plugins/jsx/delay/delay.es6.js';
@@ -26,6 +27,7 @@ const JSXPlugins = {
     context,
     portal,
     for: loop,
+    map,
     slots,
     slot,
     router,

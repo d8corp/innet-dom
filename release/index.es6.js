@@ -14,6 +14,7 @@ export { delay, delayContext, useHidden } from './plugins/jsx/delay/delay.es6.js
 export { show } from './plugins/jsx/show/show.es6.js';
 export { hide } from './plugins/jsx/hide/hide.es6.js';
 export { switchPlugin } from './plugins/jsx/switch/switch.es6.js';
+export { map } from './plugins/jsx/map/map.es6.js';
 export { domAsync } from './plugins/domAsync/domAsync.es6.js';
 export { domIterable } from './plugins/domIterable/domIterable.es6.js';
 export { NAMESPACE_URI, domJSX } from './plugins/domJSX/domJSX.es6.js';
@@ -38,5 +39,7 @@ export { onMounted } from './utils/onMounted/onMounted.es6.js';
 export { useParent } from './hooks/useParent/useParent.es6.js';
 export { getStyles, style } from './hooks/useStyle/useStyle.es6.js';
 export { useShow } from './hooks/useShow/useShow.es6.js';
+export { mapValueContext, useMapValue } from './hooks/useMapValue/useMapValue.es6.js';
+export { mapIndexContext, useMapIndex } from './hooks/useMapIndex/useMapIndex.es6.js';
 export { getHTML } from './test/getHTML/getHTML.es6.js';
 export { render } from './test/render/render.es6.js';

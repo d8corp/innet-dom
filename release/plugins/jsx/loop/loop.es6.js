@@ -7,6 +7,7 @@ import { remove, clear, after, before, prepend } from '../../../utils/dom/dom.es
 import { dif } from '../../../utils/dif/dif.es6.js';
 import { setParent } from '../../../utils/setParent/setParent.es6.js';
 
+/** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
 class LoopItem {
     constructor(value, index) {
         this._index = new State(index);
@@ -36,6 +37,7 @@ function getKey(key, value) {
         return value[key];
     }
 }
+/** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
 function loop({ type, props: { key, of: ofState, }, children: [callback,], }, handler) {
     const ofProp = statePropToWatchProp(ofState);
     if (typeof ofProp === 'function') {

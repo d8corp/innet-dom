@@ -15,6 +15,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
+/** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
 class LoopItem {
     constructor(value, index) {
         this._index = new watchState.State(index);
@@ -44,6 +45,7 @@ function getKey(key, value) {
         return value[key];
     }
 }
+/** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
 function loop({ type, props: { key, of: ofState, }, children: [callback,], }, handler) {
     const ofProp = statePropToWatchProp.statePropToWatchProp(ofState);
     if (typeof ofProp === 'function') {
