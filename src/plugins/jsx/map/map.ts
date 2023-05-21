@@ -1,5 +1,5 @@
 import { type JSXPluginElement } from '@innet/jsx'
-import innet, { type Handler } from 'innet'
+import innet, { type Handler, useApp, useHandler } from 'innet'
 import { createEvent, onDestroy, State, unwatch, Watch } from 'watch-state'
 
 import { mapIndexContext, mapValueContext } from '../../../hooks'
@@ -33,14 +33,17 @@ function getKey (key, value) {
 
 const watcherKey = Symbol('watcherKey') as unknown as string
 
-export function map <T> ({
-  type,
-  props: {
-    key,
-    of: ofState,
-  },
-  children,
-}: JSXPluginElement<MapProps<T>>, handler) {
+export function map <T> () {
+  const handler = useHandler()
+  const {
+    type,
+    props: {
+      key,
+      of: ofState,
+    },
+    children,
+  } = useApp<JSXPluginElement<MapProps<T>>>()
+
   if (!children || !ofState) return
 
   const forProp = statePropToWatchProp(ofState)
@@ -68,7 +71,7 @@ export function map <T> ({
           const value = values[index]
           const valueKey = keysList[index]
 
-          const keep = keepKeys.includes(valueKey)
+          const keep = keepKeys?.includes(valueKey)
 
           if (handlersMap.has(valueKey)) {
             const deepHandler = handlersMap.get(valueKey)
@@ -139,19 +142,13 @@ export function map <T> ({
         }
       }
     })
-
-    return mainComment
   } else {
-    const result = []
-
     let i = 0
     for (const value of forProp) {
       const childrenHandler = Object.create(handler)
       childrenHandler[mapValueContext.key] = value
       childrenHandler[mapIndexContext.key] = i++
-      result.push(innet(children, childrenHandler))
+      innet(children, childrenHandler)
     }
-
-    return result
   }
 }

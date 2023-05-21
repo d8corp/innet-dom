@@ -9,7 +9,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
 function domText() {
-    return (text, next, handler) => innet__default["default"](document.createTextNode(text), handler);
+    return () => {
+        innet__default["default"](document.createTextNode(innet.useApp()), innet.useHandler());
+    };
 }
 
 exports.domText = domText;

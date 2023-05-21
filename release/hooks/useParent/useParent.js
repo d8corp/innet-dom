@@ -2,12 +2,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var jsx = require('@innet/jsx');
+var innet = require('innet');
 require('../../utils/index.js');
 var getParent = require('../../utils/getParent/getParent.js');
 
 function useParent() {
-    return getParent.getParent(jsx.useHandler());
+    return getParent.getParent(innet.useHandler());
 }
 
 exports.useParent = useParent;

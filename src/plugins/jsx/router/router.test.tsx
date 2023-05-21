@@ -1,7 +1,8 @@
 import { type JsxComponent } from '@innet/jsx'
+import { historyPush } from '@watch-state/history-api'
 
 import { getHTML, render } from '../../../test'
-import { history, useRoute } from './router'
+import { useRoute } from './router'
 
 describe('router', () => {
   it('should work if the router is empty', () => {
@@ -11,8 +12,8 @@ describe('router', () => {
 
     expect(getHTML(result)).toBe('')
   })
-  it('should work', () => {
-    history.push('/')
+  it('should work', async () => {
+    await historyPush('/')
 
     const result = render(
       <router>
@@ -28,18 +29,18 @@ describe('router', () => {
 
     expect(getHTML(result)).toBe('Home')
 
-    history.push('/test')
+    await historyPush('/test')
 
     expect(getHTML(result)).toBe('Test')
 
-    history.push('/404')
+    await historyPush('/404')
     expect(getHTML(result)).toBe('Not Found')
 
-    history.push('/test/1')
+    await historyPush('/test/1')
     expect(getHTML(result)).toBe('Not Found')
   })
-  it('should work with ish', () => {
-    history.push('/')
+  it('should work with ish', async () => {
+    await historyPush('/')
 
     const result = render(
       <router ish>
@@ -55,17 +56,17 @@ describe('router', () => {
 
     expect(getHTML(result)).toBe('Home')
 
-    history.push('/test')
+    await historyPush('/test')
     expect(getHTML(result)).toBe('Test')
 
-    history.push('/404')
+    await historyPush('/404')
     expect(getHTML(result)).toBe('Not Found')
 
-    history.push('/test/1')
+    await historyPush('/test/1')
     expect(getHTML(result)).toBe('Test')
   })
-  it('should deep work', () => {
-    history.push('/')
+  it('should deep work', async () => {
+    await historyPush('/')
 
     const result = render(
       <router>
@@ -94,26 +95,26 @@ describe('router', () => {
 
     expect(getHTML(result)).toBe('Home')
 
-    history.push('/strong')
+    await historyPush('/strong')
     expect(getHTML(result)).toBe('Strong')
 
-    history.push('/strong/create')
+    await historyPush('/strong/create')
     expect(getHTML(result)).toBe('Strong Create')
 
-    history.push('/strong/test')
+    await historyPush('/strong/test')
     expect(getHTML(result)).toBe('Strong Not Found')
 
-    history.push('/ish')
+    await historyPush('/ish')
     expect(getHTML(result)).toBe('Ish')
 
-    history.push('/ish/test')
+    await historyPush('/ish/test')
     expect(getHTML(result)).toBe('Ish')
 
-    history.push('/404')
+    await historyPush('/404')
     expect(getHTML(result)).toBe('Not Found')
   })
-  it('should work with search', () => {
-    history.push('/')
+  it('should work with search', async () => {
+    await historyPush('/')
 
     const result = render(
       <router search='modal'>
@@ -128,17 +129,17 @@ describe('router', () => {
 
     expect(getHTML(result)).toBe('')
 
-    history.push('?modal=test1')
+    await historyPush('?modal=test1')
     expect(getHTML(result)).toBe('Test1')
 
-    history.push('?modal=test')
+    await historyPush('?modal=test')
     expect(getHTML(result)).toBe('')
 
-    history.push('?modal=test2')
+    await historyPush('?modal=test2')
     expect(getHTML(result)).toBe('Test2')
   })
-  it('should work with search and ish', () => {
-    history.push('/')
+  it('should work with search and ish', async () => {
+    await historyPush('/')
 
     const result = render(
       <router ish search='modal'>
@@ -153,21 +154,21 @@ describe('router', () => {
 
     expect(getHTML(result)).toBe('')
 
-    history.push('?modal=test1')
+    await historyPush('?modal=test1')
     expect(getHTML(result)).toBe('Test1')
 
-    history.push('?modal=test2')
+    await historyPush('?modal=test2')
     expect(getHTML(result)).toBe('Test2')
 
-    history.push('?modal=test2&modal=test1')
+    await historyPush('?modal=test2&modal=test1')
 
     expect(getHTML(result)).toBe('Test2Test1')
 
-    history.push('?modal=test1&modal=test2')
+    await historyPush('?modal=test1&modal=test2')
     expect(getHTML(result)).toBe('Test1Test2')
   })
-  it('should work with mix of source', () => {
-    history.push('/')
+  it('should work with mix of source', async () => {
+    await historyPush('/')
 
     const result = render(
       <router search='modal'>
@@ -187,21 +188,21 @@ describe('router', () => {
 
     expect(getHTML(result)).toBe('')
 
-    history.push('?modal=test1')
+    await historyPush('?modal=test1')
 
     expect(getHTML(result)).toBe('Test1 on home page')
 
-    history.push('/test?modal=test1')
+    await historyPush('/test?modal=test1')
     expect(getHTML(result)).toBe('Test1')
 
-    history.push('?modal=test')
+    await historyPush('?modal=test')
     expect(getHTML(result)).toBe('')
 
-    history.push('?modal=test2')
+    await historyPush('?modal=test2')
     expect(getHTML(result)).toBe('Test2')
   })
-  test('useRoute', () => {
-    history.push('/')
+  test('useRoute', async () => {
+    await historyPush('/')
 
     const App: JsxComponent = () => {
       const route = useRoute()
@@ -222,17 +223,17 @@ describe('router', () => {
 
     expect(getHTML(result)).toBe('Home page:/')
 
-    history.push('/settings')
+    await historyPush('/settings')
     expect(getHTML(result)).toBe('Settings:/')
 
-    history.push('/settings/test')
+    await historyPush('/settings/test')
     expect(getHTML(result)).toBe('Settings:test')
 
-    history.push('/any-other')
+    await historyPush('/any-other')
     expect(getHTML(result)).toBe('Other:any-other')
   })
-  it('should render one with ish', () => {
-    history.push('/')
+  it('should render one with ish', async () => {
+    await historyPush('/')
 
     let count = 0
 
@@ -259,15 +260,15 @@ describe('router', () => {
     expect(getHTML(result)).toBe('Home')
     expect(count).toBe(0)
 
-    history.push('/settings')
+    await historyPush('/settings')
     expect(count).toBe(1)
     expect(getHTML(result)).toBe('Settings')
 
-    history.push('/settings/test')
+    await historyPush('/settings/test')
     expect(getHTML(result)).toBe('Settings')
     expect(count).toBe(1)
 
-    history.push('/any-other')
+    await historyPush('/any-other')
     expect(getHTML(result)).toBe('Not Found')
     expect(count).toBe(1)
   })

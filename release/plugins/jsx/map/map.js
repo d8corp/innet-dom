@@ -31,7 +31,9 @@ function getKey(key, value) {
     }
 }
 const watcherKey = Symbol('watcherKey');
-function map({ type, props: { key, of: ofState, }, children, }, handler) {
+function map() {
+    const handler = innet.useHandler();
+    const { type, props: { key, of: ofState, }, children, } = innet.useApp();
     if (!children || !ofState)
         return;
     const forProp = statePropToWatchProp.statePropToWatchProp(ofState);
@@ -52,7 +54,7 @@ function map({ type, props: { key, of: ofState, }, children, }, handler) {
                 for (let index = 0; index < values.length; index++) {
                     const value = values[index];
                     const valueKey = keysList[index];
-                    const keep = keepKeys.includes(valueKey);
+                    const keep = keepKeys === null || keepKeys === void 0 ? void 0 : keepKeys.includes(valueKey);
                     if (handlersMap.has(valueKey)) {
                         const deepHandler = handlersMap.get(valueKey);
                         watchState.unwatch(watchState.createEvent(() => {
@@ -118,18 +120,15 @@ function map({ type, props: { key, of: ofState, }, children, }, handler) {
                 }
             }
         });
-        return mainComment;
     }
     else {
-        const result = [];
         let i = 0;
         for (const value of forProp) {
             const childrenHandler = Object.create(handler);
             childrenHandler[useMapValue.mapValueContext.key] = value;
             childrenHandler[useMapIndex.mapIndexContext.key] = i++;
-            result.push(innet__default["default"](children, childrenHandler));
+            innet__default["default"](children, childrenHandler);
         }
-        return result;
     }
 }
 

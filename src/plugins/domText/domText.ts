@@ -1,5 +1,7 @@
-import innet, { type PluginHandler } from 'innet'
+import innet, { type HandlerPlugin, useApp, useHandler } from 'innet'
 
-export function domText (): PluginHandler {
-  return (text, next, handler) => innet(document.createTextNode(text), handler)
+export function domText (): HandlerPlugin {
+  return () => {
+    innet(document.createTextNode(useApp<string>()), useHandler())
+  }
 }

@@ -1,7 +1,9 @@
-import innet from 'innet';
+import innet, { useApp, useHandler } from 'innet';
 
 function domText() {
-    return (text, next, handler) => innet(document.createTextNode(text), handler);
+    return () => {
+        innet(document.createTextNode(useApp()), useHandler());
+    };
 }
 
 export { domText };

@@ -1,9 +1,11 @@
-import innet, { type PluginHandler } from 'innet'
+import innet, { type HandlerPlugin, useApp, useHandler } from 'innet'
 import { onDestroy, scope, Watch } from 'watch-state'
 
 import { clear, getComment } from '../../utils'
 
-export const domAsyncIterable = (): PluginHandler => async (apps, next, handler) => {
+export const domAsyncIterable = (): HandlerPlugin => () => {
+  const handler = useHandler()
+  const apps = useApp<AsyncIterable<any>>()
   const [childrenHandler, comment] = getComment(handler, 'asyncIterable')
   const { activeWatcher } = scope
   let watcher: Watch
@@ -13,26 +15,28 @@ export const domAsyncIterable = (): PluginHandler => async (apps, next, handler)
     deleted = true
   })
 
-  for await (const app of apps) {
-    if (deleted) return
+  const run = async () => {
+    for await (const app of apps) {
+      if (deleted) return
 
-    scope.activeWatcher = activeWatcher
+      scope.activeWatcher = activeWatcher
 
-    if (watcher) {
-      watcher.destroy()
-      clear(comment)
-    }
-
-    watcher = new Watch(update => {
-      if (update) {
+      if (watcher) {
+        watcher.destroy()
         clear(comment)
       }
 
-      innet(app, childrenHandler)
-    })
+      watcher = new Watch(update => {
+        if (update) {
+          clear(comment)
+        }
 
-    scope.activeWatcher = undefined
+        innet(app, childrenHandler)
+      })
+
+      scope.activeWatcher = undefined
+    }
   }
 
-  return comment
+  run()
 }

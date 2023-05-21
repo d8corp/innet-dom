@@ -88,7 +88,9 @@ describe('delay', () => {
     const Component: JsxComponent = () => {
       const hidden = useHidden()
 
-      return () => hidden.value ? 'hidden' : 'shown'
+      return (
+        <div class={() => hidden.value ? 'hidden' : 'shown'} />
+      )
     }
 
     const show = new State(true)
@@ -101,19 +103,19 @@ describe('delay', () => {
       </show>,
     )
 
-    expect(getHTML(result)).toBe('shown')
+    expect(getHTML(result)).toBe('<div class="shown"></div>')
 
     await new Promise(resolve => setTimeout(resolve, 100))
 
-    expect(getHTML(result)).toBe('shown')
+    expect(getHTML(result)).toBe('<div class="shown"></div>')
 
     show.value = false
 
-    expect(getHTML(result)).toBe('hidden')
+    expect(getHTML(result)).toBe('<div class="hidden"></div>')
 
     await new Promise(resolve => setTimeout(resolve, 50))
 
-    expect(getHTML(result)).toBe('hidden')
+    expect(getHTML(result)).toBe('<div class="hidden"></div>')
 
     await new Promise(resolve => setTimeout(resolve, 50))
 
@@ -123,7 +125,9 @@ describe('delay', () => {
     const Component: JsxComponent = () => {
       const hidden = useHidden()
 
-      return () => hidden.value ? 'hidden' : 'shown'
+      return (
+        <div class={() => hidden.value ? 'hidden' : 'shown'} />
+      )
     }
 
     const show = new State(true)
@@ -140,15 +144,15 @@ describe('delay', () => {
 
     await new Promise(resolve => setTimeout(resolve, 105))
 
-    expect(getHTML(result)).toBe('shown')
+    expect(getHTML(result)).toBe('<div class="shown"></div>')
 
     show.value = false
 
-    expect(getHTML(result)).toBe('hidden')
+    expect(getHTML(result)).toBe('<div class="hidden"></div>')
 
     await new Promise(resolve => setTimeout(resolve, 50))
 
-    expect(getHTML(result)).toBe('hidden')
+    expect(getHTML(result)).toBe('<div class="hidden"></div>')
 
     await new Promise(resolve => setTimeout(resolve, 50))
 
@@ -160,7 +164,7 @@ describe('delay', () => {
 
       return (
         <delay ref={hidden} hide={100}>
-          {() => hidden.value.value ? 'hidden' : 'shown'}
+          <div class={() => hidden.value.value ? 'hidden' : 'shown'} />
         </delay>
       )
     }
@@ -173,15 +177,15 @@ describe('delay', () => {
       </show>,
     )
 
-    expect(getHTML(result)).toBe('shown')
+    expect(getHTML(result)).toBe('<div class="shown"></div>')
 
     show.value = false
 
-    expect(getHTML(result)).toBe('hidden')
+    expect(getHTML(result)).toBe('<div class="hidden"></div>')
 
     await new Promise(resolve => setTimeout(resolve, 50))
 
-    expect(getHTML(result)).toBe('hidden')
+    expect(getHTML(result)).toBe('<div class="hidden"></div>')
 
     await new Promise(resolve => setTimeout(resolve, 50))
 

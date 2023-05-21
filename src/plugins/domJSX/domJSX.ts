@@ -1,13 +1,15 @@
-import innet, { type PluginHandler } from 'innet'
+import innet, { type HandlerPlugin, NEXT, useApp, useHandler } from 'innet'
 import { Watch } from 'watch-state'
 
 import { setParent, statePropToWatchProp } from '../../utils'
 
 export const NAMESPACE_URI = Symbol('NAMESPACE_URI') as unknown as string
 
-export function domJSX (): PluginHandler {
-  return ({ type, props, children }, next, handler) => {
-    if (typeof type !== 'string') return next()
+export function domJSX (): HandlerPlugin {
+  return () => {
+    const { type, props, children } = useApp<any>()
+    let handler = useHandler()
+    if (typeof type !== 'string') return NEXT
 
     if (type === 'svg') {
       handler = Object.create(handler)
@@ -86,15 +88,13 @@ export function domJSX (): PluginHandler {
       }
     }
 
-    const result = innet(element, handler)
+    innet(element, handler)
 
     if (children) {
       const childrenHandler = Object.create(handler)
       setParent(childrenHandler, element)
 
-      return innet(children, childrenHandler)
+      innet(children, childrenHandler)
     }
-
-    return result
   }
 }

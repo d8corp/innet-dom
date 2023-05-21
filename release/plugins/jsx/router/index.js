@@ -8,7 +8,6 @@ var router = require('./router.js');
 
 exports.getRoute = router.getRoute;
 exports.getStrongRoute = router.getStrongRoute;
-exports.history = router.history;
 exports.parsedPath = router.parsedPath;
 exports.parsedSearch = router.parsedSearch;
 exports.pathDeep = router.pathDeep;

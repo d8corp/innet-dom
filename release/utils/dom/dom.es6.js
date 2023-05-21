@@ -1,6 +1,5 @@
-import '../setTimeoutSync/index.es6.js';
+import SyncTimer from 'sync-timer';
 import { REMOVE_DELAY } from './constants.es6.js';
-import { setTimeoutSync } from '../setTimeoutSync/setTimeoutSync.es6.js';
 
 function removeParentChild(target) {
     if (target._parent) {
@@ -11,7 +10,7 @@ function removeParentChild(target) {
 }
 function removeElements(target, delay = target[REMOVE_DELAY]) {
     if (delay) {
-        setTimeoutSync(() => { target.remove(); }, delay);
+        new SyncTimer(() => { target.remove(); }, delay);
     }
     else {
         target.remove();

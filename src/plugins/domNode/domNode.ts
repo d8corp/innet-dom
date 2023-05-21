@@ -1,14 +1,10 @@
-import { type PluginHandler } from 'innet'
+import { type HandlerPlugin, useApp } from 'innet'
 
-import { append } from '../../utils/dom'
-import { getParent } from '../../utils/getParent'
+import { useParent } from '../../hooks'
+import { append } from '../../utils'
 
-export function domNode (): PluginHandler {
-  return (node, next, handler) => {
-    const parent = getParent(handler)
-
-    append(parent, node)
-
-    return parent
+export function domNode (): HandlerPlugin {
+  return () => {
+    append(useParent(), useApp<HTMLElement>())
   }
 }

@@ -12,19 +12,20 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
 function domAsync() {
-    return (app, next, handler) => {
+    return () => {
+        const handler = innet.useHandler();
+        const app = innet.useApp();
         const [childHandler] = getComment.getComment(handler, 'async');
         let removed = false;
         watchState.onDestroy(() => {
             removed = true;
         });
         const { activeWatcher } = watchState.scope;
-        return app.then(data => {
+        app.then(data => {
             if (!removed) {
                 watchState.scope.activeWatcher = activeWatcher;
-                const result = innet__default["default"](data, childHandler);
+                innet__default["default"](data, childHandler);
                 watchState.scope.activeWatcher = undefined;
-                return result;
             }
         });
     };

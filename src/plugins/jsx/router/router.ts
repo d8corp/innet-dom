@@ -1,22 +1,23 @@
-import { Context, createContextHandler, getSlots, type JSXPluginElement, useHandler } from '@innet/jsx'
-import History from '@watch-state/history-api'
-import innet, { type Handler } from 'innet'
+import { Context, createContextHandler, type JSXPluginElement, useSlots } from '@innet/jsx'
+import { locationPath, locationSearch } from '@watch-state/history-api'
+import innet, { type Handler, runPlugins, useApp, useHandler } from 'innet'
 import { Cache } from 'watch-state'
 
+import { useMapValue } from '../../../hooks'
+import { use } from '../../../utils'
 import { parseSearch } from '../../../utils/parseSearch'
-import { loop } from '../loop'
+import { map } from '../map'
 
 export interface RouterProps {
   search?: string | number
   ish?: boolean
 }
 
-export const history = new History()
 export const routerContext = new Context(1)
 
-export const parsedSearch = new Cache(() => parseSearch(history.search))
+export const parsedSearch = new Cache(() => parseSearch(locationSearch.value))
 
-export const parsedPath = new Cache(() => history.path.split('/').map(e => e || '/'), true)
+export const parsedPath = new Cache(() => locationPath.value.split('/').map(e => e || '/'), true)
 export const pathDeep = new Cache(() => parsedPath.value.length, true)
 
 export const routes: Cache<string>[] = []
@@ -60,32 +61,47 @@ function renderSearchIsh (key: string, slots: Record<string, any>, handler: Hand
     return [result]
   })
 
-  return loop({
+  runPlugins({
     type: 'router-loop',
     props: { of: () => currentSlots.value },
-    children: [({ value }) => slots[value as string]],
-  }, handler)
+    children: [{
+      type () {
+        return update => slots[use(useMapValue<any>(), update)]
+      },
+    }],
+  }, handler, [map])
 }
 
-export function router ({ props, children }: JSXPluginElement<RouterProps>, handler) {
-  const slots = getSlots(handler, children)
+export function router () {
+  const { props } = useApp<JSXPluginElement<RouterProps>>()
+  const handler = useHandler()
+  const slots = useSlots()
   const deep = props?.search || routerContext.get(handler)
   const search = props?.search
   const ish = props?.ish
 
   if (search && ish) {
-    return renderSearchIsh(String(search), slots, handler)
+    renderSearchIsh(String(search), slots, handler)
+    return
   }
 
+  const curRoute = search
+    ? new Cache<string>(() => {
+      const value = parsedSearch.value[search]
+      return Array.isArray(value) ? String(value[0]) : String(value)
+    })
+    : ish ? getRoute(handler, deep) : getStrongRoute(handler, deep)
+
   const slot = new Cache(() => {
-    const route = search ? history.getSearch(String(search)) : ish ? getRoute(handler, deep).value : getStrongRoute(handler, deep).value
+    const route = curRoute.value
+
     if (route && route in slots) {
       return slots[route]
     }
     return slots['']
   })
 
-  return innet(() => {
+  innet(() => {
     const currentSlot = slot.value
 
     if (currentSlot !== slots['']) {

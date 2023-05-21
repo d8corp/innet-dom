@@ -1,15 +1,15 @@
-import innet from 'innet';
+import innet, { useApp, useHandler } from 'innet';
 
-const domIterable = () => (apps, next, handler) => {
+const domIterable = () => () => {
+    const apps = useApp();
+    const handler = useHandler();
     let update = false;
-    let result;
     for (const app of apps) {
         if (update)
             break;
-        result = innet(app, handler);
+        innet(app, handler);
         update = true;
     }
-    return result;
 };
 
 export { domIterable };

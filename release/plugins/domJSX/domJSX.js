@@ -14,9 +14,11 @@ var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
 const NAMESPACE_URI = Symbol('NAMESPACE_URI');
 function domJSX() {
-    return ({ type, props, children }, next, handler) => {
+    return () => {
+        const { type, props, children } = innet.useApp();
+        let handler = innet.useHandler();
         if (typeof type !== 'string')
-            return next();
+            return innet.NEXT;
         if (type === 'svg') {
             handler = Object.create(handler);
             handler[NAMESPACE_URI] = 'http://www.w3.org/2000/svg';
@@ -86,13 +88,12 @@ function domJSX() {
                 }
             }
         }
-        const result = innet__default["default"](element, handler);
+        innet__default["default"](element, handler);
         if (children) {
             const childrenHandler = Object.create(handler);
             setParent.setParent(childrenHandler, element);
-            return innet__default["default"](children, childrenHandler);
+            innet__default["default"](children, childrenHandler);
         }
-        return result;
     };
 }
 

@@ -2,9 +2,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-require('../setTimeoutSync/index.js');
+var SyncTimer = require('sync-timer');
 var constants = require('./constants.js');
-var setTimeoutSync = require('../setTimeoutSync/setTimeoutSync.js');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var SyncTimer__default = /*#__PURE__*/_interopDefaultLegacy(SyncTimer);
 
 function removeParentChild(target) {
     if (target._parent) {
@@ -15,7 +18,7 @@ function removeParentChild(target) {
 }
 function removeElements(target, delay = target[constants.REMOVE_DELAY]) {
     if (delay) {
-        setTimeoutSync.setTimeoutSync(() => { target.remove(); }, delay);
+        new SyncTimer__default["default"](() => { target.remove(); }, delay);
     }
     else {
         target.remove();

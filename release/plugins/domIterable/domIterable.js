@@ -8,16 +8,16 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
-const domIterable = () => (apps, next, handler) => {
+const domIterable = () => () => {
+    const apps = innet.useApp();
+    const handler = innet.useHandler();
     let update = false;
-    let result;
     for (const app of apps) {
         if (update)
             break;
-        result = innet__default["default"](app, handler);
+        innet__default["default"](app, handler);
         update = true;
     }
-    return result;
 };
 
 exports.domIterable = domIterable;

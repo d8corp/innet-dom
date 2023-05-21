@@ -1,7 +1,7 @@
-import { State, Cache } from 'watch-state';
+import { Observable } from 'watch-state';
 
 function use(prop, update = false) {
-    if (prop instanceof State || prop instanceof Cache) {
+    if (prop instanceof Observable) {
         return prop.value;
     }
     return typeof prop === 'function' ? prop(update) : prop;

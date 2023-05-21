@@ -1,15 +1,14 @@
-import innet, { type PluginHandler } from 'innet'
+import innet, { type HandlerPlugin, useApp, useHandler } from 'innet'
 
-export const domIterable = (): PluginHandler => (apps, next, handler) => {
+export const domIterable = (): HandlerPlugin => () => {
+  const apps = useApp<Iterable<any>>()
+  const handler = useHandler()
   let update = false
-  let result
 
   for (const app of apps) {
     if (update) break
 
-    result = innet(app, handler)
+    innet(app, handler)
     update = true
   }
-
-  return result
 }

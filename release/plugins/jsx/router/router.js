@@ -3,23 +3,25 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var jsx = require('@innet/jsx');
-var History = require('@watch-state/history-api');
+var historyApi = require('@watch-state/history-api');
 var innet = require('innet');
 var watchState = require('watch-state');
+require('../../../hooks/index.js');
+require('../../../utils/index.js');
 require('../../../utils/parseSearch/index.js');
-require('../loop/index.js');
+require('../map/index.js');
 var parseSearch = require('../../../utils/parseSearch/parseSearch.js');
-var loop = require('../loop/loop.js');
+var use = require('../../../utils/use/use.js');
+var useMapValue = require('../../../hooks/useMapValue/useMapValue.js');
+var map = require('../map/map.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var History__default = /*#__PURE__*/_interopDefaultLegacy(History);
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
-const history = new History__default["default"]();
 const routerContext = new jsx.Context(1);
-const parsedSearch = new watchState.Cache(() => parseSearch.parseSearch(history.search));
-const parsedPath = new watchState.Cache(() => history.path.split('/').map(e => e || '/'), true);
+const parsedSearch = new watchState.Cache(() => parseSearch.parseSearch(historyApi.locationSearch.value));
+const parsedPath = new watchState.Cache(() => historyApi.locationPath.value.split('/').map(e => e || '/'), true);
 const pathDeep = new watchState.Cache(() => parsedPath.value.length, true);
 const routes = [];
 const routesIsh = [];
@@ -36,7 +38,7 @@ function getStrongRoute(handler, deep = routerContext.get(handler)) {
     return routes[routeIndex];
 }
 function useRoute() {
-    return getRoute(jsx.useHandler());
+    return getRoute(innet.useHandler());
 }
 function getRoute(handler, deep = routerContext.get(handler)) {
     const routeIndex = deep - 1;
@@ -54,35 +56,48 @@ function renderSearchIsh(key, slots, handler) {
             return result;
         return [result];
     });
-    return loop.loop({
+    innet.runPlugins({
         type: 'router-loop',
         props: { of: () => currentSlots.value },
-        children: [({ value }) => slots[value]],
-    }, handler);
+        children: [{
+                type() {
+                    return update => slots[use.use(useMapValue.useMapValue(), update)];
+                },
+            }],
+    }, handler, [map.map]);
 }
-function router({ props, children }, handler) {
-    const slots = jsx.getSlots(handler, children);
+function router() {
+    const { props } = innet.useApp();
+    const handler = innet.useHandler();
+    const slots = jsx.useSlots();
     const deep = (props === null || props === void 0 ? void 0 : props.search) || routerContext.get(handler);
     const search = props === null || props === void 0 ? void 0 : props.search;
     const ish = props === null || props === void 0 ? void 0 : props.ish;
     if (search && ish) {
-        return renderSearchIsh(String(search), slots, handler);
+        renderSearchIsh(String(search), slots, handler);
+        return;
     }
+    const curRoute = search
+        ? new watchState.Cache(() => {
+            const value = parsedSearch.value[search];
+            return Array.isArray(value) ? String(value[0]) : String(value);
+        })
+        : ish ? getRoute(handler, deep) : getStrongRoute(handler, deep);
     const slot = new watchState.Cache(() => {
-        const route = search ? history.getSearch(String(search)) : ish ? getRoute(handler, deep).value : getStrongRoute(handler, deep).value;
+        const route = curRoute.value;
         if (route && route in slots) {
             return slots[route];
         }
         return slots[''];
     });
-    return innet__default["default"](() => {
+    innet__default["default"](() => {
         const currentSlot = slot.value;
         if (currentSlot !== slots['']) {
             return search
                 ? currentSlot
                 : {
                     type: () => {
-                        innet__default["default"](currentSlot, jsx.createContextHandler(jsx.useHandler(), routerContext, deep + 1));
+                        innet__default["default"](currentSlot, jsx.createContextHandler(innet.useHandler(), routerContext, deep + 1));
                     },
                 };
         }
@@ -92,7 +107,6 @@ function router({ props, children }, handler) {
 
 exports.getRoute = getRoute;
 exports.getStrongRoute = getStrongRoute;
-exports.history = history;
 exports.parsedPath = parsedPath;
 exports.parsedSearch = parsedSearch;
 exports.pathDeep = pathDeep;

@@ -1,4 +1,4 @@
-import { useHandler } from '@innet/jsx'
+import { useHandler } from 'innet'
 
 import { type TargetElements } from '../../types'
 import { getParent } from '../../utils'

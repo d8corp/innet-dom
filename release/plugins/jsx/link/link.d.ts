@@ -1,4 +1,3 @@
-import { type JSXPluginElement } from '@innet/jsx';
 import { type HTMLStyleProps } from '../../../hooks/useStyle';
 export declare const defaultClass: {
     root: any;
@@ -11,4 +10,4 @@ export interface LinkProps extends HTMLStyleProps<HTMLAnchorElement, typeof defa
     replace?: boolean;
     exact?: boolean;
 }
-export declare function link({ type, props, children }: JSXPluginElement<LinkProps, void>, oldHandler: any): any;
+export declare function link(): void;

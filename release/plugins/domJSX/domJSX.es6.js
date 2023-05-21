@@ -1,4 +1,4 @@
-import innet from 'innet';
+import innet, { useApp, useHandler, NEXT } from 'innet';
 import { Watch } from 'watch-state';
 import '../../utils/index.es6.js';
 import { statePropToWatchProp } from '../../utils/statePropToWatchProp/statePropToWatchProp.es6.js';
@@ -6,9 +6,11 @@ import { setParent } from '../../utils/setParent/setParent.es6.js';
 
 const NAMESPACE_URI = Symbol('NAMESPACE_URI');
 function domJSX() {
-    return ({ type, props, children }, next, handler) => {
+    return () => {
+        const { type, props, children } = useApp();
+        let handler = useHandler();
         if (typeof type !== 'string')
-            return next();
+            return NEXT;
         if (type === 'svg') {
             handler = Object.create(handler);
             handler[NAMESPACE_URI] = 'http://www.w3.org/2000/svg';
@@ -78,13 +80,12 @@ function domJSX() {
                 }
             }
         }
-        const result = innet(element, handler);
+        innet(element, handler);
         if (children) {
             const childrenHandler = Object.create(handler);
             setParent(childrenHandler, element);
-            return innet(children, childrenHandler);
+            innet(children, childrenHandler);
         }
-        return result;
     };
 }
 

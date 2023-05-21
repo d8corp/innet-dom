@@ -1,9 +1,8 @@
 import { context, slots, slot, jsxPlugins, jsxComponent } from '@innet/jsx';
-import { arraySync, asyncIterable, iterable, nullish, stop, promise, node, fn, string, number, array, object } from '@innet/utils';
+import { arraySync, asyncIterable, iterable, nullish, promise, node, fn, string, number, array, object } from '@innet/utils';
 import { createHandler } from 'innet';
 import '../plugins/index.es6.js';
 import { portal } from '../plugins/jsx/portal/portal.es6.js';
-import { loop } from '../plugins/jsx/loop/loop.es6.js';
 import { map } from '../plugins/jsx/map/map.es6.js';
 import { router } from '../plugins/jsx/router/router.es6.js';
 import { link } from '../plugins/jsx/link/link.es6.js';
@@ -26,7 +25,6 @@ const arrayPlugins = [
 const JSXPlugins = {
     context,
     portal,
-    for: loop,
     map,
     slots,
     slot,
@@ -65,7 +63,7 @@ const promisePlugins = [
     domAsync,
 ];
 const handler = createHandler([
-    nullish([stop]),
+    nullish([]),
     promise(promisePlugins),
     node(nodePlugins),
     fn(fnPlugins),

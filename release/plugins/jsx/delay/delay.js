@@ -4,22 +4,27 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var jsx = require('@innet/jsx');
 var innet = require('innet');
+var SyncTimer = require('sync-timer');
 var watchState = require('watch-state');
 require('../../../utils/index.js');
 var constants = require('../../../utils/dom/constants.js');
 var getComment = require('../../../utils/getComment/getComment.js');
-var setTimeoutSync = require('../../../utils/setTimeoutSync/setTimeoutSync.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
+var SyncTimer__default = /*#__PURE__*/_interopDefaultLegacy(SyncTimer);
 
 const delayContext = new jsx.Context();
 function useHidden() {
-    return delayContext.get(jsx.useHandler());
+    return delayContext.get(innet.useHandler());
 }
-function delay({ props, children }, handler) {
-    const run = () => innet__default["default"](children, handler);
+function delay() {
+    const { props, children } = innet.useApp();
+    let handler = innet.useHandler();
+    const run = () => {
+        innet__default["default"](children, handler);
+    };
     if (props) {
         const { show, hide, ref } = props;
         const [childHandler, comment] = getComment.getComment(handler, 'delay', true);
@@ -46,7 +51,7 @@ function delay({ props, children }, handler) {
             }, true);
             watchState.onDestroy(() => {
                 hideState.value = true;
-                setTimeoutSync.setTimeoutSync(() => { watcher.destroy(); }, hide);
+                new SyncTimer__default["default"](() => { watcher.destroy(); }, hide);
             });
             return;
         }
@@ -56,16 +61,17 @@ function delay({ props, children }, handler) {
             watchState.onDestroy(() => {
                 destroyed = true;
             });
-            return setTimeout(() => {
+            setTimeout(() => {
                 if (!destroyed) {
                     watchState.scope.activeWatcher = activeWatcher;
                     run();
                     watchState.scope.activeWatcher = undefined;
                 }
             }, show);
+            return;
         }
     }
-    return run();
+    run();
 }
 
 exports.delay = delay;

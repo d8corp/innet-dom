@@ -1,2 +1,2 @@
-import { type PluginHandler } from 'innet';
-export declare const domAsyncIterable: () => PluginHandler;
+import { type HandlerPlugin } from 'innet';
+export declare const domAsyncIterable: () => HandlerPlugin;

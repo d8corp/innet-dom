@@ -1,6 +1,5 @@
+import SyncTimer from 'sync-timer'
 import { onDestroy } from 'watch-state'
-
-import { setTimeoutSync } from '../setTimeoutSync'
 
 export function onMounted (callback: () => void, delay?: number) {
   let destroyed = false
@@ -9,7 +8,7 @@ export function onMounted (callback: () => void, delay?: number) {
     destroyed = true
   })
 
-  setTimeoutSync(() => {
+  new SyncTimer(() => {
     if (!destroyed) {
       callback()
     }

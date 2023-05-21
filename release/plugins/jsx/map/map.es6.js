@@ -1,4 +1,4 @@
-import innet from 'innet';
+import innet, { useHandler, useApp } from 'innet';
 import { onDestroy, Watch, unwatch, createEvent, State } from 'watch-state';
 import '../../../hooks/index.es6.js';
 import '../../../utils/index.es6.js';
@@ -23,7 +23,9 @@ function getKey(key, value) {
     }
 }
 const watcherKey = Symbol('watcherKey');
-function map({ type, props: { key, of: ofState, }, children, }, handler) {
+function map() {
+    const handler = useHandler();
+    const { type, props: { key, of: ofState, }, children, } = useApp();
     if (!children || !ofState)
         return;
     const forProp = statePropToWatchProp(ofState);
@@ -44,7 +46,7 @@ function map({ type, props: { key, of: ofState, }, children, }, handler) {
                 for (let index = 0; index < values.length; index++) {
                     const value = values[index];
                     const valueKey = keysList[index];
-                    const keep = keepKeys.includes(valueKey);
+                    const keep = keepKeys === null || keepKeys === void 0 ? void 0 : keepKeys.includes(valueKey);
                     if (handlersMap.has(valueKey)) {
                         const deepHandler = handlersMap.get(valueKey);
                         unwatch(createEvent(() => {
@@ -110,18 +112,15 @@ function map({ type, props: { key, of: ofState, }, children, }, handler) {
                 }
             }
         });
-        return mainComment;
     }
     else {
-        const result = [];
         let i = 0;
         for (const value of forProp) {
             const childrenHandler = Object.create(handler);
             childrenHandler[mapValueContext.key] = value;
             childrenHandler[mapIndexContext.key] = i++;
-            result.push(innet(children, childrenHandler));
+            innet(children, childrenHandler);
         }
-        return result;
     }
 }
 

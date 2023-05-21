@@ -1,10 +1,11 @@
-import { type ContextProps, type JSXPlugin, type SlotProps, type SlotsProps } from '@innet/jsx';
+import { type ContextProps, type SlotProps, type SlotsProps } from '@innet/jsx';
 import { arraySync } from '@innet/utils';
-import { type DelayProps, domAsync, domFn, domNode, domText, type HideProps, type LinkProps, type LoopProps, type MapProps, type PortalProps, type RouterProps, type ShowProps, type SwitchProps } from '../plugins';
+import { type HandlerPlugin } from 'innet';
+import { type DelayProps, domAsync, domFn, domNode, domText, type HideProps, type LinkProps, type MapProps, type PortalProps, type RouterProps, type ShowProps, type SwitchProps } from '../plugins';
 import { type HTMLProps } from '../types';
 export declare const arrayPlugins: (typeof arraySync)[];
-export declare const JSXPlugins: Record<string, JSXPlugin>;
-export declare const objectPlugins: ((handler: import("innet").Handler) => import("innet").PluginHandler)[];
+export declare const JSXPlugins: Record<string, HandlerPlugin>;
+export declare const objectPlugins: import("innet").Plugin[];
 export declare const fnPlugins: (typeof domFn)[];
 export declare const stringPlugins: (typeof domText)[];
 export declare const numberPlugins: (typeof domText)[];
@@ -15,8 +16,6 @@ declare global {
     namespace JSX {
         interface IntrinsicElements {
             portal: PortalProps;
-            /** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
-            for: LoopProps;
             map: MapProps;
             context: ContextProps;
             slots: SlotsProps;

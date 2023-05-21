@@ -1,10 +1,11 @@
+import { historyPush } from '@watch-state/history-api'
+
 import { getHTML, render } from '../../../test'
 import { Ref } from '../../../utils'
-import { history } from '../router'
 
 describe('link', () => {
   it('should work', async () => {
-    history.push('/')
+    await historyPush('/')
 
     const homeLink = new Ref<HTMLAnchorElement>()
     const testLink = new Ref<HTMLAnchorElement>()
@@ -33,6 +34,7 @@ describe('link', () => {
     expect(getHTML(content.value)).toBe('<div>Home Page</div>')
 
     testLink.value.click()
+
     await new Promise(resolve => setTimeout(resolve, 100))
 
     expect(getHTML(content.value)).toBe('<div>Test Page</div>')
@@ -42,15 +44,15 @@ describe('link', () => {
 
     expect(getHTML(content.value)).toBe('<div>404</div>')
   })
-  it('should work without props', () => {
-    history.push('/')
+  it('should work without props', async () => {
+    await historyPush('/')
 
     const app = render(<a>home</a>)
 
     expect(getHTML(app)).toBe('<a>home</a>')
   })
-  it('should contain default props on external', () => {
-    history.push('/')
+  it('should contain default props on external', async () => {
+    await historyPush('/')
 
     const app = render(<a href='https://cantinc.com'>CANT inc.</a>)
 
@@ -73,8 +75,8 @@ describe('link', () => {
       '<a class="test1 test2" href="/">CANT inc.</a>',
     )
   })
-  it('should have active class', () => {
-    history.push('/')
+  it('should have active class', async () => {
+    await historyPush('/')
 
     const app = render(
       <a
@@ -87,16 +89,16 @@ describe('link', () => {
 
     expect(getHTML(app)).toBe('<a class="test active" href="/">CANT inc.</a>')
 
-    history.push('/test')
+    await historyPush('/test')
 
     expect(getHTML(app)).toBe('<a class="test" href="/">CANT inc.</a>')
 
-    history.push('/')
+    await historyPush('/')
 
     expect(getHTML(app)).toBe('<a class="test active" href="/">CANT inc.</a>')
   })
-  it('should work with any search', () => {
-    history.push('/')
+  it('should work with any search', async () => {
+    await historyPush('/')
 
     const app = render(
       <a class={{ root: 'test', active: 'active' }} href='/test?phone=+7%20(999)%20999-99-99'>
@@ -106,7 +108,7 @@ describe('link', () => {
 
     expect(getHTML(app)).toBe('<a class="test" href="/test?phone=+7%20(999)%20999-99-99">CANT inc.</a>')
 
-    history.push('/test?phone=+7%20(999)%20999-99-99')
+    await historyPush('/test?phone=+7%20(999)%20999-99-99')
 
     expect(getHTML(app)).toBe('<a class="test active" href="/test?phone=+7%20(999)%20999-99-99">CANT inc.</a>')
   })

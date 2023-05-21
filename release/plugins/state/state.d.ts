@@ -1,2 +1,2 @@
-import { type PluginHandler } from 'innet';
-export declare function state(): PluginHandler;
+import { type HandlerPlugin } from 'innet';
+export declare function state(): HandlerPlugin;

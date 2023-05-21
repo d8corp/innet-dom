@@ -10,8 +10,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
-function show({ props: { when }, children }, handler) {
-    return innet__default["default"](inject.inject(when, state => state ? children : null), handler);
+function show() {
+    const handler = innet.useHandler();
+    const { props: { when }, children } = innet.useApp();
+    innet__default["default"](inject.inject(when, state => state ? children : null), handler);
 }
 
 exports.show = show;

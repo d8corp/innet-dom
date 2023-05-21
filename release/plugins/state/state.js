@@ -10,11 +10,11 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
 function state() {
-    return (state, next, handler) => {
-        if (state instanceof watchState.State || state instanceof watchState.Cache) {
-            return innet__default["default"](() => state.value, handler);
-        }
-        return next();
+    return () => {
+        const state = innet.useApp();
+        if (!(state instanceof watchState.Observable))
+            return innet.NEXT;
+        innet__default["default"](() => state.value, innet.useHandler());
     };
 }
 

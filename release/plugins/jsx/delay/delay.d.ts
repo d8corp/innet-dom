@@ -1,5 +1,4 @@
-import { Context, type JSXPluginElement } from '@innet/jsx';
-import { type Handler } from 'innet';
+import { Context } from '@innet/jsx';
 import { State } from 'watch-state';
 import { type Ref } from '../../../utils';
 export interface DelayProps {
@@ -9,4 +8,4 @@ export interface DelayProps {
 }
 export declare const delayContext: Context<State<boolean>, State<boolean>>;
 export declare function useHidden(): undefined | State<boolean>;
-export declare function delay({ props, children }: JSXPluginElement<DelayProps>, handler: Handler): any;
+export declare function delay(): void;

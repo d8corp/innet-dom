@@ -2,7 +2,6 @@ import {
   context,
   type ContextProps,
   jsxComponent,
-  type JSXPlugin,
   jsxPlugins,
   slot,
   type SlotProps,
@@ -20,10 +19,9 @@ import {
   number,
   object,
   promise,
-  stop,
   string,
 } from '@innet/utils'
-import { createHandler } from 'innet'
+import { createHandler, type HandlerPlugin } from 'innet'
 
 import {
   delay,
@@ -39,8 +37,6 @@ import {
   type HideProps,
   link,
   type LinkProps,
-  loop,
-  type LoopProps,
   map,
   type MapProps,
   portal,
@@ -59,10 +55,9 @@ export const arrayPlugins = [
   arraySync,
 ]
 
-export const JSXPlugins: Record<string, JSXPlugin> = {
+export const JSXPlugins: Record<string, HandlerPlugin> = {
   context,
   portal,
-  for: loop,
   map,
   slots,
   slot,
@@ -108,7 +103,7 @@ export const promisePlugins = [
 ]
 
 export const handler = createHandler([
-  nullish([stop]),
+  nullish([]),
   promise(promisePlugins),
   node(nodePlugins),
   fn(fnPlugins),
@@ -123,8 +118,6 @@ declare global {
     // @ts-expect-error: need to be redeclared
     interface IntrinsicElements {
       portal: PortalProps
-      /** @deprecated - use <map ...>...</map> instead of <for ...>...</for> */
-      for: LoopProps
       map: MapProps
       context: ContextProps
       slots: SlotsProps

@@ -13,16 +13,16 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
 function domFn() {
-    return (fn, next, handler) => {
+    return () => {
+        const fn = innet.useApp();
+        const handler = innet.useHandler();
         const [childrenHandler, comment] = getComment.getComment(handler, fn.name || 'watch');
-        let result;
         new watchState.Watch(update => {
             if (update) {
                 dom.clear(comment);
             }
-            result = innet__default["default"](fn(update), childrenHandler);
+            innet__default["default"](fn(update), childrenHandler);
         });
-        return result;
     };
 }
 

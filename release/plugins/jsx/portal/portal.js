@@ -10,9 +10,11 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
-function portal({ props, children }, handler) {
+function portal() {
+    const handler = innet.useHandler();
+    const { props, children } = innet.useApp();
     const [childHandler] = getComment.getComment(handler, 'portal', false, props.parent);
-    return innet__default["default"](children, childHandler);
+    innet__default["default"](children, childHandler);
 }
 
 exports.portal = portal;

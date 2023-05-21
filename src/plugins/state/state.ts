@@ -1,12 +1,12 @@
-import innet, { type PluginHandler } from 'innet'
-import { Cache, State } from 'watch-state'
+import innet, { type HandlerPlugin, NEXT, useApp, useHandler } from 'innet'
+import { Observable } from 'watch-state'
 
-export function state (): PluginHandler {
-  return (state, next, handler) => {
-    if (state instanceof State || state instanceof Cache) {
-      return innet(() => state.value, handler)
-    }
+export function state (): HandlerPlugin {
+  return () => {
+    const state = useApp()
 
-    return next()
+    if (!(state instanceof Observable)) return NEXT
+
+    innet(() => state.value, useHandler())
   }
 }

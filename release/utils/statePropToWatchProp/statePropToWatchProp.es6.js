@@ -1,7 +1,7 @@
-import { State, Cache } from 'watch-state';
+import { Observable } from 'watch-state';
 
 function statePropToWatchProp(value) {
-    if (value instanceof State || value instanceof Cache) {
+    if (value instanceof Observable) {
         return () => value.value;
     }
     return value;

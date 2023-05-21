@@ -7,7 +7,6 @@ var utils = require('@innet/utils');
 var innet = require('innet');
 require('../plugins/index.js');
 var portal = require('../plugins/jsx/portal/portal.js');
-var loop = require('../plugins/jsx/loop/loop.js');
 var map = require('../plugins/jsx/map/map.js');
 var router = require('../plugins/jsx/router/router.js');
 var link = require('../plugins/jsx/link/link.js');
@@ -30,7 +29,6 @@ const arrayPlugins = [
 const JSXPlugins = {
     context: jsx.context,
     portal: portal.portal,
-    for: loop.loop,
     map: map.map,
     slots: jsx.slots,
     slot: jsx.slot,
@@ -69,7 +67,7 @@ const promisePlugins = [
     domAsync.domAsync,
 ];
 const handler = innet.createHandler([
-    utils.nullish([utils.stop]),
+    utils.nullish([]),
     utils.promise(promisePlugins),
     utils.node(nodePlugins),
     utils.fn(fnPlugins),

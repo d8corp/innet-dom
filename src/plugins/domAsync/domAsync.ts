@@ -1,10 +1,12 @@
-import innet, { type PluginHandler } from 'innet'
+import innet, { type HandlerPlugin, useApp, useHandler } from 'innet'
 import { onDestroy, scope } from 'watch-state'
 
 import { getComment } from '../../utils'
 
-export function domAsync (): PluginHandler {
-  return (app: Promise<any>, next, handler) => {
+export function domAsync (): HandlerPlugin {
+  return () => {
+    const handler = useHandler()
+    const app = useApp<Promise<any>>()
     const [childHandler] = getComment(handler, 'async')
 
     let removed = false
@@ -15,12 +17,11 @@ export function domAsync (): PluginHandler {
 
     const { activeWatcher } = scope
 
-    return app.then(data => {
+    app.then(data => {
       if (!removed) {
         scope.activeWatcher = activeWatcher
-        const result = innet(data, childHandler)
+        innet(data, childHandler)
         scope.activeWatcher = undefined
-        return result
       }
     })
   }

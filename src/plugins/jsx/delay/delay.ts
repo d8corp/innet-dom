@@ -1,8 +1,9 @@
-import { Context, type JSXPluginElement, useHandler } from '@innet/jsx'
-import innet, { type Handler } from 'innet'
+import { Context, type JSXPluginElement } from '@innet/jsx'
+import innet, { useApp, useHandler } from 'innet'
+import Timer from 'sync-timer'
 import { onDestroy, scope, State, Watch } from 'watch-state'
 
-import { getComment, type Ref, setTimeoutSync } from '../../../utils'
+import { getComment, type Ref } from '../../../utils'
 import { REMOVE_DELAY } from '../../../utils/dom/constants'
 
 export interface DelayProps {
@@ -17,8 +18,13 @@ export function useHidden (): undefined | State<boolean> {
   return delayContext.get(useHandler())
 }
 
-export function delay ({ props, children }: JSXPluginElement<DelayProps>, handler: Handler) {
-  const run = () => innet(children, handler)
+export function delay () {
+  const { props, children } = useApp<JSXPluginElement<DelayProps>>()
+  let handler = useHandler()
+
+  const run = () => {
+    innet(children, handler)
+  }
 
   if (props) {
     const { show, hide, ref } = props
@@ -50,7 +56,7 @@ export function delay ({ props, children }: JSXPluginElement<DelayProps>, handle
 
       onDestroy(() => {
         hideState.value = true
-        setTimeoutSync(() => { watcher.destroy() }, hide)
+        new Timer(() => { watcher.destroy() }, hide)
       })
 
       return
@@ -62,15 +68,16 @@ export function delay ({ props, children }: JSXPluginElement<DelayProps>, handle
       onDestroy(() => {
         destroyed = true
       })
-      return setTimeout(() => {
+      setTimeout(() => {
         if (!destroyed) {
           scope.activeWatcher = activeWatcher
           run()
           scope.activeWatcher = undefined
         }
       }, show)
+      return
     }
   }
 
-  return run()
+  run()
 }

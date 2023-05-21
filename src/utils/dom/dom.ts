@@ -1,5 +1,6 @@
+import SyncTimer from 'sync-timer'
+
 import { type ContentElements, type TargetElements } from '../../types'
-import { setTimeoutSync } from '../setTimeoutSync'
 import { REMOVE_DELAY } from './constants'
 
 function removeParentChild (target: ContentElements) {
@@ -11,7 +12,7 @@ function removeParentChild (target: ContentElements) {
 }
 function removeElements (target: ContentElements, delay: number = target[REMOVE_DELAY]) {
   if (delay) {
-    setTimeoutSync(() => { target.remove() }, delay)
+    new SyncTimer(() => { target.remove() }, delay)
   } else {
     target.remove()
   }

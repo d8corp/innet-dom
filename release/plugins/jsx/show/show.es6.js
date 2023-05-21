@@ -1,9 +1,11 @@
-import innet from 'innet';
+import innet, { useHandler, useApp } from 'innet';
 import '../../../utils/index.es6.js';
 import { inject } from '../../../utils/inject/inject.es6.js';
 
-function show({ props: { when }, children }, handler) {
-    return innet(inject(when, state => state ? children : null), handler);
+function show() {
+    const handler = useHandler();
+    const { props: { when }, children } = useApp();
+    innet(inject(when, state => state ? children : null), handler);
 }
 
 export { show };

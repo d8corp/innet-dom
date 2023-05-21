@@ -1,12 +1,12 @@
-import innet from 'innet';
-import { State, Cache } from 'watch-state';
+import innet, { useApp, NEXT, useHandler } from 'innet';
+import { Observable } from 'watch-state';
 
 function state() {
-    return (state, next, handler) => {
-        if (state instanceof State || state instanceof Cache) {
-            return innet(() => state.value, handler);
-        }
-        return next();
+    return () => {
+        const state = useApp();
+        if (!(state instanceof Observable))
+            return NEXT;
+        innet(() => state.value, useHandler());
     };
 }
 

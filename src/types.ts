@@ -1,6 +1,5 @@
 import { type Handler } from 'innet'
-import { type Cache, type State } from 'watch-state'
-import { type Watcher } from 'watch-state/types'
+import { type Observable, type Watcher } from 'watch-state'
 
 import { type Ref } from './utils'
 
@@ -19,7 +18,7 @@ export type ParentElements = TargetElements | DocumentFragment
 export type UseComment = [Handler, Comment]
 
 export type WatchProp <T> = T | Watcher<T>
-export type StateProp <T> = WatchProp<T> | State<T> | Cache<T>
+export type StateProp <T> = WatchProp<T> | Observable<T>
 
 export type HTMLStyleKeys = keyof KeysToKebabCase<Omit<
 HTMLElement['style'],

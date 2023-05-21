@@ -1,17 +1,21 @@
-import { Context, useHandler } from '@innet/jsx';
-import innet from 'innet';
+import { Context } from '@innet/jsx';
+import innet, { useHandler, useApp } from 'innet';
+import SyncTimer from 'sync-timer';
 import { State, Watch, scope, onDestroy } from 'watch-state';
 import '../../../utils/index.es6.js';
 import { REMOVE_DELAY } from '../../../utils/dom/constants.es6.js';
 import { getComment } from '../../../utils/getComment/getComment.es6.js';
-import { setTimeoutSync } from '../../../utils/setTimeoutSync/setTimeoutSync.es6.js';
 
 const delayContext = new Context();
 function useHidden() {
     return delayContext.get(useHandler());
 }
-function delay({ props, children }, handler) {
-    const run = () => innet(children, handler);
+function delay() {
+    const { props, children } = useApp();
+    let handler = useHandler();
+    const run = () => {
+        innet(children, handler);
+    };
     if (props) {
         const { show, hide, ref } = props;
         const [childHandler, comment] = getComment(handler, 'delay', true);
@@ -38,7 +42,7 @@ function delay({ props, children }, handler) {
             }, true);
             onDestroy(() => {
                 hideState.value = true;
-                setTimeoutSync(() => { watcher.destroy(); }, hide);
+                new SyncTimer(() => { watcher.destroy(); }, hide);
             });
             return;
         }
@@ -48,16 +52,17 @@ function delay({ props, children }, handler) {
             onDestroy(() => {
                 destroyed = true;
             });
-            return setTimeout(() => {
+            setTimeout(() => {
                 if (!destroyed) {
                     scope.activeWatcher = activeWatcher;
                     run();
                     scope.activeWatcher = undefined;
                 }
             }, show);
+            return;
         }
     }
-    return run();
+    run();
 }
 
 export { delay, delayContext, useHidden };
