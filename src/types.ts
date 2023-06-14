@@ -19,6 +19,7 @@ export type UseComment = [Handler, Comment]
 
 export type WatchProp <T> = T | Watcher<T>
 export type StateProp <T> = WatchProp<T> | Observable<T>
+export type ObservableProp <T> = T | Observable<T>
 
 export type HTMLStyleKeys = keyof KeysToKebabCase<Omit<
 HTMLElement['style'],

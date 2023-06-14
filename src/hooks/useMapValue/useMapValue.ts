@@ -1,11 +1,11 @@
 import { Context, useContext } from '@innet/jsx'
 
-import { type StateProp } from '../../types'
+import { type ObservableProp } from '../../types'
 
 const mapValueUnknown = Symbol('mapValueUnknown')
-export const mapValueContext = new Context(mapValueUnknown)
+export const mapValueContext = new Context<ObservableProp<any>>(mapValueUnknown)
 
-export function useMapValue <V> (): StateProp<V> {
+export function useMapValue <V> (): ObservableProp<V> {
   const value = useContext(mapValueContext)
 
   if (value === mapValueUnknown) {
