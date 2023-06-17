@@ -1,8 +1,8 @@
 import { GenericComponent } from '@innet/jsx'
+import { callHandler } from '@innet/utils'
 import innet, { type HandlerPlugin, NEXT, useApp, useHandler } from 'innet'
 import { onDestroy, scope, Watch } from 'watch-state'
 
-import { callFunctionHandler } from '../../handlers'
 import { clear, getComment } from '../../utils'
 
 export const domIterable = (): HandlerPlugin => () => {
@@ -15,7 +15,7 @@ export const domIterable = (): HandlerPlugin => () => {
 
   if (!(data instanceof Promise)) {
     innet(data.value, handler)
-    innet(() => genericComponent.app.next(), callFunctionHandler)
+    innet(() => genericComponent.app.next(), callHandler)
     return
   }
 

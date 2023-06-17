@@ -1,10 +1,9 @@
 import { __awaiter, __asyncValues } from 'tslib';
 import { GenericComponent } from '@innet/jsx';
+import { callHandler } from '@innet/utils';
 import innet, { useApp, NEXT, useHandler } from 'innet';
 import { scope, onDestroy, Watch } from 'watch-state';
-import '../../handlers/index.es6.js';
 import '../../utils/index.es6.js';
-import { callFunctionHandler } from '../../handlers/callFunctionHandler.es6.js';
 import { getComment } from '../../utils/getComment/getComment.es6.js';
 import { clear } from '../../utils/dom/dom.es6.js';
 
@@ -16,7 +15,7 @@ const domIterable = () => () => {
     const { app: apps, data } = genericComponent;
     if (!(data instanceof Promise)) {
         innet(data.value, handler);
-        innet(() => genericComponent.app.next(), callFunctionHandler);
+        innet(() => genericComponent.app.next(), callHandler);
         return;
     }
     const [childrenHandler, comment] = getComment(handler, 'domIterable');

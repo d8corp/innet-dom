@@ -4,11 +4,10 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var tslib = require('tslib');
 var jsx = require('@innet/jsx');
+var utils = require('@innet/utils');
 var innet = require('innet');
 var watchState = require('watch-state');
-require('../../handlers/index.js');
 require('../../utils/index.js');
-var callFunctionHandler = require('../../handlers/callFunctionHandler.js');
 var getComment = require('../../utils/getComment/getComment.js');
 var dom = require('../../utils/dom/dom.js');
 
@@ -24,7 +23,7 @@ const domIterable = () => () => {
     const { app: apps, data } = genericComponent;
     if (!(data instanceof Promise)) {
         innet__default["default"](data.value, handler);
-        innet__default["default"](() => genericComponent.app.next(), callFunctionHandler.callFunctionHandler);
+        innet__default["default"](() => genericComponent.app.next(), utils.callHandler);
         return;
     }
     const [childrenHandler, comment] = getComment.getComment(handler, 'domIterable');
