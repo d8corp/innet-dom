@@ -1,6 +1,6 @@
 {
   "name": "@innet/dom",
-  "version": "0.15.0-alpha.1",
+  "version": "0.15.0-alpha.2",
   "description": "Tools to build Web Site",
   "main": "index.js",
   "module": "index.es6.js",
@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/d8corp/innet-dom",
   "dependencies": {
-    "@innet/jsx": "^2.0.0-alpha.0",
+    "@innet/jsx": "^2.0.0-alpha.7",
     "@innet/utils": "^2.0.0-alpha.0",
     "@watch-state/history-api": "^2.0.0-alpha.0",
     "html-classes": "^2.0.2",

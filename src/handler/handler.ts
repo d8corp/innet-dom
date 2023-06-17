@@ -11,9 +11,7 @@ import {
 import {
   array,
   arraySync,
-  asyncIterable,
   fn,
-  iterable,
   node,
   nullish,
   number,
@@ -27,7 +25,6 @@ import {
   delay,
   type DelayProps,
   domAsync,
-  domAsyncIterable,
   domFn,
   domIterable,
   domJSX,
@@ -74,12 +71,7 @@ export const objectPlugins = [
   jsxPlugins(JSXPlugins),
   jsxComponent,
   domJSX,
-  asyncIterable([
-    domAsyncIterable,
-  ]),
-  iterable([
-    domIterable,
-  ]),
+  domIterable,
 ]
 
 export const fnPlugins = [

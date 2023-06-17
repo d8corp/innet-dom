@@ -7,3 +7,4 @@ export * from './domFn';
 export * from './domText';
 export * from './domAsyncIterable';
 export * from './state';
+export * from './callFunction';

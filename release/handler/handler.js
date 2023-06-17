@@ -16,7 +16,6 @@ var hide = require('../plugins/jsx/hide/hide.js');
 var _switch = require('../plugins/jsx/switch/switch.js');
 var state = require('../plugins/state/state.js');
 var domJSX = require('../plugins/domJSX/domJSX.js');
-var domAsyncIterable = require('../plugins/domAsyncIterable/domAsyncIterable.js');
 var domIterable = require('../plugins/domIterable/domIterable.js');
 var domFn = require('../plugins/domFn/domFn.js');
 var domText = require('../plugins/domText/domText.js');
@@ -44,12 +43,7 @@ const objectPlugins = [
     jsx.jsxPlugins(JSXPlugins),
     jsx.jsxComponent,
     domJSX.domJSX,
-    utils.asyncIterable([
-        domAsyncIterable.domAsyncIterable,
-    ]),
-    utils.iterable([
-        domIterable.domIterable,
-    ]),
+    domIterable.domIterable,
 ];
 const fnPlugins = [
     domFn.domFn,

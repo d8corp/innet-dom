@@ -1,5 +1,5 @@
 import { context, slots, slot, jsxPlugins, jsxComponent } from '@innet/jsx';
-import { arraySync, asyncIterable, iterable, nullish, promise, node, fn, string, number, array, object } from '@innet/utils';
+import { arraySync, nullish, promise, node, fn, string, number, array, object } from '@innet/utils';
 import { createHandler } from 'innet';
 import '../plugins/index.es6.js';
 import { portal } from '../plugins/jsx/portal/portal.es6.js';
@@ -12,7 +12,6 @@ import { hide } from '../plugins/jsx/hide/hide.es6.js';
 import { switchPlugin } from '../plugins/jsx/switch/switch.es6.js';
 import { state } from '../plugins/state/state.es6.js';
 import { domJSX } from '../plugins/domJSX/domJSX.es6.js';
-import { domAsyncIterable } from '../plugins/domAsyncIterable/domAsyncIterable.es6.js';
 import { domIterable } from '../plugins/domIterable/domIterable.es6.js';
 import { domFn } from '../plugins/domFn/domFn.es6.js';
 import { domText } from '../plugins/domText/domText.es6.js';
@@ -40,12 +39,7 @@ const objectPlugins = [
     jsxPlugins(JSXPlugins),
     jsxComponent,
     domJSX,
-    asyncIterable([
-        domAsyncIterable,
-    ]),
-    iterable([
-        domIterable,
-    ]),
+    domIterable,
 ];
 const fnPlugins = [
     domFn,
