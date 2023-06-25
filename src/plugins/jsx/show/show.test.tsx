@@ -1,4 +1,4 @@
-import { Cache, State } from 'watch-state'
+import { Cache, onDestroy, State } from 'watch-state'
 
 import { getHTML, render } from '../../../test'
 
@@ -53,5 +53,23 @@ describe('show', () => {
     show.value = true
 
     expect(getHTML(result)).toBe('Shown')
+  })
+  it('should destroy content', () => {
+    const fn = jest.fn()
+    const show = new State(true)
+
+    function Test () {
+      onDestroy(fn)
+      return 'test'
+    }
+
+    render(
+      <show when={show}>
+        <Test />
+      </show>,
+    )
+
+    show.value = false
+    expect(fn).toBeCalled()
   })
 })
