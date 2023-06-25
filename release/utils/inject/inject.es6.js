@@ -4,7 +4,7 @@ import { use } from '../use/use.es6.js';
 
 function inject(value, callback) {
     if (value instanceof Observable || value instanceof Function) {
-        return () => callback(use(value));
+        return update => callback(use(value, update));
     }
     return callback(value);
 }

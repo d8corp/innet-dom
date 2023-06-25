@@ -8,7 +8,7 @@ var use = require('../use/use.js');
 
 function inject(value, callback) {
     if (value instanceof watchState.Observable || value instanceof Function) {
-        return () => callback(use.use(value));
+        return update => callback(use.use(value, update));
     }
     return callback(value);
 }
