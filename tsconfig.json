@@ -16,8 +16,10 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "strict": true,
     "declaration": true,
-    "jsx": "preserve"
+    "jsx": "react-jsx",
+    "jsxImportSource": "@innet/jsx"
   },
   "include": [
     "src"

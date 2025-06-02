@@ -33,13 +33,13 @@ describe('link', () => {
 
     expect(getHTML(content.value)).toBe('<div>Home Page</div>')
 
-    testLink.value.click()
+    testLink.value?.click()
 
     await new Promise(resolve => setTimeout(resolve, 100))
 
     expect(getHTML(content.value)).toBe('<div>Test Page</div>')
 
-    unknownLink.value.click()
+    unknownLink.value?.click()
     await new Promise(resolve => setTimeout(resolve, 100))
 
     expect(getHTML(content.value)).toBe('<div>404</div>')

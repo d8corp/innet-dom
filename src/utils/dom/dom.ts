@@ -10,7 +10,7 @@ function removeParentChild (target: ContentElements) {
     target._parent = undefined
   }
 }
-function removeElements (target: ContentElements, delay: number = target[REMOVE_DELAY]) {
+function removeElements (target: ContentElements, delay: number = (target as any)[REMOVE_DELAY]) {
   if (delay) {
     new SyncTimer(() => { target.remove() }, delay)
   } else {

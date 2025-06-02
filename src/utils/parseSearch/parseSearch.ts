@@ -1,6 +1,6 @@
 import qs, { type IParseOptions, type ParsedQs } from 'qs'
 
-export function parseSearch <V extends ParsedQs> (search?: string, options?: IParseOptions): V {
+export function parseSearch <V extends ParsedQs> (search: string = '', options?: IParseOptions): V {
   return qs.parse(search, {
     ignoreQueryPrefix: true,
     ...options,

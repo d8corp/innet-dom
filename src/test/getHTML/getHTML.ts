@@ -1,4 +1,4 @@
-export function getHTML (element, showComments?: boolean) {
+export function getHTML (element: any, showComments?: boolean) {
   if (element instanceof DocumentFragment) {
     let result = ''
 

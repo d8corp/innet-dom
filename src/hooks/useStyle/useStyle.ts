@@ -48,6 +48,7 @@ export function style<S> (styles: S, rest?: Record<string, any>) {
   return function useStyle (): S {
     const props = useProps()
 
+    // @ts-expect-error TODO: fix types
     return getStyles(rest ? Object.assign({}, styles, rest) : styles, props)
   }
 }

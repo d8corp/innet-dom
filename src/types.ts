@@ -27,7 +27,11 @@ HTMLElement['style'],
 >> | `--${string}`
 export type HTMLStyleProp = Partial<Record<HTMLStyleKeys, StateProp<string>>>
 
-export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> {
+export interface ChildrenProps {
+  children?: any
+}
+
+export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> extends ChildrenProps {
   class?: StateProp<string>
   style?: HTMLStyleProp
   ref?: Ref<E>

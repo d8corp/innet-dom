@@ -3,7 +3,8 @@
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint",
-    "simple-import-sort"
+    "simple-import-sort",
+    "eslint-plugin-unused-imports"
   ],
   "extends": [
     "standard-with-typescript",
@@ -19,6 +20,8 @@
     "jest": true
   },
   "rules": {
+    "@typescript-eslint/return-await": "off",
+    "unused-imports/no-unused-imports": "error",
     "@typescript-eslint/no-namespace": "off",
     "n/no-callback-literal": "off",
     "@typescript-eslint/ban-types": "off",

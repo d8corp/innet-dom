@@ -2,6 +2,7 @@ import {
   context,
   type ContextProps,
   jsxComponent,
+  type JSXElement,
   jsxPlugins,
   slot,
   type SlotProps,
@@ -22,29 +23,15 @@ import {
 import { createHandler, type HandlerPlugin } from 'innet'
 
 import {
-  delay,
-  type DelayProps,
   domAsync,
   domFn,
   domIterable,
   domJSX,
   domNode,
   domText,
-  hide,
-  type HideProps,
   link,
   type LinkProps,
-  map,
-  type MapProps,
-  portal,
-  type PortalProps,
-  router,
-  type RouterProps,
-  show,
-  type ShowProps,
   state,
-  switchPlugin,
-  type SwitchProps,
 } from '../plugins'
 import { type HTMLProps } from '../types'
 
@@ -54,16 +41,9 @@ export const arrayPlugins = [
 
 export const JSXPlugins: Record<string, HandlerPlugin> = {
   context,
-  portal,
-  map,
   slots,
   slot,
-  router,
   a: link,
-  delay,
-  show,
-  hide,
-  switch: switchPlugin,
 }
 
 export const objectPlugins = [
@@ -107,18 +87,37 @@ export const handler = createHandler([
 
 declare global {
   namespace JSX {
-    // @ts-expect-error: need to be redeclared
+    type Element =
+      | PromiseElement
+      | NonPromiseElement
+
+    type NonPromiseElement =
+      | ArrayElement
+      | WatchElement
+      | JSXElement
+      | Generator<Element, void, unknown>
+      | boolean
+      | null
+      | number
+      | string
+      | symbol
+      | undefined
+      | void
+
+    interface ArrayElement extends Array<Element> {}
+
+    type WatchElement = (update: boolean) => Element
+    type PromiseElement = Promise<NonPromiseElement>
+
+    interface ElementChildrenAttribute {
+      // eslint-disable-next-line @typescript-eslint/ban-types
+      children: {}
+    }
+
     interface IntrinsicElements {
-      portal: PortalProps
-      map: MapProps
       context: ContextProps
       slots: SlotsProps
       slot: SlotProps
-      router: RouterProps
-      delay: DelayProps
-      show: ShowProps
-      hide: HideProps
-      switch: SwitchProps
       a: LinkProps
       div: HTMLProps<HTMLDivElement>
       span: HTMLProps<HTMLSpanElement>

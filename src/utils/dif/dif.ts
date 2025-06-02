@@ -22,5 +22,6 @@ export function dif <T> (values1: T[], values2: T[]): T[] | undefined {
     }
   }
 
+  // @ts-expect-error TODO: fix types
   return result
 }

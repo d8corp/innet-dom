@@ -1,7 +1,7 @@
-import { useChildren } from '@innet/jsx'
 import { State } from 'watch-state'
 
 import { getHTML, render } from '../../test'
+import { type ChildrenProps } from '../../types'
 
 describe('domIterable', () => {
   it('should run after yield', () => {
@@ -27,9 +27,8 @@ describe('domIterable', () => {
     expect(getHTML(result)).toBe('<div id="bar"></div>')
   })
   it('should works with hooks', () => {
-    function * Test () {
-      const children = useChildren()
-      yield <div>{children}</div>
+    function * Test (props: ChildrenProps) {
+      yield <div>{props.children}</div>
     }
 
     const result = render(<Test>foo</Test>)

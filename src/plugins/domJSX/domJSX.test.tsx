@@ -9,7 +9,7 @@ describe('domJSX', () => {
     expect(getHTML(result)).toBe('<div></div>')
   })
   it('should watch property', () => {
-    const classState = new State()
+    const classState = new State<string | undefined>()
 
     const result = render(<div class={classState} />)
 

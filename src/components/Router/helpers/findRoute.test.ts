@@ -1,0 +1,144 @@
+import { type Route } from '../types'
+import { createRouting } from './createRouting'
+import { findRoute } from './findRoute'
+
+const NotFound = () => '404'
+const Home = () => 'Home'
+const About = () => 'About'
+const Todo = () => 'Todo'
+const Todos = () => 'Todos'
+const AllTodos = () => 'AllTodos'
+const ActiveTodos = () => 'ActiveTodos'
+const InactiveTodos = () => 'InactiveTodos'
+const MainLayout = () => 'MainLayout'
+const SecondLayout = () => 'SecondLayout'
+const Settings = () => 'Settings'
+
+const todoRoutes: Route[] = [
+  { index: true, component: Home },
+  {
+    path: 'todos',
+    children: [
+      {
+        component: Todos,
+        children: [
+          { index: true, component: AllTodos },
+          { path: 'active', children: [{ component: ActiveTodos }] },
+          { path: 'inactive', children: [{ component: InactiveTodos }] },
+        ],
+      },
+    ],
+  },
+  { path: 'todo/:id', component: Todo },
+  { index: true, path: 'about', component: About },
+  {
+    path: ':test[foo|bar]',
+    component: Home,
+  },
+  { component: NotFound },
+]
+
+const todoRouting = createRouting(todoRoutes)
+
+describe('findRoute', () => {
+  describe('todos', () => {
+    it('home page', () => {
+      const params: Record<string, string> = {}
+      const result = findRoute(todoRouting, [], params)
+
+      expect(result).toEqual([Home])
+      expect(params).toEqual({})
+    })
+    it('about page', () => {
+      const params: Record<string, string> = {}
+      const result = findRoute(todoRouting, ['about'], params)
+
+      expect(result).toEqual([About])
+      expect(params).toEqual({})
+    })
+    it('404 page', () => {
+      const params: Record<string, string> = {}
+      const result = findRoute(todoRouting, ['404'], params)
+
+      expect(result).toEqual([NotFound])
+      expect(params).toEqual({})
+    })
+    it('404 about page', () => {
+      const params: Record<string, string> = {}
+      const result = findRoute(todoRouting, ['about', 'test'], params)
+
+      expect(result).toEqual([NotFound])
+      expect(params).toEqual({})
+    })
+    it('todo page', () => {
+      const params: Record<string, string> = {}
+      const result = findRoute(todoRouting, ['todo', '1'], params)
+
+      expect(result).toEqual([Todo])
+      expect(params).toEqual({ id: '1' })
+    })
+    it('todo page without param', () => {
+      const params: Record<string, string> = {}
+      const result = findRoute(todoRouting, ['todo'], params)
+
+      expect(result).toEqual([NotFound])
+      expect(params).toEqual({})
+    })
+    it('todos page all todos', () => {
+      const params: Record<string, string> = {}
+      const result = findRoute(todoRouting, ['todos'], params)
+
+      expect(result).toEqual([Todos, AllTodos])
+      expect(params).toEqual({})
+    })
+    it('todos page active todos', () => {
+      const params: Record<string, string> = {}
+      const result = findRoute(todoRouting, ['todos', 'active'], params)
+
+      expect(result).toEqual([Todos, ActiveTodos])
+      expect(params).toEqual({})
+    })
+    it('foo', () => {
+      const params: Record<string, string> = {}
+      const result = findRoute(todoRouting, ['foo'], params)
+
+      expect(result).toEqual([Home])
+      expect(params).toEqual({ test: 'foo' })
+    })
+    it('bar', () => {
+      const params: Record<string, string> = {}
+      const result = findRoute(todoRouting, ['bar'], params)
+
+      expect(result).toEqual([Home])
+      expect(params).toEqual({ test: 'bar' })
+    })
+    it('complex', () => {
+      const routing = createRouting([
+        {
+          component: MainLayout,
+          children: [
+            { index: true, component: Home },
+            { index: true, path: 'about', component: About },
+          ],
+        },
+        {
+          component: SecondLayout,
+          children: [
+            { index: true, path: 'settings', component: Settings },
+          ],
+        },
+        {
+          component: MainLayout,
+          children: [
+            { component: NotFound },
+          ],
+        },
+      ])
+      const params: Record<string, string> = {}
+      const result = findRoute(routing, ['settings'], params)
+
+      expect(result).toEqual([SecondLayout, Settings])
+      expect(params).toEqual({})
+    })
+  })
+})

@@ -1,3 +1,4 @@
+// @ts-nocheck TODO: fix types
 import { JSX_PLUGINS, type JSXPluginElement } from '@innet/jsx'
 import { historyPush, historyReplace, locationURL } from '@watch-state/history-api'
 import classes from 'html-classes'
@@ -18,6 +19,7 @@ export interface LinkProps extends HTMLStyleProps<HTMLAnchorElement, typeof defa
   scrollTo?: number | string
   replace?: boolean
   exact?: boolean
+  children?: JSX.Element
 }
 
 const CLEAR_HREF = /([?#].*)?$/
@@ -27,13 +29,13 @@ function clearHref (url: string) {
 }
 
 export function link () {
-  const { type, props, children } = useApp<JSXPluginElement<LinkProps, void>>()
+  const { type, props } = useApp<JSXPluginElement<LinkProps>>()
   const handler = Object.create(useHandler())
   handler[JSX_PLUGINS] = Object.create(handler[JSX_PLUGINS])
   handler[JSX_PLUGINS][type] = undefined
 
   if (!props) {
-    innet({ type: 'a', children }, handler)
+    innet({ type: 'a' }, handler)
     return
   }
 
@@ -51,7 +53,6 @@ export function link () {
         target: rest.target ?? (href ? '_blank' : undefined),
         onclick,
       },
-      children,
     }, handler)
     return
   }
@@ -60,7 +61,7 @@ export function link () {
 
   function createClassName () {
     const regString = new Cache(update => {
-      const href = getHref(update)
+      const href = getHref(update) as string
       const prefix = href.startsWith('?')
         ? '[^?]*'
         : href.startsWith('#')
@@ -83,7 +84,10 @@ export function link () {
   const className = rest.class && createClassName()
 
   function handleClick (e: MouseEvent) {
-    if (e.ctrlKey || e.metaKey) return onclick?.call(this, e)
+    if (e.ctrlKey || e.metaKey) {
+      // @ts-expect-error TODO: fix types
+      return onclick?.call(this, e)
+    }
 
     const href = getHref(false)
     let url = href
@@ -114,6 +118,5 @@ export function link () {
       href,
       onclick: handleClick,
     },
-    children,
   }, handler)
 }

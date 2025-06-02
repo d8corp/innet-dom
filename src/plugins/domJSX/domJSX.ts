@@ -1,3 +1,5 @@
+// @ts-nocheck TODO: fix types
+import { type JSXElement, useChildren } from '@innet/jsx'
 import innet, { type HandlerPlugin, NEXT, useApp, useHandler } from 'innet'
 import { Watch } from 'watch-state'
 
@@ -7,7 +9,9 @@ export const NAMESPACE_URI = Symbol('NAMESPACE_URI') as unknown as string
 
 export function domJSX (): HandlerPlugin {
   return () => {
-    const { type, props, children } = useApp<any>()
+    const { type, props } = useApp<JSXElement>()
+    const children = useChildren()
+
     let handler = useHandler()
     if (typeof type !== 'string') return NEXT
 
@@ -22,6 +26,8 @@ export function domJSX (): HandlerPlugin {
 
     if (props) {
       for (let key in props) {
+        if (key === 'children') continue
+
         if (key === 'ref') {
           if (props.ref) {
             props.ref.value = element
