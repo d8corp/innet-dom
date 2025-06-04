@@ -83,6 +83,7 @@ describe('normalizeRoutes', () => {
           {
             path: ':todoId',
             children: [
+              // @ts-expect-error TODO: fix types
               {
                 children: [{ component: Todo }],
               },

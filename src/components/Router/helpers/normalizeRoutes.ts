@@ -1,28 +1,27 @@
-import { type ChildrenProps } from '../../../types'
-import { type Route } from '../types'
+import { type BaseComponentRoute, type Route } from '../types'
 
-export interface NormalizedPathRoute {
+interface PathRoute {
   path: string
   children: NormalizedRoute[]
+  lazy?: never
+  fallback?: never
   component?: never
   index?: never
 }
 
-export interface NormalizedIndexRoute {
+type IndexRoute = BaseComponentRoute & {
   index: true
-  component?: (props: ChildrenProps) => JSX.Element
   path?: never
   children?: never
 }
 
-export interface NormalizedNoIndexRoute {
+type NoIndexRoute = BaseComponentRoute & {
   index?: false
-  component?: (props: ChildrenProps) => JSX.Element
   children?: NormalizedRoute[]
   path?: never
 }
 
-export type NormalizedRoute = NormalizedPathRoute | NormalizedIndexRoute | NormalizedNoIndexRoute
+export type NormalizedRoute = PathRoute | IndexRoute | NoIndexRoute
 
 export function normalizeRoutes (routes: Route[]): NormalizedRoute[] {
   return routes.map((route): NormalizedRoute => {

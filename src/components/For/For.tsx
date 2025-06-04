@@ -90,8 +90,8 @@ export function For<O extends StateProp<Iterable<any>>> ({
       const valueKey = keysList[index]
 
       if (handlersMap.has(valueKey)) {
-        const keep = keepKeys.includes(valueKey)
-        const deepHandler = handlersMap.get(valueKey)
+        const keep = keepKeys?.includes(valueKey)
+        const deepHandler = handlersMap.get(valueKey) as Handler
 
         unwatch(createEvent(() => {
           deepHandler[FOR_VALUE].value = value
@@ -102,9 +102,9 @@ export function For<O extends StateProp<Iterable<any>>> ({
           const comment = getParent(deepHandler) as ContentElements
 
           if (index) {
-            after(getParent(handlersMap.get(keysList[index - 1])), comment)
+            after(getParent(handlersMap.get(keysList[index - 1]) as Handler), comment)
           } else if (oldKeysList.length) {
-            before(getParent(handlersMap.get(oldKeysList[0])), comment)
+            before(getParent(handlersMap.get(oldKeysList[0]) as Handler), comment)
           } else {
             prepend(mainComment, comment)
           }
@@ -118,9 +118,9 @@ export function For<O extends StateProp<Iterable<any>>> ({
         handlersMap.set(valueKey, deepHandler)
 
         if (index) {
-          after(getParent(handlersMap.get(keysList[index - 1])), comment)
+          after(getParent(handlersMap.get(keysList[index - 1]) as Handler), comment)
         } else if (oldKeysList.length) {
-          before(getParent(handlersMap.get(oldKeysList[0])), comment)
+          before(getParent(handlersMap.get(oldKeysList[0]) as Handler), comment)
         } else {
           prepend(mainComment, comment)
         }
@@ -134,7 +134,7 @@ export function For<O extends StateProp<Iterable<any>>> ({
     }
 
     oldKeysSet.forEach(valueKey => {
-      const deepHandler = handlersMap.get(valueKey)
+      const deepHandler = handlersMap.get(valueKey) as Handler
       handlersMap.delete(valueKey)
       remove(getParent(deepHandler) as ContentElements)
       deepHandler[WATCHER_KEY].destroy()

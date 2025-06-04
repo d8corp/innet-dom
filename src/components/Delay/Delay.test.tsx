@@ -195,7 +195,8 @@ describe('Delay', () => {
   it('should work deep', async () => {
     const result = render(
       <Delay show={100}>
-        Works <Delay show={100}>fine!</Delay>
+        Works
+        <Delay show={100}>fine!</Delay>
       </Delay>,
     )
 

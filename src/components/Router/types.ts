@@ -1,25 +1,46 @@
 import { type ChildrenProps } from '../../types'
 
-export interface BaseRoute {
-  path?: string
-  component?: (props: ChildrenProps) => JSX.Element
+export type RouteComponent = (props: ChildrenProps) => JSX.Element
+export type RouteLazyComponent = () => Promise<RouteComponent>
+
+interface BaseNoLazyComponentRoute {
+  component: RouteComponent
+  lazy?: false
+  fallback?: never
 }
 
-export interface IndexRoute extends BaseRoute {
+interface BaseLazyComponentRoute {
+  component: RouteLazyComponent
+  lazy: true
+  fallback?: JSX.Element
+}
+
+export type BaseComponentRoute = BaseLazyComponentRoute | BaseNoLazyComponentRoute
+
+interface BaseNoComponentRoute {
+  component?: never
+  lazy?: never
+}
+
+type BaseRoute = (BaseComponentRoute | BaseNoComponentRoute) & {
+  path?: string
+}
+
+type IndexRoute = BaseRoute & {
   index: true
 }
 
-export interface NoIndexRoute extends BaseRoute {
+type NoIndexRoute = BaseRoute & {
   index?: false
   children?: Route[]
 }
 
 export type Route = IndexRoute | NoIndexRoute
 
-export type RouteComponent = (props: ChildrenProps) => JSX.Element
-
 export interface RoutingRoute {
-  components: RouteComponent[]
+  components: Array<RouteComponent | RouteLazyComponent>
+  lazy: boolean[]
+  fallback?: JSX.Element[]
   params: string[]
 }
 

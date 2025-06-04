@@ -2,6 +2,7 @@ import { Cache, State } from 'watch-state'
 
 import { getHTML, render } from '../../test'
 import { use } from '../../utils'
+import { Delay } from '../Delay'
 import { For } from '.'
 
 describe('For', () => {
@@ -168,7 +169,7 @@ describe('For', () => {
       const result = render(
         <ul>
           <For of={data}>
-            {(value) => <delay hide={300}><li>{value}</li></delay>}
+            {(value) => <Delay hide={300}><li>{value}</li></Delay>}
           </For>
         </ul>,
       )

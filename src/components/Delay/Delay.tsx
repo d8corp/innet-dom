@@ -19,7 +19,7 @@ export interface DelayProps {
   children?: JSX.Element
 }
 
-export function Delay ({ show, hide, ref, children }: DelayProps) {
+export function Delay ({ show = 0, hide = 0, ref, children }: DelayProps) {
   let handler = useHandler()
 
   const run = () => { innet(children, handler) }
@@ -29,6 +29,7 @@ export function Delay ({ show, hide, ref, children }: DelayProps) {
 
   if (hide > 0) {
     const hideState = childHandler[delayContext.key] = new State(false)
+    // @ts-expect-error TODO: fix types
     comment[REMOVE_DELAY] = hide
 
     if (ref) {

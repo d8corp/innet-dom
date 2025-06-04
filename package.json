@@ -60,6 +60,7 @@
     "@innet/jsx": "^2.0.0-beta.5",
     "@innet/utils": "^2.0.0-alpha.1",
     "@watch-state/history-api": "^2.0.0-alpha.1",
+    "@watch-state/async": "^2.0.0-alpha.3",
     "html-classes": "^2.0.2",
     "innet": "^2.0.0-alpha.3",
     "qs": "^6.14.0",

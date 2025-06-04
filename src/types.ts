@@ -32,7 +32,7 @@ export interface ChildrenProps {
 }
 
 export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> extends ChildrenProps {
-  class?: StateProp<string>
+  class?: StateProp<string | undefined>
   style?: HTMLStyleProp
   ref?: Ref<E>
 }

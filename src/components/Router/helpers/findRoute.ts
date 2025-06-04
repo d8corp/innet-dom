@@ -1,4 +1,4 @@
-import { type RouteComponent, type Routing } from '../types'
+import { type Routing, type RoutingRoute } from '../types'
 
 function setParams (rootPath: string[], pathParams: string[], result: Record<string, string>) {
   for (let i = 0; i < pathParams.length; i++) {
@@ -13,22 +13,22 @@ export function findRoute (
   path: string[],
   params: Record<string, string>,
   index = 0,
-): RouteComponent[] | undefined {
+): RoutingRoute | undefined {
   if (path.length === index) {
     if (routing.index) {
       setParams(path, routing.index.params, params)
-      return routing.index.components
+      return routing.index
     }
 
     if (routing.children?.index) {
       setParams(path, routing.children.index.params, params)
-      return routing.children.index.components
+      return routing.children.index
     }
 
     if (routing.rest) {
       if (routing.rest.components) {
         setParams(path, routing.rest.params, params)
-        return routing.rest.components
+        return routing.rest
       }
     }
 
@@ -55,6 +55,6 @@ export function findRoute (
 
   if (routing.rest) {
     setParams(path, routing.rest.params, params)
-    return routing.rest.components
+    return routing.rest
   }
 }

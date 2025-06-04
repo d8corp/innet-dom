@@ -1,5 +1,7 @@
 import { historyPush } from '@watch-state/history-api'
 
+import { Router } from '../../../components/Router'
+import { createRouting } from '../../../components/Router/helpers/createRouting'
 import { getHTML, render } from '../../../test'
 import { Ref } from '../../../utils'
 
@@ -12,21 +14,23 @@ describe('link', () => {
     const unknownLink = new Ref<HTMLAnchorElement>()
     const content = new Ref<HTMLDivElement>()
 
+    const HomePage = () => 'Home Page'
+    const TestPage = () => 'Test Page'
+    const NotFound = () => '404'
+
+    const routing = createRouting([
+      { index: true, component: HomePage },
+      { index: true, path: 'test', component: TestPage },
+      { component: NotFound },
+    ])
+
     render(
       <div>
         <a ref={homeLink} href='/'>home</a>
         <a ref={testLink} href='/test'>test</a>
         <a ref={unknownLink} href='/home'>unknown</a>
         <div ref={content}>
-          <router>
-            <slot name='/'>
-              Home Page
-            </slot>
-            <slot name='test'>
-              Test Page
-            </slot>
-            404
-          </router>
+          <Router routing={routing} />
         </div>
       </div>,
     )

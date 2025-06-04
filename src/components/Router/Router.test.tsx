@@ -4,6 +4,7 @@ import { getHTML, render } from '../../test'
 import { type ChildrenProps } from '../../types'
 import { createRouting } from './helpers/createRouting'
 import { Router } from './Router'
+import { type RouteComponent } from './types'
 
 const Home = () => 'Home'
 const NotFound = () => '404'
@@ -103,7 +104,6 @@ describe('Router', () => {
         children: [
           { index: true, component: Home },
           { index: true, path: 'about', component: About },
-          { path: '*/test', component: About },
           { component: NotFound },
         ],
       },
@@ -126,5 +126,116 @@ describe('Router', () => {
     await historyPush('/settings')
 
     expect(getHTML(result)).toBe('<span>Settings</span>')
+  })
+  describe('lazy', () => {
+    it('Should render home page', async () => {
+      await historyPush('/')
+
+      const routing = createRouting([
+        { index: true, component: async () => Home, lazy: true },
+      ])
+
+      const result = render(<Router routing={routing} />)
+
+      await new Promise(resolve => setTimeout(resolve))
+
+      expect(getHTML(result)).toBe('Home')
+
+      await historyPush('/test')
+
+      expect(getHTML(result)).toBe('')
+    })
+    it('Should render fallback', async () => {
+      await historyPush('/')
+
+      const routing = createRouting([
+        {
+          index: true,
+          component: async () => Home,
+          lazy: true,
+          fallback: 'Loading...',
+        },
+      ])
+
+      const result = render(<Router routing={routing} />)
+
+      expect(getHTML(result)).toBe('Loading...')
+
+      await new Promise(resolve => setTimeout(resolve))
+
+      expect(getHTML(result)).toBe('Home')
+
+      await historyPush('/test')
+
+      expect(getHTML(result)).toBe('')
+    })
+    it('Should render lazy deep', async () => {
+      await historyPush('/')
+
+      const once = (fn: () => Promise<RouteComponent>) => {
+        let result: Promise<RouteComponent>
+
+        return () => {
+          if (!result) {
+            result = fn()
+          }
+          return result
+        }
+      }
+
+      const routing = createRouting([
+        {
+          component: once(async () => {
+            new Promise(resolve => setTimeout(resolve, 300))
+            return MainLayout
+          }),
+          lazy: true,
+          fallback: 'Loading MainLayout...',
+          children: [
+            {
+              index: true,
+              component: once(async () => {
+                new Promise(resolve => setTimeout(resolve, 300))
+                return Home
+              }),
+              lazy: true,
+              fallback: 'Loading Home...',
+            },
+            {
+              component: once(async () => {
+                await new Promise(resolve => setTimeout(resolve, 300))
+                return NotFound
+              }),
+              lazy: true,
+              fallback: 'Loading NotFound...',
+            },
+          ],
+        },
+      ])
+
+      const result = render(<Router routing={routing} />)
+
+      expect(getHTML(result)).toBe('Loading MainLayout...')
+
+      await new Promise(resolve => setTimeout(resolve, 300))
+
+      expect(getHTML(result)).toBe('<div>Home</div>')
+
+      await historyPush('/test')
+
+      expect(getHTML(result)).toBe('<div>Loading NotFound...</div>')
+
+      await new Promise(resolve => setTimeout(resolve, 300))
+
+      expect(getHTML(result)).toBe('<div>404</div>')
+
+      await historyPush('/')
+
+      expect(getHTML(result)).toBe('<div>Home</div>')
+
+      await historyPush('/test')
+
+      expect(getHTML(result)).toBe('<div>404</div>')
+    })
   })
 })

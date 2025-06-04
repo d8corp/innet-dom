@@ -24,7 +24,7 @@ describe('createRouting', () => {
         },
       ])
 
-      expect(routing).toEqual({ index: { components: [Home], params: [] } } satisfies Routing)
+      expect(routing).toEqual({ index: { components: [Home], params: [], lazy: [false], fallback: [undefined] } } satisfies Routing)
     })
     it('should work with rest route', () => {
       const NotFound = () => '404'
@@ -35,7 +35,7 @@ describe('createRouting', () => {
         },
       ])
 
-      expect(routing).toEqual({ rest: { components: [NotFound], params: [] } } satisfies Routing)
+      expect(routing).toEqual({ rest: { components: [NotFound], params: [], lazy: [false], fallback: [undefined] } } satisfies Routing)
     })
     it('should work with index and rest together', () => {
       const Home = () => 'Home'
@@ -52,8 +52,8 @@ describe('createRouting', () => {
       ])
 
       expect(routing).toEqual({
-        index: { components: [Home], params: [] },
-        rest: { components: [NotFound], params: [] },
+        index: { components: [Home], params: [], lazy: [false], fallback: [undefined] },
+        rest: { components: [NotFound], params: [], lazy: [false], fallback: [undefined] },
       } satisfies Routing)
     })
     it('should work with path', () => {
@@ -77,13 +77,13 @@ describe('createRouting', () => {
       ])
 
       expect(routing).toEqual({
-        index: { components: [Home], params: [] },
+        index: { components: [Home], params: [], lazy: [false], fallback: [undefined] },
         strict: {
           about: {
-            index: { components: [About], params: [''] },
+            index: { components: [About], params: [''], lazy: [false], fallback: [undefined] },
           },
         },
-        rest: { components: [NotFound], params: [] },
+        rest: { components: [NotFound], params: [], lazy: [false], fallback: [undefined] },
       } satisfies Routing)
     })
     it('should work with simple deep path', () => {
@@ -115,10 +115,10 @@ describe('createRouting', () => {
       expect(routing).toEqual({
         strict: {
           todos: {
-            index: { components: [Todos, AllTodos], params: [''] },
+            index: { components: [Todos, AllTodos], params: [''], lazy: [false, false], fallback: [undefined, undefined] },
             strict: {
-              active: { rest: { components: [Todos, ActiveTodos], params: ['', ''] } },
-              inactive: { rest: { components: [Todos, InactiveTodos], params: ['', ''] } },
+              active: { rest: { components: [Todos, ActiveTodos], params: ['', ''], lazy: [false, false], fallback: [undefined, undefined] } },
+              inactive: { rest: { components: [Todos, InactiveTodos], params: ['', ''], lazy: [false, false], fallback: [undefined, undefined] } },
             },
           },
         },
@@ -161,17 +161,17 @@ describe('createRouting', () => {
       ])
 
       expect(routing).toEqual({
-        index: { components: [Home], params: [] },
+        index: { components: [Home], params: [], lazy: [false], fallback: [undefined] },
         strict: {
           todos: {
-            index: { components: [Todos, AllTodos], params: [''] },
+            index: { components: [Todos, AllTodos], params: [''], lazy: [false, false], fallback: [undefined, undefined] },
             strict: {
-              active: { rest: { components: [Todos, ActiveTodos], params: ['', ''] } },
-              inactive: { rest: { components: [Todos, InactiveTodos], params: ['', ''] } },
+              active: { rest: { components: [Todos, ActiveTodos], params: ['', ''], lazy: [false, false], fallback: [undefined, undefined] } },
+              inactive: { rest: { components: [Todos, InactiveTodos], params: ['', ''], lazy: [false, false], fallback: [undefined, undefined] } },
             },
           },
         },
-        rest: { components: [NotFound], params: [] },
+        rest: { components: [NotFound], params: [], lazy: [false], fallback: [undefined] },
       } satisfies Routing)
     })
     it('should work with deep mixed path', () => {
@@ -209,16 +209,18 @@ describe('createRouting', () => {
       expect(routing).toEqual({
         strict: {
           todos: {
-            index: { components: [Todos, AllTodos], params: [''] },
+            index: { components: [Todos, AllTodos], params: [''], lazy: [false, false], fallback: [undefined, undefined] },
             strict: {
               settings: {
                 rest: {
                   components: [TodoSettings],
+                  lazy: [false],
+                  fallback: [undefined],
                   params: ['', ''],
                 },
               },
-              active: { rest: { components: [Todos, ActiveTodos], params: ['', ''] } },
-              inactive: { rest: { components: [Todos, InactiveTodos], params: ['', ''] } },
+              active: { rest: { components: [Todos, ActiveTodos], params: ['', ''], lazy: [false, false], fallback: [undefined, undefined] } },
+              inactive: { rest: { components: [Todos, InactiveTodos], params: ['', ''], lazy: [false, false], fallback: [undefined, undefined] } },
             },
           },
         },
@@ -236,7 +238,7 @@ describe('createRouting', () => {
 
       expect(routing).toEqual({
         children: {
-          rest: { components: [Todo], params: ['todoId'] },
+          rest: { components: [Todo], params: ['todoId'], lazy: [false], fallback: [undefined] },
         },
       } satisfies Routing)
     })
@@ -260,15 +262,15 @@ describe('createRouting', () => {
       ])
 
       expect(routing).toEqual({
-        index: { components: [Home], params: [] },
+        index: { components: [Home], params: [], lazy: [false], fallback: [undefined] },
         strict: {
           todo: {
             children: {
-              rest: { components: [Todo], params: ['', 'todoId'] },
+              rest: { components: [Todo], params: ['', 'todoId'], lazy: [false], fallback: [undefined] },
             },
           },
         },
-        rest: { components: [NotFound], params: [] },
+        rest: { components: [NotFound], params: [], lazy: [false], fallback: [undefined] },
       } satisfies Routing)
     })
     it('should work with deep structure path param', () => {
@@ -290,7 +292,7 @@ describe('createRouting', () => {
         strict: {
           todo: {
             children: {
-              rest: { components: [Todo], params: ['', 'todoId'] },
+              rest: { components: [Todo], params: ['', 'todoId'], lazy: [false], fallback: [undefined] },
             },
           },
         },
@@ -344,25 +346,25 @@ describe('createRouting', () => {
       ])
 
       expect(routing).toEqual({
-        index: { components: [Home], params: [] },
+        index: { components: [Home], params: [], lazy: [false], fallback: [undefined] },
         strict: {
           todos: {
-            index: { components: [Todos, AllTodos], params: [''] },
+            index: { components: [Todos, AllTodos], params: [''], lazy: [false, false], fallback: [undefined, undefined] },
             strict: {
-              active: { rest: { components: [Todos, ActiveTodos], params: ['', ''] } },
-              inactive: { rest: { components: [Todos, InactiveTodos], params: ['', ''] } },
+              active: { rest: { components: [Todos, ActiveTodos], params: ['', ''], lazy: [false, false], fallback: [undefined, undefined] } },
+              inactive: { rest: { components: [Todos, InactiveTodos], params: ['', ''], lazy: [false, false], fallback: [undefined, undefined] } },
             },
           },
           about: {
-            index: { components: [About], params: [''] },
+            index: { components: [About], params: [''], lazy: [false], fallback: [undefined] },
           },
           todo: {
             children: {
-              rest: { components: [Todo], params: ['', 'id'] },
+              rest: { components: [Todo], params: ['', 'id'], lazy: [false], fallback: [undefined] },
             },
           },
         },
-        rest: { components: [NotFound], params: [] },
+        rest: { components: [NotFound], params: [], lazy: [false], fallback: [undefined] },
       } satisfies Routing)
     })
     it('should work with layout complex routing', () => {
@@ -389,14 +391,16 @@ describe('createRouting', () => {
       ])
 
       expect(routing).toEqual({
-        index: { components: [MainLayout, Home], params: [] },
+        index: { components: [MainLayout, Home], params: [], lazy: [false, false], fallback: [undefined, undefined] },
         strict: {
-          about: { index: { components: [MainLayout, About], params: [''] } },
-          settings: { index: { components: [SecondLayout, Settings], params: [''] } },
+          about: { index: { components: [MainLayout, About], params: [''], lazy: [false, false], fallback: [undefined, undefined] } },
+          settings: { index: { components: [SecondLayout, Settings], params: [''], lazy: [false, false], fallback: [undefined, undefined] } },
         },
         rest: {
           components: [MainLayout, NotFound],
           params: [],
+          lazy: [false, false],
+          fallback: [undefined, undefined],
         },
       } satisfies Routing)
     })

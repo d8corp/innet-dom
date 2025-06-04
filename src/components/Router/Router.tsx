@@ -1,13 +1,14 @@
 import { Context, useContext } from '@innet/jsx'
+import Async from '@watch-state/async'
 import { locationPath } from '@watch-state/history-api'
-import { Cache, State } from 'watch-state'
+import { Cache, State, Watch } from 'watch-state'
 
 import { paramsContext } from '../../hooks'
 import type { StateProp } from '../../types'
 import { use } from '../../utils'
 import { Show } from '../Show'
 import { findRoute } from './helpers/findRoute'
-import { type RouteComponent, type Routing } from './types'
+import { type RouteComponent, type RouteLazyComponent, type Routing } from './types'
 
 export interface RouterProps {
   routing: StateProp<Routing>
@@ -16,23 +17,61 @@ export interface RouterProps {
 
 interface IndexRouterProps {
   index: number
-  components: Cache<RouteComponent[]>
+  components: () => Array<RouteComponent | Promise<RouteComponent>>
+  lazy: () => boolean[]
+  fallbacks: () => JSX.Element[]
+  loadedComponents: WeakMap<Promise<RouteComponent>, RouteComponent>
 }
 
 const prefixContext = new Context<State<string>>()
 
-function IndexRouter ({ index, components }: IndexRouterProps) {
-  const component = new Cache(() => components.value[index])
-  const show = new Cache(() => components.value.length > index)
+function IndexRouter ({ index, components, fallbacks, lazy, loadedComponents }: IndexRouterProps) {
+  const component = new Cache(() => components()[index])
+  const lazyMode = new Cache(() => lazy()[index])
+  const fallback = new Cache(() => fallbacks()[index])
+  const show = new Cache(() => components().length > index)
 
-  return (
-    <Show when={show}>
-      {() => {
-        const Component = component.value
-        return <Component children={<IndexRouter index={index + 1} components={components} />} />
-      }}
-    </Show>
+  const render = (Component: RouteComponent) => (
+    <Component
+      children={(
+        <IndexRouter
+          index={index + 1}
+          fallbacks={fallbacks}
+          components={components}
+          lazy={lazy}
+          loadedComponents={loadedComponents}
+        />
+      )}
+    />
   )
+
+  const lazyContent = new Async(async () => render(await component.rawValue))
+
+  new Watch((update) => {
+    if (!show.value || !lazyMode.value || !component.value) return
+
+    if (component.value instanceof Promise && !loadedComponents.has(component.value)) {
+      const key = component.value
+      key.then((component) => {
+        loadedComponents.set(key, component)
+      })
+    }
+
+    if (update) {
+      lazyContent.update()
+    }
+  })
+
+  return (): JSX.Element => {
+    if (!show.value) return null
+    if (!lazyMode.value) return render(component.value as RouteComponent)
+
+    if (loadedComponents.has(component.value as Promise<RouteComponent>)) {
+      return render(loadedComponents.get(component.value as Promise<RouteComponent>) as RouteComponent)
+    }
+
+    return lazyContent.loading ? fallback.value : lazyContent.value
+  }
 }
 
 export function Router ({ routing, prefix: prefixRaw = useContext(prefixContext) || '/' }: RouterProps) {
@@ -40,11 +79,24 @@ export function Router ({ routing, prefix: prefixRaw = useContext(prefixContext)
   const localPath = new Cache(() => locationPath.value.slice(prefix.value.length))
   const params = useContext(paramsContext) || new State<Record<string, string>>({})
 
-  const components = new Cache(() => {
+  const route = new Cache(() => {
     const newParams: Record<string, string> = {}
-    const result = findRoute(use(routing), localPath.value.split('/').filter(Boolean), newParams)
+    const route = findRoute(use(routing), localPath.value.split('/').filter(Boolean), newParams)
     params.value = newParams
-    return result || []
+    return route
+  })
+
+  const components = new Cache(() => {
+    const routeValue = route.value
+    if (!routeValue) return []
+
+    const result: Array<RouteComponent | Promise<RouteComponent>> = []
+
+    for (let i = 0; i < routeValue.components.length; i++) {
+      result.push(routeValue.lazy[i] ? (routeValue.components[i] as RouteLazyComponent)() : routeValue.components[i] as RouteComponent)
+    }
+
+    return result
   })
 
   const prefixSuccess = new Cache(() => {
@@ -58,7 +110,13 @@ export function Router ({ routing, prefix: prefixRaw = useContext(prefixContext)
   return (
     <Show when={prefixSuccess}>
       <context for={paramsContext} set={params}>
-        <IndexRouter index={0} components={components} />
+        <IndexRouter
+          index={0}
+          components={() => components.value}
+          fallbacks={() => route.value?.fallback ?? []}
+          lazy={() => route.value?.lazy ?? []}
+          loadedComponents={new WeakMap()}
+        />
       </context>
     </Show>
   )

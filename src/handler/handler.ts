@@ -21,6 +21,7 @@ import {
   string,
 } from '@innet/utils'
 import { createHandler, type HandlerPlugin } from 'innet'
+import { type Observable } from 'watch-state'
 
 import {
   domAsync,
@@ -96,6 +97,7 @@ declare global {
       | WatchElement
       | JSXElement
       | Generator<Element, void, unknown>
+      | Observable<Element>
       | boolean
       | null
       | number

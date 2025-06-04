@@ -1,12 +1,14 @@
-import { type Route, type RouteComponent, type Routing } from '../types'
+import { type Route, type RouteComponent, type RouteLazyComponent, type Routing } from '../types'
 import { normalizeRoutes } from './normalizeRoutes'
 
 export function createRouting (
   routes: Route[],
   routing: Routing = {},
-  parentComponents: RouteComponent[] = [],
+  parentComponents: Array<RouteComponent | RouteLazyComponent> = [],
   parentParams: string[] = [],
   parentRest = false,
+  parentLazy: boolean[] = [],
+  parentFallback: JSX.Element[] = [],
 ): Routing {
   const normalizedRoutes = normalizeRoutes(routes)
 
@@ -14,6 +16,8 @@ export function createRouting (
     const route = normalizedRoutes[i]
     const pathKey = route.path
     const components = route.component ? [...parentComponents, route.component] : parentComponents
+    const lazy = route.component ? [...parentLazy, route.lazy ?? false] : parentLazy
+    const fallback = route.fallback ? [...parentFallback, route.fallback] : parentFallback
 
     if (pathKey) {
       if (pathKey.startsWith(':') && !pathKey.endsWith(']')) {
@@ -25,7 +29,7 @@ export function createRouting (
             routing.children = {}
           }
 
-          createRouting(route.children, routing.children, components, params, Boolean(routing.rest))
+          createRouting(route.children as Route[], routing.children, components, params, Boolean(routing.rest), lazy, fallback)
           continue
         }
 
@@ -33,7 +37,7 @@ export function createRouting (
           throw Error(`Routing Error. Do not use a param route with rest route. Param: "${paramKey}".`)
         }
 
-        routing.rest = { components, params }
+        routing.rest = { components, params, lazy, fallback }
 
         continue
       }
@@ -50,7 +54,7 @@ export function createRouting (
           routing.strict[key] = {}
         }
 
-        createRouting(route.children, routing.strict[key], components, params)
+        createRouting(route.children as Route[], routing.strict[key], components, params, false, lazy, fallback)
       }
 
       continue
@@ -63,6 +67,8 @@ export function createRouting (
 
       routing.index = {
         components,
+        lazy,
+        fallback,
         params: parentParams,
       }
 
@@ -70,7 +76,7 @@ export function createRouting (
     }
 
     if (route.children?.length) {
-      createRouting(route.children, routing, components, parentParams)
+      createRouting(route.children as Route[], routing, components, parentParams, false, lazy, fallback)
       continue
     }
 
@@ -80,6 +86,8 @@ export function createRouting (
 
     routing.rest = {
       components,
+      lazy,
+      fallback,
       params: parentParams,
     }
   }
