@@ -8,7 +8,7 @@ import type { StateProp } from '../../types'
 import { use } from '../../utils'
 import { Show } from '../Show'
 import { findRoute } from './helpers/findRoute'
-import { type RouteComponent, type RouteLazyComponent, type Routing } from './types'
+import { type RouteComponent, type RouteLazyComponent, type RouteLazyComponentResult, type Routing } from './types'
 
 export interface RouterProps {
   routing: StateProp<Routing>
@@ -17,10 +17,10 @@ export interface RouterProps {
 
 interface IndexRouterProps {
   index: number
-  components: () => Array<RouteComponent | Promise<RouteComponent>>
+  components: () => Array<RouteComponent | RouteLazyComponentResult>
   lazy: () => boolean[]
   fallbacks: () => JSX.Element[]
-  loadedComponents: WeakMap<Promise<RouteComponent>, RouteComponent>
+  loadedComponents: WeakMap<RouteLazyComponentResult, RouteComponent>
 }
 
 const prefixContext = new Context<State<string>>()
@@ -45,7 +45,10 @@ function IndexRouter ({ index, components, fallbacks, lazy, loadedComponents }: 
     />
   )
 
-  const lazyContent = new Async(async () => render(await component.rawValue))
+  const lazyContent = new Async(async () => {
+    const value = await component.rawValue
+    return render(typeof value === 'function' ? value : value.default)
+  })
 
   new Watch((update) => {
     if (!show.value || !lazyMode.value || !component.value) return
@@ -53,7 +56,7 @@ function IndexRouter ({ index, components, fallbacks, lazy, loadedComponents }: 
     if (component.value instanceof Promise && !loadedComponents.has(component.value)) {
       const key = component.value
       key.then((component) => {
-        loadedComponents.set(key, component)
+        loadedComponents.set(key, typeof component === 'function' ? component : component.default)
       })
     }
 
@@ -90,7 +93,7 @@ export function Router ({ routing, prefix: prefixRaw = useContext(prefixContext)
     const routeValue = route.value
     if (!routeValue) return []
 
-    const result: Array<RouteComponent | Promise<RouteComponent>> = []
+    const result: Array<RouteComponent | RouteLazyComponentResult> = []
 
     for (let i = 0; i < routeValue.components.length; i++) {
       result.push(routeValue.lazy[i] ? (routeValue.components[i] as RouteLazyComponent)() : routeValue.components[i] as RouteComponent)

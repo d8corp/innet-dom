@@ -1,6 +1,18 @@
 import { type Route, type RouteComponent, type RouteLazyComponent, type Routing } from '../types'
 import { normalizeRoutes } from './normalizeRoutes'
 
+const once = (fn: RouteLazyComponent): RouteLazyComponent => {
+  let result: Promise<{ default: RouteComponent } | RouteComponent>
+
+  return () => {
+    if (!result) {
+      result = fn()
+    }
+
+    return result
+  }
+}
+
 export function createRouting (
   routes: Route[],
   routing: Routing = {},
@@ -15,7 +27,9 @@ export function createRouting (
   for (let i = 0; i < normalizedRoutes.length; i++) {
     const route = normalizedRoutes[i]
     const pathKey = route.path
-    const components = route.component ? [...parentComponents, route.component] : parentComponents
+    const components = route.component
+      ? [...parentComponents, route.lazy ? once(route.component) : route.component]
+      : parentComponents
     const lazy = route.component ? [...parentLazy, route.lazy ?? false] : parentLazy
     const fallback = route.fallback ? [...parentFallback, route.fallback] : parentFallback
 

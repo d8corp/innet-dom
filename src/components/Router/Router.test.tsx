@@ -4,7 +4,6 @@ import { getHTML, render } from '../../test'
 import { type ChildrenProps } from '../../types'
 import { createRouting } from './helpers/createRouting'
 import { Router } from './Router'
-import { type RouteComponent } from './types'
 
 const Home = () => 'Home'
 const NotFound = () => '404'
@@ -172,40 +171,29 @@ describe('Router', () => {
     it('Should render lazy deep', async () => {
       await historyPush('/')
 
-      const once = (fn: () => Promise<RouteComponent>) => {
-        let result: Promise<RouteComponent>
-
-        return () => {
-          if (!result) {
-            result = fn()
-          }
-          return result
-        }
-      }
-
       const routing = createRouting([
         {
-          component: once(async () => {
+          component: async () => {
             new Promise(resolve => setTimeout(resolve, 300))
             return MainLayout
-          }),
+          },
           lazy: true,
           fallback: 'Loading MainLayout...',
           children: [
             {
               index: true,
-              component: once(async () => {
+              component: async () => {
                 new Promise(resolve => setTimeout(resolve, 300))
                 return Home
-              }),
+              },
               lazy: true,
               fallback: 'Loading Home...',
             },
             {
-              component: once(async () => {
+              component: async () => {
                 await new Promise(resolve => setTimeout(resolve, 300))
                 return NotFound
-              }),
+              },
               lazy: true,
               fallback: 'Loading NotFound...',
             },
@@ -236,6 +224,30 @@ describe('Router', () => {
       await historyPush('/test')
 
       expect(getHTML(result)).toBe('<div>404</div>')
+    })
+    it('Should work with default', async () => {
+      await historyPush('/')
+
+      const routing = createRouting([
+        {
+          index: true,
+          component: async () => ({ default: Home }),
+          lazy: true,
+          fallback: 'Loading...',
+        },
+      ])
+
+      const result = render(<Router routing={routing} />)
+
+      expect(getHTML(result)).toBe('Loading...')
+
+      await new Promise(resolve => setTimeout(resolve))
+
+      expect(getHTML(result)).toBe('Home')
+
+      await historyPush('/test')
+
+      expect(getHTML(result)).toBe('')
     })
   })
 })

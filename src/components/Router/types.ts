@@ -1,7 +1,8 @@
 import { type ChildrenProps } from '../../types'
 
 export type RouteComponent = (props: ChildrenProps) => JSX.Element
-export type RouteLazyComponent = () => Promise<RouteComponent>
+export type RouteLazyComponentResult = Promise<{ default: RouteComponent } | RouteComponent>
+export type RouteLazyComponent = () => RouteLazyComponentResult
 
 interface BaseNoLazyComponentRoute {
   component: RouteComponent
