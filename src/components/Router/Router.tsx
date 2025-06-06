@@ -1,4 +1,4 @@
-import { Context, useContext } from '@innet/jsx'
+import { Context, ContextProvider, useContext } from '@innet/jsx'
 import Async from '@watch-state/async'
 import { locationPath } from '@watch-state/history-api'
 import { Cache, State, Watch } from 'watch-state'
@@ -112,7 +112,7 @@ export function Router ({ routing, prefix: prefixRaw = useContext(prefixContext)
 
   return (
     <Show when={prefixSuccess}>
-      <context for={paramsContext} set={params}>
+      <ContextProvider for={paramsContext} set={params}>
         <IndexRouter
           index={0}
           components={() => components.value}
@@ -120,7 +120,7 @@ export function Router ({ routing, prefix: prefixRaw = useContext(prefixContext)
           lazy={() => route.value?.lazy ?? []}
           loadedComponents={new WeakMap()}
         />
-      </context>
+      </ContextProvider>
     </Show>
   )
 }

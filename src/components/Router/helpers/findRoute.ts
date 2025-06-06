@@ -20,11 +20,6 @@ export function findRoute (
       return routing.index
     }
 
-    if (routing.children?.index) {
-      setParams(path, routing.children.index.params, params)
-      return routing.children.index
-    }
-
     if (routing.rest) {
       if (routing.rest.components) {
         setParams(path, routing.rest.params, params)

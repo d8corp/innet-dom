@@ -1,13 +1,7 @@
 import {
-  context,
-  type ContextProps,
   jsxComponent,
   type JSXElement,
   jsxPlugins,
-  slot,
-  type SlotProps,
-  slots,
-  type SlotsProps,
 } from '@innet/jsx'
 import {
   array,
@@ -41,9 +35,6 @@ export const arrayPlugins = [
 ]
 
 export const JSXPlugins: Record<string, HandlerPlugin> = {
-  context,
-  slots,
-  slot,
   a: link,
 }
 
@@ -117,9 +108,6 @@ declare global {
     }
 
     interface IntrinsicElements {
-      context: ContextProps
-      slots: SlotsProps
-      slot: SlotProps
       a: LinkProps
       div: HTMLProps<HTMLDivElement>
       span: HTMLProps<HTMLSpanElement>

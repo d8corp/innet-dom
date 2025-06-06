@@ -419,27 +419,6 @@ describe('createRouting', () => {
 
       expect(testCase).toThrowError('Routing Error. Do not use the same routes.')
     })
-    it('should error if rest and param', () => {
-      const Home = () => 'Home'
-      const NotFound = () => '404'
-
-      const testCase1 = () => {
-        createRouting([
-          { path: ':id', component: Home },
-          { component: NotFound },
-        ])
-      }
-
-      const testCase2 = () => {
-        createRouting([
-          { component: NotFound },
-          { path: ':bar', component: Home },
-        ])
-      }
-
-      expect(testCase1).toThrowError('Routing Error. Do not use the same routes.')
-      expect(testCase2).toThrowError('Routing Error. Do not use the same routes.')
-    })
     it('should error if a param twice', () => {
       const Home = () => 'Home'
       const NotFound = () => '404'

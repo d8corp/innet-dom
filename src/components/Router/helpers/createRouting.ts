@@ -18,7 +18,6 @@ export function createRouting (
   routing: Routing = {},
   parentComponents: Array<RouteComponent | RouteLazyComponent> = [],
   parentParams: string[] = [],
-  parentRest = false,
   parentLazy: boolean[] = [],
   parentFallback: JSX.Element[] = [],
 ): Routing {
@@ -26,7 +25,8 @@ export function createRouting (
 
   for (let i = 0; i < normalizedRoutes.length; i++) {
     const route = normalizedRoutes[i]
-    const pathKey = route.path
+    const optional = route.path?.endsWith('?')
+    const pathKey = optional ? route.path?.slice(0, -1) : route.path
     const components = route.component
       ? [...parentComponents, route.lazy ? once(route.component) : route.component]
       : parentComponents
@@ -38,40 +38,29 @@ export function createRouting (
         const paramKey = pathKey.substring(1)
         const params = [...parentParams, paramKey]
 
-        if (route.children) {
-          if (!routing.children) {
-            routing.children = {}
+        if (!routing.children) {
+          routing.children = {}
+        }
+
+        createRouting(route.children as Route[], routing.children, components, params, lazy, fallback)
+      } else {
+        if (!routing.strict) {
+          routing.strict = {}
+        }
+
+        const [paramKey, unionPath] = pathKey.startsWith(':') ? pathKey.slice(1, -1).split('[') : [undefined, pathKey]
+        const params = paramKey ? [...parentParams, paramKey] : [...parentParams, '']
+
+        for (const key of unionPath.split('|')) {
+          if (!routing.strict[key]) {
+            routing.strict[key] = {}
           }
 
-          createRouting(route.children as Route[], routing.children, components, params, Boolean(routing.rest), lazy, fallback)
-          continue
+          createRouting(route.children as Route[], routing.strict[key], components, params, lazy, fallback)
         }
-
-        if (routing.rest) {
-          throw Error(`Routing Error. Do not use a param route with rest route. Param: "${paramKey}".`)
-        }
-
-        routing.rest = { components, params, lazy, fallback }
-
-        continue
       }
 
-      if (!routing.strict) {
-        routing.strict = {}
-      }
-
-      const [paramKey, unionPath] = pathKey.startsWith(':') ? pathKey.slice(1, -1).split('[') : [undefined, pathKey]
-      const params = paramKey ? [...parentParams, paramKey] : [...parentParams, '']
-
-      for (const key of unionPath.split('|')) {
-        if (!routing.strict[key]) {
-          routing.strict[key] = {}
-        }
-
-        createRouting(route.children as Route[], routing.strict[key], components, params, false, lazy, fallback)
-      }
-
-      continue
+      if (!optional) continue
     }
 
     if (route.index) {
@@ -90,11 +79,11 @@ export function createRouting (
     }
 
     if (route.children?.length) {
-      createRouting(route.children as Route[], routing, components, parentParams, false, lazy, fallback)
+      createRouting(route.children, routing, components, parentParams, lazy, fallback)
       continue
     }
 
-    if (routing.rest || routing.children?.rest || parentRest) {
+    if (routing.rest) {
       throw Error('Routing Error. Do not use the same routes.')
     }
 
