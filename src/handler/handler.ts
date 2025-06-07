@@ -1,7 +1,6 @@
 import {
   jsxComponent,
   type JSXElement,
-  jsxPlugins,
 } from '@innet/jsx'
 import {
   array,
@@ -14,7 +13,7 @@ import {
   promise,
   string,
 } from '@innet/utils'
-import { createHandler, type HandlerPlugin } from 'innet'
+import { createHandler } from 'innet'
 import { type Observable } from 'watch-state'
 
 import {
@@ -24,8 +23,6 @@ import {
   domJSX,
   domNode,
   domText,
-  link,
-  type LinkProps,
   state,
 } from '../plugins'
 import { type HTMLProps } from '../types'
@@ -34,13 +31,8 @@ export const arrayPlugins = [
   arraySync,
 ]
 
-export const JSXPlugins: Record<string, HandlerPlugin> = {
-  a: link,
-}
-
 export const objectPlugins = [
   state,
-  jsxPlugins(JSXPlugins),
   jsxComponent,
   domJSX,
   domIterable,
@@ -108,7 +100,7 @@ declare global {
     }
 
     interface IntrinsicElements {
-      a: LinkProps
+      a: HTMLProps<HTMLAnchorElement>
       div: HTMLProps<HTMLDivElement>
       span: HTMLProps<HTMLSpanElement>
       h1: HTMLProps<HTMLHeadingElement>

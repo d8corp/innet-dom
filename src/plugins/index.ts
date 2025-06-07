@@ -1,4 +1,3 @@
-export * from './jsx'
 export * from './domAsync'
 export * from './domIterable'
 export * from './domJSX'
