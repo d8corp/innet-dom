@@ -24,32 +24,38 @@ Based on [innet](https://www.npmjs.com/package/innet).
 
 ## Index
 
-[Install](#install)  
-[Handler](#handler)  
-[JSX](#jsx)  
-[State Management](#state-management)  
-[Ref](#ref)
-[onDestroy](#ondestroy)  
-
-**[Components](#components)**
-
-[Portal](#portal)  
-[Context](#context)  
-[Show](#show)  
-[Hide](#hide)  
-[For](#for)  
-[Router](#router)  
-[Link](#link)  
-[Delay](#delay)
-
-**Hooks**
-
-[useRoute](#useroute)  
-[useParent](#useparent)
-
+[Install](#install) | 
+[Handler](#handler) | 
+[JSX](#jsx) | 
+[State Management](#state-management) |
 [style](#style)
 
+**[Life Cycle](#life-cycle)**  
+[onDestroy](#ondestroy) |
+[onMounted](#onmounted)
+
+**[Components](#components)**  
+[Portal](#portal) | 
+[ContextProvide](#contextprovide) | 
+[Show](#show) | 
+[Hide](#hide) | 
+[For](#for) | 
+[Router](#router) | 
+[Link](#link) | 
+[Delay](#delay)
+
+**[Hooks](#hooks)**  
+[useRoute](#useroute) | 
+[useParent](#useparent)
+
+**Utils**  
+[Ref](#ref) | 
+[Context](#context)
+
 ## Install
+
+[← back](#index)
+
 Use [innetjs](https://www.npmjs.com/package/innetjs) to start `innet-dom` app development.
 
 ```shell
@@ -60,6 +66,8 @@ npx innetjs init my-app -t fe
 Go into `my-app` and check `README.md`
 
 ## Handler
+
+[← back](#index)
 
 Use `dom` handler to start an application.
 
@@ -74,6 +82,9 @@ innet(app, dom)
 ```
 
 ## JSX
+
+[← back](#index)
+
 You can use xml-like syntax to create and append elements into the DOM.
 More information about JSX [here](https://www.typescriptlang.org/docs/handbook/jsx.html).
 
@@ -86,10 +97,12 @@ export default (
 )
 ```
 
-Everything, that you provide as the first argument of `innet` function with the `dom` handler,
+Everything, that you provide as the first argument of `innet` function (with the `dom` handler),
 will fall into the `body` DOM-element.
 
 ## Portal
+
+[← back](#index)
 
 If you want to put your content into another element (not `body`), use `Portal` component.
 
@@ -151,6 +164,8 @@ export default (
 
 ## State Management
 
+[← back](#index)
+
 With `innet` you can fully exclude component approach, but state management still to be available.
 
 The state management based on [watch-state](https://github.com/d8corp/watch-state)
@@ -208,6 +223,15 @@ export default (
 ```
 
 ## Components
+
+[← back](#index)
+
+[props](#props) | 
+[return](#return) | 
+[Life Cycle](#life-cycle)  
+[Async Components](#async-component) | 
+[Generic Async Component](#generic-async-component) | 
+[Generic Component](#generic-component)
 
 Component is a function.
 You can use it as JSX element.
@@ -313,6 +337,8 @@ export default (
 
 ### Return
 
+[← back](#components)
+
 A component awaits a return:
 - `string`, `number` - render as text node
   ```typescript jsx
@@ -349,6 +375,9 @@ A component awaits a return:
   ```
 
 ### Life Cycle
+
+[← back](#components)
+
 Each component renders only once!
 
 There are 3 steps of life cycle:
@@ -503,6 +532,8 @@ queueMicrotask B <span id="a"></span> <span id="b"></span>
 
 ## Ref
 
+[← back](#index)
+
 `Ref` helps to get an HTML element.
 ```typescript jsx
 import { Ref } from '@innet/dom'
@@ -521,6 +552,8 @@ function * Content () {
 ```
 
 ## onDestroy
+
+[← back](#index)
 
 You can subscribe on destroy of a component by `onDestroy` from `watch-state`
 
@@ -572,7 +605,33 @@ export default (
 )
 ```
 
+## onMounted
+
+[← back](#index)
+
+You can use `onMounted` to do something after end of rendering.
+
+Change `Content.tsx`
+
+```typescript jsx
+import { onMounted, Ref } from '@innet/dom'
+import { State, onDestroy } from 'watch-state'
+
+export function Content() {
+  const width = new State(0)
+  const ref = new Ref<HTMLDivElement>()
+
+  onMounted(() => {
+    console.log(ref.value.clientWidth)
+  })
+
+  return <div ref={ref}>Hello world</div>
+}
+```
+
 ## Context
+
+[← back](#index)
 
 You can pass a value from a parent element through any children to the place you need.
 
@@ -593,7 +652,13 @@ export function Content () {
 }
 ```
 
-And change `app.tsx`
+## ContextProvide
+
+[← back](#index)
+
+Use `ContextProvide` to provide context value into children.
+
+Change `app.tsx`
 ```typescript jsx
 import { ContextProvider } from '@innet/dom'
 import { Content, color } from './Content'
@@ -613,6 +678,8 @@ export default (
 ```
 
 ## Show
+
+[← back](#index)
 
 You can use `Show` component to show/hide content by state.
 
@@ -638,6 +705,8 @@ export default (
 
 ## Hide
 
+[← back](#index)
+
 You can use `Hide` component to show/hide content by state.
 
 ```typescript jsx
@@ -661,6 +730,8 @@ export default (
 > `when` can be: `State` | `Cache` | `() => any` | `any`
 
 ## For
+
+[← back](#index)
 
 You can use `map` method of an array to put view on data.
 ```typescript jsx
@@ -725,6 +796,9 @@ export default (
 ```
 
 ## Router
+
+[← back](#index)
+
 You can render content by url.
 
 ```typescript jsx
@@ -752,34 +826,44 @@ You can see
 `/settings/test` - Not Found  
 `/any-other` - Not Found
 
-## useRoute
-You can handle dynamic routes by `useRoute`.
-```typescript jsx
-const Test = () => {
-  const route = useRoute()
+## useParam
 
-  return () => route.value
+[← back](#index)
+
+You can get route params by `useParam`.
+
+```typescript jsx
+import { Router, createRouting, ChildrenProps, useParam } from '@innet/dom'
+
+const UserPage = (props: ChildrenProps) => {
+  const userId = useParam('userId')
+  
+  return <div>{userId}</div>
 }
 
+const routing = createRouting([
+  {index: true, component: () => 'Home page'},
+  {
+    index: true,
+    path: 'user/:userId',
+    component: UserPage,
+  },
+  {component: () => 'Not Found'}
+])
+
 export const Content = () => (
-  <router ish>
-    <slot name='/'>
-      Home page: <Test />
-    </slot>
-    <slot name='settings'>
-      Settings: <Test />
-    </slot>
-    Other: <Test />
-  </router>
+  <Router routing={routing}/>
 )
 ```
 
-`/` - Home page: /  
-`/settings` - Settings: /  
-`/settings/test` - Settings: test    
-`/any-other` - Other: any-other
+`/` - Home page  
+`/user/123` - `<div>123</div>`   
+`/user` - Not Found
 
 ## Link
+
+[← back](#index)
+
 The tag `a` has a couple of features.
 
 > `rel="noopener noreferrer nofollow"` and `target="_blank"` are default for external links.
@@ -943,6 +1027,9 @@ export const Content = () => (
 Use a string to scroll under an element relates to the CSS selector you provide or use `-1` to stop scrolling.
 
 ## Delay
+
+[← back](#index)
+
 You can show and hide elements with delay.
 
 ```typescript jsx
@@ -1032,6 +1119,8 @@ export default () => show.value && (
 
 ## useParent
 
+[← back](#index)
+
 You can get parent HTML element inside a component
 
 ```typescript jsx
@@ -1043,6 +1132,8 @@ export function Content () {
 ```
 
 ## style
+
+[← back](#index)
 
 You can style components with `style` function.
 The function returns `useStyle` hook.
