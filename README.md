@@ -255,6 +255,9 @@ export default (
 ```
 
 #### props
+
+[← back](#components)
+
 Any component gets the first argument of an object that contains the `props`.
 
 Change `Content.tsx`
@@ -276,62 +279,6 @@ import { Content } from './Content'
 
 export default (
   <Content color='red' />
-)
-```
-
-### Hooks
-You can use hooks inside a component.
-
-```typescript jsx
-export async function Content (props1) {
-  const value1 = useHook1()
-  const value2 = useHook2()
-}
-```
-
-#### useProps
-You can get props with `useProps` hook.
-
-```typescript jsx
-import { useProps } from '@innet/jsx'
-
-export function Content (props1) {
-  const props2 = useProps()
-
-  return (
-    <h1>
-      {props1 === props2 ? 'same' : 'different'}
-    </h1>
-  )
-}
-```
-
-#### useChildren
-To get children elements you can take `useChildren`.
-
-Change `Content.tsx`
-```typescript jsx
-import { useChildren } from '@innet/jsx'
-
-export function Content ({ color, children }) {
-  return (
-    <h1 style={{ color }}>
-      {String(children === useChildren())}
-    </h1>
-  )
-}
-```
-
-Then you can use the children outside.
-
-Change `app.tsx`
-```typescript jsx
-import { Content } from './Content'
-
-export default (
-  <Content color='red'>
-    Hello World!
-  </Content>
 )
 ```
 
@@ -406,7 +353,87 @@ function Content () {
 }
 ```
 
+## onDestroy
+
+[← back](#index)
+
+You can subscribe on destroy of a component by `onDestroy` from `watch-state`
+
+Change `Content.tsx`
+
+```typescript jsx
+import { State, onDestroy } from 'watch-state'
+
+export function Content() {
+  const count = new State(0)
+  // create a state
+
+  const timer = setInterval(() => {
+    count.value++
+  }, 1000)
+  // increase the state each second
+
+  onDestroy(() => clearInterval(timer))
+  // stop timer on destroy
+
+  return () => count.value
+  // return observable value
+}
+```
+
+And change `app.tsx`
+```typescript jsx
+import { State } from 'watch-state'
+import { Show } from '@innet/dom'
+import { Content } from './Content'
+
+const show = new State(true)
+
+const handleChange = (e: Event) => {
+  show.value = e.target.checked
+}
+
+export default (
+  <>
+    <Show when={show}>
+      <Content />
+    </Show>
+    <input
+      type="checkbox"
+      checked
+      onchange={handleChange}
+    />
+  </>
+)
+```
+
+## onMounted
+
+[← back](#index)
+
+You can use `onMounted` to do something after end of rendering.
+
+Change `Content.tsx`
+
+```typescript jsx
+import { onMounted, Ref } from '@innet/dom'
+import { State, onDestroy } from 'watch-state'
+
+export function Content() {
+  const width = new State(0)
+  const ref = new Ref<HTMLDivElement>()
+
+  onMounted(() => {
+    console.log(ref.value.clientWidth)
+  })
+
+  return <div ref={ref}>Hello world</div>
+}
+```
+
 ### Async Component
+
+[← back](#components)
 
 Innet supports async components, you can simplify previous code.
 ```typescript jsx
@@ -444,6 +471,8 @@ If you want to show something, use `Generic Async Component`.
 
 ### Generic Async Component
 
+[← back](#components)
+
 Just add a star and use `yield` instead of `return`
 ```typescript jsx
 async function * Content () {
@@ -456,6 +485,8 @@ async function * Content () {
 ```
 
 ### Generic Component
+
+[← back](#components)
 
 It can be useful when you want to do something after a content deployed.
 
@@ -548,84 +579,6 @@ function * Content () {
   )
 
   colsole.log(wrapper.value)
-}
-```
-
-## onDestroy
-
-[← back](#index)
-
-You can subscribe on destroy of a component by `onDestroy` from `watch-state`
-
-Change `Content.tsx`
-
-```typescript jsx
-import { State, onDestroy } from 'watch-state'
-
-export function Content() {
-  const count = new State(0)
-  // create a state
-
-  const timer = setInterval(() => {
-    count.value++
-  }, 1000)
-  // increase the state each second
-
-  onDestroy(() => clearInterval(timer))
-  // stop timer on destroy
-
-  return () => count.value
-  // return observable value
-}
-```
-
-And change `app.tsx`
-```typescript jsx
-import { State } from 'watch-state'
-import { Show } from '@innet/dom'
-import { Content } from './Content'
-
-const show = new State(true)
-
-const handleChange = (e: Event) => {
-  show.value = e.target.checked
-}
-
-export default (
-  <>
-    <Show when={show}>
-      <Content />
-    </Show>
-    <input
-      type="checkbox"
-      checked
-      onchange={handleChange}
-    />
-  </>
-)
-```
-
-## onMounted
-
-[← back](#index)
-
-You can use `onMounted` to do something after end of rendering.
-
-Change `Content.tsx`
-
-```typescript jsx
-import { onMounted, Ref } from '@innet/dom'
-import { State, onDestroy } from 'watch-state'
-
-export function Content() {
-  const width = new State(0)
-  const ref = new Ref<HTMLDivElement>()
-
-  onMounted(() => {
-    console.log(ref.value.clientWidth)
-  })
-
-  return <div ref={ref}>Hello world</div>
 }
 ```
 
@@ -1117,7 +1070,66 @@ export default () => show.value && (
 )
 ```
 
-## useParent
+## Hooks
+
+[← back](#index)
+
+You can use hooks only inside a component.
+
+```typescript jsx
+export async function Content (props1) {
+  const value1 = useHook1()
+  const value2 = useHook2()
+}
+```
+
+### useProps
+You can get props with `useProps` hook.
+
+```typescript jsx
+import { useProps } from '@innet/jsx'
+
+export function Content (props1) {
+  const props2 = useProps()
+
+  return (
+    <h1>
+      {props1 === props2 ? 'same' : 'different'}
+    </h1>
+  )
+}
+```
+
+### useChildren
+To get children elements you can take `useChildren`.
+
+Change `Content.tsx`
+```typescript jsx
+import { useChildren } from '@innet/jsx'
+
+export function Content ({ color, children }) {
+  return (
+    <h1 style={{ color }}>
+      {String(children === useChildren())}
+    </h1>
+  )
+}
+```
+
+Then you can use the children outside.
+
+Change `app.tsx`
+```typescript jsx
+import { Content } from './Content'
+
+export default (
+  <Content color='red'>
+    Hello World!
+  </Content>
+)
+```
+
+### useParent
 
 [← back](#index)
 
