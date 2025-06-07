@@ -6,7 +6,7 @@ import { getComment } from '../../utils'
 
 export interface PortalProps {
   parent: TargetElements | DocumentFragment
-  children?: any
+  children?: JSX.Element
 }
 
 export function Portal ({ parent, children }: PortalProps) {

@@ -3,7 +3,17 @@ import innet, { type Handler, useHandler } from 'innet'
 import { createEvent, onDestroy, State, unwatch, Watch } from 'watch-state'
 
 import { type ContentElements, type StateProp } from '../../types'
-import { after, before, dif, getComment, getParent, prepend, remove, setParent, statePropToWatchProp } from '../../utils'
+import {
+  after,
+  before,
+  getComment,
+  getParent,
+  lcs,
+  prepend,
+  remove,
+  setParent,
+  statePropToWatchProp,
+} from '../../utils'
 
 export const FOR_VALUE = Symbol('FOR_VALUE') as unknown as string
 export const FOR_INDEX = Symbol('FOR_INDEX') as unknown as string
@@ -82,7 +92,7 @@ export function For<O extends StateProp<Iterable<any>>> ({
       keysList.push(getKey(key, value))
     }
 
-    const keepKeys = dif(oldKeysList, keysList)
+    const keepKeys = new Set(lcs(oldKeysList, keysList))
 
     let i = 0
     for (const value of values) {
@@ -90,7 +100,7 @@ export function For<O extends StateProp<Iterable<any>>> ({
       const valueKey = keysList[index]
 
       if (handlersMap.has(valueKey)) {
-        const keep = keepKeys?.includes(valueKey)
+        const keep = keepKeys.has(valueKey)
         const deepHandler = handlersMap.get(valueKey) as Handler
 
         unwatch(createEvent(() => {
