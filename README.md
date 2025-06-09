@@ -227,11 +227,11 @@ export default (
 [← back](#index)
 
 [props](#props) | 
-[return](#return) | 
-[Life Cycle](#life-cycle)  
+[return](#return)  
 [Async Components](#async-component) | 
 [Generic Async Component](#generic-async-component) | 
-[Generic Component](#generic-component)
+[Generic Component](#generic-component)  
+[Life Cycle](#life-cycle)  
 
 Component is a function.
 You can use it as JSX element.
@@ -254,7 +254,7 @@ export default (
 )
 ```
 
-#### props
+### Props
 
 [← back](#components)
 
@@ -320,116 +320,6 @@ A component awaits a return:
   const Test2 = () => state
   const Test3 = () => <>{() => state.value}</>
   ```
-
-### Life Cycle
-
-[← back](#components)
-
-Each component renders only once!
-
-There are 3 steps of life cycle:
-- **render** (DOM elements are not created)
-- **mounted** (DOM elements are created)
-- **destroy** (elements will be removed from the DOM)
-
-Because of a component renders only once you can have effects right inside the component function.
-```typescript jsx
-import { State } from 'watch-state'
-
-function Content () {
-  const state = new State()
-
-  fetch('...')
-    .then(e => e.json())
-    .then(data => {
-      state.value = data.text
-    })
-
-  return (
-    <div>
-      {state}
-    </div>
-  )
-}
-```
-
-## onDestroy
-
-[← back](#index)
-
-You can subscribe on destroy of a component by `onDestroy` from `watch-state`
-
-Change `Content.tsx`
-
-```typescript jsx
-import { State, onDestroy } from 'watch-state'
-
-export function Content() {
-  const count = new State(0)
-  // create a state
-
-  const timer = setInterval(() => {
-    count.value++
-  }, 1000)
-  // increase the state each second
-
-  onDestroy(() => clearInterval(timer))
-  // stop timer on destroy
-
-  return () => count.value
-  // return observable value
-}
-```
-
-And change `app.tsx`
-```typescript jsx
-import { State } from 'watch-state'
-import { Show } from '@innet/dom'
-import { Content } from './Content'
-
-const show = new State(true)
-
-const handleChange = (e: Event) => {
-  show.value = e.target.checked
-}
-
-export default (
-  <>
-    <Show when={show}>
-      <Content />
-    </Show>
-    <input
-      type="checkbox"
-      checked
-      onchange={handleChange}
-    />
-  </>
-)
-```
-
-## onMounted
-
-[← back](#index)
-
-You can use `onMounted` to do something after end of rendering.
-
-Change `Content.tsx`
-
-```typescript jsx
-import { onMounted, Ref } from '@innet/dom'
-import { State, onDestroy } from 'watch-state'
-
-export function Content() {
-  const width = new State(0)
-  const ref = new Ref<HTMLDivElement>()
-
-  onMounted(() => {
-    console.log(ref.value.clientWidth)
-  })
-
-  return <div ref={ref}>Hello world</div>
-}
-```
 
 ### Async Component
 
@@ -559,6 +449,119 @@ generic A <span id="a"></span> null
 generic B <span id="a"></span> <span id="b"></span>
 queueMicrotask A <span id="a"></span> <span id="b"></span>
 queueMicrotask B <span id="a"></span> <span id="b"></span>
+```
+
+### Life Cycle
+
+[← back](#components)
+
+[onDestroy](#ondestroy) | 
+[onMounted](#onmounted)
+
+Each component renders only once!
+
+There are 3 steps of life cycle:
+- **render** (DOM elements are not created)
+- **mounted** (DOM elements are created)
+- **destroy** (elements will be removed from the DOM)
+
+Because of a component renders only once you can have effects right inside the component function.
+```typescript jsx
+import { State } from 'watch-state'
+
+function Content () {
+  const state = new State()
+
+  fetch('...')
+    .then(e => e.json())
+    .then(data => {
+      state.value = data.text
+    })
+
+  return (
+    <div>
+      {state}
+    </div>
+  )
+}
+```
+
+## onDestroy
+
+[← back](#index)
+
+You can subscribe on destroy of a component by `onDestroy` from `watch-state`
+
+Change `Content.tsx`
+
+```typescript jsx
+import { State, onDestroy } from 'watch-state'
+
+export function Content() {
+  const count = new State(0)
+  // create a state
+
+  const timer = setInterval(() => {
+    count.value++
+  }, 1000)
+  // increase the state each second
+
+  onDestroy(() => clearInterval(timer))
+  // stop timer on destroy
+
+  return () => count.value
+  // return observable value
+}
+```
+
+And change `app.tsx`
+```typescript jsx
+import { State } from 'watch-state'
+import { Show } from '@innet/dom'
+import { Content } from './Content'
+
+const show = new State(true)
+
+const handleChange = (e: Event) => {
+  show.value = e.target.checked
+}
+
+export default (
+  <>
+    <Show when={show}>
+      <Content />
+    </Show>
+    <input
+      type="checkbox"
+      checked
+      onchange={handleChange}
+    />
+  </>
+)
+```
+
+## onMounted
+
+[← back](#index)
+
+You can use `onMounted` to do something after end of rendering.
+
+Change `Content.tsx`
+
+```typescript jsx
+import { onMounted, Ref } from '@innet/dom'
+import { State, onDestroy } from 'watch-state'
+
+export function Content() {
+  const width = new State(0)
+  const ref = new Ref<HTMLDivElement>()
+
+  onMounted(() => {
+    console.log(ref.value.clientWidth)
+  })
+
+  return <div ref={ref}>Hello world</div>
+}
 ```
 
 ## Ref

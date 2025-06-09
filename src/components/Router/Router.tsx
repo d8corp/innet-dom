@@ -11,14 +11,17 @@ import { type RouteComponent, type RouteLazyComponent, type RouteLazyComponentRe
 
 export interface RouterProps {
   routing: StateProp<Routing>
+  permissions?: StateProp<Set<string>>
 }
 
-export function Router ({ routing }: RouterProps) {
+const EMPTY_SET = new Set<string>()
+
+export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
   const params = useContext(paramsContext) || new State<Record<string, string>>({})
 
   const route = new Cache(() => {
     const newParams: Record<string, string> = {}
-    const route = findRoute(use(routing), locationPath.value.split('/').filter(Boolean), newParams)
+    const route = findRoute(use(routing), locationPath.value.split('/').filter(Boolean), newParams, use(permissions))
     params.value = newParams
     return route
   })

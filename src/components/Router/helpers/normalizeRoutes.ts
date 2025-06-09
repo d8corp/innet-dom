@@ -5,6 +5,7 @@ interface PathRoute {
   children: NormalizedRoute[]
   lazy?: never
   fallback?: never
+  permissions?: never
   component?: never
   index?: never
 }

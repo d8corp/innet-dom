@@ -24,7 +24,14 @@ describe('createRouting', () => {
         },
       ])
 
-      expect(routing).toEqual({ index: { components: [Home], params: [], lazy: [false], fallback: [undefined] } } satisfies Routing)
+      expect(routing).toEqual({
+        index: {
+          components: [Home],
+          params: [],
+          lazy: [false],
+          fallback: [undefined],
+        },
+      } satisfies Routing)
     })
     it('should work with rest route', () => {
       const NotFound = () => '404'
@@ -35,7 +42,14 @@ describe('createRouting', () => {
         },
       ])
 
-      expect(routing).toEqual({ rest: { components: [NotFound], params: [], lazy: [false], fallback: [undefined] } } satisfies Routing)
+      expect(routing).toEqual({
+        rest: {
+          components: [NotFound],
+          params: [],
+          lazy: [false],
+          fallback: [undefined],
+        },
+      } satisfies Routing)
     })
     it('should work with index and rest together', () => {
       const Home = () => 'Home'
@@ -115,10 +129,29 @@ describe('createRouting', () => {
       expect(routing).toEqual({
         strict: {
           todos: {
-            index: { components: [Todos, AllTodos], params: [''], lazy: [false, false], fallback: [undefined, undefined] },
+            index: {
+              components: [Todos, AllTodos],
+              params: [''],
+              lazy: [false, false],
+              fallback: [undefined, undefined],
+            },
             strict: {
-              active: { rest: { components: [Todos, ActiveTodos], params: ['', ''], lazy: [false, false], fallback: [undefined, undefined] } },
-              inactive: { rest: { components: [Todos, InactiveTodos], params: ['', ''], lazy: [false, false], fallback: [undefined, undefined] } },
+              active: {
+                rest: {
+                  components: [Todos, ActiveTodos],
+                  params: ['', ''],
+                  lazy: [false, false],
+                  fallback: [undefined, undefined],
+                },
+              },
+              inactive: {
+                rest: {
+                  components: [Todos, InactiveTodos],
+                  params: ['', ''],
+                  lazy: [false, false],
+                  fallback: [undefined, undefined],
+                },
+              },
             },
           },
         },

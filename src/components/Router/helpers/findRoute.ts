@@ -12,19 +12,36 @@ export function findRoute (
   routing: Routing,
   path: string[],
   params: Record<string, string>,
+  permissions: Set<string>,
   index = 0,
 ): RoutingRoute | undefined {
   if (path.length === index) {
+    if (permissions.size && routing.indexList) {
+      for (const item of routing.indexList) {
+        if (item.permissions.isSubsetOf(permissions)) {
+          setParams(path, item.params, params)
+          return item
+        }
+      }
+    }
+
     if (routing.index) {
       setParams(path, routing.index.params, params)
       return routing.index
     }
 
-    if (routing.rest) {
-      if (routing.rest.components) {
-        setParams(path, routing.rest.params, params)
-        return routing.rest
+    if (permissions.size && routing.restList) {
+      for (const item of routing.restList) {
+        if (item.permissions.isSubsetOf(permissions)) {
+          setParams(path, item.params, params)
+          return item
+        }
       }
+    }
+
+    if (routing.rest) {
+      setParams(path, routing.rest.params, params)
+      return routing.rest
     }
 
     return undefined
@@ -35,7 +52,7 @@ export function findRoute (
   const nextIndex = index + 1
 
   if (strictRouting) {
-    const result = findRoute(strictRouting, path, params, nextIndex)
+    const result = findRoute(strictRouting, path, params, permissions, nextIndex)
 
     if (result) {
       return result
@@ -43,7 +60,7 @@ export function findRoute (
   }
 
   if (routing.children) {
-    const result = findRoute(routing.children, path, params, nextIndex)
+    const result = findRoute(routing.children, path, params, permissions, nextIndex)
 
     if (result) return result
   }

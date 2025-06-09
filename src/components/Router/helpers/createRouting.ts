@@ -20,6 +20,7 @@ export function createRouting (
   parentParams: string[] = [],
   parentLazy: boolean[] = [],
   parentFallback: JSX.Element[] = [],
+  parentPermissions: string[] = [],
 ): Routing {
   const normalizedRoutes = normalizeRoutes(routes)
 
@@ -32,6 +33,7 @@ export function createRouting (
       : parentComponents
     const lazy = route.component ? [...parentLazy, route.lazy ?? false] : parentLazy
     const fallback = route.fallback ? [...parentFallback, route.fallback] : parentFallback
+    const permissions = route.permissions ? [...parentPermissions, ...route.permissions] : parentPermissions
 
     if (pathKey) {
       if (pathKey.startsWith(':') && !pathKey.endsWith(']')) {
@@ -42,7 +44,7 @@ export function createRouting (
           routing.children = {}
         }
 
-        createRouting(route.children as Route[], routing.children, components, params, lazy, fallback)
+        createRouting(route.children as Route[], routing.children, components, params, lazy, fallback, permissions)
       } else {
         if (!routing.strict) {
           routing.strict = {}
@@ -56,7 +58,7 @@ export function createRouting (
             routing.strict[key] = {}
           }
 
-          createRouting(route.children as Route[], routing.strict[key], components, params, lazy, fallback)
+          createRouting(route.children as Route[], routing.strict[key], components, params, lazy, fallback, permissions)
         }
       }
 
@@ -64,6 +66,22 @@ export function createRouting (
     }
 
     if (route.index) {
+      if (permissions.length) {
+        if (!routing.indexList) {
+          routing.indexList = []
+        }
+
+        routing.indexList.push({
+          components,
+          permissions: new Set(permissions),
+          lazy,
+          fallback,
+          params: parentParams,
+        })
+
+        continue
+      }
+
       if (routing.index) {
         throw Error('Routing Error. Do not use index routes twice.')
       }
@@ -79,7 +97,23 @@ export function createRouting (
     }
 
     if (route.children?.length) {
-      createRouting(route.children, routing, components, parentParams, lazy, fallback)
+      createRouting(route.children, routing, components, parentParams, lazy, fallback, permissions)
+      continue
+    }
+
+    if (permissions.length) {
+      if (!routing.restList) {
+        routing.restList = []
+      }
+
+      routing.restList.push({
+        components,
+        permissions: new Set(permissions),
+        lazy,
+        fallback,
+        params: parentParams,
+      })
+
       continue
     }
 

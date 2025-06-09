@@ -1,4 +1,5 @@
 import { historyPush } from '@watch-state/history-api'
+import { State } from 'watch-state'
 
 import { useParam } from '../../hooks'
 import { getHTML, render } from '../../test'
@@ -10,6 +11,7 @@ const Home = () => 'Home'
 const NotFound = () => '404'
 const About = () => 'About'
 const Settings = () => 'Settings'
+const Prelogin = () => 'Prelogin'
 
 const MainLayout = (props: ChildrenProps) => <div>{props.children}</div>
 const SecondLayout = (props: ChildrenProps) => <span>{props.children}</span>
@@ -59,7 +61,7 @@ describe('Router', () => {
 
       const routing = createRouting([
         { index: true, component: Home },
-        { component: About, path: 'about' },
+        { path: 'about', component: About },
         { component: NotFound },
       ])
 
@@ -127,6 +129,103 @@ describe('Router', () => {
       await historyPush('/settings')
 
       expect(getHTML(result)).toBe('<span>Settings</span>')
+    })
+    it('Should work with permissions', async () => {
+      await historyPush('/')
+
+      const permissions = new State(new Set<string>())
+
+      const routing = createRouting([
+        {
+          component: MainLayout,
+          children: [
+            { index: true, component: Home },
+            { index: true, path: 'about', component: About },
+            { component: NotFound },
+          ],
+        },
+        {
+          component: SecondLayout,
+          permissions: ['postlogin'],
+          children: [
+            { index: true, path: 'settings', component: Settings },
+          ],
+        },
+      ])
+
+      const result = render(<Router routing={routing} permissions={permissions} />)
+
+      expect(getHTML(result)).toBe('<div>Home</div>')
+
+      await historyPush('/about')
+
+      expect(getHTML(result)).toBe('<div>About</div>')
+
+      await historyPush('/settings')
+
+      expect(getHTML(result)).toBe('<div>404</div>')
+
+      permissions.value.add('postlogin')
+      permissions.update()
+
+      expect(getHTML(result)).toBe('<span>Settings</span>')
+
+      permissions.value.delete('postlogin')
+      permissions.update()
+
+      expect(getHTML(result)).toBe('<div>404</div>')
+    })
+    it('Should work with different pages for different permissions', async () => {
+      await historyPush('/')
+
+      const permissions = new State(new Set<string>())
+
+      const routing = createRouting([
+        {
+          index: true,
+          component: Prelogin,
+        },
+        {
+          component: MainLayout,
+          children: [
+            { index: true, path: 'about', component: About },
+            {
+              permissions: ['postlogin'],
+              children: [
+                { index: true, component: Home },
+                { index: true, path: 'settings', component: Settings },
+              ],
+            },
+            { component: NotFound },
+          ],
+        },
+      ])
+
+      const result = render(<Router routing={routing} permissions={permissions} />)
+
+      expect(getHTML(result)).toBe('Prelogin')
+
+      await historyPush('/about')
+
+      expect(getHTML(result)).toBe('<div>About</div>')
+
+      await historyPush('/settings')
+
+      expect(getHTML(result)).toBe('<div>404</div>')
+
+      permissions.value.add('postlogin')
+      permissions.update()
+
+      expect(getHTML(result)).toBe('<div>Settings</div>')
+
+      await historyPush('/')
+
+      expect(getHTML(result)).toBe('<div>Home</div>')
+
+      permissions.value.delete('postlogin')
+      permissions.update()
+
+      expect(getHTML(result)).toBe('Prelogin')
     })
   })
   describe('lazy', () => {

@@ -44,70 +44,70 @@ describe('findRoute', () => {
   describe('todos', () => {
     it('home page', () => {
       const params: Record<string, string> = {}
-      const result = findRoute(todoRouting, [], params)
+      const result = findRoute(todoRouting, [], params, new Set())
 
       expect(result).toEqual({ components: [Home], lazy: [false], fallback: [undefined], params: [] } satisfies RoutingRoute)
       expect(params).toEqual({})
     })
     it('about page', () => {
       const params: Record<string, string> = {}
-      const result = findRoute(todoRouting, ['about'], params)
+      const result = findRoute(todoRouting, ['about'], params, new Set())
 
       expect(result).toEqual({ components: [About], lazy: [false], fallback: [undefined], params: [''] } satisfies RoutingRoute)
       expect(params).toEqual({})
     })
     it('404 page', () => {
       const params: Record<string, string> = {}
-      const result = findRoute(todoRouting, ['404'], params)
+      const result = findRoute(todoRouting, ['404'], params, new Set())
 
       expect(result).toEqual({ components: [NotFound], lazy: [false], fallback: [undefined], params: [] } satisfies RoutingRoute)
       expect(params).toEqual({})
     })
     it('404 about page', () => {
       const params: Record<string, string> = {}
-      const result = findRoute(todoRouting, ['about', 'test'], params)
+      const result = findRoute(todoRouting, ['about', 'test'], params, new Set())
 
       expect(result).toEqual({ components: [NotFound], lazy: [false], fallback: [undefined], params: [] } satisfies RoutingRoute)
       expect(params).toEqual({})
     })
     it('todo page', () => {
       const params: Record<string, string> = {}
-      const result = findRoute(todoRouting, ['todo', '1'], params)
+      const result = findRoute(todoRouting, ['todo', '1'], params, new Set())
 
       expect(result).toEqual({ components: [Todo], lazy: [false], fallback: [undefined], params: ['', 'id'] } satisfies RoutingRoute)
       expect(params).toEqual({ id: '1' })
     })
     it('todo page without param', () => {
       const params: Record<string, string> = {}
-      const result = findRoute(todoRouting, ['todo'], params)
+      const result = findRoute(todoRouting, ['todo'], params, new Set())
 
       expect(result).toEqual({ components: [NotFound], lazy: [false], fallback: [undefined], params: [] } satisfies RoutingRoute)
       expect(params).toEqual({})
     })
     it('todos page all todos', () => {
       const params: Record<string, string> = {}
-      const result = findRoute(todoRouting, ['todos'], params)
+      const result = findRoute(todoRouting, ['todos'], params, new Set())
 
       expect(result).toEqual({ components: [Todos, AllTodos], lazy: [false, false], fallback: [undefined, undefined], params: [''] } satisfies RoutingRoute)
       expect(params).toEqual({})
     })
     it('todos page active todos', () => {
       const params: Record<string, string> = {}
-      const result = findRoute(todoRouting, ['todos', 'active'], params)
+      const result = findRoute(todoRouting, ['todos', 'active'], params, new Set())
 
       expect(result).toEqual({ components: [Todos, ActiveTodos], lazy: [false, false], fallback: [undefined, undefined], params: ['', ''] } satisfies RoutingRoute)
       expect(params).toEqual({})
     })
     it('foo', () => {
       const params: Record<string, string> = {}
-      const result = findRoute(todoRouting, ['foo'], params)
+      const result = findRoute(todoRouting, ['foo'], params, new Set())
 
       expect(result).toEqual({ components: [Home], lazy: [false], fallback: [undefined], params: ['test'] } satisfies RoutingRoute)
       expect(params).toEqual({ test: 'foo' })
     })
     it('bar', () => {
       const params: Record<string, string> = {}
-      const result = findRoute(todoRouting, ['bar'], params)
+      const result = findRoute(todoRouting, ['bar'], params, new Set())
 
       expect(result).toEqual({ components: [Home], lazy: [false], fallback: [undefined], params: ['test'] } satisfies RoutingRoute)
       expect(params).toEqual({ test: 'bar' })
@@ -135,7 +135,7 @@ describe('findRoute', () => {
         },
       ])
       const params: Record<string, string> = {}
-      const result = findRoute(routing, ['settings'], params)
+      const result = findRoute(routing, ['settings'], params, new Set())
 
       expect(result).toEqual({ components: [SecondLayout, Settings], lazy: [false, false], fallback: [undefined, undefined], params: [''] } satisfies RoutingRoute)
       expect(params).toEqual({})

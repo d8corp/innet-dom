@@ -6,21 +6,25 @@ export type RouteLazyComponent = () => RouteLazyComponentResult
 
 interface BaseNoLazyComponentRoute {
   component: RouteComponent
+  permissions?: string[]
   lazy?: false
   fallback?: never
 }
 
 interface BaseLazyComponentRoute {
   component: RouteLazyComponent
+  permissions?: string[]
   lazy: true
   fallback?: JSX.Element
 }
 
 export type BaseComponentRoute = BaseLazyComponentRoute | BaseNoLazyComponentRoute
 
-interface BaseNoComponentRoute {
+export interface BaseNoComponentRoute {
   component?: never
+  permissions?: string[]
   lazy?: never
+  fallback?: never
 }
 
 type BaseRoute = (BaseComponentRoute | BaseNoComponentRoute) & {
@@ -29,6 +33,7 @@ type BaseRoute = (BaseComponentRoute | BaseNoComponentRoute) & {
 
 type IndexRoute = BaseRoute & {
   index: true
+  children?: never
 }
 
 type NoIndexRoute = BaseRoute & {
@@ -45,9 +50,15 @@ export interface RoutingRoute {
   params: string[]
 }
 
+export interface PermissionsRoutingRoute extends RoutingRoute {
+  permissions: Set<string>
+}
+
 export interface Routing {
   index?: RoutingRoute
   strict?: Record<string, Routing>
   children?: Routing
   rest?: RoutingRoute
+  indexList?: PermissionsRoutingRoute[]
+  restList?: PermissionsRoutingRoute[]
 }
