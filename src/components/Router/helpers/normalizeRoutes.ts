@@ -5,6 +5,7 @@ interface PathRoute {
   children: NormalizedRoute[]
   lazy?: never
   fallback?: never
+  childrenFallback?: never
   permissions?: never
   component?: never
   index?: never
@@ -14,11 +15,13 @@ type IndexRoute = BaseComponentRoute & {
   index: true
   path?: never
   children?: never
+  childrenFallback?: never
 }
 
 type NoIndexRoute = BaseComponentRoute & {
   index?: false
   children?: NormalizedRoute[]
+  childrenFallback?: JSX.Element
   path?: never
 }
 

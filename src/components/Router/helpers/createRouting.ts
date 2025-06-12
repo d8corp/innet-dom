@@ -19,8 +19,9 @@ export function createRouting (
   parentComponents: Array<RouteComponent | RouteLazyComponent> = [],
   parentParams: string[] = [],
   parentLazy: boolean[] = [],
-  parentFallback: JSX.Element[] = [],
+  parentFallbacks: JSX.Element[] = [],
   parentPermissions: string[] = [],
+  parentFallback?: JSX.Element,
 ): Routing {
   const normalizedRoutes = normalizeRoutes(routes)
 
@@ -32,7 +33,7 @@ export function createRouting (
       ? [...parentComponents, route.lazy ? once(route.component) : route.component]
       : parentComponents
     const lazy = route.component ? [...parentLazy, route.lazy ?? false] : parentLazy
-    const fallback = route.fallback ? [...parentFallback, route.fallback] : parentFallback
+    const fallback = route.component ? [...parentFallbacks, route.fallback ?? parentFallback] : parentFallbacks
     const permissions = route.permissions ? [...parentPermissions, ...route.permissions] : parentPermissions
 
     if (pathKey) {
@@ -44,7 +45,16 @@ export function createRouting (
           routing.children = {}
         }
 
-        createRouting(route.children as Route[], routing.children, components, params, lazy, fallback, permissions)
+        createRouting(
+          route.children as Route[],
+          routing.children,
+          components,
+          params,
+          lazy,
+          fallback,
+          permissions,
+          route.childrenFallback ?? parentFallback,
+        )
       } else {
         if (!routing.strict) {
           routing.strict = {}
@@ -58,7 +68,16 @@ export function createRouting (
             routing.strict[key] = {}
           }
 
-          createRouting(route.children as Route[], routing.strict[key], components, params, lazy, fallback, permissions)
+          createRouting(
+            route.children as Route[],
+            routing.strict[key],
+            components,
+            params,
+            lazy,
+            fallback,
+            permissions,
+            route.childrenFallback ?? parentFallback,
+          )
         }
       }
 
@@ -97,7 +116,16 @@ export function createRouting (
     }
 
     if (route.children?.length) {
-      createRouting(route.children, routing, components, parentParams, lazy, fallback, permissions)
+      createRouting(
+        route.children,
+        routing,
+        components,
+        parentParams,
+        lazy,
+        fallback,
+        permissions,
+        route.childrenFallback ?? parentFallback,
+      )
       continue
     }
 

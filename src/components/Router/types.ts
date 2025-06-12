@@ -39,6 +39,7 @@ type IndexRoute = BaseRoute & {
 type NoIndexRoute = BaseRoute & {
   index?: false
   children?: Route[]
+  childrenFallback?: JSX.Element
 }
 
 export type Route = IndexRoute | NoIndexRoute
@@ -46,7 +47,7 @@ export type Route = IndexRoute | NoIndexRoute
 export interface RoutingRoute {
   components: Array<RouteComponent | RouteLazyComponent>
   lazy: boolean[]
-  fallback?: JSX.Element[]
+  fallback: JSX.Element[]
   params: string[]
 }
 

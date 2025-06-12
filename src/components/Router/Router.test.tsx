@@ -12,6 +12,8 @@ const NotFound = () => '404'
 const About = () => 'About'
 const Settings = () => 'Settings'
 const Prelogin = () => 'Prelogin'
+const Foo = () => 'Foo'
+const Bar = () => 'Bar'
 
 const MainLayout = (props: ChildrenProps) => <div>{props.children}</div>
 const SecondLayout = (props: ChildrenProps) => <span>{props.children}</span>
@@ -350,6 +352,42 @@ describe('Router', () => {
       await historyPush('/test')
 
       expect(getHTML(result)).toBe('')
+    })
+  })
+  describe('children', () => {
+    it('Should work with childrenFallback', async () => {
+      await historyPush('/')
+
+      const routing = createRouting([
+        { index: true, component: Home },
+        {
+          childrenFallback: 'Loading...',
+          children: [
+            { index: true, path: 'foo', component: async () => Foo, lazy: true },
+            { index: true, path: 'bar', component: async () => Bar, lazy: true },
+          ],
+        },
+      ])
+
+      const result = render(<Router routing={routing} />)
+
+      expect(getHTML(result)).toBe('Home')
+
+      await historyPush('/foo')
+
+      expect(getHTML(result)).toBe('Loading...')
+
+      await new Promise(resolve => setTimeout(resolve))
+
+      expect(getHTML(result)).toBe('Foo')
+
+      await historyPush('/bar')
+
+      expect(getHTML(result)).toBe('Loading...')
+
+      await new Promise(resolve => setTimeout(resolve))
+
+      expect(getHTML(result)).toBe('Bar')
     })
   })
   describe('optional path segment', () => {
