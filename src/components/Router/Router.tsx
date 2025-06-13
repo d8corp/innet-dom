@@ -46,13 +46,13 @@ export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
   return (
     <ContextProvider for={paramsContext} set={params}>
       <Pipe>
-        {(children, deep) => (
+        {(children, index) => (
           <Lazy
-            component={new Cache(() => components.value[deep])}
-            fallback={new Cache(() => route.value?.fallback?.[deep])}
-            show={new Cache(() => components.value.length > deep)}
-            loadedComponents={loadedComponents}
+            component={new Cache(() => components.value[index])}
+            fallback={new Cache(() => route.value?.fallback?.[index])}
+            show={new Cache(() => components.value.length > index)}
             render={(Component) => <Component children={children} />}
+            loadedComponents={loadedComponents}
           />
         )}
       </Pipe>

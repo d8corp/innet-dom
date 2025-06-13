@@ -75,5 +75,9 @@ describe('Lazy', () => {
     await historyPush('?modal=logout')
 
     expect(getHTML(result)).toBe('LogoutModal')
+
+    await historyPush('?modal=login&modal=logout')
+
+    expect(getHTML(result)).toBe('LoginModalLogoutModal')
   })
 })
