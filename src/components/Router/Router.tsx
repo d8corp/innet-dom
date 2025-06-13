@@ -4,8 +4,7 @@ import { Cache, State } from 'watch-state'
 
 import { paramsContext } from '../../hooks'
 import { type Component, type StateProp } from '../../types'
-import { use } from '../../utils'
-import { type LazyComponent, type LazyComponentFn } from '../Lazy'
+import { isLazy, type LazyResult, use } from '../../utils'
 import { LazyPipe } from '../LazyPipe'
 import { findRoute } from './helpers/findRoute'
 import { type Routing } from './types'
@@ -31,10 +30,11 @@ export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
     const routeValue = route.value
     if (!routeValue) return []
 
-    const result: Array<Component | LazyComponent> = []
+    const result: Array<Component | LazyResult> = []
 
     for (let i = 0; i < routeValue.components.length; i++) {
-      result.push(routeValue.lazy[i] ? (routeValue.components[i] as LazyComponentFn)() : routeValue.components[i] as Component)
+      const component = routeValue.components[i]
+      result.push(isLazy(component) ? component() : component)
     }
 
     return result
@@ -45,8 +45,7 @@ export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
       <LazyPipe
         components={() => components.value}
         fallbacks={() => route.value?.fallback ?? []}
-        lazy={() => route.value?.lazy ?? []}
-        loadedComponents={new WeakMap()}
+        loadedComponents={new Map()}
       />
     </ContextProvider>
   )

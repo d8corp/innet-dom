@@ -3,10 +3,10 @@ import { Cache } from 'watch-state'
 
 import { getHTML, render } from '../../test'
 import type { Component } from '../../types'
-import { parsedSearch } from '../../utils'
+import { isLazy, type LazyResult, parsedSearch } from '../../utils'
 import { For } from '../For'
 import { type BaseComponentRoute } from '../Router'
-import { Lazy, type LazyComponent } from './Lazy'
+import { Lazy } from './Lazy'
 
 const LoginModal = () => 'LoginModal'
 const LogoutModal = () => 'LogoutModal'
@@ -33,7 +33,7 @@ describe('Lazy', () => {
     ]
 
     function Modals () {
-      const loadedComponents = new WeakMap<LazyComponent, Component>()
+      const loadedComponents = new Map<LazyResult, Component>()
 
       const searchModals = new Cache(() => {
         const searchModal = parsedSearch.value.modal
@@ -55,9 +55,8 @@ describe('Lazy', () => {
           of={searchModals}
           children={route => (
             <Lazy
-              component={() => route.value.lazy ? route.value.component() : route.value.component}
+              component={() => isLazy(route.value.component) ? route.value.component() : route.value.component}
               fallback={() => route.value.fallback}
-              lazy={() => route.value.lazy || false}
               loadedComponents={loadedComponents}
             />
           )}

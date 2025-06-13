@@ -4,6 +4,7 @@ import { State } from 'watch-state'
 import { useParam } from '../../hooks'
 import { getHTML, render } from '../../test'
 import { type ChildrenProps } from '../../types'
+import { lazy } from '../../utils'
 import { createRouting } from './helpers/createRouting'
 import { Router } from './Router'
 
@@ -31,7 +32,7 @@ describe('Router', () => {
       await historyPush('/')
 
       const routing = createRouting([
-        { index: true, component: () => Home },
+        { index: true, component: Home },
       ])
 
       const result = render(<Router routing={routing} />)
@@ -235,7 +236,7 @@ describe('Router', () => {
       await historyPush('/')
 
       const routing = createRouting([
-        { index: true, component: async () => Home, lazy: true },
+        { index: true, component: lazy(async () => Home) },
       ])
 
       const result = render(<Router routing={routing} />)
@@ -254,8 +255,7 @@ describe('Router', () => {
       const routing = createRouting([
         {
           index: true,
-          component: async () => Home,
-          lazy: true,
+          component: lazy(async () => Home),
           fallback: 'Loading...',
         },
       ])
@@ -277,28 +277,25 @@ describe('Router', () => {
 
       const routing = createRouting([
         {
-          component: async () => {
+          component: lazy(async () => {
             new Promise(resolve => setTimeout(resolve, 300))
             return MainLayout
-          },
-          lazy: true,
+          }),
           fallback: 'Loading MainLayout...',
           children: [
             {
               index: true,
-              component: async () => {
+              component: lazy(async () => {
                 new Promise(resolve => setTimeout(resolve, 300))
                 return Home
-              },
-              lazy: true,
+              }),
               fallback: 'Loading Home...',
             },
             {
-              component: async () => {
+              component: lazy(async () => {
                 await new Promise(resolve => setTimeout(resolve, 300))
                 return NotFound
-              },
-              lazy: true,
+              }),
               fallback: 'Loading NotFound...',
             },
           ],
@@ -335,8 +332,7 @@ describe('Router', () => {
       const routing = createRouting([
         {
           index: true,
-          component: async () => ({ default: Home }),
-          lazy: true,
+          component: lazy(async () => ({ default: Home })),
           fallback: 'Loading...',
         },
       ])
@@ -363,8 +359,22 @@ describe('Router', () => {
         {
           childrenFallback: 'Loading...',
           children: [
-            { index: true, path: 'foo', component: async () => Foo, lazy: true },
-            { index: true, path: 'bar', component: async () => Bar, lazy: true },
+            {
+              index: true,
+              path: 'foo',
+              component: lazy(async () => {
+                await new Promise(resolve => setTimeout(resolve))
+                return Foo
+              }),
+            },
+            {
+              index: true,
+              path: 'bar',
+              component: lazy(async () => {
+                await new Promise(resolve => setTimeout(resolve))
+                return Bar
+              }),
+            },
           ],
         },
       ])

@@ -1,51 +1,41 @@
-import Async from '@watch-state/async'
-import { unwatch, Watch } from 'watch-state'
+import { State, Watch } from 'watch-state'
 
 import { type Component, type StateProp } from '../../types'
-import { use } from '../../utils'
+import { type LazyResult, use } from '../../utils'
 
-export type LazyComponent = Promise<{ default: Component } | Component>
-export type LazyComponentFn = () => LazyComponent
-
-export interface LazyProps<L extends boolean> {
-  component: StateProp<L extends true ? LazyComponent : Component>
-  lazy: StateProp<L>
+export interface LazyProps<C extends Component = Component> {
+  component: StateProp<LazyResult<C> | C>
   fallback?: StateProp<JSX.Element>
   show?: StateProp<boolean>
-  render?: (Component: Component) => JSX.Element
-  loadedComponents?: WeakMap<LazyComponent, Component>
+  render?: (Component: C) => JSX.Element
+  loadedComponents?: Map<LazyResult, Component>
 }
 
-export function Lazy<L extends boolean> ({
+export function Lazy<C extends Component = Component> ({
   component,
-  lazy,
   fallback,
   show = true,
   render = (Component) => <Component />,
-  loadedComponents = new WeakMap(),
-}: LazyProps<L>) {
-  const lazyContent = new Async(async () => {
-    const value = await unwatch(() => use(component))
-    return render(typeof value === 'function' ? value : value.default)
-  })
+  loadedComponents = new Map(),
+}: LazyProps<C>) {
+  const loading = new State(false)
 
-  if (show && lazy) {
-    new Watch((update) => {
-      if (!use(show) || !use(lazy)) return
+  if (show) {
+    new Watch(() => {
+      if (!use(show)) return
 
       const currentComponent = use(component)
 
       if (!currentComponent) return
 
-      if (currentComponent instanceof Promise && !loadedComponents.has(currentComponent)) {
-        const key = currentComponent
-        key.then((component) => {
-          loadedComponents.set(key, typeof component === 'function' ? component : component.default)
-        })
-      }
+      if (loading.rawValue) return
 
-      if (update) {
-        lazyContent.update()
+      if (currentComponent instanceof Promise && !loadedComponents.has(currentComponent)) {
+        loading.value = true
+        currentComponent.then((component) => {
+          loadedComponents.set(currentComponent, typeof component === 'function' ? component : component.default)
+          loading.value = false
+        })
       }
     })
   }
@@ -55,12 +45,16 @@ export function Lazy<L extends boolean> ({
 
     const currentComponent = use(component)
 
-    if (!use(lazy)) return render(currentComponent as Component)
+    if (typeof currentComponent === 'function') return render(currentComponent)
 
-    if (loadedComponents.has(currentComponent as Promise<Component>)) {
-      return render(loadedComponents.get(currentComponent as Promise<Component>) as Component)
+    const loadedComponent = loadedComponents.get(currentComponent) as C
+
+    if (loadedComponent) {
+      return render(loadedComponent)
     }
 
-    return lazyContent.loading ? use(fallback) : lazyContent.value
+    if (loading.value) return use(fallback)
+
+    throw Error('Error in Lazy component. component has wrong result of promise.')
   }
 }

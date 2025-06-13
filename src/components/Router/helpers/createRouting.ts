@@ -1,26 +1,13 @@
 import { type Component } from '../../../types'
-import { type LazyComponent, type LazyComponentFn } from '../../Lazy'
+import { type LazyFn } from '../../../utils'
 import { type Route, type Routing } from '../types'
 import { normalizeRoutes } from './normalizeRoutes'
-
-const once = (fn: LazyComponentFn): LazyComponentFn => {
-  let result: LazyComponent
-
-  return () => {
-    if (!result) {
-      result = fn()
-    }
-
-    return result
-  }
-}
 
 export function createRouting (
   routes: Route[],
   routing: Routing = {},
-  parentComponents: Array<Component | LazyComponentFn> = [],
+  parentComponents: Array<Component | LazyFn> = [],
   parentParams: string[] = [],
-  parentLazy: boolean[] = [],
   parentFallbacks: JSX.Element[] = [],
   parentPermissions: string[] = [],
   parentFallback?: JSX.Element,
@@ -32,9 +19,8 @@ export function createRouting (
     const optional = route.path?.endsWith('?')
     const pathKey = optional ? route.path?.slice(0, -1) : route.path
     const components = route.component
-      ? [...parentComponents, route.lazy ? once(route.component) : route.component]
+      ? [...parentComponents, route.component]
       : parentComponents
-    const lazy = route.component ? [...parentLazy, route.lazy ?? false] : parentLazy
     const fallback = route.component ? [...parentFallbacks, route.fallback ?? parentFallback] : parentFallbacks
     const permissions = route.permissions ? [...parentPermissions, ...route.permissions] : parentPermissions
 
@@ -52,7 +38,6 @@ export function createRouting (
           routing.children,
           components,
           params,
-          lazy,
           fallback,
           permissions,
           route.childrenFallback ?? parentFallback,
@@ -75,7 +60,6 @@ export function createRouting (
             routing.strict[key],
             components,
             params,
-            lazy,
             fallback,
             permissions,
             route.childrenFallback ?? parentFallback,
@@ -95,7 +79,6 @@ export function createRouting (
         routing.indexList.push({
           components,
           permissions: new Set(permissions),
-          lazy,
           fallback,
           params: parentParams,
         })
@@ -109,7 +92,6 @@ export function createRouting (
 
       routing.index = {
         components,
-        lazy,
         fallback,
         params: parentParams,
       }
@@ -123,7 +105,6 @@ export function createRouting (
         routing,
         components,
         parentParams,
-        lazy,
         fallback,
         permissions,
         route.childrenFallback ?? parentFallback,
@@ -139,7 +120,6 @@ export function createRouting (
       routing.restList.push({
         components,
         permissions: new Set(permissions),
-        lazy,
         fallback,
         params: parentParams,
       })
@@ -153,7 +133,6 @@ export function createRouting (
 
     routing.rest = {
       components,
-      lazy,
       fallback,
       params: parentParams,
     }

@@ -1,17 +1,15 @@
 import { type Component } from '../../types'
-import { type LazyComponentFn } from '../Lazy'
+import { type LazyFn } from '../../utils'
 
 interface BaseNoLazyComponentRoute {
   component: Component
   permissions?: string[]
-  lazy?: false
   fallback?: never
 }
 
 interface BaseLazyComponentRoute {
-  component: LazyComponentFn
+  component: LazyFn
   permissions?: string[]
-  lazy: true
   fallback?: JSX.Element
 }
 
@@ -20,7 +18,6 @@ export type BaseComponentRoute = BaseLazyComponentRoute | BaseNoLazyComponentRou
 export interface BaseNoComponentRoute {
   component?: never
   permissions?: string[]
-  lazy?: never
   fallback?: never
 }
 
@@ -42,8 +39,7 @@ type NoIndexRoute = BaseRoute & {
 export type Route = IndexRoute | NoIndexRoute
 
 export interface RoutingRoute {
-  components: Array<Component | LazyComponentFn>
-  lazy: boolean[]
+  components: Array<Component | LazyFn>
   fallback: JSX.Element[]
   params: string[]
 }
