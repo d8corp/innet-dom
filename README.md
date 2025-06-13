@@ -757,7 +757,7 @@ Use `key` property to improve `DOM` changes when you use an array of objects wit
 import { For } from '@innet/dom'
 import { State } from 'watch-state'
 
-const names = new State([
+const users = new State([
   { id: 1, text: 'test1' },
   { id: 2, text: 'test2' },
   { id: 3, text: 'test3' },
@@ -765,11 +765,11 @@ const names = new State([
 
 export default (
   <ul>
-    <For of={names} key='id'>
-      {(name, index) => (
+    <For of={users} key='id'>
+      {(user, index) => (
         <li>
           #{index}:
-          {name}
+          {() => user.value.name}
         </li>
       )}
     </For>
