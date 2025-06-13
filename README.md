@@ -13,7 +13,7 @@
 [![license](https://img.shields.io/npm/l/@innet/dom)](https://github.com/d8corp/innet-dom/blob/main/LICENSE)
 
 ## Abstract
-This is an `innet` tool, that helps to create frontend-side application.
+This is an `innet` tool for building frontend applications.
 
 Based on [innet](https://www.npmjs.com/package/innet).
 
@@ -60,7 +60,7 @@ Use [innetjs](https://www.npmjs.com/package/innetjs) to start `innet-dom` app de
 ```shell
 npx innetjs init my-app -t fe
 ```
-*change my-app to work folder name*
+*Replace my-app with your working folder name*
 
 Go into `my-app` and check `README.md`
 
@@ -68,7 +68,7 @@ Go into `my-app` and check `README.md`
 
 [← back](#index)
 
-Use `dom` handler to start an application.
+Use the `dom` handler to start the application.
 
 Clear `src` folder and create `index.ts` inside.
 ```typescript
@@ -96,16 +96,15 @@ export default (
 )
 ```
 
-Everything, that you provide as the first argument of `innet` function (with the `dom` handler),
-will fall into the `body` DOM-element.
+Everything you provide as the first argument to the `innet` function (with the `dom` handler) will be rendered inside the body element.
 
 ## Portal
 
 [← back](#index)
 
-If you want to put your content into another element (not `body`), use `Portal` [component](#components).
+If you want to render your content into an element other than `body`, use the `Portal` [component](#components).
 
-For example, you can change `index.html` in `public` folder.
+For example, you can modify `index.html` in `public` folder.
 ```html
 <!doctype html>
 <html lang="en">
@@ -117,7 +116,7 @@ For example, you can change `index.html` in `public` folder.
 </html>
 ```
 
-And change `app.tsx`
+And modify `app.tsx`
 
 ```typescript jsx
 import { Portal } from '@innet/dom'
@@ -133,9 +132,9 @@ export default (
 )
 ```
 
-You can use `Portal` everywhere inside the app.
+You can use `Portal` anywhere inside your app.
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { Portal } from '@innet/dom'
 
@@ -165,13 +164,13 @@ export default (
 
 [← back](#index)
 
-With `innet` you can fully exclude component approach, but state management still to be available.
+With `innet`, you can completely avoid the traditional component approach while still having state management available.
 
-The state management based on [watch-state](https://github.com/d8corp/watch-state)
+State management is based on [watch-state](https://github.com/d8corp/watch-state)
 
-To bind state and content, use `State`, `Cache` or a function as the content.
+To bind state to content, use `State`, `Cache` or a function as the content.
 
-Turn back `index.html` and change `app.tsx`
+Turn back `index.html` and modify `app.tsx`
 ```typescript jsx
 import { State } from 'watch-state'
 
@@ -195,7 +194,7 @@ export default (
 
 To bind a state and a prop use `State`, `Cache` or a function as a value of the prop.
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { State } from 'watch-state'
 
@@ -233,8 +232,7 @@ export default (
 [Generic Component](#generic-component)  
 [Life Cycle](#life-cycle)  
 
-Component is a function.
-You can use it as JSX element.
+A component is a function. You can use it as a JSX element.
 
 Create `Content.tsx`
 ```typescript jsx
@@ -245,7 +243,7 @@ export const Content = () => (
 )
 ```
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { Content } from './Content'
 
@@ -258,9 +256,9 @@ export default (
 
 [← back](#components)
 
-Any component gets the first argument of an object that contains the `props`.
+Each component receives a single argument: an object containing its `props`.
 
-Change `Content.tsx`
+Modify `Content.tsx`
 ```typescript jsx
 export function Content ({ color }) {
   return (
@@ -271,9 +269,9 @@ export function Content ({ color }) {
 }
 ```
 
-Then you should use the `color` prop outside.
+You should pass the `color` prop when using the component.
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { Content } from './Content'
 
@@ -286,9 +284,9 @@ export default (
 
 [← back](#components)
 
-Component props can contains `children` prop.
+Component props can include a `children` prop.
 
-Change `Content.tsx`
+Modify `Content.tsx`
 ```typescript jsx
 export function Content ({ children }) {
   return <h1>{children}</h1>
@@ -297,7 +295,7 @@ export function Content ({ children }) {
 
 You can put `children` inside component body.
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { Content } from './Content'
 
@@ -310,7 +308,8 @@ export default (
 
 [← back](#components)
 
-A component awaits a return:
+A component can return:
+
 - `string`, `number` - render as text node
   ```typescript jsx
   const Test1 = () => 123
@@ -387,7 +386,7 @@ If you want to show something, use `Generic Async Component`.
 
 [← back](#components)
 
-Just add a star and use `yield` instead of `return`
+Simply add an asterisk and use `yield` instead of `return`.
 ```typescript jsx
 async function * Content () {
   yield 'Loading...'
@@ -482,9 +481,9 @@ queueMicrotask B <span id="a"></span> <span id="b"></span>
 [onDestroy](#ondestroy) | 
 [onMounted](#onmounted)
 
-Each component renders only once!
+Each component renders only once.
 
-There are 3 steps of life cycle:
+There are three lifecycle stages:
 - **render** (DOM elements are not created)
 - **mounted** (DOM elements are created)
 - **destroy** (elements will be removed from the DOM)
@@ -516,7 +515,7 @@ function Content () {
 
 You can subscribe on destroy of a component by `onDestroy` from `watch-state`
 
-Change `Content.tsx`
+Modify `Content.tsx`
 
 ```typescript jsx
 import { State, onDestroy } from 'watch-state'
@@ -538,7 +537,7 @@ export function Content() {
 }
 ```
 
-And change `app.tsx`
+And modify `app.tsx`
 ```typescript jsx
 import { State } from 'watch-state'
 import { Show } from '@innet/dom'
@@ -570,7 +569,7 @@ export default (
 
 You can use `onMounted` to do something after end of rendering.
 
-Change `Content.tsx`
+Modify `Content.tsx`
 
 ```typescript jsx
 import { onMounted, Ref } from '@innet/dom'
@@ -615,7 +614,7 @@ function * Content () {
 
 You can pass a value from a parent element through any children to the place you need.
 
-Change `Content.tsx`
+Modify `Content.tsx`
 ```typescript jsx
 import { Context, useContext } from '@innet/dom'
 
@@ -638,7 +637,7 @@ export function Content () {
 
 Use `ContextProvide` to provide context value into children.
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { ContextProvider } from '@innet/dom'
 import { Content, color } from './Content'
@@ -790,9 +789,9 @@ export default (
 [useParam](#useparam) | 
 [useParams](#useparams)
 
-You can render content by url.
+You can render content based on the URL.
 
-Use `component` to define a route component.
+Use `component` to define the route's component.
 Use `path` to define segments of URL path.
 Use `index` to define a route as end of segments.
 
@@ -825,7 +824,7 @@ You can see
 `/settings/foo` - Settings Rest
 `/foo` - Not Found
 
-You can split path segments by `/`
+You can split path segments using `/`
 
 ```typescript jsx
 import { Router, createRouting } from '@innet/dom'
@@ -868,7 +867,7 @@ You can see
 
 [← back](#router)
 
-You can use `children` to group routes. You can use `component` field on a group to add a layout for children pages.
+You can group routes using `children`. The `component` field on a group defines a layout for its child pages.
 
 ```typescript jsx
 import { Router, createRouting, ChildrenProps } from '@innet/dom'
@@ -915,7 +914,7 @@ You can see
 
 [← back](#router)
 
-You can split available segments by `|`.
+You can separate available segments with `|`.
 
 ```typescript jsx
 import { Router, createRouting } from '@innet/dom'
@@ -944,7 +943,7 @@ export const Content = () => (
 
 [← back](#router)
 
-You can use `?` at the end of a segment to make the segment optional.
+You can add `?` at the end of a segment to make it optional.
 
 ```typescript jsx
 import { Router, createRouting, ChildrenProps } from '@innet/dom'
@@ -1027,8 +1026,7 @@ permissions.update()
 
 [← back](#router)
 
-You can use `lazy` to load pages and layouts asynchronously.
-It helps to make code-splitting by pages and layouts.
+You can use `lazy` to load pages and layouts asynchronously, enabling code-splitting by pages and layouts.
 
 You can use `fallback` field to render a glimmer while pages or layouts are loading.
 You can use `childrenFallback` field to set `fallback` for children elements.
@@ -1063,7 +1061,7 @@ export const Content = () => (
 
 [← back](#router)
 
-You can use `:` at start of a path segment to set the segment value into a param.
+Prefix a path segment with `:` to capture its value as a param.
 
 ```typescript jsx
 import { Router, createRouting, useParam } from '@innet/dom'
@@ -1143,7 +1141,7 @@ export const Content = () => (
 `/user/123` - `<div>123</div>`   
 `/user` - Not Found
 
-You can use square brackets and `|` to set available values of a param.
+You can use square brackets and `|` to specify allowed values for a param.
 You can use `?` to set optional param.
 
 ```typescript jsx
@@ -1381,7 +1379,7 @@ Use a string to scroll under an element relates to the CSS selector you provide 
 
 [← back](#index)
 
-You can show and hide elements with delay.
+You can show and hide elements with a delay.
 
 ```typescript jsx
 import { Delay } from '@innet/dom'
@@ -1399,9 +1397,10 @@ export function Content () {
 ```
 
 ### useHidden
-You can react on removing of elements
 
-Change `Content.tsx`
+You can react to elements being removed.
+
+Modify `Content.tsx`
 ```typescript jsx
 import { useHidden } from '@innet/dom'
 
@@ -1412,7 +1411,7 @@ export function Content () {
 }
 ```
 
-And change `app.tsx`
+And modify `app.tsx`
 ```typescript jsx
 import { Delay } from '@innet/dom'
 import { State } from 'watch-state'
@@ -1434,9 +1433,9 @@ export default () => show.value && (
 ```
 
 ### ref
-You can use `ref` to get the hidden state.
+You can use `ref` to access the hidden state.
 
-Change `Content.tsx`
+Modify `Content.tsx`
 ```typescript jsx
 import { Delay } from '@innet/dom'
 
@@ -1451,7 +1450,7 @@ export function Content () {
 }
 ```
 
-And change `app.tsx`
+And modify `app.tsx`
 ```typescript jsx
 import { State } from 'watch-state'
 
@@ -1519,7 +1518,7 @@ export function Content ({ color, children }) {
 
 Then you can use the children outside.
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { Content } from './Content'
 
