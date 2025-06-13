@@ -902,8 +902,8 @@ You can see
 
 `/` - `<article>Home Page</article>`  
 `/about` - `<article>About Page</article>`  
-`/settings` - `<div>Settings Page</div>`
-`/settings/foo` - `<article>NotFound Page</article>`
+`/settings` - `<div>Settings Page</div>`  
+`/settings/foo` - `<article>NotFound Page</article>`  
 `/foo` - `<article>NotFound Page</article>`
 
 ### Lazy Loading
