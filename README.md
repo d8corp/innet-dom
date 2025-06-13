@@ -45,7 +45,8 @@ Based on [innet](https://www.npmjs.com/package/innet).
 [onMounted](#onmounted)
 
 **[Hooks](#hooks)**  
-[useRoute](#useroute) | 
+[useParam](#useparam) | 
+[useParams](#useparams) | 
 [useParent](#useparent)
 
 **Utils**  
@@ -787,6 +788,10 @@ export default (
 [Lazy Loading](#lazy-loading) | 
 [Params](#params)
 
+Hooks  
+[useParam](#useparam) | 
+[useParams](#useparams)
+
 You can render content by url.
 
 Use `component` to define a route component.
@@ -988,11 +993,11 @@ export const Content = () => (
 
 [← back](#router)
 
-## useParam
+### useParam
 
-[← back](#index)
+[← back](#router)
 
-You can get route params by `useParam`.
+You can get a route param by `useParam`.
 
 ```typescript jsx
 import { Router, createRouting, ChildrenProps, useParam } from '@innet/dom'
@@ -1021,6 +1026,41 @@ export const Content = () => (
 `/` - Home page  
 `/user/123` - `<div>123</div>`   
 `/user` - Not Found
+
+### useParams
+
+[← back](#router)
+
+You can get all route params by `useParams`.
+
+```typescript jsx
+import { Router, createRouting, ChildrenProps, useParams } from '@innet/dom'
+
+const UserPage = (props: ChildrenProps) => {
+  const params = useParams()
+  
+  return <div>{() => params.value.userId}</div>
+}
+
+const routing = createRouting([
+  {index: true, component: () => 'Home page'},
+  {
+    index: true,
+    path: 'user/:userId',
+    component: UserPage,
+  },
+  {component: () => 'Not Found'}
+])
+
+export const Content = () => (
+  <Router routing={routing}/>
+)
+```
+
+`/` - Home page  
+`/user/123` - `<div>123</div>`   
+`/user` - Not Found
+
 
 ## Link
 
