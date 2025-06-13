@@ -856,9 +856,9 @@ You can see
 
 `/` - Home page  
 `/settings` - Settings Index  
-`/settings/account` - Account Settings
-`/settings/notifications` - Notification Settings
-`/settings/foo` - Not Found
+`/settings/account` - Account Settings  
+`/settings/notifications` - Notification Settings  
+`/settings/foo` - Not Found  
 `/foo` - Not Found
 
 ### Layout
