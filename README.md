@@ -488,7 +488,7 @@ function Content () {
 
 ## onDestroy
 
-[← back](#index)
+[← back](#life-cycle)
 
 You can subscribe on destroy of a component by `onDestroy` from `watch-state`
 
@@ -542,7 +542,7 @@ export default (
 
 ## onMounted
 
-[← back](#index)
+[← back](#life-cycle)
 
 You can use `onMounted` to do something after end of rendering.
 
