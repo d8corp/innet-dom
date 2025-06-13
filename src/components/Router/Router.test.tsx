@@ -15,6 +15,7 @@ const Settings = () => 'Settings'
 const Prelogin = () => 'Prelogin'
 const Foo = () => 'Foo'
 const Bar = () => 'Bar'
+const FooBar = () => 'FooBar'
 
 const MainLayout = (props: ChildrenProps) => <div>{props.children}</div>
 const SecondLayout = (props: ChildrenProps) => <span>{props.children}</span>
@@ -132,6 +133,31 @@ describe('Router', () => {
       await historyPush('/settings')
 
       expect(getHTML(result)).toBe('<span>Settings</span>')
+    })
+    it('Should render list of segments', async () => {
+      await historyPush('/')
+
+      const routing = createRouting([
+        { index: true, component: Home },
+        { path: 'foo|bar', component: FooBar },
+        { component: NotFound },
+      ])
+
+      const result = render(<Router routing={routing} />)
+
+      expect(getHTML(result)).toBe('Home')
+
+      await historyPush('/foo')
+
+      expect(getHTML(result)).toBe('FooBar')
+
+      await historyPush('/bar')
+
+      expect(getHTML(result)).toBe('FooBar')
+
+      await historyPush('/baz')
+
+      expect(getHTML(result)).toBe('404')
     })
     it('Should work with permissions', async () => {
       await historyPush('/')

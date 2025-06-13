@@ -781,11 +781,11 @@ export default (
 [← back](#index)
 
 [Layout](#layout) | 
-[Lazy Loading](#lazy-loading) | 
-[Permissions](#permissions) | 
 [List of Segments](#list-of-segments) | 
 [Optional Segment](#optional-segment) | 
-[Params](#params) | 
+[Permissions](#permissions) | 
+[Lazy Loading](#lazy-loading) | 
+[Params](#params)
 
 You can render content by url.
 
@@ -906,13 +906,38 @@ You can see
 `/settings/foo` - `<article>NotFound Page</article>`  
 `/foo` - `<article>NotFound Page</article>`
 
-### Lazy Loading
+### List of Segments
 
-### Permissions
+You can split available segments by `|`.
+
+```typescript jsx
+import { Router, createRouting } from '@innet/dom'
+
+const Home = () => 'Home Page'
+const FooBar = () => 'FooBar Page'
+const NotFound = () => 'NotFound Page'
+
+const routing = createRouting([
+  { index: true, component: Home },
+  { path: 'foo|bar', component: FooBar },
+  { component: NotFound },
+])
+
+export const Content = () => (
+  <Router routing={routing} />
+)
+```
+
+`/` - Home page  
+`/foo` - FooBar Page  
+`/bar` - FooBar Page  
+`/baz` - NotFound Page
 
 ### Optional Segment
 
-### List of Segments
+### Permissions
+
+### Lazy Loading
 
 ### Params
 
