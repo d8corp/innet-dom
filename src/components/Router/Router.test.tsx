@@ -159,6 +159,57 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('404')
     })
+    it('Should render optional segment', async () => {
+      await historyPush('/')
+
+      const Settings = ({ children }: ChildrenProps) => <div>{children}</div>
+      const MainTab = () => 'Main Tab'
+      const AccountTab = () => 'Account Tab'
+      const NotificationsTab = () => 'Notifications Tab'
+      const NotFound = () => 'NotFound Page'
+
+      const routing = createRouting([
+        { index: true, component: Home },
+        {
+          path: 'settings',
+          component: Settings,
+          children: [
+            { index: true, path: 'main?', component: MainTab },
+            { index: true, path: 'account', component: AccountTab },
+            { index: true, path: 'notifications', component: NotificationsTab },
+          ],
+        },
+        { component: NotFound },
+      ])
+
+      const result = render(<Router routing={routing} />)
+
+      expect(getHTML(result)).toBe('Home')
+
+      await historyPush('/settings')
+
+      expect(getHTML(result)).toBe('<div>Main Tab</div>')
+
+      await historyPush('/settings/main')
+
+      expect(getHTML(result)).toBe('<div>Main Tab</div>')
+
+      await historyPush('/settings/account')
+
+      expect(getHTML(result)).toBe('<div>Account Tab</div>')
+
+      await historyPush('/settings/notifications')
+
+      expect(getHTML(result)).toBe('<div>Notifications Tab</div>')
+
+      await historyPush('/settings/foo')
+
+      expect(getHTML(result)).toBe('NotFound Page')
+
+      await historyPush('/foo')
+
+      expect(getHTML(result)).toBe('NotFound Page')
+    })
     it('Should work with permissions', async () => {
       await historyPush('/')
 

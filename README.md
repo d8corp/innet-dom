@@ -935,6 +935,41 @@ export const Content = () => (
 
 ### Optional Segment
 
+You can use `?` at the end of a segment to make the segment optional.
+
+```typescript jsx
+import { Router, createRouting, ChildrenProps } from '@innet/dom'
+
+const Home = () => 'Home Page'
+const Settings = ({ children }: ChildrenProps) => <div>{children}</div>
+const MainTab = () => 'Main Tab'
+const AccountTab = () => 'Account Tab'
+const NotificationsTab = () => 'Notifications Tab'
+const NotFound = () => 'NotFound Page'
+
+const routing = createRouting([
+  { index: true, component: Home },
+  { path: 'settings', component: Settings, children: [
+    { index: true, path: 'main?', component: MainTab },
+    { index: true, path: 'account', component: AccountTab },
+    { index: true, path: 'notifications', component: NotificationsTab },
+  ]},
+  { component: NotFound },
+])
+
+export const Content = () => (
+  <Router routing={routing} />
+)
+```
+
+`/` - Home page  
+`/settings` - `<div>Main Tab</div>`  
+`/settings/main` - `<div>Main Tab</div>`  
+`/settings/account` - `<div>Account Tab</div>`  
+`/settings/notifications` - `<div>Notifications Tab</div>`  
+`/settings/foo` - NotFound Page  
+`/foo` - NotFound Page  
+
 ### Permissions
 
 ### Lazy Loading
