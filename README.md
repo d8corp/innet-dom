@@ -227,6 +227,7 @@ export default (
 [← back](#index)
 
 [props](#props) | 
+[children](#children) | 
 [return](#return)  
 [Async Components](#async-component) | 
 [Generic Async Component](#generic-async-component) | 
@@ -279,6 +280,30 @@ import { Content } from './Content'
 
 export default (
   <Content color='red' />
+)
+```
+
+### Children
+
+[← back](#components)
+
+Component props can contains `children` prop.
+
+Change `Content.tsx`
+```typescript jsx
+export function Content ({ children }) {
+  return <h1>{children}</h1>
+}
+```
+
+You can put `children` inside component body.
+
+Change `app.tsx`
+```typescript jsx
+import { Content } from './Content'
+
+export default (
+  <Content>Content</Content>
 )
 ```
 
