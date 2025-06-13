@@ -105,7 +105,7 @@ will fall into the `body` DOM-element.
 
 [← back](#index)
 
-If you want to put your content into another element (not `body`), use `Portal` component.
+If you want to put your content into another element (not `body`), use `Portal` [component](#components).
 
 For example, you can change `index.html` from `public` folder.
 ```html
