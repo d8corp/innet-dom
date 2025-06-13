@@ -5,7 +5,8 @@ import { Cache, State } from 'watch-state'
 import { paramsContext } from '../../hooks'
 import { type Component, type StateProp } from '../../types'
 import { isLazy, type LazyResult, use } from '../../utils'
-import { LazyPipe } from '../LazyPipe'
+import { Lazy } from '../Lazy'
+import { Pipe } from '../Pipe'
 import { findRoute } from './helpers/findRoute'
 import { type Routing } from './types'
 
@@ -40,13 +41,21 @@ export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
     return result
   })
 
+  const loadedComponents = new Map()
+
   return (
     <ContextProvider for={paramsContext} set={params}>
-      <LazyPipe
-        components={() => components.value}
-        fallbacks={() => route.value?.fallback ?? []}
-        loadedComponents={new Map()}
-      />
+      <Pipe>
+        {(children, deep) => (
+          <Lazy
+            component={new Cache(() => components.value[deep])}
+            fallback={new Cache(() => route.value?.fallback?.[deep])}
+            show={new Cache(() => components.value.length > deep)}
+            loadedComponents={loadedComponents}
+            render={(Component) => <Component children={children} />}
+          />
+        )}
+      </Pipe>
     </ContextProvider>
   )
 }
