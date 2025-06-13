@@ -486,7 +486,7 @@ function Content () {
 }
 ```
 
-## onDestroy
+#### onDestroy
 
 [← back](#life-cycle)
 
@@ -540,7 +540,7 @@ export default (
 )
 ```
 
-## onMounted
+#### onMounted
 
 [← back](#life-cycle)
 
