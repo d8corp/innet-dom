@@ -30,10 +30,6 @@ Based on [innet](https://www.npmjs.com/package/innet).
 [State Management](#state-management) |
 [style](#style)
 
-**[Life Cycle](#life-cycle)**  
-[onDestroy](#ondestroy) |
-[onMounted](#onmounted)
-
 **[Components](#components)**  
 [Portal](#portal) | 
 [ContextProvide](#contextprovide) | 
@@ -43,6 +39,10 @@ Based on [innet](https://www.npmjs.com/package/innet).
 [Router](#router) | 
 [Link](#link) | 
 [Delay](#delay)
+
+**[Life Cycle](#life-cycle)**  
+[onDestroy](#ondestroy) |
+[onMounted](#onmounted)
 
 **[Hooks](#hooks)**  
 [useRoute](#useroute) | 
