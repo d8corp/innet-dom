@@ -84,7 +84,7 @@ innet(app, dom)
 
 [← back](#index)
 
-You can use xml-like syntax to create and append elements into the DOM.
+You can use XML-like syntax to create and append elements into the DOM.
 More information about JSX [here](https://www.typescriptlang.org/docs/handbook/jsx.html).
 
 Create `app.tsx` in `src` folder.
@@ -412,7 +412,7 @@ function * Content () {
     </div>
   )
 
-  colsole.log(document.getElementById('test'))
+  console.log(document.getElementById('test'))
 }
 ```
 
@@ -605,7 +605,7 @@ function * Content () {
     </div>
   )
 
-  colsole.log(wrapper.value)
+  console.log(wrapper.value)
 }
 ```
 
