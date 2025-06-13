@@ -1234,27 +1234,21 @@ plus `rel="noopener noreferrer nofollow"` and `target="_blank"` are default for 
 If `href` starts from `/`, `?` or `#` then the Link will use [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
 
 ```typescript jsx
+import { Link, Router, createRouting } from '@innet/dom'
+
+const routing = createRouting([
+  { index: true, component: () => 'Home Page' },
+  { index: true, path: 'test', component: () => 'Test Page' },
+  { component: () => '404' },
+])
+
 export const Content = () => (
   <div>
-    <a href="/">home</a>
-    <a href="/test">test</a>
-    <a href="/home">unknown</a>
-    <a href="?modal=test">modal</a>
+    <Link href="/">home</Link>
+    <Link href="/test">test</Link>
+    <Link href="/home">unknown</Link>
     <div>
-      <router>
-        <slot name='/'>
-          Home Page
-        </slot>
-        <slot name='test'>
-          Test Page
-        </slot>
-        404
-      </router>
-      <router search='modal'>
-        <slot name='test'>
-          Test Modal
-        </slot>
-      </router>
+      <Router routing={routing} />
     </div>
   </div>
 )
@@ -1264,17 +1258,17 @@ export const Content = () => (
 By default, it pushes to history, but you may use `replace` to replace current history state.
 
 ```typescript jsx
-export const Content = () => (
-  <a replace href="/">
-    home
-  </a>
-)
+<Link replace href="/">
+  home
+</Link>
 ```
 
 ### class
 You can add root or active link class
 
 ```typescript jsx
+import { Link } from '@innet/dom'
+
 const classes = {
   root: 'link',
   active: 'active',
@@ -1282,16 +1276,12 @@ const classes = {
 
 export const Content = () => (
   <div>
-    <a
-      href="/"
-      class='only-root'>
+    <Link href='/' class='only-root'>
       home
-    </a>
-    <a
-      href="/test"
-      class={classes}>
+    </Link>
+    <Link href='/test' class={classes}>
       test
-    </a>
+    </Link>
   </div>
 )
 ```
@@ -1299,6 +1289,8 @@ export const Content = () => (
 You can use all features from [html-classes](https://www.npmjs.com/package/html-classes) for the `class` prop.
 
 ```typescript jsx
+import { Link } from '@innet/dom'
+
 const classes = {
   root: ['link1', 'link2', () => 'dynamic-class'],
   active: { active: true },
@@ -1306,16 +1298,12 @@ const classes = {
 
 export const Content = () => (
   <div>
-    <a
-      href="/"
-      class={() => 'dynamic-root'}>
+    <Link href='/' class={() => 'dynamic-root'}>
       home
-    </a>
-    <a
-      href="/test"
-      class={classes}>
+    </Link>
+    <Link href='/test' class={classes}>
       test
-    </a>
+    </Link>
   </div>
 )
 ```
@@ -1324,21 +1312,18 @@ export const Content = () => (
 By default, active class appends if URL starts with `href` prop value, but use `exact` to compare exactly.
 
 ```typescript jsx
+import { Link } from '@innet/dom'
+
 const classes = { root: 'link', active: 'active' }
 
 export const Content = () => (
   <div>
-    <a
-      href="/"
-      exact
-      classes={classes}>
+    <Link href='/' exact classes={classes}>
       home
-    </a>
-    <a
-      href="/test"
-      classes={classes}>
+    </Link>
+    <Link href="/test" classes={classes}>
       test
-    </a>
+    </Link>
   </div>
 )
 ```
@@ -1355,17 +1340,19 @@ The property of `scroll` says should we scroll on click and how.
 > by default equals `before`
 
 ```typescript jsx
+import { Link } from '@innet/dom'
+
 export const Content = () => (
   <div>
-    <a href="/" scroll='before'>
+    <Link href="/" scroll='before'>
       home
-    </a>
-    <a href="/test" scroll='after'>
+    </Link>
+    <Link href="/test" scroll='after'>
       test
-    </a>
-    <a href="?modal" scroll='none'>
+    </Link>
+    <Link href="?modal" scroll='none'>
       test
-    </a>
+    </Link>
   </div>
 )
 ```
@@ -1374,14 +1361,16 @@ export const Content = () => (
 If you want to scroll the page to custom position (by default it's up of the page) use `scrollTo`
 
 ```typescript jsx
+import { Link } from '@innet/dom'
+
 export const Content = () => (
   <div>
-    <a href="/" scrollTo={100}>
+    <Link href='/' scrollTo={100}>
       home
-    </a>
-    <a href="/test" scrollTo='#root'>
+    </Link>
+    <Link href='/test' scrollTo='#root'>
       test
-    </a>
+    </Link>
   </div>
 )
 ```
@@ -1395,14 +1384,16 @@ Use a string to scroll under an element relates to the CSS selector you provide 
 You can show and hide elements with delay.
 
 ```typescript jsx
+import { Delay } from '@innet/dom'
+
 export function Content () {
   return (
-    <delay show={1000}>
+    <Delay show={1000}>
       Works
-      <delay show={1000}>
+      <Delay show={1000}>
         fine!
-      </delay>
-    </delay>
+      </Delay>
+    </Delay>
   )
 }
 ```
@@ -1423,6 +1414,7 @@ export function Content () {
 
 And change `app.tsx`
 ```typescript jsx
+import { Delay } from '@innet/dom'
 import { State } from 'watch-state'
 
 const show = new State(true)
@@ -1432,13 +1424,12 @@ const handleClick = () => {
 }
 
 export default () => show.value && (
-  <delay hide={1000}>
+  <Delay hide={1000}>
     <Content />
-    <button
-      onclick={handleClick}>
+    <button onclick={handleClick}>
       Hide
     </button>
-  </delay>
+  </Delay>
 )
 ```
 
@@ -1447,13 +1438,15 @@ You can use `ref` to get the hidden state.
 
 Change `Content.tsx`
 ```typescript jsx
+import { Delay } from '@innet/dom'
+
 export function Content () {
   const hidden = new Ref()
 
   return (
-    <delay ref={hidden} hide={1000}>
+    <Delay ref={hidden} hide={1000}>
       {() => hidden.value.value ? 'hidden' : 'shown'}
-    </delay>
+    </Delay>
   )
 }
 ```
@@ -1471,8 +1464,7 @@ const handleClick = () => {
 export default () => show.value && (
   <>
     <Content />
-    <button
-      onclick={handleClick}>
+    <button onclick={handleClick}>
       Hide
     </button>
   </>
