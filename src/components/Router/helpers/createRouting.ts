@@ -1,8 +1,10 @@
-import { type Route, type RouteComponent, type RouteLazyComponent, type Routing } from '../types'
+import { type Component } from '../../../types'
+import { type LazyComponent, type LazyComponentFn } from '../../Lazy'
+import { type Route, type Routing } from '../types'
 import { normalizeRoutes } from './normalizeRoutes'
 
-const once = (fn: RouteLazyComponent): RouteLazyComponent => {
-  let result: Promise<{ default: RouteComponent } | RouteComponent>
+const once = (fn: LazyComponentFn): LazyComponentFn => {
+  let result: LazyComponent
 
   return () => {
     if (!result) {
@@ -16,7 +18,7 @@ const once = (fn: RouteLazyComponent): RouteLazyComponent => {
 export function createRouting (
   routes: Route[],
   routing: Routing = {},
-  parentComponents: Array<RouteComponent | RouteLazyComponent> = [],
+  parentComponents: Array<Component | LazyComponentFn> = [],
   parentParams: string[] = [],
   parentLazy: boolean[] = [],
   parentFallbacks: JSX.Element[] = [],

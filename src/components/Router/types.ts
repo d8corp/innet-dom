@@ -1,18 +1,15 @@
-import { type ChildrenProps } from '../../types'
-
-export type RouteComponent = (props: ChildrenProps) => JSX.Element
-export type RouteLazyComponentResult = Promise<{ default: RouteComponent } | RouteComponent>
-export type RouteLazyComponent = () => RouteLazyComponentResult
+import { type Component } from '../../types'
+import { type LazyComponentFn } from '../Lazy'
 
 interface BaseNoLazyComponentRoute {
-  component: RouteComponent
+  component: Component
   permissions?: string[]
   lazy?: false
   fallback?: never
 }
 
 interface BaseLazyComponentRoute {
-  component: RouteLazyComponent
+  component: LazyComponentFn
   permissions?: string[]
   lazy: true
   fallback?: JSX.Element
@@ -45,7 +42,7 @@ type NoIndexRoute = BaseRoute & {
 export type Route = IndexRoute | NoIndexRoute
 
 export interface RoutingRoute {
-  components: Array<RouteComponent | RouteLazyComponent>
+  components: Array<Component | LazyComponentFn>
   lazy: boolean[]
   fallback: JSX.Element[]
   params: string[]

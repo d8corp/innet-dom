@@ -3,11 +3,12 @@ import { locationPath } from '@watch-state/history-api'
 import { Cache, State } from 'watch-state'
 
 import { paramsContext } from '../../hooks'
-import type { StateProp } from '../../types'
+import { type Component, type StateProp } from '../../types'
 import { use } from '../../utils'
+import { type LazyComponent, type LazyComponentFn } from '../Lazy'
+import { LazyPipe } from '../LazyPipe'
 import { findRoute } from './helpers/findRoute'
-import { IndexRouter } from './IndexRouter'
-import { type RouteComponent, type RouteLazyComponent, type RouteLazyComponentResult, type Routing } from './types'
+import { type Routing } from './types'
 
 export interface RouterProps {
   routing: StateProp<Routing>
@@ -30,10 +31,10 @@ export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
     const routeValue = route.value
     if (!routeValue) return []
 
-    const result: Array<RouteComponent | RouteLazyComponentResult> = []
+    const result: Array<Component | LazyComponent> = []
 
     for (let i = 0; i < routeValue.components.length; i++) {
-      result.push(routeValue.lazy[i] ? (routeValue.components[i] as RouteLazyComponent)() : routeValue.components[i] as RouteComponent)
+      result.push(routeValue.lazy[i] ? (routeValue.components[i] as LazyComponentFn)() : routeValue.components[i] as Component)
     }
 
     return result
@@ -41,8 +42,7 @@ export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
 
   return (
     <ContextProvider for={paramsContext} set={params}>
-      <IndexRouter
-        index={0}
+      <LazyPipe
         components={() => components.value}
         fallbacks={() => route.value?.fallback ?? []}
         lazy={() => route.value?.lazy ?? []}

@@ -31,7 +31,7 @@ describe('Router', () => {
       await historyPush('/')
 
       const routing = createRouting([
-        { index: true, component: Home },
+        { index: true, component: () => Home },
       ])
 
       const result = render(<Router routing={routing} />)
