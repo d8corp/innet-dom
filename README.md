@@ -780,7 +780,18 @@ export default (
 
 [← back](#index)
 
+[Layout](#layout) | 
+[Lazy Loading](#lazy-loading) | 
+[Permissions](#permissions) | 
+[List of Segments](#list-of-segments) | 
+[Optional Segment](#optional-segment) | 
+[Params](#params) | 
+
 You can render content by url.
+
+Use `component` to define a route component.
+Use `path` to define segments of URL path.
+Use `index` to define a route as end of segments.
 
 ```typescript jsx
 import { Router, createRouting } from '@innet/dom'
@@ -790,7 +801,11 @@ const routing = createRouting([
   {
     index: true,
     path: 'settings',
-    component: () => 'Settings page',
+    component: () => 'Settings Index',
+  },
+  {
+    path: 'settings',
+    component: () => 'Settings Rest',
   },
   { component: () => 'Not Found' }
 ])
@@ -803,9 +818,103 @@ export const Content = () => (
 You can see
 
 `/` - Home page  
-`/settings` - Settings page  
-`/settings/test` - Not Found  
-`/any-other` - Not Found
+`/settings` - Settings Index  
+`/settings/foo` - Settings Rest
+`/foo` - Not Found
+
+You can split path segments by `/`
+
+```typescript jsx
+import { Router, createRouting } from '@innet/dom'
+
+const routing = createRouting([
+  { index: true, component: () => 'Home page' },
+  {
+    index: true,
+    path: 'settings',
+    component: () => 'Settings Index',
+  },
+  {
+    index: true,
+    path: 'settings/account',
+    component: () => 'Account Settings',
+  },
+  {
+    index: true,
+    path: 'settings/notifications',
+    component: () => 'Notification Settings',
+  },
+  { component: () => 'Not Found' }
+])
+
+export const Content = () => (
+  <Router routing={routing} />
+)
+```
+
+You can see
+
+`/` - Home page  
+`/settings` - Settings Index  
+`/settings/account` - Account Settings
+`/settings/notifications` - Notification Settings
+`/settings/foo` - Not Found
+`/foo` - Not Found
+
+### Layout
+
+You can use `children` to group routes. You can use `component` field on a group to add a layout for children pages.
+
+```typescript jsx
+import { Router, createRouting, ChildrenProps } from '@innet/dom'
+
+const Home = () => 'Home Page'
+const About = () => 'About Page'
+const Settings = () => 'Settings Page'
+const NotFound = () => 'NotFound Page'
+
+const MainLayout = (props: ChildrenProps) => <article>{props.children}</article>
+const SecondLayout = (props: ChildrenProps) => <div>{props.children}</div>
+
+const routing = createRouting([
+  {
+    component: MainLayout,
+    children: [
+      { index: true, component: Home },
+      { index: true, path: 'about', component: About },
+      { component: NotFound },
+    ],
+  },
+  {
+    component: SecondLayout,
+    children: [
+      { index: true, path: 'settings', component: Settings },
+    ],
+  },
+])
+
+export const Content = () => (
+  <Router routing={routing} />
+)
+```
+
+You can see
+
+`/` - `<article>Home Page</article>`  
+`/about` - `<article>About Page</article>`  
+`/settings` - `<div>Settings Page</div>`
+`/settings/foo` - `<article>NotFound Page</article>`
+`/foo` - `<article>NotFound Page</article>`
+
+### Lazy Loading
+
+### Permissions
+
+### Optional Segment
+
+### List of Segments
+
+### Params
 
 ## useParam
 
