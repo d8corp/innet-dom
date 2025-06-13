@@ -1226,9 +1226,9 @@ export const Content = () => (
 
 [← back](#index)
 
-The tag `a` has a couple of features.
-
-> `rel="noopener noreferrer nofollow"` and `target="_blank"` are default for external links.
+Use `Link` component to add a link.
+It works like HTML tag of `a` but it user [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) for internal links
+plus `rel="noopener noreferrer nofollow"` and `target="_blank"` are default for external links.
 
 ### href
 If `href` starts from `/`, `?` or `#` then the Link will use [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
