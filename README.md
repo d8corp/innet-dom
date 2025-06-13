@@ -863,6 +863,8 @@ You can see
 
 ### Layout
 
+[← back](#router)
+
 You can use `children` to group routes. You can use `component` field on a group to add a layout for children pages.
 
 ```typescript jsx
@@ -908,6 +910,8 @@ You can see
 
 ### List of Segments
 
+[← back](#router)
+
 You can split available segments by `|`.
 
 ```typescript jsx
@@ -934,6 +938,8 @@ export const Content = () => (
 `/baz` - NotFound Page
 
 ### Optional Segment
+
+[← back](#router)
 
 You can use `?` at the end of a segment to make the segment optional.
 
@@ -972,9 +978,15 @@ export const Content = () => (
 
 ### Permissions
 
+[← back](#router)
+
 ### Lazy Loading
 
+[← back](#router)
+
 ### Params
+
+[← back](#router)
 
 ## useParam
 
