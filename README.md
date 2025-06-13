@@ -788,7 +788,7 @@ export default (
 [Lazy Loading](#lazy-loading) | 
 [Params](#params)
 
-Hooks  
+**Hooks**  
 [useParam](#useparam) | 
 [useParams](#useparams)
 
