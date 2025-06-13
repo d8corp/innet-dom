@@ -15,8 +15,6 @@
 ## Abstract
 This is an `innet` tool, that helps to create frontend-side application.
 
-Here you can find JSX components, state-management, portals, context, routing and more.
-
 Based on [innet](https://www.npmjs.com/package/innet).
 
 [![stars](https://img.shields.io/github/stars/d8corp/innet-dom?style=social)](https://github.com/d8corp/innet-dom/stargazers)
@@ -107,7 +105,7 @@ will fall into the `body` DOM-element.
 
 If you want to put your content into another element (not `body`), use `Portal` [component](#components).
 
-For example, you can change `index.html` from `public` folder.
+For example, you can change `index.html` in `public` folder.
 ```html
 <!doctype html>
 <html lang="en">
@@ -985,13 +983,131 @@ export const Content = () => (
 
 [← back](#router)
 
+```typescript jsx
+import { Router, createRouting } from '@innet/dom'
+import { State } from 'watch-state'
+
+const Home = () => 'Home Page'
+const Settings = () => 'Settings Page'
+const NotFound = () => 'NotFound Page'
+
+const permissions = new State(new Set<string>())
+
+const routing = createRouting([
+  { index: true, component: Home },
+  {
+    path: 'settings',
+    permissions: ['postlogin'],
+    component: Settings,
+  },
+  { component: NotFound },
+])
+
+export const Content = () => (
+  <Router routing={routing} permissions={permissions} />
+)
+```
+
+`/` - Home page  
+`/settings` - NotFound Page  
+`/foo` - NotFound Page
+
+Set permissions
+
+```typescript jsx
+permissions.value.add('postlogin')
+permissions.update()
+```
+
+`/` - Home page  
+`/settings` - Settings Page  
+`/foo` - NotFound Page
+
 ### Lazy Loading
 
 [← back](#router)
 
+You can use `lazy` to load pages and layouts asynchronously.
+It helps to make code-splitting by pages and layouts.
+
+You can use `fallback` field to render a glimmer while pages or layouts are loading.
+You can use `childrenFallback` field to set `fallback` for children elements.
+
+```typescript jsx
+import { Router, createRouting, lazy } from '@innet/dom'
+
+const routing = createRouting([
+  {
+    childrenFallback: 'Loading...',
+    children: [
+      {
+        index: true,
+        component: lazy(() => import('./Home')),
+        fallback: 'Home Loading...',
+      },
+      {
+        path: 'settings',
+        component: lazy(() => import('./Settings')),
+      },
+      { component: lazy(() => import('./NotFound')) },
+    ],
+  }
+])
+
+export const Content = () => (
+  <Router routing={routing} />
+)
+```
+
 ### Params
 
 [← back](#router)
+
+You can use `:` at start of a path segment to set the segment value into a param.
+
+```typescript jsx
+import { Router, createRouting, useParam } from '@innet/dom'
+
+const Home = () => 'Home Page'
+const Products = () => 'Products Page'
+const NotFound = () => 'NotFound Page'
+
+const Product = () => {
+  const productId = useParam('productId')
+
+  return <>Product: {productId}</>
+}
+
+const routing = createRouting([
+  {
+    index: true,
+    component: Home,
+  },
+  {
+    path: 'products',
+    children: [
+      {
+        index: true,
+        component: Products,
+      },
+      {
+        path: ':productId',
+        component: Product,
+      },
+    ],
+  },
+  { component: NotFound },
+])
+
+export const Content = () => (
+  <Router routing={routing} />
+)
+```
+
+`/` - Home page  
+`/products` - Products Page  
+`/products/123` - Product: 123  
+`/foo` - NotFound Page
 
 ### useParam
 
@@ -1000,22 +1116,22 @@ export const Content = () => (
 You can get a route param by `useParam`.
 
 ```typescript jsx
-import { Router, createRouting, ChildrenProps, useParam } from '@innet/dom'
+import { Router, createRouting, useParam } from '@innet/dom'
 
-const UserPage = (props: ChildrenProps) => {
+const UserPage = () => {
   const userId = useParam('userId')
   
   return <div>{userId}</div>
 }
 
 const routing = createRouting([
-  {index: true, component: () => 'Home page'},
+  { index: true, component: () => 'Home page' },
   {
     index: true,
     path: 'user/:userId',
     component: UserPage,
   },
-  {component: () => 'Not Found'}
+  { component: () => 'Not Found' }
 ])
 
 export const Content = () => (
@@ -1026,6 +1142,51 @@ export const Content = () => (
 `/` - Home page  
 `/user/123` - `<div>123</div>`   
 `/user` - Not Found
+
+You can use square brackets and `|` to set available values of a param.
+You can use `?` to set optional param.
+
+```typescript jsx
+import { Router, createRouting, useParam } from '@innet/dom'
+
+const Home = () => {
+  const lang = useParam('lang')
+  
+  return <>Home: {lang}</>
+}
+
+const About = () => {
+  const lang = useParam('lang')
+  
+  return <>About: {lang}</>
+}
+
+const NotFound = () => 'NotFound Page'
+
+const routing = createRouting([
+  {
+    path: ':lang[en|ru]?',
+    children: [
+      { index: true, component: Home },
+      { index: true, path: 'about', component: About },
+    ]
+  },
+  { component: NotFound },
+])
+
+export const Content = () => (
+  <Router routing={routing} />
+)
+```
+
+`/` - Home:  
+`/en` - Home: en  
+`/ru` - Home: ru  
+`/about` - About:  
+`/en/about` - About: en  
+`/ru/about` - About: ru  
+`/de/about` - Not Found  
+`/de` - Not Found
 
 ### useParams
 
@@ -1060,7 +1221,6 @@ export const Content = () => (
 `/` - Home page  
 `/user/123` - `<div>123</div>`   
 `/user` - Not Found
-
 
 ## Link
 

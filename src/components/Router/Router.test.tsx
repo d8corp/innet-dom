@@ -481,22 +481,46 @@ describe('Router', () => {
     it('should work with strict params', async () => {
       await historyPush('/')
 
+      const Home = () => {
+        const lang = useParam('lang')
+
+        return <>Home: {lang}</>
+      }
+
       const routing = createRouting([
-        { index: true, path: ':lang[en|ru]?', component: Home },
+        {
+          path: ':lang[en|ru]?',
+          children: [
+            { index: true, component: Home },
+            { index: true, path: 'about', component: About },
+          ],
+        },
         { component: NotFound },
       ])
 
       const result = render(<Router routing={routing} />)
 
-      expect(getHTML(result)).toBe('Home')
+      expect(getHTML(result)).toBe('Home: ')
 
       await historyPush('/en')
 
-      expect(getHTML(result)).toBe('Home')
+      expect(getHTML(result)).toBe('Home: en')
 
       await historyPush('/ru')
 
-      expect(getHTML(result)).toBe('Home')
+      expect(getHTML(result)).toBe('Home: ru')
+
+      await historyPush('/about')
+
+      expect(getHTML(result)).toBe('About')
+
+      await historyPush('/en/about')
+
+      expect(getHTML(result)).toBe('About')
+
+      await historyPush('/ru/about')
+
+      expect(getHTML(result)).toBe('About')
 
       await historyPush('/foo')
 
