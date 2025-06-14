@@ -12,10 +12,21 @@
 [![changelog](https://img.shields.io/badge/Changelog-⋮-brightgreen)](https://changelogs.xyz/@innet/dom)
 [![license](https://img.shields.io/npm/l/@innet/dom)](https://github.com/d8corp/innet-dom/blob/main/LICENSE)
 
-## Abstract
-This is an `innet` tool for building frontend applications.
+## Overview
+`@innet/dom` is a lightweight and reactive frontend framework built on top of [innet](https://www.npmjs.com/package/innet). It provides a simple, JSX-based API for building highly performant web applications with fine-grained reactivity and minimal boilerplate.
 
-Based on [innet](https://www.npmjs.com/package/innet).
+### Why Use `@innet/dom`?
+`@innet/dom` offers a declarative and reactive approach to UI development without the overhead of virtual DOM diffing. It enables developers to write simple, composable components with direct DOM manipulation, resulting in faster rendering and smaller bundle sizes compared to traditional frameworks.
+
+Key features include:
+- JSX support with full TypeScript integration
+- Fine-grained reactivity powered by [watch-state](https://github.com/d8corp/watch-state)
+- Built-in routing with flexible route definitions and permissions
+- Support for async components and code splitting
+- Lifecycle hooks for mounting and cleanup
+- Context API for dependency injection and state sharing
+- Utility components like Portal, Show, Hide, and Delay for common UI patterns
+- Seamless integration with CSS Modules and styling utilities
 
 [![stars](https://img.shields.io/github/stars/d8corp/innet-dom?style=social)](https://github.com/d8corp/innet-dom/stargazers)
 [![watchers](https://img.shields.io/github/watchers/d8corp/innet-dom?style=social)](https://github.com/d8corp/innet-dom/watchers)
@@ -30,7 +41,7 @@ Based on [innet](https://www.npmjs.com/package/innet).
 
 **[Components](#components)**  
 [Portal](#portal) | 
-[ContextProvide](#contextprovide) | 
+[ContextProvider](#contextprovider) | 
 [Show](#show) | 
 [Hide](#hide) | 
 [For](#for) | 
@@ -55,22 +66,22 @@ Based on [innet](https://www.npmjs.com/package/innet).
 
 [← back](#index)
 
-Use [innetjs](https://www.npmjs.com/package/innetjs) to start `innet-dom` app development.
+To start developing an `innet-dom` application, use [innetjs](https://www.npmjs.com/package/innetjs):
 
 ```shell
 npx innetjs init my-app -t fe
 ```
 *Replace my-app with your working folder name*
 
-Go into `my-app` and check `README.md`
+Go into the `my-app` directory and check `README.md`
 
 ## Handler
 
 [← back](#index)
 
-Use the `dom` handler to start the application.
+Use the `dom` handler to run the application.
 
-Clear `src` folder and create `index.ts` inside.
+Clear the `src` folder and create `index.ts` inside.
 ```typescript
 import innet from 'innet'
 import dom from '@innet/dom'
@@ -84,8 +95,8 @@ innet(app, dom)
 
 [← back](#index)
 
-You can use XML-like syntax to create and append elements into the DOM.
-More information about JSX [here](https://www.typescriptlang.org/docs/handbook/jsx.html).
+You can use XML-like syntax (JSX) to create and insert elements into the DOM.
+Learn more about JSX [here](https://www.typescriptlang.org/docs/handbook/jsx.html).
 
 Create `app.tsx` in `src` folder.
 ```typescript jsx
@@ -102,7 +113,7 @@ Everything you provide as the first argument to the `innet` function (with the `
 
 [← back](#index)
 
-If you want to render your content into an element other than `body`, use the `Portal` [component](#components).
+If you want to render content into an element other than `body`, use the `Portal` [component](#components).
 
 For example, you can modify `index.html` in `public` folder.
 ```html
@@ -153,7 +164,7 @@ export default (
 )
 ```
 
-`myElement` should contain `This is content of myElement` and `app` should contain the next code.
+`myElement` should contain `This is content of myElement` and `app` should contain the following code.
 ```html
 <h1>
   Hello World!
@@ -164,11 +175,11 @@ export default (
 
 [← back](#index)
 
-With `innet`, you can completely avoid the traditional component approach while still having state management available.
+With `innet`, you can avoid the traditional component-based approach while still having access to state management.
 
-State management is based on [watch-state](https://github.com/d8corp/watch-state)
+State management is powered by [watch-state](https://github.com/d8corp/watch-state)
 
-To bind state to content, use `State`, `Cache` or a function as the content.
+To bind state to content, use `State`, `Cache`, or a function as the content.
 
 Turn back `index.html` and modify `app.tsx`
 ```typescript jsx
@@ -293,7 +304,7 @@ export function Content ({ children }) {
 }
 ```
 
-You can put `children` inside component body.
+You can pass `children` as content inside the component.
 
 Modify `app.tsx`
 ```typescript jsx
@@ -631,11 +642,11 @@ export function Content () {
 }
 ```
 
-## ContextProvide
+## ContextProvider
 
 [← back](#index)
 
-Use `ContextProvide` to provide context value into children.
+Use `ContextProvider` to provide context value into children.
 
 Modify `app.tsx`
 ```typescript jsx
@@ -789,11 +800,11 @@ export default (
 [useParam](#useparam) | 
 [useParams](#useparams)
 
-You can render content based on the URL.
+You can render content based on the current URL.
 
-Use `component` to define the route's component.
-Use `path` to define segments of URL path.
-Use `index` to define a route as end of segments.
+Use `component` to specify the component for a route.
+Use `path` to define URL path segments.
+Use `index` to mark a route as the endpoint for a given path.
 
 ```typescript jsx
 import { Router, createRouting } from '@innet/dom'
@@ -817,7 +828,7 @@ export const Content = () => (
 )
 ```
 
-You can see
+The following routes will be available:
 
 `/` - Home page  
 `/settings` - Settings Index  
@@ -854,7 +865,7 @@ export const Content = () => (
 )
 ```
 
-You can see
+The following routes will be available:
 
 `/` - Home page  
 `/settings` - Settings Index  
@@ -902,7 +913,7 @@ export const Content = () => (
 )
 ```
 
-You can see
+The following routes will be available:
 
 `/` - `<article>Home Page</article>`  
 `/about` - `<article>About Page</article>`  
@@ -1224,9 +1235,9 @@ export const Content = () => (
 
 [← back](#index)
 
-Use `Link` component to add a link.
-It works like HTML tag of `a` but it user [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) for internal links
-plus `rel="noopener noreferrer nofollow"` and `target="_blank"` are default for external links.
+Use the `Link` component to create links.
+It behaves like an HTML `<a>` tag but uses the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) for internal navigation.
+For external links, it automatically adds `rel="noopener noreferrer nofollow"` and `target="_blank"` attributes.
 
 ### href
 If `href` starts from `/`, `?` or `#` then the Link will use [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
@@ -1379,7 +1390,7 @@ Use a string to scroll under an element relates to the CSS selector you provide 
 
 [← back](#index)
 
-You can show and hide elements with a delay.
+You can show or hide elements with a delay.
 
 ```typescript jsx
 import { Delay } from '@innet/dom'
