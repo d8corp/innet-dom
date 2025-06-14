@@ -9,6 +9,8 @@
 
 [![NPM](https://img.shields.io/npm/v/@innet/dom.svg)](https://www.npmjs.com/package/@innet/dom)
 [![downloads](https://img.shields.io/npm/dm/@innet/dom.svg)](https://www.npmtrends.com/@innet/dom)
+[![license](https://img.shields.io/github/actions/workflow/status/d8corp/innet-dom/node.js.yml?branch=v1&label=tests
+)](https://github.com/d8corp/innet-dom/actions/workflows/node.js.yml)
 [![changelog](https://img.shields.io/badge/Changelog-⋮-brightgreen)](https://changelogs.xyz/@innet/dom)
 [![license](https://img.shields.io/npm/l/@innet/dom)](https://github.com/d8corp/innet-dom/blob/main/LICENSE)
 
