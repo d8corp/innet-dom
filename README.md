@@ -113,7 +113,7 @@ Everything you provide as the first argument to the `innet` function (with the `
 
 ## Portal
 
-[← back](#index)
+[index](#index) / [components](#components)
 
 If you want to render content into an element other than `body`, use the `Portal` [component](#components).
 
@@ -235,15 +235,32 @@ export default (
 
 ## Components
 
-[← back](#index)
+[Index](#index) / Components
 
+---
+[Life Cycle](#life-cycle)
+
+**Component params**  
 [props](#props) | 
 [children](#children) | 
-[return](#return)  
+[return](#return)
+
+**Component types**  
 [Async Components](#async-component) | 
 [Generic Async Component](#generic-async-component) | 
 [Generic Component](#generic-component)  
-[Life Cycle](#life-cycle)  
+
+**Default Components**  
+[Portal](#portal) |
+[ContextProvider](#contextprovider) |
+[Show](#show) |
+[Hide](#hide) |
+[For](#for) |
+[Router](#router) |
+[Link](#link) |
+[Delay](#delay)
+
+---
 
 A component is a function. You can use it as a JSX element.
 
@@ -789,7 +806,7 @@ export default (
 
 ## Router
 
-[← back](#index)
+[← back](#components)
 
 [Layout](#layout) | 
 [List of Segments](#list-of-segments) | 
@@ -1235,7 +1252,7 @@ export const Content = () => (
 
 ## Link
 
-[← back](#index)
+[← back](#components)
 
 [href](#href) |
 [replace](#replace) |
@@ -1249,6 +1266,9 @@ It behaves like an HTML `<a>` tag but uses the [History API](https://developer.m
 For external links, it automatically adds `rel="noopener noreferrer nofollow"` and `target="_blank"` attributes.
 
 ### href
+
+[← back](#link)
+
 If `href` starts from `/`, `?` or `#` then the Link will use [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
 
 ```typescript jsx
