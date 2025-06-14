@@ -35,33 +35,33 @@ Key features include:
 
 ## Index
 
-[Install](#install) | 
-[Handler](#handler) | 
-[JSX](#jsx) | 
-[State Management](#state-management) |
+[Install](#install) • 
+[Handler](#handler) • 
+[JSX](#jsx) • 
+[State Management](#state-management) •
 [style](#style)
 
 **[Components](#components)**  
-[Portal](#portal) | 
-[ContextProvider](#contextprovider) | 
-[Show](#show) | 
-[Hide](#hide) | 
-[For](#for) | 
-[Router](#router) | 
-[Link](#link) | 
+[Portal](#portal) • 
+[ContextProvider](#contextprovider) • 
+[Show](#show) • 
+[Hide](#hide) • 
+[For](#for) • 
+[Router](#router) • 
+[Link](#link) • 
 [Delay](#delay)
 
 **[Life Cycle](#life-cycle)**  
-[onDestroy](#ondestroy) |
+[onDestroy](#ondestroy) •
 [onMounted](#onmounted)
 
 **[Hooks](#hooks)**  
-[useParam](#useparam) | 
-[useParams](#useparams) | 
+[useParam](#useparam) • 
+[useParams](#useparams) • 
 [useParent](#useparent)
 
 **Utils**  
-[Ref](#ref) | 
+[Ref](#ref) • 
 [Context](#context)
 
 ## Install
@@ -234,21 +234,21 @@ export default (
 ###### [Life Cycle](#life-cycle)
 
 **Component params**  
-[props](#props) | [children](#children) | [return](#return)
+[props](#props) • [children](#children) • [return](#return)
 
 **Component types**  
-[Async Components](#async-component) | 
-[Generic Async Component](#generic-async-component) | 
+[Async Components](#async-component) • 
+[Generic Async Component](#generic-async-component) • 
 [Generic Component](#generic-component)  
 
 **Default Components**  
-[Portal](#portal) |
-[ContextProvider](#contextprovider) |
-[Show](#show) |
-[Hide](#hide) |
-[For](#for) |
-[Router](#router) |
-[Link](#link) |
+[Portal](#portal) •
+[ContextProvider](#contextprovider) •
+[Show](#show) •
+[Hide](#hide) •
+[For](#for) •
+[Router](#router) •
+[Link](#link) •
 [Delay](#delay)
 
 ---
@@ -492,7 +492,7 @@ queueMicrotask B <span id="a"></span> <span id="b"></span>
 ### Life Cycle
 ###### [🏠︎](#index) / [Components](#components) / Life Cycle
 
-[onDestroy](#ondestroy) | 
+[onDestroy](#ondestroy) • 
 [onMounted](#onmounted)
 
 Each component renders only once.
@@ -1220,11 +1220,11 @@ export const Content = () => (
 ## Link
 ###### [🏠︎](#index) / [Components](#components) / Link
 
-[href](#href) |
-[replace](#replace) |
-[class](#class) |
-[exact](#exact) |
-[scroll](#scroll) |
+[href](#href) •
+[replace](#replace) •
+[class](#class) •
+[exact](#exact) •
+[scroll](#scroll) •
 [scrollTo](#scrollTo)
 
 Use the `Link` component to create links.
