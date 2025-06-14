@@ -35,34 +35,19 @@ Key features include:
 
 ## Index
 
-[Install](#install) • 
-[Handler](#handler) • 
-[JSX](#jsx) • 
-[State Management](#state-management) •
-[style](#style)
+<sup>[Install](#install) • [Handler](#handler) • [JSX](#jsx) • [State Management](#state-management) • [style](#style)</sup>
 
-**[Components](#components)**  
-[Portal](#portal) • 
-[ContextProvider](#contextprovider) • 
-[Show](#show) • 
-[Hide](#hide) • 
-[For](#for) • 
-[Router](#router) • 
-[Link](#link) • 
-[Delay](#delay)
+<sup>**[Components](#components)**</sup>  
+<sup>[Portal](#portal) • [ContextProvider](#contextprovider) • [Show](#show) • [Hide](#hide) • [For](#for) • [Router](#router) • [Link](#link) • [Delay](#delay)</sup>
 
-**[Life Cycle](#life-cycle)**  
-[onDestroy](#ondestroy) •
-[onMounted](#onmounted)
+<sup>**[Life Cycle](#life-cycle)**</sup>  
+<sup>[onDestroy](#ondestroy) • [onMounted](#onmounted)</sup>
 
-**[Hooks](#hooks)**  
-[useParam](#useparam) • 
-[useParams](#useparams) • 
-[useParent](#useparent)
+<sup>**[Hooks](#hooks)**</sup>  
+<sup>[useParam](#useparam) • [useParams](#useparams) • [useParent](#useparent)</sup>
 
-**Utils**  
-[Ref](#ref) • 
-[Context](#context)
+<sup>**Utils**</sup>  
+<sup>[Ref](#ref) • [Context](#context)</sup>
 
 ## Install
 ###### [🏠︎](#index) / Install
@@ -231,27 +216,16 @@ export default (
 ## Components
 
 ###### [🏠︎](#index) / Components
-###### [Life Cycle](#life-cycle)
+<sup>[Life Cycle](#life-cycle)</sup>
 
-**Component params**  
-[props](#props) • [children](#children) • [return](#return)
+<sup> **Component params**</sup>  
+<sup>[props](#props) • [children](#children) • [return](#return)</sup>
 
-**Component types**  
-[Async Components](#async-component) • 
-[Generic Async Component](#generic-async-component) • 
-[Generic Component](#generic-component)  
-
-**Default Components**  
-[Portal](#portal) •
-[ContextProvider](#contextprovider) •
-[Show](#show) •
-[Hide](#hide) •
-[For](#for) •
-[Router](#router) •
-[Link](#link) •
-[Delay](#delay)
-
----
+<sup>**Component types**</sup>   
+<sup>[Async Components](#async-component) • [Generic Async Component](#generic-async-component) • [Generic Component](#generic-component)</sup>   
+ 
+<sup>**Default Components**</sup>   
+<sup>[Portal](#portal) • [ContextProvider](#contextprovider) • [Show](#show) • [Hide](#hide) • [For](#for) • [Router](#router) • [Link](#link) • [Delay](#delay)</sup> 
 
 A component is a function. You can use it as a JSX element.
 
