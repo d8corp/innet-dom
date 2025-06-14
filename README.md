@@ -499,8 +499,7 @@ queueMicrotask B <span id="a"></span> <span id="b"></span>
 ```
 
 ### Life Cycle
-
-[← back](#components)
+###### [🏠︎](#index) / [Components](#components) / Life Cycle
 
 [onDestroy](#ondestroy) | 
 [onMounted](#onmounted)
@@ -534,8 +533,7 @@ function Content () {
 ```
 
 #### onDestroy
-
-[← back](#life-cycle)
+###### [🏠︎](#index) / [Components](#components) / [Life Cycle](#life-cycle) / onDestroy
 
 You can subscribe on destroy of a component by `onDestroy` from `watch-state`
 
@@ -588,8 +586,7 @@ export default (
 ```
 
 #### onMounted
-
-[← back](#life-cycle)
+###### [🏠︎](#index) / [Components](#components) / [Life Cycle](#life-cycle) / onMounted
 
 You can use `onMounted` to do something after end of rendering.
 
@@ -612,8 +609,7 @@ export function Content() {
 ```
 
 ## Ref
-
-[← back](#index)
+###### [🏠︎](#index) / Ref
 
 `Ref` helps to get an HTML element.
 ```typescript jsx
@@ -633,8 +629,7 @@ function * Content () {
 ```
 
 ## Context
-
-[← back](#index)
+###### [🏠︎](#index) / Context
 
 You can pass a value from a parent element through any children to the place you need.
 
@@ -656,8 +651,7 @@ export function Content () {
 ```
 
 ## ContextProvider
-
-[← back](#index)
+###### [🏠︎](#index) / [Components](#components) / ContextProvider
 
 Use `ContextProvider` to provide context value into children.
 
@@ -681,8 +675,7 @@ export default (
 ```
 
 ## Show
-
-[← back](#index)
+###### [🏠︎](#index) / [Components](#components) / Show
 
 You can use `Show` component to show/hide content by state.
 
@@ -707,8 +700,7 @@ export default (
 > `when` can be: `State` | `Cache` | `() => any` | `any`
 
 ## Hide
-
-[← back](#index)
+###### [🏠︎](#index) / [Components](#components) / Hide
 
 You can use `Hide` component to show/hide content by state.
 
@@ -733,8 +725,7 @@ export default (
 > `when` can be: `State` | `Cache` | `() => any` | `any`
 
 ## For
-
-[← back](#index)
+###### [🏠︎](#index) / [Components](#components) / For
 
 You can use `map` method of an array to put view on data.
 ```typescript jsx
@@ -799,8 +790,7 @@ export default (
 ```
 
 ## Router
-
-[← back](#components)
+###### [🏠︎](#index) / [Components](#components) / Router
 
 [Layout](#layout) | 
 [List of Segments](#list-of-segments) | 
@@ -888,8 +878,7 @@ The following routes will be available:
 `/foo` - Not Found
 
 ### Layout
-
-[← back](#router)
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / Layout
 
 You can group routes using `children`. The `component` field on a group defines a layout for its child pages.
 
@@ -935,8 +924,7 @@ The following routes will be available:
 `/foo` - `<article>NotFound Page</article>`
 
 ### List of Segments
-
-[← back](#router)
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / List of Segments
 
 You can separate available segments with `|`.
 
@@ -964,8 +952,7 @@ export const Content = () => (
 `/baz` - NotFound Page
 
 ### Optional Segment
-
-[← back](#router)
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / Optional Segment
 
 You can add `?` at the end of a segment to make it optional.
 
@@ -1003,8 +990,7 @@ export const Content = () => (
 `/foo` - NotFound Page  
 
 ### Permissions
-
-[← back](#router)
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / Permissions
 
 ```typescript jsx
 import { Router, createRouting } from '@innet/dom'
@@ -1047,8 +1033,7 @@ permissions.update()
 `/foo` - NotFound Page
 
 ### Lazy Loading
-
-[← back](#router)
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / Lazy Loading
 
 You can use `lazy` to load pages and layouts asynchronously, enabling code-splitting by pages and layouts.
 
@@ -1082,8 +1067,7 @@ export const Content = () => (
 ```
 
 ### Params
-
-[← back](#router)
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / Params
 
 Prefix a path segment with `:` to capture its value as a param.
 
@@ -1132,8 +1116,7 @@ export const Content = () => (
 `/foo` - NotFound Page
 
 ### useParam
-
-[← back](#router)
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / useParam
 
 You can get a route param by `useParam`.
 
@@ -1211,8 +1194,7 @@ export const Content = () => (
 `/de` - Not Found
 
 ### useParams
-
-[← back](#router)
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / useParams
 
 You can get all route params by `useParams`.
 
@@ -1245,8 +1227,7 @@ export const Content = () => (
 `/user` - Not Found
 
 ## Link
-
-[← back](#components)
+###### [🏠︎](#index) / [Components](#components) / Link
 
 [href](#href) |
 [replace](#replace) |
@@ -1260,8 +1241,7 @@ It behaves like an HTML `<a>` tag but uses the [History API](https://developer.m
 For external links, it automatically adds `rel="noopener noreferrer nofollow"` and `target="_blank"` attributes.
 
 ### href
-
-[← back](#link)
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / href
 
 If `href` starts from `/`, `?` or `#` then the Link will use [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
 
@@ -1287,6 +1267,7 @@ export const Content = () => (
 ```
 
 ### replace
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / replace
 
 [← back](#link)
 
@@ -1299,8 +1280,7 @@ By default, it pushes to history, but you may use `replace` to replace current h
 ```
 
 ### class
-
-[← back](#link)
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / class
 
 You can add root or active link class
 
@@ -1347,8 +1327,7 @@ export const Content = () => (
 ```
 
 ### exact
-
-[← back](#link)
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / exact
 
 By default, active class appends if URL starts with `href` prop value, but use `exact` to compare exactly.
 
@@ -1370,8 +1349,7 @@ export const Content = () => (
 ```
 
 ### scroll
-
-[← back](#link)
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / scroll
 
 You can use smooth scroll
 
@@ -1403,8 +1381,7 @@ export const Content = () => (
 ```
 
 ### scrollTo
-
-[← back](#link)
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / scrollTo
 
 If you want to scroll the page to custom position (by default it's up of the page) use `scrollTo`
 
@@ -1426,8 +1403,7 @@ export const Content = () => (
 Use a string to scroll under an element relates to the CSS selector you provide or use `-1` to stop scrolling.
 
 ## Delay
-
-[← back](#index)
+###### [🏠︎](#index) / [Components](#components) / Delay
 
 You can show or hide elements with a delay.
 
@@ -1447,6 +1423,7 @@ export function Content () {
 ```
 
 ### useHidden
+###### [🏠︎](#index) / [Components](#components) / [Delay](#delay) / useHidden
 
 You can react to elements being removed.
 
@@ -1483,6 +1460,7 @@ export default () => show.value && (
 ```
 
 ### ref
+###### [🏠︎](#index) / [Components](#components) / [Delay](#delay) / ref
 You can use `ref` to access the hidden state.
 
 Modify `Content.tsx`
@@ -1521,8 +1499,7 @@ export default () => show.value && (
 ```
 
 ## Hooks
-
-[← back](#index)
+###### [🏠︎](#index) / Hooks
 
 You can use hooks only inside a component.
 
@@ -1534,6 +1511,8 @@ export async function Content (props1) {
 ```
 
 ### useProps
+###### [🏠︎](#index) / [Hooks](#hooks) / useProps
+
 You can get props with `useProps` hook.
 
 ```typescript jsx
@@ -1551,6 +1530,8 @@ export function Content (props1) {
 ```
 
 ### useChildren
+###### [🏠︎](#index) / [Hooks](#hooks) / useChildren
+
 To get children elements you can take `useChildren`.
 
 Change `Content.tsx`
@@ -1580,8 +1561,7 @@ export default (
 ```
 
 ### useParent
-
-[← back](#index)
+###### [🏠︎](#index) / [Hooks](#hooks) / useParent
 
 You can get parent HTML element inside a component
 
@@ -1594,8 +1574,7 @@ export function Content () {
 ```
 
 ## style
-
-[← back](#index)
+###### [🏠︎](#index) / style
 
 You can style components with `style` function.
 The function returns `useStyle` hook.
