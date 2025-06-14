@@ -1237,6 +1237,13 @@ export const Content = () => (
 
 [← back](#index)
 
+[href](#href) |
+[replace](#replace) |
+[class](#class) |
+[exact](#exact) |
+[scroll](#scroll) |
+[scrollTo](#scrollTo)
+
 Use the `Link` component to create links.
 It behaves like an HTML `<a>` tag but uses the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) for internal navigation.
 For external links, it automatically adds `rel="noopener noreferrer nofollow"` and `target="_blank"` attributes.
@@ -1266,6 +1273,9 @@ export const Content = () => (
 ```
 
 ### replace
+
+[← back](#link)
+
 By default, it pushes to history, but you may use `replace` to replace current history state.
 
 ```typescript jsx
@@ -1275,6 +1285,9 @@ By default, it pushes to history, but you may use `replace` to replace current h
 ```
 
 ### class
+
+[← back](#link)
+
 You can add root or active link class
 
 ```typescript jsx
@@ -1320,6 +1333,9 @@ export const Content = () => (
 ```
 
 ### exact
+
+[← back](#link)
+
 By default, active class appends if URL starts with `href` prop value, but use `exact` to compare exactly.
 
 ```typescript jsx
@@ -1340,7 +1356,11 @@ export const Content = () => (
 ```
 
 ### scroll
+
+[← back](#link)
+
 You can use smooth scroll
+
 ```css
 body, html {
   scroll-behavior: smooth;
@@ -1369,6 +1389,9 @@ export const Content = () => (
 ```
 
 ### scrollTo
+
+[← back](#link)
+
 If you want to scroll the page to custom position (by default it's up of the page) use `scrollTo`
 
 ```typescript jsx
