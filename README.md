@@ -231,13 +231,10 @@ export default (
 ## Components
 
 ###### [🏠︎](#index) / Components
-
-[Life Cycle](#life-cycle)
+###### [Life Cycle](#life-cycle)
 
 **Component params**  
-[props](#props) | 
-[children](#children) | 
-[return](#return)
+[props](#props) | [children](#children) | [return](#return)
 
 **Component types**  
 [Async Components](#async-component) | 
@@ -277,8 +274,7 @@ export default (
 ```
 
 ### Props
-
-[← back](#components)
+###### [🏠︎](#index) / [Components](#components) / Props
 
 Each component receives a single argument: an object containing its `props`.
 
@@ -305,8 +301,7 @@ export default (
 ```
 
 ### Children
-
-[← back](#components)
+###### [🏠︎](#index) / [Components](#components) / Children
 
 Component props can include a `children` prop.
 
@@ -329,8 +324,7 @@ export default (
 ```
 
 ### Return
-
-[← back](#components)
+###### [🏠︎](#index) / [Components](#components) / Return
 
 A component can return:
 
@@ -369,8 +363,7 @@ A component can return:
   ```
 
 ### Async Component
-
-[← back](#components)
+###### [🏠︎](#index) / [Components](#components) / Async Component
 
 Innet supports async components, you can simplify previous code.
 ```typescript jsx
@@ -407,8 +400,7 @@ While it's loading nothing can be shown.
 If you want to show something, use `Generic Async Component`.
 
 ### Generic Async Component
-
-[← back](#components)
+###### [🏠︎](#index) / [Components](#components) / Generic Async Component
 
 Simply add an asterisk and use `yield` instead of `return`.
 ```typescript jsx
@@ -422,8 +414,7 @@ async function * Content () {
 ```
 
 ### Generic Component
-
-[← back](#components)
+###### [🏠︎](#index) / [Components](#components) / Generic Component
 
 It can be useful when you want to do something after a content deployed.
 
@@ -1268,8 +1259,6 @@ export const Content = () => (
 
 ### replace
 ###### [🏠︎](#index) / [Components](#components) / [Link](#link) / replace
-
-[← back](#link)
 
 By default, it pushes to history, but you may use `replace` to replace current history state.
 
