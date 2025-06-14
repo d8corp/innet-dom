@@ -783,15 +783,15 @@ export default (
 ## Router
 ###### [🏠︎](#index) / [Components](#components) / Router
 
-[Layout](#layout) | 
-[List of Segments](#list-of-segments) | 
-[Optional Segment](#optional-segment) | 
-[Permissions](#permissions) | 
-[Lazy Loading](#lazy-loading) | 
+[Layout](#layout) · 
+[List of Segments](#list-of-segments) · 
+[Optional Segment](#optional-segment) · 
+[Permissions](#permissions) · 
+[Lazy Loading](#lazy-loading) · 
 [Params](#params)
 
 **Hooks**  
-[useParam](#useparam) | 
+[useParam](#useparam) · 
 [useParams](#useparams)
 
 You can render content based on the current URL.
