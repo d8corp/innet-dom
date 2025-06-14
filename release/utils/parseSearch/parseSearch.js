@@ -8,7 +8,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var qs__default = /*#__PURE__*/_interopDefaultLegacy(qs);
 
-function parseSearch(search, options) {
+function parseSearch(search = '', options) {
     return qs__default["default"].parse(search, Object.assign({ ignoreQueryPrefix: true }, options));
 }
 

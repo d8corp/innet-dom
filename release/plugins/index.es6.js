@@ -1,4 +1,3 @@
-import './jsx/index.es6.js';
 import './domAsync/index.es6.js';
 import './domIterable/index.es6.js';
 import './domJSX/index.es6.js';

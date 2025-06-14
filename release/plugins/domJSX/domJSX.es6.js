@@ -1,3 +1,4 @@
+import { useChildren } from '@innet/jsx';
 import innet, { useApp, useHandler, NEXT } from 'innet';
 import { Watch } from 'watch-state';
 import '../../utils/index.es6.js';
@@ -7,7 +8,8 @@ import { setParent } from '../../utils/setParent/setParent.es6.js';
 const NAMESPACE_URI = Symbol('NAMESPACE_URI');
 function domJSX() {
     return () => {
-        const { type, props, children } = useApp();
+        const { type, props } = useApp();
+        const children = useChildren();
         let handler = useHandler();
         if (typeof type !== 'string')
             return NEXT;
@@ -20,6 +22,8 @@ function domJSX() {
             : document.createElement(type);
         if (props) {
             for (let key in props) {
+                if (key === 'children')
+                    continue;
                 if (key === 'ref') {
                     if (props.ref) {
                         props.ref.value = element;
@@ -42,6 +46,7 @@ function domJSX() {
                     continue;
                 }
                 if (key.startsWith('on')) {
+                    // @ts-expect-error TODO: fix types
                     element[key] = value;
                     continue;
                 }
@@ -55,7 +60,9 @@ function domJSX() {
                 if (typeof value === 'function') {
                     new Watch(update => {
                         const result = value(update);
+                        // @ts-expect-error TODO: fix types
                         if (fieldSet && element[key] !== result) {
+                            // @ts-expect-error TODO: fix types
                             element[key] = result;
                         }
                         if (attributeSet) {
@@ -72,6 +79,7 @@ function domJSX() {
                 }
                 else {
                     if (fieldSet) {
+                        // @ts-expect-error TODO: fix types
                         element[key] = value;
                     }
                     if (attributeSet && value !== undefined) {

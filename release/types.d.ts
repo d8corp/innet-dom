@@ -1,3 +1,4 @@
+import { type Props } from '@innet/jsx';
 import { type Handler } from 'innet';
 import { type Observable, type Watcher } from 'watch-state';
 import { type Ref } from './utils';
@@ -12,10 +13,14 @@ export type UseComment = [Handler, Comment];
 export type WatchProp<T> = T | Watcher<T>;
 export type StateProp<T> = WatchProp<T> | Observable<T>;
 export type ObservableProp<T> = T | Observable<T>;
+export type Component<P extends Props = Props> = (props: P) => JSX.Element;
 export type HTMLStyleKeys = keyof KeysToKebabCase<Omit<HTMLElement['style'], 'getPropertyPriority' | 'getPropertyValue' | 'item' | 'removeProperty' | 'setProperty'>> | `--${string}`;
 export type HTMLStyleProp = Partial<Record<HTMLStyleKeys, StateProp<string>>>;
-export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> {
-    class?: StateProp<string>;
+export interface ChildrenProps {
+    children?: any;
+}
+export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> extends ChildrenProps {
+    class?: StateProp<string | undefined>;
     style?: HTMLStyleProp;
     ref?: Ref<E>;
 }

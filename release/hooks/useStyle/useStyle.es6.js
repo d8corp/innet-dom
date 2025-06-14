@@ -31,6 +31,7 @@ function getStyles(styles, props) {
 function style(styles, rest) {
     return function useStyle() {
         const props = useProps();
+        // @ts-expect-error TODO: fix types
         return getStyles(rest ? Object.assign({}, styles, rest) : styles, props);
     };
 }

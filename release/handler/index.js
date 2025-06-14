@@ -6,7 +6,6 @@ var handler = require('./handler.js');
 
 
 
-exports.JSXPlugins = handler.JSXPlugins;
 exports.arrayPlugins = handler.arrayPlugins;
 exports.fnPlugins = handler.fnPlugins;
 exports.handler = handler.handler;

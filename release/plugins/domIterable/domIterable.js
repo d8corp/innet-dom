@@ -50,18 +50,13 @@ const domIterable = () => () => {
     const run = () => tslib.__awaiter(void 0, void 0, void 0, function* () {
         var _a, e_1, _b, _c;
         try {
-            for (var _d = true, apps_1 = tslib.__asyncValues(apps), apps_1_1; apps_1_1 = yield apps_1.next(), _a = apps_1_1.done, !_a;) {
+            for (var _d = true, apps_1 = tslib.__asyncValues(apps), apps_1_1; apps_1_1 = yield apps_1.next(), _a = apps_1_1.done, !_a; _d = true) {
                 _c = apps_1_1.value;
                 _d = false;
-                try {
-                    const app = _c;
-                    if (deleted)
-                        return;
-                    call(app);
-                }
-                finally {
-                    _d = true;
-                }
+                const app = _c;
+                if (deleted)
+                    return;
+                call(app);
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }

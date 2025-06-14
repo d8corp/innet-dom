@@ -26,29 +26,24 @@ const domAsyncIterable = () => () => {
     const run = () => tslib.__awaiter(void 0, void 0, void 0, function* () {
         var _a, e_1, _b, _c;
         try {
-            for (var _d = true, apps_1 = tslib.__asyncValues(apps), apps_1_1; apps_1_1 = yield apps_1.next(), _a = apps_1_1.done, !_a;) {
+            for (var _d = true, apps_1 = tslib.__asyncValues(apps), apps_1_1; apps_1_1 = yield apps_1.next(), _a = apps_1_1.done, !_a; _d = true) {
                 _c = apps_1_1.value;
                 _d = false;
-                try {
-                    const app = _c;
-                    if (deleted)
-                        return;
-                    watchState.scope.activeWatcher = activeWatcher;
-                    if (watcher) {
-                        watcher.destroy();
+                const app = _c;
+                if (deleted)
+                    return;
+                watchState.scope.activeWatcher = activeWatcher;
+                if (watcher) {
+                    watcher.destroy();
+                    dom.clear(comment);
+                }
+                watcher = new watchState.Watch(update => {
+                    if (update) {
                         dom.clear(comment);
                     }
-                    watcher = new watchState.Watch(update => {
-                        if (update) {
-                            dom.clear(comment);
-                        }
-                        innet__default["default"](app, childrenHandler);
-                    });
-                    watchState.scope.activeWatcher = undefined;
-                }
-                finally {
-                    _d = true;
-                }
+                    innet__default["default"](app, childrenHandler);
+                });
+                watchState.scope.activeWatcher = undefined;
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }

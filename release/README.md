@@ -9,34 +9,64 @@
 
 [![NPM](https://img.shields.io/npm/v/@innet/dom.svg)](https://www.npmjs.com/package/@innet/dom)
 [![downloads](https://img.shields.io/npm/dm/@innet/dom.svg)](https://www.npmtrends.com/@innet/dom)
+[![license](https://img.shields.io/github/actions/workflow/status/d8corp/innet-dom/node.js.yml?branch=v1&label=tests
+)](https://github.com/d8corp/innet-dom/actions/workflows/node.js.yml)
 [![changelog](https://img.shields.io/badge/Changelog-⋮-brightgreen)](https://changelogs.xyz/@innet/dom)
 [![license](https://img.shields.io/npm/l/@innet/dom)](https://github.com/d8corp/innet-dom/blob/main/LICENSE)
 
-## Abstract
-This is an `innet` tool, that helps to create frontend-side application.
+## Overview
+`@innet/dom` is a lightweight and reactive frontend framework built on top of [innet](https://www.npmjs.com/package/innet). It provides a simple, JSX-based API for building highly performant web applications with fine-grained reactivity and minimal boilerplate.
 
-Here you can find JSX components, state-management, portals, context, slots, routing and more.
+### Why Use `@innet/dom`?
+`@innet/dom` offers a declarative and reactive approach to UI development without the overhead of virtual DOM diffing. It enables developers to write simple, composable components with direct DOM manipulation, resulting in faster rendering and smaller bundle sizes compared to traditional frameworks.
 
-Based on [innet](https://www.npmjs.com/package/innet).
+Key features include:
+- JSX support with full TypeScript integration
+- Fine-grained reactivity powered by [watch-state](https://github.com/d8corp/watch-state)
+- Built-in routing with flexible route definitions and permissions
+- Support for async components and code splitting
+- Lifecycle hooks for mounting and cleanup
+- Context API for dependency injection and state sharing
+- Utility components like Portal, Show, Hide, and Delay for common UI patterns
+- Seamless integration with CSS Modules and styling utilities
 
 [![stars](https://img.shields.io/github/stars/d8corp/innet-dom?style=social)](https://github.com/d8corp/innet-dom/stargazers)
 [![watchers](https://img.shields.io/github/watchers/d8corp/innet-dom?style=social)](https://github.com/d8corp/innet-dom/watchers)
 
+## Index
+
+<sup>[Install](#install) • [Handler](#handler) • [JSX](#jsx) • [State Management](#state-management) • [style](#style)</sup>
+
+<sup>**[Components](#components)**</sup>  
+<sup>[Portal](#portal) • [ContextProvider](#contextprovider) • [Show](#show) • [Hide](#hide) • [For](#for) • [Router](#router) • [Link](#link) • [Delay](#delay)</sup>
+
+<sup>**[Life Cycle](#life-cycle)**</sup>  
+<sup>[onDestroy](#ondestroy) • [onMounted](#onmounted)</sup>
+
+<sup>**[Hooks](#hooks)**</sup>  
+<sup>[useParam](#useparam) • [useParams](#useparams) • [useParent](#useparent)</sup>
+
+<sup>**Utils**</sup>  
+<sup>[Ref](#ref) • [Context](#context)</sup>
+
 ## Install
-Use [innetjs](https://www.npmjs.com/package/innetjs) to start `innet-dom` app development.
+###### [🏠︎](#index) / Install
+
+To start developing an `innet-dom` application, use [innetjs](https://www.npmjs.com/package/innetjs):
 
 ```shell
 npx innetjs init my-app -t fe
 ```
-*change my-app to work folder name*
+*Replace my-app with your working folder name*
 
-Go into `my-app` and check `README.md`
+Go into the `my-app` directory and check `README.md`
 
 ## Handler
+###### [🏠︎](#index) / Handler
 
-Use `dom` handler to start an application.
+Use the `dom` handler to run the application.
 
-Clear `src` folder and create `index.ts` inside.
+Clear the `src` folder and create `index.ts` inside.
 ```typescript
 import innet from 'innet'
 import dom from '@innet/dom'
@@ -47,8 +77,10 @@ innet(app, dom)
 ```
 
 ## JSX
-You can use xml-like syntax to create and append elements into the DOM.
-More information about JSX [here](https://www.typescriptlang.org/docs/handbook/jsx.html).
+###### [🏠︎](#index) / JSX
+
+You can use XML-like syntax (JSX) to create and insert elements into the DOM.
+Learn more about JSX [here](https://www.typescriptlang.org/docs/handbook/jsx.html).
 
 Create `app.tsx` in `src` folder.
 ```typescript jsx
@@ -59,14 +91,19 @@ export default (
 )
 ```
 
-Everything, that you provide as the first argument of `innet` function with the `dom` handler,
-will fall into the `body` DOM-element.
+Everything you provide as the first argument to the `innet` function (with the `dom` handler) will be rendered inside the body element.
 
-## portal
+## Portal
+###### [🏠︎](#index) / [Components](#components) / Portal
 
-If you want to put your content into another element (not `body`), use portal element.
+| Prop     | Type                                   | Description                                               |
+|----------|----------------------------------------|-----------------------------------------------------------|
+| parent * | `TargetElements` \| `DocumentFragment` | The element where the child content will be rendered      |
+| children | `JSX.Element`                          | The content to render inside the specified parent element |
 
-For example, you can change `index.html` from `public` folder.
+If you want to render content into an element other than `body`, use the `Portal` [component](#components).
+
+For example, you can modify `index.html` in `public` folder.
 ```html
 <!doctype html>
 <html lang="en">
@@ -78,40 +115,44 @@ For example, you can change `index.html` from `public` folder.
 </html>
 ```
 
-And change `app.tsx`
+And modify `app.tsx`
 
 ```typescript jsx
+import { Portal } from '@innet/dom'
+
 const app = document.getElementById('app')
 
 export default (
-  <portal parent={app}>
+  <Portal parent={app}>
     <h1>
       Hello World!
     </h1>
-  </portal>
+  </Portal>
 )
 ```
 
-You can use `portal` everywhere inside the app.
+You can use `Portal` anywhere inside your app.
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
+import { Portal } from '@innet/dom'
+
 const app = document.getElementById('app')
 const myElement = document.createElement('div')
 
 export default (
-  <portal parent={app}>
+  <Portal parent={app}>
     <h1>
       Hello World!
     </h1>
-    <portal parent={myElement}>
+    <Portal parent={myElement}>
       This is content of myElement
-    </portal>
-  </portal>
+    </Portal>
+  </Portal>
 )
 ```
 
-`myElement` should contain `This is content of myElement` and `app` should contain the next code.
+`myElement` should contain `This is content of myElement` and `app` should contain the following code.
 ```html
 <h1>
   Hello World!
@@ -119,16 +160,15 @@ export default (
 ```
 
 ## State Management
+###### [🏠︎](#index) / State Management
 
-Usually, state management is available only inside a component.
+With `innet`, you can avoid the traditional component-based approach while still having access to state management.
 
-With `innet` you can fully exclude component approach, but state management still to be available.
+State management is powered by [watch-state](https://github.com/d8corp/watch-state)
 
-The state management based on [watch-state](https://github.com/d8corp/watch-state)
+To bind state to content, use `State`, `Cache`, or a function as the content.
 
-To bind state and content, use `State`, `Cache` or a function as the content.
-
-Turn back `index.html` and change `app.tsx`
+Turn back `index.html` and modify `app.tsx`
 ```typescript jsx
 import { State } from 'watch-state'
 
@@ -152,7 +192,7 @@ export default (
 
 To bind a state and a prop use `State`, `Cache` or a function as a value of the prop.
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { State } from 'watch-state'
 
@@ -180,8 +220,19 @@ export default (
 
 ## Components
 
-Component is a function.
-You can use it as JSX element.
+###### [🏠︎](#index) / Components
+<sup>[Life Cycle](#life-cycle)</sup>
+
+<sup>**Component params**</sup>  
+<sup>[props](#props) • [children](#children) • [return](#return)</sup>
+
+<sup>**Component types**</sup>   
+<sup>[Async Components](#async-component) • [Generic Async Component](#generic-async-component) • [Generic Component](#generic-component)</sup>   
+ 
+<sup>**Default Components**</sup>   
+<sup>[Portal](#portal) • [ContextProvider](#contextprovider) • [Show](#show) • [Hide](#hide) • [For](#for) • [Router](#router) • [Link](#link) • [Delay](#delay)</sup> 
+
+A component is a function. You can use it as a JSX element.
 
 Create `Content.tsx`
 ```typescript jsx
@@ -192,7 +243,7 @@ export const Content = () => (
 )
 ```
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { Content } from './Content'
 
@@ -201,11 +252,12 @@ export default (
 )
 ```
 
-#### props
-Any component gets an argument `props`.  
-If props have not provided the argument equals `undefined` else you get an object that contains the props.
+### Props
+###### [🏠︎](#index) / [Components](#components) / Props
 
-Change `Content.tsx`
+Each component receives a single argument: an object containing its `props`.
+
+Modify `Content.tsx`
 ```typescript jsx
 export function Content ({ color }) {
   return (
@@ -216,9 +268,9 @@ export function Content ({ color }) {
 }
 ```
 
-Then you should use the `color` prop outside.
+You should pass the `color` prop when using the component.
 
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { Content } from './Content'
 
@@ -227,78 +279,34 @@ export default (
 )
 ```
 
-### Hooks
-You can use hooks inside a component. Sync hooks should be used before `await`,
-async hooks should be used as the first `await`.
+### Children
+###### [🏠︎](#index) / [Components](#components) / Children
 
+Component props can include a `children` prop.
+
+Modify `Content.tsx`
 ```typescript jsx
-export async function Content (props1) {
-  const sync1 = useSyncHook1()
-  const sync2 = useSyncHook2()
-  
-  const [
-    async1,
-    async2,
-  ] = await Promise.all([
-    useAsyncHook1(),
-    useAsyncHook2(),
-  ])
-  
-  // other
+export function Content ({ children }) {
+  return <h1>{children}</h1>
 }
 ```
 
-#### useProps
-You can get props with `useProps` hook.
+You can pass `children` as content inside the component.
 
-```typescript jsx
-import { useProps } from '@innet/jsx'
-
-export function Content (props1) {
-  const props2 = useProps()
-
-  return (
-    <h1>
-      {props1 === props2 ? 'same' : 'different'}
-    </h1>
-  )
-}
-```
-
-#### useChildren
-To get children elements you can take `useChildren`.
-
-Change `Content.tsx`
-```typescript jsx
-import { useChildren } from '@innet/jsx'
-
-export function Content ({ color }) {
-  const children = useChildren()
-
-  return (
-    <h1 style={{ color }}>
-      {children}
-    </h1>
-  )
-}
-```
-
-Then you can use the children outside.
-
-Change `app.tsx`
+Modify `app.tsx`
 ```typescript jsx
 import { Content } from './Content'
 
 export default (
-  <Content color='red'>
-    Hello World!
-  </Content>
+  <Content>Content</Content>
 )
 ```
 
 ### Return
+###### [🏠︎](#index) / [Components](#components) / Return
 
-A component awaits a return:
+A component can return:
+
 - `string`, `number` - render as text node
   ```typescript jsx
   const Test1 = () => 123
@@ -325,11 +333,6 @@ A component awaits a return:
   const Test1 = () => <div>content</div>
   const Test2 = () => <br />
   ```
-- JSX Plugin - run plugin
-  ```typescript jsx
-  const Test1 = () => <portal parent={app}>content</portal>
-  const Test2 = () => <slot>content</slot>
-  ```
 - function - observable children
   ```typescript jsx
   const state = new State()
@@ -338,36 +341,8 @@ A component awaits a return:
   const Test3 = () => <>{() => state.value}</>
   ```
 
-### Life Cycle
-Each component renders only once!
-
-There are 3 steps of life cycle:
-- **render** (DOM elements are not created)
-- **mounted** (DOM elements are created)
-- **destroy** (elements will be removed from the DOM)
-
-Because of a component renders only once you can have effects right inside the component function.
-```typescript jsx
-import { State } from 'watch-state'
-
-function Content () {
-  const state = new State()
-
-  fetch('...')
-    .then(e => e.json())
-    .then(data => {
-      state.value = data.text
-    })
-
-  return (
-    <div>
-      {state}
-    </div>
-  )
-}
-```
-
 ### Async Component
+###### [🏠︎](#index) / [Components](#components) / Async Component
 
 Innet supports async components, you can simplify previous code.
 ```typescript jsx
@@ -404,8 +379,9 @@ While it's loading nothing can be shown.
 If you want to show something, use `Generic Async Component`.
 
 ### Generic Async Component
+###### [🏠︎](#index) / [Components](#components) / Generic Async Component
 
-Just add a star and use `yield` instead of `return`
+Simply add an asterisk and use `yield` instead of `return`.
 ```typescript jsx
 async function * Content () {
   yield 'Loading...'
@@ -417,6 +393,7 @@ async function * Content () {
 ```
 
 ### Generic Component
+###### [🏠︎](#index) / [Components](#components) / Generic Component
 
 It can be useful when you want to do something after a content deployed.
 
@@ -428,7 +405,7 @@ function * Content () {
     </div>
   )
 
-  colsole.log(document.getElementById('test'))
+  console.log(document.getElementById('test'))
 }
 ```
 
@@ -491,30 +468,45 @@ queueMicrotask A <span id="a"></span> <span id="b"></span>
 queueMicrotask B <span id="a"></span> <span id="b"></span>
 ```
 
-## Ref
+### Life Cycle
+###### [🏠︎](#index) / [Components](#components) / Life Cycle
 
-`Ref` helps to get an HTML element.
+<sup>[onDestroy](#ondestroy) • [onMounted](#onmounted)</sup>
+
+Each component renders only once.
+
+There are three lifecycle stages:
+- **render** (DOM elements are not created)
+- **mounted** (DOM elements are created)
+- **destroy** (elements will be removed from the DOM)
+
+Because of a component renders only once you can have effects right inside the component function.
 ```typescript jsx
-import { Ref } from '@innet/dom'
+import { State } from 'watch-state'
 
-function * Content () {
-  const wrapper = new Ref<HTMLDivElement>()
-  
-  yield (
-    <div ref={wrapper}>
-      Hello World!
+function Content () {
+  const state = new State()
+
+  fetch('...')
+    .then(e => e.json())
+    .then(data => {
+      state.value = data.text
+    })
+
+  return (
+    <div>
+      {state}
     </div>
   )
-
-  colsole.log(wrapper.value)
 }
 ```
 
-## onDestroy
+#### onDestroy
+###### [🏠︎](#index) / [Components](#components) / [Life Cycle](#life-cycle) / onDestroy
 
 You can subscribe on destroy of a component by `onDestroy` from `watch-state`
 
-Change `Content.tsx`
+Modify `Content.tsx`
 
 ```typescript jsx
 import { State, onDestroy } from 'watch-state'
@@ -536,9 +528,10 @@ export function Content() {
 }
 ```
 
-And change `app.tsx`
+And modify `app.tsx`
 ```typescript jsx
 import { State } from 'watch-state'
+import { Show } from '@innet/dom'
 import { Content } from './Content'
 
 const show = new State(true)
@@ -549,9 +542,9 @@ const handleChange = (e: Event) => {
 
 export default (
   <>
-    <show when={show}>
+    <Show when={show}>
       <Content />
-    </show>
+    </Show>
     <input
       type="checkbox"
       checked
@@ -561,11 +554,55 @@ export default (
 )
 ```
 
+#### onMounted
+###### [🏠︎](#index) / [Components](#components) / [Life Cycle](#life-cycle) / onMounted
+
+You can use `onMounted` to do something after end of rendering.
+
+Modify `Content.tsx`
+
+```typescript jsx
+import { onMounted, Ref } from '@innet/dom'
+import { State, onDestroy } from 'watch-state'
+
+export function Content() {
+  const width = new State(0)
+  const ref = new Ref<HTMLDivElement>()
+
+  onMounted(() => {
+    console.log(ref.value.clientWidth)
+  })
+
+  return <div ref={ref}>Hello world</div>
+}
+```
+
+## Ref
+###### [🏠︎](#index) / Ref
+
+`Ref` helps to get an HTML element.
+```typescript jsx
+import { Ref } from '@innet/dom'
+
+function * Content () {
+  const wrapper = new Ref<HTMLDivElement>()
+  
+  yield (
+    <div ref={wrapper}>
+      Hello World!
+    </div>
+  )
+
+  console.log(wrapper.value)
+}
+```
+
 ## Context
+###### [🏠︎](#index) / Context
 
 You can pass a value from a parent element through any children to the place you need.
 
-Change `Content.tsx`
+Modify `Content.tsx`
 ```typescript jsx
 import { Context, useContext } from '@innet/dom'
 
@@ -582,8 +619,20 @@ export function Content () {
 }
 ```
 
-And change `app.tsx`
+## ContextProvider
+###### [🏠︎](#index) / [Components](#components) / ContextProvider
+
+| Prop       | Type                           | Description                                                     |
+|------------|--------------------------------|-----------------------------------------------------------------|
+| for *      | `Context<T>` \| `Context<T>[]` | A context or array of contexts to provide                       |
+| set *      | `T` \| `T[]`                   | A value or array of values to pass to the context(s)            |
+| children * | `JSX.Element`                  | Child elements that will have access to the provided context(s) |
+
+Use `ContextProvider` from [@innet/jsx](https://www.npmjs.com/package/innet-jsx) to provide context value into children.
+
+Modify `app.tsx`
 ```typescript jsx
+import { ContextProvider } from '@innet/jsx'
 import { Content, color } from './Content'
 
 export default (
@@ -591,102 +640,81 @@ export default (
     <Content>
       Without context
     </Content>
-    <context for={color} set='red'>
+    <ContextProvider for={color} set='red'>
       <Content>
         With context
       </Content>
-    </context>
+    </ContextProvider>
   </>
 )
 ```
 
-## show
+## Show
+###### [🏠︎](#index) / [Components](#components) / Show
 
-You can use `show` element to show/hide content by state.
+| Prop     | Type                                         | Description                                         |
+|----------|----------------------------------------------|-----------------------------------------------------|
+| when *   | `State<T>` \| `Cache<T>` \| `() => T` \| `T` | Condition to determine whether to show the children |
+| fallback | `JSX.Element`                                | Element to render if the condition is not met       |
+| children | `JSX.Element`                                | Content to render when the condition is met         |
+
+You can use `Show` component to show/hide content by state.
 
 ```typescript jsx
+import { Show } from '@innet/dom'
 import { State } from 'watch-state'
 
 const show = new State(true)
 
 export default (
-  <show when={show}>
+  <Show when={show}>
     <button
       onclick={() => {
         show.value = false
       }}>
       Click Me
     </button>
-  </show>
+  </Show>
 )
 ```
 
-> `when` can be: `State` | `Cache` | `() => any` | `any`
+## Hide
+###### [🏠︎](#index) / [Components](#components) / Hide
 
-## hide
+| Prop     | Type                                         | Description                                         |
+|----------|----------------------------------------------|-----------------------------------------------------|
+| when *   | `State<T>` \| `Cache<T>` \| `() => T` \| `T` | Condition to determine whether to hide the children |
+| fallback | `JSX.Element`                                | Element to render if the condition is met           |
+| children | `JSX.Element`                                | Content to render when the condition is not met     |
 
-You can use `hide` element to show/hide content by state.
+You can use `Hide` component to show/hide content by state.
 
 ```typescript jsx
+import { Hide } from '@innet/dom'
 import { State } from 'watch-state'
 
 const isHidden = new State(false)
 
 export default (
-  <hide when={isHidden}>
+  <Hide when={isHidden}>
     <button
       onclick={() => {
         isHidden.value = true
       }}>
       Click Me
     </button>
-  </hide>
+  </Hide>
 )
 ```
 
-> `when` can be: `State` | `Cache` | `() => any` | `any`
+## For
+###### [🏠︎](#index) / [Components](#components) / For
 
-## switch
-
-You can use `switch` element to show a content by string state.
-
-```typescript jsx
-import { State } from 'watch-state'
-
-const str = new State('')
-
-const case1 = () => {
-  str.value = 'case1'
-}
-
-const case2 = () => {
-  str.value = 'case2'
-}
-
-export default (
-  <switch of={str}>
-    <slot name='case1'>
-      Case 1
-      <button
-        onclick={case2}>
-        Next
-      </button>
-    </slot>
-    <slot name='case2'>
-      Case 2
-    </slot>
-    Default content
-    <button
-      onclick={case1}>
-      Next
-    </button>
-  </switch>
-)
-```
-
-> `of` can be: `State<string | number>` | `Cache<string | number>` | `() => (string | number)` | `string | number`
-
-## map
+| Prop     | Type                                                    | Description                                               |
+|----------|---------------------------------------------------------|-----------------------------------------------------------|
+| of *     | `StateProp<Iterable<T>>`                                | The collection to iterate over                            |
+| key      | `keyof T` \| `(item: T) => any`                         | Unique key for each item, used for DOM optimization       |
+| children | `(item: State<T>, index: State<number>) => JSX.Element` | Function that returns JSX for each item in the collection |
 
 You can use `map` method of an array to put view on data.
 ```typescript jsx
@@ -703,30 +731,23 @@ export default (
 )
 ```
 
-It's ok for static data, but if you use a state, it's better to use `map` element.
+It's ok for static data, but if you use a state, it's better to use `For` component.
 ```typescript jsx
+import { For } from '@innet/dom'
 import { State } from 'watch-state'
-import { useMapValue, useMapIndex } from '@innet/dom'
 
 const names = new State(['Mike', 'Alex', 'Dan'])
 
-function User () {
-  const name = useMapValue()
-  const index = useMapIndex()
-  
-  return (
-    <li>
-      #{index}:
-      {name}
-    </li>
-  )
-}
-
 export default (
   <ul>
-    <map of={names}>
-      <User />
-    </map>
+    <For of={names}>
+      {(name, index) => (
+        <li>
+          #{index}:
+          {name}
+        </li>
+      )}
+    </For>
   </ul>
 )
 ```
@@ -734,301 +755,530 @@ export default (
 Use `key` property to improve `DOM` changes when you use an array of objects with some uniq field, like id.
 
 ```typescript jsx
+import { For } from '@innet/dom'
 import { State } from 'watch-state'
 
-const names = new State([
+const users = new State([
   { id: 1, text: 'test1' },
   { id: 2, text: 'test2' },
   { id: 3, text: 'test3' },
 ])
 
-function User () {
-  const name = useMapValue()
-  const index = useMapIndex()
-
-  return (
-    <li>
-      #{index}:
-      {name}
-    </li>
-  )
-}
-
 export default (
   <ul>
-    <map of={names} key='id'>
-      <User />
-    </map>
+    <For of={users} key='id'>
+      {(user, index) => (
+        <li>
+          #{index}:
+          {() => user.value.name}
+        </li>
+      )}
+    </For>
   </ul>
 )
 ```
 
-## slots
+## Router
+###### [🏠︎](#index) / [Components](#components) / Router
 
-You can use slots to provide a couple of named child elements.
+<sup>[Layout](#layout) • [List of Segments](#list-of-segments) • [Optional Segment](#optional-segment) • [Permissions](#permissions) • [Lazy Loading](#lazy-loading) • [Params](#params)</sup>
+
+<sup>**Hooks**</sup>  
+<sup>[useParam](#useparam) • [useParams](#useparams)</sup>
+
+| Prop        | Type                     | Description                                          |
+|-------------|--------------------------|------------------------------------------------------|
+| routing *   | `StateProp<Routing>`     | Routing object that defines the route structure      |
+| permissions | `StateProp<Set<string>>` | Set of permissions required to access certain routes |
+
+You can render content based on the current URL.
+
+Use `component` to specify the component for a route.
+Use `path` to define URL path segments.
+Use `index` to mark a route as the endpoint for a given path.
+
 ```typescript jsx
-import { useChildren } from '@innet/jsx'
+import { Router, createRouting } from '@innet/dom'
+
+const routing = createRouting([
+  { index: true, component: () => 'Home page' },
+  {
+    index: true,
+    path: 'settings',
+    component: () => 'Settings Index',
+  },
+  {
+    path: 'settings',
+    component: () => 'Settings Rest',
+  },
+  { component: () => 'Not Found' }
+])
 
 export const Content = () => (
-  <slots from={useChildren()}>
-    <div class='header'>
-      <slot name='header'>
-        default header
-      </slot>
-    </div>
-    <div class='content'>
-      <slot>
-        default content
-      </slot>
-    </div>
-    <div class='footer'>
-      <slot name='footer'>
-        default footer
-      </slot>
-    </div>
-  </slots>
+  <Router routing={routing} />
 )
 ```
 
-```typescript jsx
-export default (
-  <Content>
-    <slot>Custom content</slot>
-    <slot name='header'>
-      Custom header
-    </slot>
-  </Content>
-)
-```
-
-You get `Custom header`, `Custom content` and `default footer`
-
-## useSlots
-
-`useSlots` is a way to get slots.
-```typescript jsx
-import { useSlots } from '@innet/dom'
-
-export const Content = () => {
-  const {
-    '': content,
-    header,
-    footer
-  } = useSlots()
-
-  return (
-    <>
-      <show when={header}>
-        <div class='header'>
-          {header}
-        </div>
-      </show>
-      <div class='content'>
-        {content}
-      </div>
-      <show when={footer}>
-        <div class='footer'>
-          {footer}
-        </div>
-      </show>
-    </>
-  )
-}
-```
-
-> Any slots without name or with name equals empty string and any content outside slots collect into empty string slot.
-
-```typescript jsx
-export default (
-  <Content>
-    <slot name='header'>
-      Custom header
-    </slot>
-    Custom content
-  </Content>
-)
-```
-
-You can use a couple of slots with the same name.
-```typescript jsx
-export default (
-  <Content>
-    <slot name='header'>
-      Custom header1 <br />
-    </slot>
-    <slot name='header'>
-      Custom header2
-    </slot>
-    Custom content
-  </Content>
-)
-```
-
-## router
-You can render content by url.
-
-```typescript jsx
-export const Content = () => (
-  <router>
-    <slot name='/'>
-      Home page
-    </slot>
-    <slot name='settings'>
-      Settings page
-    </slot>
-    Not Found
-  </router>
-)
-```
-
-There are strong matching by default, so you can see
+The following routes will be available:
 
 `/` - Home page  
-`/settings` - Settings page  
-`/settings/test` - Not Found  
-`/any-other` - Not Found
+`/settings` - Settings Index  
+`/settings/foo` - Settings Rest
+`/foo` - Not Found
 
-If you want to show `Settings page` on `/settings/test`, use `ish` prop on router element
+You can split path segments using `/`
+
 ```typescript jsx
+import { Router, createRouting } from '@innet/dom'
+
+const routing = createRouting([
+  { index: true, component: () => 'Home page' },
+  {
+    index: true,
+    path: 'settings',
+    component: () => 'Settings Index',
+  },
+  {
+    index: true,
+    path: 'settings/account',
+    component: () => 'Account Settings',
+  },
+  {
+    index: true,
+    path: 'settings/notifications',
+    component: () => 'Notification Settings',
+  },
+  { component: () => 'Not Found' }
+])
+
 export const Content = () => (
-  <router ish>
-    <slot name='/'>
-      Home page
-    </slot>
-    <slot name='settings'>
-      Settings page
-    </slot>
-    Not Found
-  </router>
+  <Router routing={routing} />
 )
 ```
 
-When you use a router, that is inside a slot of another router, the route checks the next peace of url path.
+The following routes will be available:
+
+`/` - Home page  
+`/settings` - Settings Index  
+`/settings/account` - Account Settings  
+`/settings/notifications` - Notification Settings  
+`/settings/foo` - Not Found  
+`/foo` - Not Found
+
+### Layout
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / Layout
+
+You can group routes using `children`. The `component` field on a group defines a layout for its child pages.
+
 ```typescript jsx
+import { Router, createRouting, ChildrenProps } from '@innet/dom'
+
+const Home = () => 'Home Page'
+const About = () => 'About Page'
+const Settings = () => 'Settings Page'
+const NotFound = () => 'NotFound Page'
+
+const MainLayout = (props: ChildrenProps) => <article>{props.children}</article>
+const SecondLayout = (props: ChildrenProps) => <div>{props.children}</div>
+
+const routing = createRouting([
+  {
+    component: MainLayout,
+    children: [
+      { index: true, component: Home },
+      { index: true, path: 'about', component: About },
+      { component: NotFound },
+    ],
+  },
+  {
+    component: SecondLayout,
+    children: [
+      { index: true, path: 'settings', component: Settings },
+    ],
+  },
+])
+
 export const Content = () => (
-  <router ish>
-    <slot name='/'>
-      Home page
-    </slot>
-    <slot name='settings'>
-      <router>
-        <slot name='main'>
-          Main Settings
-        </slot>
-        <slot name='user'>
-          User Settings
-        </slot>
-        Settings
-      </router>
-    </slot>
-    Not Found
-  </router>
+  <Router routing={routing} />
+)
+```
+
+The following routes will be available:
+
+`/` - `<article>Home Page</article>`  
+`/about` - `<article>About Page</article>`  
+`/settings` - `<div>Settings Page</div>`  
+`/settings/foo` - `<article>NotFound Page</article>`  
+`/foo` - `<article>NotFound Page</article>`
+
+### List of Segments
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / List of Segments
+
+You can separate available segments with `|`.
+
+```typescript jsx
+import { Router, createRouting } from '@innet/dom'
+
+const Home = () => 'Home Page'
+const FooBar = () => 'FooBar Page'
+const NotFound = () => 'NotFound Page'
+
+const routing = createRouting([
+  { index: true, component: Home },
+  { path: 'foo|bar', component: FooBar },
+  { component: NotFound },
+])
+
+export const Content = () => (
+  <Router routing={routing} />
 )
 ```
 
 `/` - Home page  
-`/settings` - Settings  
-`/settings/main` - Main Settings  
-`/settings/user` - User Settings  
-`/settings/any-other` - Settings  
-`/any-other` - Not Found
+`/foo` - FooBar Page  
+`/bar` - FooBar Page  
+`/baz` - NotFound Page
 
-You can use `search` prop to make router binds on query search params
+### Optional Segment
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / Optional Segment
+
+You can add `?` at the end of a segment to make it optional.
+
 ```typescript jsx
+import { Router, createRouting, ChildrenProps } from '@innet/dom'
+
+const Home = () => 'Home Page'
+const Settings = ({ children }: ChildrenProps) => <div>{children}</div>
+const MainTab = () => 'Main Tab'
+const AccountTab = () => 'Account Tab'
+const NotificationsTab = () => 'Notifications Tab'
+const NotFound = () => 'NotFound Page'
+
+const routing = createRouting([
+  { index: true, component: Home },
+  { path: 'settings', component: Settings, children: [
+    { index: true, path: 'main?', component: MainTab },
+    { index: true, path: 'account', component: AccountTab },
+    { index: true, path: 'notifications', component: NotificationsTab },
+  ]},
+  { component: NotFound },
+])
+
 export const Content = () => (
-  <router search='modal'>
-    <slot name='login'>
-      Login
-    </slot>
-    <slot name='logout'>
-      Logout
-    </slot>
-  </router>
+  <Router routing={routing} />
 )
 ```
 
-`?modal=login` - Login  
-`/settings?modal=logout` - Logout  
-`/settings?user=1&modal=logout` - Logout  
-`/any-other?any-params&modal=any-other` - render nothing
+`/` - Home page  
+`/settings` - `<div>Main Tab</div>`  
+`/settings/main` - `<div>Main Tab</div>`  
+`/settings/account` - `<div>Account Tab</div>`  
+`/settings/notifications` - `<div>Notifications Tab</div>`  
+`/settings/foo` - NotFound Page  
+`/foo` - NotFound Page  
 
-## useRoute
-You can handle dynamic routes by `useRoute`.
+### Permissions
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / Permissions
+
 ```typescript jsx
-const Test = () => {
-  const route = useRoute()
+import { Router, createRouting } from '@innet/dom'
+import { State } from 'watch-state'
 
-  return () => route.value
+const Home = () => 'Home Page'
+const Settings = () => 'Settings Page'
+const NotFound = () => 'NotFound Page'
+
+const permissions = new State(new Set<string>())
+
+const routing = createRouting([
+  { index: true, component: Home },
+  {
+    path: 'settings',
+    permissions: ['postlogin'],
+    component: Settings,
+  },
+  { component: NotFound },
+])
+
+export const Content = () => (
+  <Router routing={routing} permissions={permissions} />
+)
+```
+
+`/` - Home page  
+`/settings` - NotFound Page  
+`/foo` - NotFound Page
+
+Set permissions
+
+```typescript jsx
+permissions.value.add('postlogin')
+permissions.update()
+```
+
+`/` - Home page  
+`/settings` - Settings Page  
+`/foo` - NotFound Page
+
+### Lazy Loading
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / Lazy Loading
+
+You can use `lazy` to load pages and layouts asynchronously, enabling code-splitting by pages and layouts.
+
+You can use `fallback` field to render a glimmer while pages or layouts are loading.
+You can use `childrenFallback` field to set `fallback` for children elements.
+
+```typescript jsx
+import { Router, createRouting, lazy } from '@innet/dom'
+
+const routing = createRouting([
+  {
+    childrenFallback: 'Loading...',
+    children: [
+      {
+        index: true,
+        component: lazy(() => import('./Home')),
+        fallback: 'Home Loading...',
+      },
+      {
+        path: 'settings',
+        component: lazy(() => import('./Settings')),
+      },
+      { component: lazy(() => import('./NotFound')) },
+    ],
+  }
+])
+
+export const Content = () => (
+  <Router routing={routing} />
+)
+```
+
+### Params
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / Params
+
+Prefix a path segment with `:` to capture its value as a param.
+
+```typescript jsx
+import { Router, createRouting, useParam } from '@innet/dom'
+
+const Home = () => 'Home Page'
+const Products = () => 'Products Page'
+const NotFound = () => 'NotFound Page'
+
+const Product = () => {
+  const productId = useParam('productId')
+
+  return <>Product: {productId}</>
 }
 
+const routing = createRouting([
+  {
+    index: true,
+    component: Home,
+  },
+  {
+    path: 'products',
+    children: [
+      {
+        index: true,
+        component: Products,
+      },
+      {
+        path: ':productId',
+        component: Product,
+      },
+    ],
+  },
+  { component: NotFound },
+])
+
 export const Content = () => (
-  <router ish>
-    <slot name='/'>
-      Home page: <Test />
-    </slot>
-    <slot name='settings'>
-      Settings: <Test />
-    </slot>
-    Other: <Test />
-  </router>
+  <Router routing={routing} />
 )
 ```
 
-`/` - Home page: /  
-`/settings` - Settings: /  
-`/settings/test` - Settings: test    
-`/any-other` - Other: any-other
+`/` - Home page  
+`/products` - Products Page  
+`/products/123` - Product: 123  
+`/foo` - NotFound Page
 
-## a
-The tag `a` has a couple of features.
+### useParam
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / useParam
 
-> `rel="noopener noreferrer nofollow"` and `target="_blank"` are default for external links.
+You can get a route param by `useParam`.
+
+```typescript jsx
+import { Router, createRouting, useParam } from '@innet/dom'
+
+const UserPage = () => {
+  const userId = useParam('userId')
+  
+  return <div>{userId}</div>
+}
+
+const routing = createRouting([
+  { index: true, component: () => 'Home page' },
+  {
+    index: true,
+    path: 'user/:userId',
+    component: UserPage,
+  },
+  { component: () => 'Not Found' }
+])
+
+export const Content = () => (
+  <Router routing={routing}/>
+)
+```
+
+`/` - Home page  
+`/user/123` - `<div>123</div>`   
+`/user` - Not Found
+
+You can use square brackets and `|` to specify allowed values for a param.
+You can use `?` to set optional param.
+
+```typescript jsx
+import { Router, createRouting, useParam } from '@innet/dom'
+
+const Home = () => {
+  const lang = useParam('lang')
+  
+  return <>Home: {lang}</>
+}
+
+const About = () => {
+  const lang = useParam('lang')
+  
+  return <>About: {lang}</>
+}
+
+const NotFound = () => 'NotFound Page'
+
+const routing = createRouting([
+  {
+    path: ':lang[en|ru]?',
+    children: [
+      { index: true, component: Home },
+      { index: true, path: 'about', component: About },
+    ]
+  },
+  { component: NotFound },
+])
+
+export const Content = () => (
+  <Router routing={routing} />
+)
+```
+
+`/` - Home:  
+`/en` - Home: en  
+`/ru` - Home: ru  
+`/about` - About:  
+`/en/about` - About: en  
+`/ru/about` - About: ru  
+`/de/about` - Not Found  
+`/de` - Not Found
+
+### useParams
+###### [🏠︎](#index) / [Components](#components) / [Router](#router) / useParams
+
+You can get all route params by `useParams`.
+
+```typescript jsx
+import { Router, createRouting, ChildrenProps, useParams } from '@innet/dom'
+
+const UserPage = (props: ChildrenProps) => {
+  const params = useParams()
+  
+  return <div>{() => params.value.userId}</div>
+}
+
+const routing = createRouting([
+  {index: true, component: () => 'Home page'},
+  {
+    index: true,
+    path: 'user/:userId',
+    component: UserPage,
+  },
+  {component: () => 'Not Found'}
+])
+
+export const Content = () => (
+  <Router routing={routing}/>
+)
+```
+
+`/` - Home page  
+`/user/123` - `<div>123</div>`   
+`/user` - Not Found
+
+## Link
+###### [🏠︎](#index) / [Components](#components) / Link
+
+<sup>[href](#href) • [replace](#replace) • [class](#class) • [exact](#exact) • [scroll](#scroll) • [scrollTo](#scrollTo)</sup>
+
+| Prop     | Type                                                 | Description                                                    |
+|----------|------------------------------------------------------|----------------------------------------------------------------|
+| href     | `string`                                             | URL or path the link navigates to                              |
+| target   | `'_blank'` \| `'_parent'` \| `'__self'` \| `'__top'` | The target attribute for the link                              |
+| scroll   | `'after'` \| `'before'` \| `'none'`                  | Controls scroll behavior on navigation                         |
+| scrollTo | `number` \| `string`                                 | Position or selector to scroll to after navigation             |
+| replace  | `boolean`                                            | Replace the current history entry instead of pushing a new one |
+| exact    | `boolean`                                            | Match the path exactly instead of by prefix                    |
+| class    | `string` \| `{ root: string, active: string }`       | CSS class(es) for the link and its active state                |
+| children | `JSX.Element`                                        | Content to render inside the link                              |
+
+Use the `Link` component to create links.
+It behaves like an HTML `<a>` tag but uses the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) for internal navigation.
+For external links, it automatically adds `rel="noopener noreferrer nofollow"` and `target="_blank"` attributes.
 
 ### href
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / href
+
 If `href` starts from `/`, `?` or `#` then the Link will use [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
 
 ```typescript jsx
+import { Link, Router, createRouting } from '@innet/dom'
+
+const routing = createRouting([
+  { index: true, component: () => 'Home Page' },
+  { index: true, path: 'test', component: () => 'Test Page' },
+  { component: () => '404' },
+])
+
 export const Content = () => (
   <div>
-    <a href="/">home</a>
-    <a href="/test">test</a>
-    <a href="/home">unknown</a>
-    <a href="?modal=test">modal</a>
+    <Link href="/">home</Link>
+    <Link href="/test">test</Link>
+    <Link href="/home">unknown</Link>
     <div>
-      <router>
-        <slot name='/'>
-          Home Page
-        </slot>
-        <slot name='test'>
-          Test Page
-        </slot>
-        404
-      </router>
-      <router search='modal'>
-        <slot name='test'>
-          Test Modal
-        </slot>
-      </router>
+      <Router routing={routing} />
     </div>
   </div>
 )
 ```
 
 ### replace
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / replace
+
 By default, it pushes to history, but you may use `replace` to replace current history state.
 
 ```typescript jsx
-export const Content = () => (
-  <a replace href="/">
-    home
-  </a>
-)
+<Link replace href="/">
+  home
+</Link>
 ```
 
 ### class
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / class
+
 You can add root or active link class
 
 ```typescript jsx
+import { Link } from '@innet/dom'
+
 const classes = {
   root: 'link',
   active: 'active',
@@ -1036,16 +1286,12 @@ const classes = {
 
 export const Content = () => (
   <div>
-    <a
-      href="/"
-      class='only-root'>
+    <Link href='/' class='only-root'>
       home
-    </a>
-    <a
-      href="/test"
-      class={classes}>
+    </Link>
+    <Link href='/test' class={classes}>
       test
-    </a>
+    </Link>
   </div>
 )
 ```
@@ -1053,6 +1299,8 @@ export const Content = () => (
 You can use all features from [html-classes](https://www.npmjs.com/package/html-classes) for the `class` prop.
 
 ```typescript jsx
+import { Link } from '@innet/dom'
+
 const classes = {
   root: ['link1', 'link2', () => 'dynamic-class'],
   active: { active: true },
@@ -1060,45 +1308,43 @@ const classes = {
 
 export const Content = () => (
   <div>
-    <a
-      href="/"
-      class={() => 'dynamic-root'}>
+    <Link href='/' class={() => 'dynamic-root'}>
       home
-    </a>
-    <a
-      href="/test"
-      class={classes}>
+    </Link>
+    <Link href='/test' class={classes}>
       test
-    </a>
+    </Link>
   </div>
 )
 ```
 
 ### exact
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / exact
+
 By default, active class appends if URL starts with `href` prop value, but use `exact` to compare exactly.
 
 ```typescript jsx
+import { Link } from '@innet/dom'
+
 const classes = { root: 'link', active: 'active' }
 
 export const Content = () => (
   <div>
-    <a
-      href="/"
-      exact
-      classes={classes}>
+    <Link href='/' exact classes={classes}>
       home
-    </a>
-    <a
-      href="/test"
-      classes={classes}>
+    </Link>
+    <Link href="/test" classes={classes}>
       test
-    </a>
+    </Link>
   </div>
 )
 ```
 
 ### scroll
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / scroll
+
 You can use smooth scroll
+
 ```css
 body, html {
   scroll-behavior: smooth;
@@ -1109,59 +1355,78 @@ The property of `scroll` says should we scroll on click and how.
 > by default equals `before`
 
 ```typescript jsx
+import { Link } from '@innet/dom'
+
 export const Content = () => (
   <div>
-    <a href="/" scroll='before'>
+    <Link href="/" scroll='before'>
       home
-    </a>
-    <a href="/test" scroll='after'>
+    </Link>
+    <Link href="/test" scroll='after'>
       test
-    </a>
-    <a href="?modal" scroll='none'>
+    </Link>
+    <Link href="?modal" scroll='none'>
       test
-    </a>
+    </Link>
   </div>
 )
 ```
 
 ### scrollTo
+###### [🏠︎](#index) / [Components](#components) / [Link](#link) / scrollTo
+
 If you want to scroll the page to custom position (by default it's up of the page) use `scrollTo`
 
 ```typescript jsx
+import { Link } from '@innet/dom'
+
 export const Content = () => (
   <div>
-    <a href="/" scrollTo={100}>
+    <Link href='/' scrollTo={100}>
       home
-    </a>
-    <a href="/test" scrollTo='#root'>
+    </Link>
+    <Link href='/test' scrollTo='#root'>
       test
-    </a>
+    </Link>
   </div>
 )
 ```
 
 Use a string to scroll under an element relates to the CSS selector you provide or use `-1` to stop scrolling.
 
-## delay
-You can show and hide elements with delay.
+## Delay
+###### [🏠︎](#index) / [Components](#components) / Delay
+
+| Prop     | Type                  | Description                                        |
+|----------|-----------------------|----------------------------------------------------|
+| show     | `number`              | Delay before showing the content (in milliseconds) |
+| hide     | `number`              | Delay before hiding the content (in milliseconds)  |
+| ref      | `Ref<State<boolean>>` | Reference to the visibility state                  |
+| children | `JSX.Element`         | Content to render with delay                       |
+
+You can show or hide elements with a delay.
 
 ```typescript jsx
+import { Delay } from '@innet/dom'
+
 export function Content () {
   return (
-    <delay show={1000}>
+    <Delay show={1000}>
       Works
-      <delay show={1000}>
+      <Delay show={1000}>
         fine!
-      </delay>
-    </delay>
+      </Delay>
+    </Delay>
   )
 }
 ```
 
 ### useHidden
-You can react on removing of elements
+###### [🏠︎](#index) / [Components](#components) / [Delay](#delay) / useHidden
 
-Change `Content.tsx`
+You can react to elements being removed.
+
+Modify `Content.tsx`
 ```typescript jsx
 import { useHidden } from '@innet/dom'
 
@@ -1172,8 +1437,9 @@ export function Content () {
 }
 ```
 
-And change `app.tsx`
+And modify `app.tsx`
 ```typescript jsx
+import { Delay } from '@innet/dom'
 import { State } from 'watch-state'
 
 const show = new State(true)
@@ -1183,33 +1449,35 @@ const handleClick = () => {
 }
 
 export default () => show.value && (
-  <delay hide={1000}>
+  <Delay hide={1000}>
     <Content />
-    <button
-      onclick={handleClick}>
+    <button onclick={handleClick}>
       Hide
     </button>
-  </delay>
+  </Delay>
 )
 ```
 
 ### ref
-You can use `ref` to get the hidden state.
+###### [🏠︎](#index) / [Components](#components) / [Delay](#delay) / ref
+You can use `ref` to access the hidden state.
 
-Change `Content.tsx`
+Modify `Content.tsx`
 ```typescript jsx
+import { Delay } from '@innet/dom'
+
 export function Content () {
   const hidden = new Ref()
 
   return (
-    <delay ref={hidden} hide={1000}>
+    <Delay ref={hidden} hide={1000}>
       {() => hidden.value.value ? 'hidden' : 'shown'}
-    </delay>
+    </Delay>
   )
 }
 ```
 
-And change `app.tsx`
+And modify `app.tsx`
 ```typescript jsx
 import { State } from 'watch-state'
 
@@ -1222,15 +1490,77 @@ const handleClick = () => {
 export default () => show.value && (
   <>
     <Content />
-    <button
-      onclick={handleClick}>
+    <button onclick={handleClick}>
       Hide
     </button>
   </>
 )
 ```
 
-## useParent
+## Hooks
+###### [🏠︎](#index) / Hooks
+
+You can use hooks only inside a component.
+
+```typescript jsx
+export async function Content (props1) {
+  const value1 = useHook1()
+  const value2 = useHook2()
+}
+```
+
+### useProps
+###### [🏠︎](#index) / [Hooks](#hooks) / useProps
+
+You can get props with `useProps` hook.
+
+```typescript jsx
+import { useProps } from '@innet/jsx'
+
+export function Content (props1) {
+  const props2 = useProps()
+
+  return (
+    <h1>
+      {props1 === props2 ? 'same' : 'different'}
+    </h1>
+  )
+}
+```
+
+### useChildren
+###### [🏠︎](#index) / [Hooks](#hooks) / useChildren
+
+To get children elements you can take `useChildren`.
+
+Change `Content.tsx`
+```typescript jsx
+import { useChildren } from '@innet/jsx'
+
+export function Content ({ color, children }) {
+  return (
+    <h1 style={{ color }}>
+      {String(children === useChildren())}
+    </h1>
+  )
+}
+```
+
+Then you can use the children outside.
+
+Modify `app.tsx`
+```typescript jsx
+import { Content } from './Content'
+
+export default (
+  <Content color='red'>
+    Hello World!
+  </Content>
+)
+```
+
+### useParent
+###### [🏠︎](#index) / [Hooks](#hooks) / useParent
 
 You can get parent HTML element inside a component
 
@@ -1243,6 +1573,7 @@ export function Content () {
 ```
 
 ## style
+###### [🏠︎](#index) / style
 
 You can style components with `style` function.
 The function returns `useStyle` hook.

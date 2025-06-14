@@ -2,6 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var jsx = require('@innet/jsx');
 var innet = require('innet');
 var watchState = require('watch-state');
 require('../../utils/index.js');
@@ -15,7 +16,8 @@ var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 const NAMESPACE_URI = Symbol('NAMESPACE_URI');
 function domJSX() {
     return () => {
-        const { type, props, children } = innet.useApp();
+        const { type, props } = innet.useApp();
+        const children = jsx.useChildren();
         let handler = innet.useHandler();
         if (typeof type !== 'string')
             return innet.NEXT;
@@ -28,6 +30,8 @@ function domJSX() {
             : document.createElement(type);
         if (props) {
             for (let key in props) {
+                if (key === 'children')
+                    continue;
                 if (key === 'ref') {
                     if (props.ref) {
                         props.ref.value = element;
@@ -50,6 +54,7 @@ function domJSX() {
                     continue;
                 }
                 if (key.startsWith('on')) {
+                    // @ts-expect-error TODO: fix types
                     element[key] = value;
                     continue;
                 }
@@ -63,7 +68,9 @@ function domJSX() {
                 if (typeof value === 'function') {
                     new watchState.Watch(update => {
                         const result = value(update);
+                        // @ts-expect-error TODO: fix types
                         if (fieldSet && element[key] !== result) {
+                            // @ts-expect-error TODO: fix types
                             element[key] = result;
                         }
                         if (attributeSet) {
@@ -80,6 +87,7 @@ function domJSX() {
                 }
                 else {
                     if (fieldSet) {
+                        // @ts-expect-error TODO: fix types
                         element[key] = value;
                     }
                     if (attributeSet && value !== undefined) {

@@ -1,3 +1,4 @@
 const PARENT = Symbol('parent');
+const LAZY = Symbol('lazy');
 
-export { PARENT };
+export { LAZY, PARENT };

@@ -1,6 +1,5 @@
 'use strict';
 
-require('./jsx/index.js');
 require('./domAsync/index.js');
 require('./domIterable/index.js');
 require('./domJSX/index.js');

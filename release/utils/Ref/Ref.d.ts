@@ -1,4 +1,4 @@
 export declare class Ref<E> {
-    value?: E;
-    constructor(value?: E);
+    value?: E | undefined;
+    constructor(value?: E | undefined);
 }

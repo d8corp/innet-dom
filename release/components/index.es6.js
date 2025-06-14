@@ -1,0 +1,9 @@
+import './For/index.es6.js';
+import './Delay/index.es6.js';
+import './Hide/index.es6.js';
+import './Lazy/index.es6.js';
+import './Link/index.es6.js';
+import './Portal/index.es6.js';
+import './Router/index.es6.js';
+import './Show/index.es6.js';
+import './Pipe/index.es6.js';

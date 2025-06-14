@@ -1,11 +1,10 @@
-import { type ContextProps, type SlotProps, type SlotsProps } from '@innet/jsx';
+import { type JSXElement } from '@innet/jsx';
 import { arraySync } from '@innet/utils';
-import { type HandlerPlugin } from 'innet';
-import { type DelayProps, domAsync, domFn, domNode, domText, type HideProps, type LinkProps, type MapProps, type PortalProps, type RouterProps, type ShowProps, type SwitchProps } from '../plugins';
+import { type Observable } from 'watch-state';
+import { domAsync, domFn, domNode, domText } from '../plugins';
 import { type HTMLProps } from '../types';
 export declare const arrayPlugins: (typeof arraySync)[];
-export declare const JSXPlugins: Record<string, HandlerPlugin>;
-export declare const objectPlugins: import("innet").Plugin[];
+export declare const objectPlugins: (() => import("innet").HandlerPlugin)[];
 export declare const fnPlugins: (typeof domFn)[];
 export declare const stringPlugins: (typeof domText)[];
 export declare const numberPlugins: (typeof domText)[];
@@ -14,18 +13,17 @@ export declare const promisePlugins: (typeof domAsync)[];
 export declare const handler: import("innet").Handler;
 declare global {
     namespace JSX {
+        type Element = PromiseElement | NonPromiseElement;
+        type NonPromiseElement = ArrayElement | WatchElement | JSXElement | Generator<Element, void, unknown> | Observable<Element> | boolean | null | number | string | symbol | undefined | void;
+        interface ArrayElement extends Array<Element> {
+        }
+        type WatchElement = (update: boolean) => Element;
+        type PromiseElement = Promise<NonPromiseElement>;
+        interface ElementChildrenAttribute {
+            children: {};
+        }
         interface IntrinsicElements {
-            portal: PortalProps;
-            map: MapProps;
-            context: ContextProps;
-            slots: SlotsProps;
-            slot: SlotProps;
-            router: RouterProps;
-            delay: DelayProps;
-            show: ShowProps;
-            hide: HideProps;
-            switch: SwitchProps;
-            a: LinkProps;
+            a: HTMLProps<HTMLAnchorElement>;
             div: HTMLProps<HTMLDivElement>;
             span: HTMLProps<HTMLSpanElement>;
             h1: HTMLProps<HTMLHeadingElement>;
