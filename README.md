@@ -235,9 +235,8 @@ export default (
 
 ## Components
 
-[Index](#index) / Components
+###### [Index](#index) / Components
 
----
 [Life Cycle](#life-cycle)
 
 **Component params**  
@@ -259,8 +258,6 @@ export default (
 [Router](#router) |
 [Link](#link) |
 [Delay](#delay)
-
----
 
 A component is a function. You can use it as a JSX element.
 
