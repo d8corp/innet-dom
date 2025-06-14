@@ -466,8 +466,7 @@ queueMicrotask B <span id="a"></span> <span id="b"></span>
 ### Life Cycle
 ###### [🏠︎](#index) / [Components](#components) / Life Cycle
 
-[onDestroy](#ondestroy) • 
-[onMounted](#onmounted)
+<sup>[onDestroy](#ondestroy) • [onMounted](#onmounted)</sup>
 
 Each component renders only once.
 
@@ -757,16 +756,10 @@ export default (
 ## Router
 ###### [🏠︎](#index) / [Components](#components) / Router
 
-[Layout](#layout) • 
-[List of Segments](#list-of-segments) • 
-[Optional Segment](#optional-segment) • 
-[Permissions](#permissions) • 
-[Lazy Loading](#lazy-loading) • 
-[Params](#params)
+<sup>[Layout](#layout) • [List of Segments](#list-of-segments) • [Optional Segment](#optional-segment) • [Permissions](#permissions) • [Lazy Loading](#lazy-loading) • [Params](#params)</sup>
 
-**Hooks**  
-[useParam](#useparam) • 
-[useParams](#useparams)
+<sup>**Hooks**</sup>  
+<sup>[useParam](#useparam) • [useParams](#useparams)</sup>
 
 You can render content based on the current URL.
 
@@ -1194,12 +1187,7 @@ export const Content = () => (
 ## Link
 ###### [🏠︎](#index) / [Components](#components) / Link
 
-[href](#href) •
-[replace](#replace) •
-[class](#class) •
-[exact](#exact) •
-[scroll](#scroll) •
-[scrollTo](#scrollTo)
+<sup>[href](#href) • [replace](#replace) • [class](#class) • [exact](#exact) • [scroll](#scroll) • [scrollTo](#scrollTo)</sup>
 
 Use the `Link` component to create links.
 It behaves like an HTML `<a>` tag but uses the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) for internal navigation.
