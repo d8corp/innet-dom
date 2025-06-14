@@ -661,6 +661,7 @@ export default (
 )
 ```
 
+> [!NOTE]  
 > `when` can be: `State` | `Cache` | `() => any` | `any`
 
 ## Hide
@@ -686,6 +687,7 @@ export default (
 )
 ```
 
+> [!NOTE]  
 > `when` can be: `State` | `Cache` | `() => any` | `any`
 
 ## For
