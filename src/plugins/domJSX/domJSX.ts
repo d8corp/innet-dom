@@ -1,4 +1,3 @@
-// @ts-nocheck TODO: fix types
 import { type JSXElement, useChildren } from '@innet/jsx'
 import innet, { type HandlerPlugin, NEXT, useApp, useHandler } from 'innet'
 import { Watch } from 'watch-state'
@@ -53,6 +52,7 @@ export function domJSX (): HandlerPlugin {
         }
 
         if (key.startsWith('on')) {
+          // @ts-expect-error TODO: fix types
           element[key] = value
           continue
         }
@@ -70,7 +70,9 @@ export function domJSX (): HandlerPlugin {
         if (typeof value === 'function') {
           new Watch(update => {
             const result = value(update)
+            // @ts-expect-error TODO: fix types
             if (fieldSet && element[key] !== result) {
+              // @ts-expect-error TODO: fix types
               element[key] = result
             }
             if (attributeSet) {
@@ -85,6 +87,7 @@ export function domJSX (): HandlerPlugin {
           })
         } else {
           if (fieldSet) {
+            // @ts-expect-error TODO: fix types
             element[key] = value
           }
           if (attributeSet && value !== undefined) {
