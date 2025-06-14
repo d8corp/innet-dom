@@ -707,9 +707,6 @@ export default (
 )
 ```
 
-> [!NOTE]  
-> `when` can be: `State` | `Cache` | `() => any` | `any`
-
 ## For
 ###### [🏠︎](#index) / [Components](#components) / For
 
