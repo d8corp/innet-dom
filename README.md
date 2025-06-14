@@ -96,10 +96,10 @@ Everything you provide as the first argument to the `innet` function (with the `
 ## Portal
 ###### [🏠︎](#index) / [Components](#components) / Portal
 
-| Prop     | Type                                   | Description |
-|----------|----------------------------------------|-------------|
-| parent * | `TargetElements` \| `DocumentFragment` |             |
-| children | `JSX.Element`                          |             |
+| Prop     | Type                                   | Description                                               |
+|----------|----------------------------------------|-----------------------------------------------------------|
+| parent * | `TargetElements` \| `DocumentFragment` | The element where the child content will be rendered      |
+| children | `JSX.Element`                          | The content to render inside the specified parent element |
 
 If you want to render content into an element other than `body`, use the `Portal` [component](#components).
 
@@ -622,11 +622,11 @@ export function Content () {
 ## ContextProvider
 ###### [🏠︎](#index) / [Components](#components) / ContextProvider
 
-| Prop       | Type                           | Description |
-|------------|--------------------------------|-------------|
-| for *      | `Context<T>` \| `Context<T>[]` |             |
-| set *      | `T` \| `T[]`                   |             |
-| children * | `JSX.Element`                  |             |
+| Prop       | Type                           | Description                                                     |
+|------------|--------------------------------|-----------------------------------------------------------------|
+| for *      | `Context<T>` \| `Context<T>[]` | A context or array of contexts to provide                       |
+| set *      | `T` \| `T[]`                   | A value or array of values to pass to the context(s)            |
+| children * | `JSX.Element`                  | Child elements that will have access to the provided context(s) |
 
 Use `ContextProvider` from [@innet/jsx](https://www.npmjs.com/package/innet-jsx) to provide context value into children.
 
@@ -652,11 +652,11 @@ export default (
 ## Show
 ###### [🏠︎](#index) / [Components](#components) / Show
 
-| Prop     | Type                                         | Description |
-|----------|----------------------------------------------|-------------|
-| when *   | `State<T>` \| `Cache<T>` \| `() => T` \| `T` |             |
-| fallback | `JSX.Element`                                |             |
-| children | `JSX.Element`                                |             |
+| Prop     | Type                                         | Description                                         |
+|----------|----------------------------------------------|-----------------------------------------------------|
+| when *   | `State<T>` \| `Cache<T>` \| `() => T` \| `T` | Condition to determine whether to show the children |
+| fallback | `JSX.Element`                                | Element to render if the condition is not met       |
+| children | `JSX.Element`                                | Content to render when the condition is met         |
 
 You can use `Show` component to show/hide content by state.
 
@@ -681,11 +681,11 @@ export default (
 ## Hide
 ###### [🏠︎](#index) / [Components](#components) / Hide
 
-| Prop     | Type                                         | Description |
-|----------|----------------------------------------------|-------------|
-| when *   | `State<T>` \| `Cache<T>` \| `() => T` \| `T` |             |
-| fallback | `JSX.Element`                                |             |
-| children | `JSX.Element`                                |             |
+| Prop     | Type                                         | Description                                         |
+|----------|----------------------------------------------|-----------------------------------------------------|
+| when *   | `State<T>` \| `Cache<T>` \| `() => T` \| `T` | Condition to determine whether to hide the children |
+| fallback | `JSX.Element`                                | Element to render if the condition is met           |
+| children | `JSX.Element`                                | Content to render when the condition is not met     |
 
 You can use `Hide` component to show/hide content by state.
 
@@ -713,11 +713,11 @@ export default (
 ## For
 ###### [🏠︎](#index) / [Components](#components) / For
 
-| Prop     | Type                                                    | Description |
-|----------|---------------------------------------------------------|-------------|
-| of *     | `StateProp<Iterable<T>>`                                |             |
-| key      | `keyof T` \| `(item: T) => any`                         |             |
-| children | `(item: State<T>, index: State<number>) => JSX.Element` |             |
+| Prop     | Type                                                    | Description                                               |
+|----------|---------------------------------------------------------|-----------------------------------------------------------|
+| of *     | `StateProp<Iterable<T>>`                                | The collection to iterate over                            |
+| key      | `keyof T` \| `(item: T) => any`                         | Unique key for each item, used for DOM optimization       |
+| children | `(item: State<T>, index: State<number>) => JSX.Element` | Function that returns JSX for each item in the collection |
 
 You can use `map` method of an array to put view on data.
 ```typescript jsx
@@ -789,10 +789,10 @@ export default (
 <sup>**Hooks**</sup>  
 <sup>[useParam](#useparam) • [useParams](#useparams)</sup>
 
-| Prop        | Type                     | Description |
-|-------------|--------------------------|-------------|
-| routing *   | `StateProp<Routing>`     |             |
-| permissions | `StateProp<Set<string>>` |             |
+| Prop        | Type                     | Description                                          |
+|-------------|--------------------------|------------------------------------------------------|
+| routing *   | `StateProp<Routing>`     | Routing object that defines the route structure      |
+| permissions | `StateProp<Set<string>>` | Set of permissions required to access certain routes |
 
 You can render content based on the current URL.
 
@@ -1222,16 +1222,16 @@ export const Content = () => (
 
 <sup>[href](#href) • [replace](#replace) • [class](#class) • [exact](#exact) • [scroll](#scroll) • [scrollTo](#scrollTo)</sup>
 
-| Prop     | Type                                                 | Description |
-|----------|------------------------------------------------------|-------------|
-| href     | `string`                                             |             |
-| target   | `'_blank'` \| `'_parent'` \| `'__self'` \| `'__top'` |             |
-| scroll   | `'after'` \| `'before'` \| `'none'`                  |             |
-| scrollTo | `number` \| `string`                                 |             |
-| replace  | `boolean`                                            |             |
-| exact    | `boolean`                                            |             |
-| class    | `string` \| `{ root: string, active: string }`       |             |
-| children | `JSX.Element`                                        |             |
+| Prop     | Type                                                 | Description                                                    |
+|----------|------------------------------------------------------|----------------------------------------------------------------|
+| href     | `string`                                             | URL or path the link navigates to                              |
+| target   | `'_blank'` \| `'_parent'` \| `'__self'` \| `'__top'` | The target attribute for the link                              |
+| scroll   | `'after'` \| `'before'` \| `'none'`                  | Controls scroll behavior on navigation                         |
+| scrollTo | `number` \| `string`                                 | Position or selector to scroll to after navigation             |
+| replace  | `boolean`                                            | Replace the current history entry instead of pushing a new one |
+| exact    | `boolean`                                            | Match the path exactly instead of by prefix                    |
+| class    | `string` \| `{ root: string, active: string }`       | CSS class(es) for the link and its active state                |
+| children | `JSX.Element`                                        | Content to render inside the link                              |
 
 Use the `Link` component to create links.
 It behaves like an HTML `<a>` tag but uses the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) for internal navigation.
@@ -1400,12 +1400,12 @@ Use a string to scroll under an element relates to the CSS selector you provide 
 ## Delay
 ###### [🏠︎](#index) / [Components](#components) / Delay
 
-| Prop     | Type                  | Description |
-|----------|-----------------------|-------------|
-| show     | `number`              |             |
-| hide     | `number`              |             |
-| ref      | `Ref<State<boolean>>` |             |
-| children | `JSX.Element`         |             |
+| Prop     | Type                  | Description                                        |
+|----------|-----------------------|----------------------------------------------------|
+| show     | `number`              | Delay before showing the content (in milliseconds) |
+| hide     | `number`              | Delay before hiding the content (in milliseconds)  |
+| ref      | `Ref<State<boolean>>` | Reference to the visibility state                  |
+| children | `JSX.Element`         | Content to render with delay                       |
 
 You can show or hide elements with a delay.
 
