@@ -65,8 +65,7 @@ Key features include:
 [Context](#context)
 
 ## Install
-
-[← back](#index)
+###### [🏠︎](#index) / Install
 
 To start developing an `innet-dom` application, use [innetjs](https://www.npmjs.com/package/innetjs):
 
@@ -78,8 +77,7 @@ npx innetjs init my-app -t fe
 Go into the `my-app` directory and check `README.md`
 
 ## Handler
-
-[← back](#index)
+###### [🏠︎](#index) / Handler
 
 Use the `dom` handler to run the application.
 
@@ -94,8 +92,7 @@ innet(app, dom)
 ```
 
 ## JSX
-
-[← back](#index)
+###### [🏠︎](#index) / JSX
 
 You can use XML-like syntax (JSX) to create and insert elements into the DOM.
 Learn more about JSX [here](https://www.typescriptlang.org/docs/handbook/jsx.html).
@@ -112,8 +109,7 @@ export default (
 Everything you provide as the first argument to the `innet` function (with the `dom` handler) will be rendered inside the body element.
 
 ## Portal
-
-[index](#index) / [components](#components)
+###### [🏠︎](#index) / [Components](#components) / Portal
 
 If you want to render content into an element other than `body`, use the `Portal` [component](#components).
 
@@ -174,8 +170,7 @@ export default (
 ```
 
 ## State Management
-
-[← back](#index)
+###### [🏠︎](#index) / State Management
 
 With `innet`, you can avoid the traditional component-based approach while still having access to state management.
 
@@ -235,7 +230,7 @@ export default (
 
 ## Components
 
-###### [Index](#index) / Components
+###### [🏠︎](#index) / Components
 
 [Life Cycle](#life-cycle)
 
@@ -258,6 +253,8 @@ export default (
 [Router](#router) |
 [Link](#link) |
 [Delay](#delay)
+
+---
 
 A component is a function. You can use it as a JSX element.
 
