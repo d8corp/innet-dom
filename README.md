@@ -96,6 +96,11 @@ Everything you provide as the first argument to the `innet` function (with the `
 ## Portal
 ###### [🏠︎](#index) / [Components](#components) / Portal
 
+| Prop     | Type                                   | Description |
+|----------|----------------------------------------|-------------|
+| parent * | `TargetElements` \| `DocumentFragment` |             |
+| children | `JSX.Element`                          |             |
+
 If you want to render content into an element other than `body`, use the `Portal` [component](#components).
 
 For example, you can modify `index.html` in `public` folder.
@@ -218,7 +223,7 @@ export default (
 ###### [🏠︎](#index) / Components
 <sup>[Life Cycle](#life-cycle)</sup>
 
-<sup> **Component params**</sup>  
+<sup>**Component params**</sup>  
 <sup>[props](#props) • [children](#children) • [return](#return)</sup>
 
 <sup>**Component types**</sup>   
@@ -617,11 +622,17 @@ export function Content () {
 ## ContextProvider
 ###### [🏠︎](#index) / [Components](#components) / ContextProvider
 
-Use `ContextProvider` to provide context value into children.
+| Prop       | Type                           | Description |
+|------------|--------------------------------|-------------|
+| for *      | `Context<T>` \| `Context<T>[]` |             |
+| set *      | `T` \| `T[]`                   |             |
+| children * | `JSX.Element`                  |             |
+
+Use `ContextProvider` from [@innet/jsx](https://www.npmjs.com/package/innet-jsx) to provide context value into children.
 
 Modify `app.tsx`
 ```typescript jsx
-import { ContextProvider } from '@innet/dom'
+import { ContextProvider } from '@innet/jsx'
 import { Content, color } from './Content'
 
 export default (
@@ -640,6 +651,12 @@ export default (
 
 ## Show
 ###### [🏠︎](#index) / [Components](#components) / Show
+
+| Prop     | Type                                         | Description |
+|----------|----------------------------------------------|-------------|
+| when *   | `State<T>` \| `Cache<T>` \| `() => T` \| `T` |             |
+| fallback | `JSX.Element`                                |             |
+| children | `JSX.Element`                                |             |
 
 You can use `Show` component to show/hide content by state.
 
@@ -661,11 +678,14 @@ export default (
 )
 ```
 
-> [!NOTE]  
-> `when` can be: `State` | `Cache` | `() => any` | `any`
-
 ## Hide
 ###### [🏠︎](#index) / [Components](#components) / Hide
+
+| Prop     | Type                                         | Description |
+|----------|----------------------------------------------|-------------|
+| when *   | `State<T>` \| `Cache<T>` \| `() => T` \| `T` |             |
+| fallback | `JSX.Element`                                |             |
+| children | `JSX.Element`                                |             |
 
 You can use `Hide` component to show/hide content by state.
 
@@ -692,6 +712,12 @@ export default (
 
 ## For
 ###### [🏠︎](#index) / [Components](#components) / For
+
+| Prop     | Type                                                    | Description |
+|----------|---------------------------------------------------------|-------------|
+| of *     | `StateProp<Iterable<T>>`                                |             |
+| key      | `keyof T` \| `(item: T) => any`                         |             |
+| children | `(item: State<T>, index: State<number>) => JSX.Element` |             |
 
 You can use `map` method of an array to put view on data.
 ```typescript jsx
@@ -762,6 +788,11 @@ export default (
 
 <sup>**Hooks**</sup>  
 <sup>[useParam](#useparam) • [useParams](#useparams)</sup>
+
+| Prop        | Type                     | Description |
+|-------------|--------------------------|-------------|
+| routing *   | `StateProp<Routing>`     |             |
+| permissions | `StateProp<Set<string>>` |             |
 
 You can render content based on the current URL.
 
@@ -1191,6 +1222,17 @@ export const Content = () => (
 
 <sup>[href](#href) • [replace](#replace) • [class](#class) • [exact](#exact) • [scroll](#scroll) • [scrollTo](#scrollTo)</sup>
 
+| Prop     | Type                                                 | Description |
+|----------|------------------------------------------------------|-------------|
+| href     | `string`                                             |             |
+| target   | `'_blank'` \| `'_parent'` \| `'__self'` \| `'__top'` |             |
+| scroll   | `'after'` \| `'before'` \| `'none'`                  |             |
+| scrollTo | `number` \| `string`                                 |             |
+| replace  | `boolean`                                            |             |
+| exact    | `boolean`                                            |             |
+| class    | `string` \| `{ root: string, active: string }`       |             |
+| children | `JSX.Element`                                        |             |
+
 Use the `Link` component to create links.
 It behaves like an HTML `<a>` tag but uses the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API) for internal navigation.
 For external links, it automatically adds `rel="noopener noreferrer nofollow"` and `target="_blank"` attributes.
@@ -1357,6 +1399,13 @@ Use a string to scroll under an element relates to the CSS selector you provide 
 
 ## Delay
 ###### [🏠︎](#index) / [Components](#components) / Delay
+
+| Prop     | Type                  | Description |
+|----------|-----------------------|-------------|
+| show     | `number`              |             |
+| hide     | `number`              |             |
+| ref      | `Ref<State<boolean>>` |             |
+| children | `JSX.Element`         |             |
 
 You can show or hide elements with a delay.
 
