@@ -14,7 +14,7 @@ export declare const handler: import("innet").Handler;
 declare global {
     namespace JSX {
         type Element = PromiseElement | NonPromiseElement;
-        type NonPromiseElement = ArrayElement | WatchElement | JSXElement | Generator<Element, void, unknown> | Observable<Element> | boolean | null | number | string | symbol | undefined | void;
+        type NonPromiseElement = ArrayElement | WatchElement | JSXElement | Generator<Element, void, unknown> | AsyncGenerator<Element, void, unknown> | Observable<Element> | boolean | null | number | string | symbol | undefined | void;
         interface ArrayElement extends Array<Element> {
         }
         type WatchElement = (update: boolean) => Element;

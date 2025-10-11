@@ -13,3 +13,4 @@ import './lcs/index.es6.js';
 import './parsedSearch/index.es6.js';
 import './lazy/index.es6.js';
 import './isLazy/index.es6.js';
+import './injectPx/index.es6.js';

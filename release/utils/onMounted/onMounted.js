@@ -10,15 +10,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var SyncTimer__default = /*#__PURE__*/_interopDefaultLegacy(SyncTimer);
 
 function onMounted(callback, delay) {
-    let destroyed = false;
+    const timer = new SyncTimer__default["default"](callback, delay);
     watchState.onDestroy(() => {
-        destroyed = true;
+        timer.cancel();
     });
-    new SyncTimer__default["default"](() => {
-        if (!destroyed) {
-            callback();
-        }
-    }, delay);
 }
 
 exports.onMounted = onMounted;

@@ -15,4 +15,5 @@ require('./lcs/index.js');
 require('./parsedSearch/index.js');
 require('./lazy/index.js');
 require('./isLazy/index.js');
+require('./injectPx/index.js');
 

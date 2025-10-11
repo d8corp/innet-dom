@@ -80,6 +80,7 @@ declare global {
       | WatchElement
       | JSXElement
       | Generator<Element, void, unknown>
+      | AsyncGenerator<Element, void, unknown>
       | Observable<Element>
       | boolean
       | null

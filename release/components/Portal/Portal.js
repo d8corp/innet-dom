@@ -11,7 +11,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var innet__default = /*#__PURE__*/_interopDefaultLegacy(innet);
 
-function Portal({ parent, children }) {
+function Portal({ parent = document.body, children }) {
     const handler = innet.useHandler();
     const [childHandler] = getComment.getComment(handler, 'portal', false, parent);
     innet__default["default"](children, childHandler);

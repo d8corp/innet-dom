@@ -5,11 +5,11 @@ import type { TargetElements } from '../../types'
 import { getComment } from '../../utils'
 
 export interface PortalProps {
-  parent: TargetElements | DocumentFragment
+  parent?: TargetElements | DocumentFragment
   children?: JSX.Element
 }
 
-export function Portal ({ parent, children }: PortalProps) {
+export function Portal ({ parent = document.body, children }: PortalProps) {
   const handler = useHandler()
   const [childHandler] = getComment(handler, 'portal', false, parent)
 

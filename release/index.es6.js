@@ -31,6 +31,7 @@ export { lcs } from './utils/lcs/lcs.es6.js';
 export { parsedSearch } from './utils/parsedSearch/parsedSearch.es6.js';
 export { lazy } from './utils/lazy/lazy.es6.js';
 export { isLazy } from './utils/isLazy/isLazy.es6.js';
+export { injectPx } from './utils/injectPx/injectPx.es6.js';
 export { useParent } from './hooks/useParent/useParent.es6.js';
 export { getStyles, style } from './hooks/useStyle/useStyle.es6.js';
 export { useShow } from './hooks/useShow/useShow.es6.js';

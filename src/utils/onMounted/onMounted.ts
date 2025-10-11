@@ -2,15 +2,9 @@ import SyncTimer from 'sync-timer'
 import { onDestroy } from 'watch-state'
 
 export function onMounted (callback: () => void, delay?: number) {
-  let destroyed = false
+  const timer = new SyncTimer(callback, delay)
 
   onDestroy(() => {
-    destroyed = true
+    timer.cancel()
   })
-
-  new SyncTimer(() => {
-    if (!destroyed) {
-      callback()
-    }
-  }, delay)
 }

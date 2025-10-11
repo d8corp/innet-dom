@@ -13,3 +13,4 @@ export * from './lcs';
 export * from './parsedSearch';
 export * from './lazy';
 export * from './isLazy';
+export * from './injectPx';
