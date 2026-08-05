@@ -1,6 +1,6 @@
 import { type JSXElement, useChildren } from '@innet/jsx'
-import innet, { type HandlerPlugin, NEXT, useApp, useHandler } from 'innet'
-import { Watch } from 'watch-state'
+import { type HandlerPlugin, innet, NEXT, useApp, useHandler } from 'innet'
+import { scope, Watch } from 'watch-state'
 
 import { setParent, statePropToWatchProp } from '../../utils'
 
@@ -31,6 +31,7 @@ export function domJSX (): HandlerPlugin {
           if (props.ref) {
             props.ref.value = element
           }
+
           continue
         }
 
@@ -41,13 +42,14 @@ export function domJSX (): HandlerPlugin {
             const rawValue = statePropToWatchProp(value[property])
 
             if (typeof rawValue === 'function') {
-              new Watch(update => {
-                element.style.setProperty(property, rawValue(update))
+              new Watch(() => {
+                element.style.setProperty(property, rawValue())
               })
             } else {
               element.style.setProperty(property, rawValue)
             }
           }
+
           continue
         }
 
@@ -68,16 +70,18 @@ export function domJSX (): HandlerPlugin {
         value = statePropToWatchProp(value)
 
         if (typeof value === 'function') {
-          new Watch(update => {
-            const result = value(update)
+          new Watch(() => {
+            const result = value()
+
             // @ts-expect-error TODO: fix types
             if (fieldSet && element[key] !== result) {
               // @ts-expect-error TODO: fix types
               element[key] = result
             }
+
             if (attributeSet) {
               if (result === undefined || result === false) {
-                if (update) {
+                if (scope.activeWatcher?.updated) {
                   element.removeAttribute(key)
                 }
               } else {
@@ -90,6 +94,7 @@ export function domJSX (): HandlerPlugin {
             // @ts-expect-error TODO: fix types
             element[key] = value
           }
+
           if (attributeSet && value !== undefined) {
             element.setAttribute(key, value)
           }
@@ -97,13 +102,13 @@ export function domJSX (): HandlerPlugin {
       }
     }
 
-    innet(element, handler)
+    innet(element, handler, 0, true)
 
     if (children) {
       const childrenHandler = Object.create(handler)
       setParent(childrenHandler, element)
 
-      innet(children, childrenHandler)
+      innet(children, childrenHandler, 0, true)
     }
   }
 }

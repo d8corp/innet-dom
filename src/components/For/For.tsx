@@ -1,6 +1,6 @@
 import { EMPTY } from '@innet/jsx'
-import innet, { type Handler, useHandler } from 'innet'
-import { createEvent, onDestroy, State, unwatch, Watch } from 'watch-state'
+import { type Handler, innet, useHandler } from 'innet'
+import { createEvent, onDestroy, scope, State, unwatch, Watch } from 'watch-state'
 
 import { type ContentElements, type StateProp } from '../../types'
 import {
@@ -58,10 +58,10 @@ export function For<O extends StateProp<Iterable<any>>> ({
     handlersMap.forEach(({ [WATCHER_KEY]: watcher }) => watcher.destroy())
   })
 
-  new Watch(update => {
-    const values = ofProp(update)
+  new Watch(() => {
+    const values = ofProp()
 
-    if (!update) {
+    if (!scope.activeWatcher!.updated) {
       let index = 0
 
       for (const value of values) {
@@ -77,7 +77,7 @@ export function For<O extends StateProp<Iterable<any>>> ({
         handlersMap.set(valueKey, deepHandler)
 
         deepHandler[WATCHER_KEY] = new Watch(() => {
-          innet(children(deepHandler[FOR_VALUE], deepHandler[FOR_INDEX]), deepHandler)
+          innet(children(deepHandler[FOR_VALUE], deepHandler[FOR_INDEX]), deepHandler, 0, true)
         }, true)
       }
 
@@ -95,6 +95,7 @@ export function For<O extends StateProp<Iterable<any>>> ({
     const keepKeys = new Set(lcs(oldKeysList, keysList))
 
     let i = 0
+
     for (const value of values) {
       const index = i++
       const valueKey = keysList[index]
@@ -136,7 +137,7 @@ export function For<O extends StateProp<Iterable<any>>> ({
         }
 
         deepHandler[WATCHER_KEY] = new Watch(() => {
-          innet(children(deepHandler[FOR_VALUE], deepHandler[FOR_INDEX]), deepHandler)
+          innet(children(deepHandler[FOR_VALUE], deepHandler[FOR_INDEX]), deepHandler, 0, true)
         }, true)
       }
 

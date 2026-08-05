@@ -1,4 +1,4 @@
-import innet, { type HandlerPlugin, useApp, useHandler } from 'innet'
+import { type HandlerPlugin, innet, useApp, useHandler } from 'innet'
 import { onDestroy, scope } from 'watch-state'
 
 import { getComment } from '../../utils'
@@ -20,7 +20,7 @@ export function domAsync (): HandlerPlugin {
     app.then(data => {
       if (!removed) {
         scope.activeWatcher = activeWatcher
-        innet(data, childHandler)
+        innet(data, childHandler, 0, true)
         scope.activeWatcher = undefined
       }
     })

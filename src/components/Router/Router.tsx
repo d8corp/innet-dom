@@ -2,13 +2,14 @@ import { ContextProvider, useContext } from '@innet/jsx'
 import { locationPath } from '@watch-state/history-api'
 import { Cache, State } from 'watch-state'
 
-import { paramsContext } from '../../hooks'
-import { type Component, type StateProp } from '../../types'
-import { isLazy, type LazyResult, use } from '../../utils'
 import { Lazy } from '../Lazy'
 import { Pipe } from '../Pipe'
 import { findRoute } from './helpers/findRoute'
 import { type Routing } from './types'
+
+import { paramsContext } from '../../hooks'
+import { type Component, type StateProp } from '../../types'
+import { isLazy, type LazyResult, use } from '../../utils'
 
 export interface RouterProps {
   routing: StateProp<Routing>
@@ -24,6 +25,7 @@ export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
     const newParams: Record<string, string> = {}
     const route = findRoute(use(routing), locationPath.value.split('/').filter(Boolean), newParams, use(permissions))
     params.value = newParams
+
     return route
   })
 

@@ -1,8 +1,9 @@
 import { State } from 'watch-state'
 
-import { getHTML, render } from '../../test'
 import { Show } from '../Show'
 import { Portal } from './Portal'
+
+import { getHTML, render } from '../../test'
 
 describe('Portal', () => {
   it('should work static', () => {
@@ -17,6 +18,7 @@ describe('Portal', () => {
     expect(getHTML(result)).toBe('')
     expect(getHTML(div)).toBe('works')
   })
+
   it('should work dynamic', () => {
     const div = document.createDocumentFragment()
     const show = new State(true)

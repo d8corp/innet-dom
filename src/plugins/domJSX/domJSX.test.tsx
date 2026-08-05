@@ -8,6 +8,7 @@ describe('domJSX', () => {
 
     expect(getHTML(result)).toBe('<div></div>')
   })
+
   it('should watch property', () => {
     const classState = new State<string | undefined>()
 
@@ -27,16 +28,19 @@ describe('domJSX', () => {
 
     expect(getHTML(result)).toBe('<div></div>')
   })
+
   it('should handle style', () => {
     const result = render(<div style={{ color: 'red' }} />)
 
     expect(getHTML(result)).toBe('<div style="color: red;"></div>')
   })
+
   it('should skip empty value', () => {
     const result = render(<div style={{ color: '' }} />)
 
     expect(getHTML(result)).toBe('<div></div>')
   })
+
   it('should handle dynamic style', () => {
     const style = {
       color: new State('red'),

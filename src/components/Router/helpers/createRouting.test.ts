@@ -14,6 +14,7 @@ describe('createRouting', () => {
     it('should return empty', () => {
       expect(createRouting([])).toEqual({})
     })
+
     it('should work with top level route', () => {
       const Home = () => 'Home'
 
@@ -32,6 +33,7 @@ describe('createRouting', () => {
         },
       } satisfies Routing)
     })
+
     it('should work with rest route', () => {
       const NotFound = () => '404'
 
@@ -49,6 +51,7 @@ describe('createRouting', () => {
         },
       } satisfies Routing)
     })
+
     it('should work with index and rest together', () => {
       const Home = () => 'Home'
       const NotFound = () => '404'
@@ -68,6 +71,7 @@ describe('createRouting', () => {
         rest: { components: [NotFound], params: [], fallback: [undefined] },
       } satisfies Routing)
     })
+
     it('should work with path', () => {
       const About = () => 'About'
       const Home = () => 'Home'
@@ -98,6 +102,7 @@ describe('createRouting', () => {
         rest: { components: [NotFound], params: [], fallback: [undefined] },
       } satisfies Routing)
     })
+
     it('should work with simple deep path', () => {
       const AllTodos = () => 'AllTodos'
       const ActiveTodos = () => 'ActiveTodos'
@@ -152,6 +157,7 @@ describe('createRouting', () => {
         },
       } satisfies Routing)
     })
+
     it('should work with deep path', () => {
       const Home = () => 'Home'
       const NotFound = () => '404'
@@ -202,6 +208,7 @@ describe('createRouting', () => {
         rest: { components: [NotFound], params: [], fallback: [undefined] },
       } satisfies Routing)
     })
+
     it('should work with deep mixed path', () => {
       const TodoSettings = () => 'TodoSettings'
       const Todos = () => 'Todos'
@@ -253,6 +260,7 @@ describe('createRouting', () => {
         },
       } satisfies Routing)
     })
+
     it('should work with path param', () => {
       const Todo = () => 'Todo'
 
@@ -269,6 +277,7 @@ describe('createRouting', () => {
         },
       } satisfies Routing)
     })
+
     it('should work with deep path param', () => {
       const Home = () => 'Home'
       const NotFound = () => '404'
@@ -300,6 +309,7 @@ describe('createRouting', () => {
         rest: { components: [NotFound], params: [], fallback: [undefined] },
       } satisfies Routing)
     })
+
     it('should work with deep structure path param', () => {
       const Todo = () => 'Todo'
 
@@ -325,6 +335,7 @@ describe('createRouting', () => {
         },
       } satisfies Routing)
     })
+
     it('should work with complex routing', () => {
       const Home = () => 'Home'
       const Todos = () => 'Todos'
@@ -394,6 +405,7 @@ describe('createRouting', () => {
         rest: { components: [NotFound], params: [], fallback: [undefined] },
       } satisfies Routing)
     })
+
     it('should work with layout complex routing', () => {
       const routing = createRouting([
         {
@@ -431,6 +443,7 @@ describe('createRouting', () => {
       } satisfies Routing)
     })
   })
+
   describe('errors', () => {
     it('should error if rest duplicates', () => {
       const Home = () => 'Home'
@@ -443,8 +456,9 @@ describe('createRouting', () => {
         ])
       }
 
-      expect(testCase).toThrowError('Routing Error. Do not use the same routes.')
+      expect(testCase).toThrow('Routing Error. Do not use the same routes.')
     })
+
     it('should error if a param twice', () => {
       const Home = () => 'Home'
       const NotFound = () => '404'
@@ -456,8 +470,9 @@ describe('createRouting', () => {
         ])
       }
 
-      expect(testCase).toThrowError('Routing Error. Do not use the same routes.')
+      expect(testCase).toThrow('Routing Error. Do not use the same routes.')
     })
+
     it('should error if the same path', () => {
       const Home = () => 'Home'
       const NotFound = () => '404'
@@ -469,8 +484,9 @@ describe('createRouting', () => {
         ])
       }
 
-      expect(testCase).toThrowError('Routing Error. Do not use the same routes.')
+      expect(testCase).toThrow('Routing Error. Do not use the same routes.')
     })
+
     it('should error if the same path deep', () => {
       const Home = () => 'Home'
       const NotFound = () => '404'
@@ -482,8 +498,9 @@ describe('createRouting', () => {
         ])
       }
 
-      expect(testCase).toThrowError('Routing Error. Do not use the same routes.')
+      expect(testCase).toThrow('Routing Error. Do not use the same routes.')
     })
+
     it('should error if index duplicates', () => {
       const Home = () => 'Home'
       const NotFound = () => '404'
@@ -495,7 +512,7 @@ describe('createRouting', () => {
         ])
       }
 
-      expect(testCase).toThrowError('Routing Error. Do not use index routes twice.')
+      expect(testCase).toThrow('Routing Error. Do not use index routes twice.')
     })
   })
 })

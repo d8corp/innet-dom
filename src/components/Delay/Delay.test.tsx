@@ -1,9 +1,11 @@
 import { type JsxComponent } from '@innet/jsx'
 import { State } from 'watch-state'
 
+import { Show } from '../Show'
+
 import { getHTML, render } from '../../test'
 import { Ref } from '../../utils'
-import { Show } from '../Show'
+
 import { Delay, useHidden } from '.'
 
 describe('Delay', () => {
@@ -16,6 +18,7 @@ describe('Delay', () => {
 
     expect(getHTML(result)).toBe('works')
   })
+
   it('should work', async () => {
     const show = new State(true)
 
@@ -41,6 +44,7 @@ describe('Delay', () => {
 
     expect(getHTML(result)).toBe('')
   })
+
   it('should set elements to the right place', async () => {
     const result = render(
       <>
@@ -58,6 +62,7 @@ describe('Delay', () => {
 
     expect(getHTML(result)).toBe('beforeworksafter')
   })
+
   it('should set elements to the right place with hide', async () => {
     const show = new State(true)
 
@@ -85,6 +90,7 @@ describe('Delay', () => {
 
     expect(getHTML(result)).toBe('')
   })
+
   it('should work with context', async () => {
     const Component: JsxComponent = () => {
       const hidden = useHidden()
@@ -122,6 +128,7 @@ describe('Delay', () => {
 
     expect(getHTML(result)).toBe('')
   })
+
   it('should work with context and show', async () => {
     const Component: JsxComponent = () => {
       const hidden = useHidden()
@@ -159,6 +166,7 @@ describe('Delay', () => {
 
     expect(getHTML(result)).toBe('')
   })
+
   it('should work with ref', async () => {
     const Component: JsxComponent = () => {
       const hidden = new Ref<State<boolean>>()
@@ -192,6 +200,7 @@ describe('Delay', () => {
 
     expect(getHTML(result)).toBe('')
   })
+
   it('should work deep', async () => {
     const result = render(
       <Delay show={100}>
@@ -210,6 +219,7 @@ describe('Delay', () => {
 
     expect(getHTML(result)).toBe('Worksfine!')
   })
+
   it('should works with async', async () => {
     async function Test1 () {
       const hidden = new Ref<State<boolean>>()
@@ -247,6 +257,7 @@ describe('Delay', () => {
 
     expect(getHTML(result)).toBe('')
   })
+
   it('should works inside each other', async () => {
     const show = new State(true)
 

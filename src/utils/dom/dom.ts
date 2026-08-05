@@ -1,7 +1,8 @@
 import SyncTimer from 'sync-timer'
 
-import { type ContentElements, type TargetElements } from '../../types'
 import { REMOVE_DELAY } from './constants'
+
+import { type ContentElements, type TargetElements } from '../../types'
 
 function removeParentChild (target: ContentElements) {
   if (target._parent) {
@@ -10,6 +11,7 @@ function removeParentChild (target: ContentElements) {
     target._parent = undefined
   }
 }
+
 function removeElements (target: ContentElements, delay: number = (target as any)[REMOVE_DELAY]) {
   if (delay) {
     new SyncTimer(() => { target.remove() }, delay)
@@ -21,6 +23,7 @@ function removeElements (target: ContentElements, delay: number = (target as any
     clear(target, delay)
   }
 }
+
 function updateChildren (target: ContentElements) {
   if (target instanceof Comment) {
     if (target._children) {
@@ -31,6 +34,7 @@ function updateChildren (target: ContentElements) {
     }
   }
 }
+
 function insertChild (target: TargetElements, node: ContentElements, offset = 0) {
   if (target._parent) {
     const parent = node._parent = target._parent
@@ -42,6 +46,7 @@ export function clear (target: Comment, delay?: number) {
   target._children.forEach(target => { removeElements(target, delay) })
   target._children = []
 }
+
 export function remove (target: ContentElements) {
   removeParentChild(target)
   removeElements(target)
@@ -58,40 +63,52 @@ function simpleBefore (target: TargetElements, node: ContentElements) {
     target.before(node)
   }
 }
+
 export function before (target: TargetElements, node: ContentElements) {
   removeParentChild(node)
   insertChild(target, node, 1)
   simpleBefore(target, node)
   updateChildren(node)
 }
+
 export function prepend (target: TargetElements | DocumentFragment, node: ContentElements) {
   removeParentChild(node)
+
   if (target instanceof Comment) {
     node._parent = target
+
     if (!target._children) {
       target._children = []
     }
+
     target._children.unshift(node);
     (target._children[1] || target).before(node)
   } else {
     target.prepend(node)
   }
+
   updateChildren(node)
 }
+
 export function append (target: TargetElements | DocumentFragment, node: ContentElements) {
   removeParentChild(node)
+
   if (target instanceof Comment) {
     node._parent = target
+
     if (!target._children) {
       target._children = []
     }
+
     target._children.push(node)
     target.before(node)
   } else {
     target.appendChild(node)
   }
+
   updateChildren(node)
 }
+
 export function after (target: TargetElements, node: ContentElements) {
   removeParentChild(node)
   insertChild(target, node)

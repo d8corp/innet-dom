@@ -1,4 +1,4 @@
-import innet, { type HandlerPlugin, useApp, useHandler } from 'innet'
+import { type HandlerPlugin, innet, useApp, useHandler } from 'innet'
 import { onDestroy, scope, Watch } from 'watch-state'
 
 import { clear, getComment } from '../../utils'
@@ -26,12 +26,12 @@ export const domAsyncIterable = (): HandlerPlugin => () => {
         clear(comment)
       }
 
-      watcher = new Watch(update => {
-        if (update) {
+      watcher = new Watch(() => {
+        if (scope.activeWatcher!.updated) {
           clear(comment)
         }
 
-        innet(app, childrenHandler)
+        innet(app, childrenHandler, 0, true)
       })
 
       scope.activeWatcher = undefined

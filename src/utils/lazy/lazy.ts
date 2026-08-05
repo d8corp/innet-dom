@@ -15,6 +15,7 @@ export function lazy<C extends Component> (fn: LazyParam<C>): LazyFn<C> {
   const lazyFn: LazyFn<C> = () => {
     if (promise) return promise
     promise = fn()
+
     return promise
   }
 

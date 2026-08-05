@@ -1,12 +1,13 @@
 import { historyPush } from '@watch-state/history-api'
 import { Cache } from 'watch-state'
 
-import { getHTML, render } from '../../test'
-import type { Component } from '../../types'
-import { isLazy, type LazyResult, parsedSearch } from '../../utils'
 import { For } from '../For'
 import { type BaseComponentRoute } from '../Router'
 import { Lazy } from './Lazy'
+
+import { getHTML, render } from '../../test'
+import type { Component } from '../../types'
+import { isLazy, type LazyResult, parsedSearch } from '../../utils'
 
 const LoginModal = () => 'LoginModal'
 const LogoutModal = () => 'LogoutModal'
@@ -37,6 +38,7 @@ describe('Lazy', () => {
 
       const searchModals = new Cache(() => {
         const searchModal = parsedSearch.value.modal
+
         const searchModals = typeof searchModal === 'string'
           ? [searchModal]
           : Array.isArray(searchModal)

@@ -1,8 +1,10 @@
 import { Cache, State } from 'watch-state'
 
+import { Delay } from '../Delay'
+
 import { getHTML, render } from '../../test'
 import { use } from '../../utils'
-import { Delay } from '../Delay'
+
 import { For } from '.'
 
 describe('For', () => {
@@ -19,6 +21,7 @@ describe('For', () => {
 
       expect(getHTML(result, true)).toBe('<ul><li>#0: Mike</li><li>#1: Alex</li><li>#2: Dan</li></ul>')
     })
+
     it('should render Set', () => {
       const result = render(
         <ul>
@@ -31,6 +34,7 @@ describe('For', () => {
 
       expect(getHTML(result, true)).toBe('<ul><li>#0: Mike</li><li>#1: Alex</li><li>#2: Dan</li></ul>')
     })
+
     it('should render Map', () => {
       const result = render(
         <ul>
@@ -44,6 +48,7 @@ describe('For', () => {
       expect(getHTML(result, true)).toBe('<ul><li>#0: 1Mike</li><li>#1: 2Alex</li><li>#2: 3Dan</li></ul>')
     })
   })
+
   describe('dynamic', () => {
     it('should re-render', () => {
       const names = new State(['Mike', 'Alex', 'Dan'])
@@ -62,6 +67,7 @@ describe('For', () => {
 
       expect(getHTML(result)).toBe('<ul><li>#0: Alex</li><li>#1: Dan</li><li>#2: Mike</li></ul>')
     })
+
     it('should re-render with a function value', () => {
       const names = new State(['Mike', 'Alex', 'Dan'])
 
@@ -79,6 +85,7 @@ describe('For', () => {
 
       expect(getHTML(result)).toBe('<ul><li>#0: Alex</li><li>#1: Dan</li><li>#2: Mike</li></ul>')
     })
+
     it('should keep elements, if index in a function', () => {
       const names = new State(['Mike', 'Alex', 'Dan'])
 
@@ -100,6 +107,7 @@ describe('For', () => {
       expect(elements1[1]).toBe(elements2[0])
       expect(elements1[2]).toBe(elements2[1])
     })
+
     it('should not keep elements, if element key is changed', () => {
       const names = new State(['Mike', 'Alex', 'Dan'])
 
@@ -121,6 +129,7 @@ describe('For', () => {
       expect(elements1[1]).toBe(elements2[1])
       expect(elements1[2]).toBe(elements2[2])
     })
+
     it('should keep elements, if element key is not changed', () => {
       const people = new State([
         { id: 'mike', name: 'Mike' },
@@ -131,7 +140,7 @@ describe('For', () => {
       const result = render(
         <ul>
           <For of={people} key='id'>
-            {(value, index) => <li>{() => use(value).name}</li>}
+            {(value) => <li>{() => use(value).name}</li>}
           </For>
         </ul>,
       )
@@ -153,9 +162,11 @@ describe('For', () => {
 
       expect(getHTML(result)).toBe('<ul><li>Michael</li><li>Alex</li><li>Dan</li></ul>')
     })
+
     it('should work with delay', async () => {
       const min = new State(1)
       const max = new State(2)
+
       const data = new Cache(() => {
         const result = []
 
@@ -183,6 +194,7 @@ describe('For', () => {
       expect(data.value).toEqual([0, 1])
       expect(getHTML(result)).toBe('<ul><li>0</li><li>1</li></ul>')
     })
+
     it('should work with Set', () => {
       const names = new State(new Set(['Mike', 'Alex', 'Dan']))
 

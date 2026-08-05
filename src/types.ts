@@ -1,6 +1,6 @@
 import { type Props } from '@innet/jsx'
 import { type Handler } from 'innet'
-import { type Observable, type Watcher } from 'watch-state'
+import type { Observable, Reaction } from 'watch-state'
 
 import { type Ref } from './utils'
 
@@ -18,7 +18,7 @@ export type ParentElements = TargetElements | DocumentFragment
 
 export type UseComment = [Handler, Comment]
 
-export type WatchProp <T> = T | Watcher<T>
+export type WatchProp <T> = T | Reaction<T>
 export type StateProp <T> = WatchProp<T> | Observable<T>
 export type ObservableProp <T> = T | Observable<T>
 export type Component<P extends Props = Props> = (props: P) => JSX.Element

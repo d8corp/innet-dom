@@ -9,6 +9,7 @@ describe('Ref', () => {
 
     expect(div.childNodes[0]).toBe(element.value)
   })
+
   it('works with ref equals undefined', () => {
     const element = new Ref<HTMLDivElement>()
 

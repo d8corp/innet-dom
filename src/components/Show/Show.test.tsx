@@ -1,7 +1,8 @@
-import { Cache, onDestroy, State } from 'watch-state'
+import { Compute, onDestroy, State } from 'watch-state'
+
+import { Show } from './Show'
 
 import { getHTML, render } from '../../test'
-import { Show } from './Show'
 
 describe('Show', () => {
   it('should render with a state', () => {
@@ -19,10 +20,11 @@ describe('Show', () => {
 
     expect(getHTML(result)).toBe('Shown')
   })
+
   it('should render with a cache', () => {
     const show1 = new State(false)
     const show2 = new State(false)
-    const show = new Cache(() => show1.value && show2.value)
+    const show = new Compute(() => show1.value && show2.value)
 
     const result = render(
       <Show when={show}>
@@ -40,6 +42,7 @@ describe('Show', () => {
 
     expect(getHTML(result)).toBe('Shown')
   })
+
   it('should render with a function of state', () => {
     const show = new State(false)
 
@@ -55,12 +58,14 @@ describe('Show', () => {
 
     expect(getHTML(result)).toBe('Shown')
   })
+
   it('should destroy content', () => {
     const fn = jest.fn()
     const show = new State(true)
 
     function Test () {
       onDestroy(fn)
+
       return 'test'
     }
 
@@ -71,8 +76,9 @@ describe('Show', () => {
     )
 
     show.value = false
-    expect(fn).toBeCalled()
+    expect(fn).toHaveBeenCalled()
   })
+
   it('should render fallback', () => {
     const show = new State(true)
 

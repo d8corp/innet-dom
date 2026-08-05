@@ -1,5 +1,6 @@
-import { type StateProp } from '../../types'
 import { inject } from '../inject'
+
+import { type StateProp } from '../../types'
 
 export function injectPx (value?: StateProp<undefined | number | number[]>) {
   return inject(value, value => (

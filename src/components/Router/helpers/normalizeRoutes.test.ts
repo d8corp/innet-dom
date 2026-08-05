@@ -7,6 +7,7 @@ describe('normalizeRoutes', () => {
   it('should work with empty router', () => {
     expect(normalizeRoutes([])).toEqual([])
   })
+
   it('should work with simple path', () => {
     const input: Route[] = [
       { path: 'todos', component: Todo },
@@ -23,6 +24,7 @@ describe('normalizeRoutes', () => {
 
     expect(normalizeRoutes(input)).toEqual(output)
   })
+
   it('should work with normalized simple path', () => {
     const Todo = () => 'Todo'
 
@@ -46,6 +48,7 @@ describe('normalizeRoutes', () => {
 
     expect(normalizeRoutes(input)).toEqual(output)
   })
+
   it('should work', () => {
     const Todo = () => 'Todo'
 
@@ -69,6 +72,7 @@ describe('normalizeRoutes', () => {
 
     expect(normalizeRoutes(input)).toEqual(output)
   })
+
   it('should work deep', () => {
     const Todo = () => 'Todo'
 
@@ -95,6 +99,7 @@ describe('normalizeRoutes', () => {
 
     expect(normalizeRoutes(input)).toEqual(output)
   })
+
   it('should reduce slashes', () => {
     const input: Route[] = [
       { path: '/todo/', component: Todo },

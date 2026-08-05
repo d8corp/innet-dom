@@ -1,7 +1,8 @@
-import { type Component } from '../../../types'
-import { type LazyFn } from '../../../utils'
 import { type Route, type Routing } from '../types'
 import { normalizeRoutes } from './normalizeRoutes'
+
+import { type Component } from '../../../types'
+import { type LazyFn } from '../../../utils'
 
 export function createRouting (
   routes: Route[],
@@ -18,9 +19,11 @@ export function createRouting (
     const route = normalizedRoutes[i]
     const optional = route.path?.endsWith('?')
     const pathKey = optional ? route.path?.slice(0, -1) : route.path
+
     const components = route.component
       ? [...parentComponents, route.component]
       : parentComponents
+
     const fallback = route.component ? [...parentFallbacks, route.fallback ?? parentFallback] : parentFallbacks
     const permissions = route.permissions ? [...parentPermissions, ...route.permissions] : parentPermissions
 
@@ -109,6 +112,7 @@ export function createRouting (
         permissions,
         route.childrenFallback ?? parentFallback,
       )
+
       continue
     }
 

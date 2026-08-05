@@ -1,5 +1,6 @@
-import { getHTML, render } from '../../test'
 import { Pipe } from './Pipe'
+
+import { getHTML, render } from '../../test'
 
 describe('Pipe', () => {
   it('should work', () => {

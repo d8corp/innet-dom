@@ -6,6 +6,7 @@ import { type ChildrenProps } from '../../types'
 describe('domIterable', () => {
   it('should run after yield', () => {
     const fn = jest.fn()
+
     function * Test () {
       yield <div />
       fn()
@@ -13,8 +14,9 @@ describe('domIterable', () => {
 
     render(<Test />)
 
-    expect(fn).toBeCalledTimes(1)
+    expect(fn).toHaveBeenCalledTimes(1)
   })
+
   it('should change state immediately', () => {
     function * Test () {
       const id = new State('foo')
@@ -26,6 +28,7 @@ describe('domIterable', () => {
 
     expect(getHTML(result)).toBe('<div id="bar"></div>')
   })
+
   it('should works with hooks', () => {
     function * Test (props: ChildrenProps) {
       yield <div>{props.children}</div>

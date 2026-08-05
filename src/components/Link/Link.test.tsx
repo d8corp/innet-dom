@@ -1,10 +1,11 @@
 import { historyPush } from '@watch-state/history-api'
 
-import { getHTML, render } from '../../test'
-import { Ref } from '../../utils'
 import { Router } from '../Router'
 import { createRouting } from '../Router/helpers/createRouting'
 import { Link } from './Link'
+
+import { getHTML, render } from '../../test'
+import { Ref } from '../../utils'
 
 describe('Link', () => {
   it('should work', async () => {
@@ -49,6 +50,7 @@ describe('Link', () => {
 
     expect(getHTML(content.value)).toBe('<div>404</div>')
   })
+
   it('should work without props', async () => {
     await historyPush('/')
 
@@ -56,6 +58,7 @@ describe('Link', () => {
 
     expect(getHTML(app)).toBe('<a>home</a>')
   })
+
   it('should contain default props on external', async () => {
     await historyPush('/')
 
@@ -63,6 +66,7 @@ describe('Link', () => {
 
     expect(getHTML(app)).toBe('<a href="https://cantinc.com" rel="noopener noreferrer nofollow" target="_blank">CANT inc.</a>')
   })
+
   it('should have self class', () => {
     expect(getHTML(render(
       <Link href='/' class='test'>
@@ -80,6 +84,7 @@ describe('Link', () => {
       '<a class="test1 test2" href="/">CANT inc.</a>',
     )
   })
+
   it('should have active class', async () => {
     await historyPush('/')
 
@@ -87,7 +92,8 @@ describe('Link', () => {
       <Link
         href='/'
         exact
-        class={{ root: 'test', active: 'active' }}>
+        class={{ root: 'test', active: 'active' }}
+      >
         CANT inc.
       </Link>,
     )
@@ -102,6 +108,7 @@ describe('Link', () => {
 
     expect(getHTML(app)).toBe('<a class="test active" href="/">CANT inc.</a>')
   })
+
   it('should work with any search', async () => {
     await historyPush('/')
 

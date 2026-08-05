@@ -1,12 +1,13 @@
 import { historyPush } from '@watch-state/history-api'
 import { State } from 'watch-state'
 
+import { createRouting } from './helpers/createRouting'
+import { Router } from './Router'
+
 import { useParam } from '../../hooks'
 import { getHTML, render } from '../../test'
 import { type ChildrenProps } from '../../types'
 import { lazy } from '../../utils'
-import { createRouting } from './helpers/createRouting'
-import { Router } from './Router'
 
 const Home = () => 'Home'
 const NotFound = () => '404'
@@ -29,6 +30,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('')
     })
+
     it('Should render home page', async () => {
       await historyPush('/')
 
@@ -44,6 +46,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('')
     })
+
     it('Should render 404 page', async () => {
       await historyPush('/')
 
@@ -60,6 +63,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('404')
     })
+
     it('Should render about page', async () => {
       await historyPush('/')
 
@@ -81,6 +85,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('About')
     })
+
     it('Should render index about page', async () => {
       await historyPush('/')
 
@@ -102,6 +107,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('404')
     })
+
     it('Should render layout', async () => {
       await historyPush('/')
 
@@ -134,6 +140,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('<span>Settings</span>')
     })
+
     it('Should render list of segments', async () => {
       await historyPush('/')
 
@@ -159,6 +166,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('404')
     })
+
     it('Should render optional segment', async () => {
       await historyPush('/')
 
@@ -210,6 +218,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('NotFound Page')
     })
+
     it('Should work with permissions', async () => {
       await historyPush('/')
 
@@ -255,6 +264,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('<div>404</div>')
     })
+
     it('Should work with different pages for different permissions', async () => {
       await historyPush('/')
 
@@ -308,6 +318,7 @@ describe('Router', () => {
       expect(getHTML(result)).toBe('Prelogin')
     })
   })
+
   describe('lazy', () => {
     it('Should render home page', async () => {
       await historyPush('/')
@@ -326,6 +337,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('')
     })
+
     it('Should render fallback', async () => {
       await historyPush('/')
 
@@ -349,6 +361,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('')
     })
+
     it('Should render lazy deep', async () => {
       await historyPush('/')
 
@@ -356,6 +369,7 @@ describe('Router', () => {
         {
           component: lazy(async () => {
             new Promise(resolve => setTimeout(resolve, 300))
+
             return MainLayout
           }),
           fallback: 'Loading MainLayout...',
@@ -364,6 +378,7 @@ describe('Router', () => {
               index: true,
               component: lazy(async () => {
                 new Promise(resolve => setTimeout(resolve, 300))
+
                 return Home
               }),
               fallback: 'Loading Home...',
@@ -371,6 +386,7 @@ describe('Router', () => {
             {
               component: lazy(async () => {
                 await new Promise(resolve => setTimeout(resolve, 300))
+
                 return NotFound
               }),
               fallback: 'Loading NotFound...',
@@ -403,6 +419,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('<div>404</div>')
     })
+
     it('Should work with default', async () => {
       await historyPush('/')
 
@@ -427,6 +444,7 @@ describe('Router', () => {
       expect(getHTML(result)).toBe('')
     })
   })
+
   describe('children', () => {
     it('Should work with childrenFallback', async () => {
       await historyPush('/')
@@ -441,6 +459,7 @@ describe('Router', () => {
               path: 'foo',
               component: lazy(async () => {
                 await new Promise(resolve => setTimeout(resolve))
+
                 return Foo
               }),
             },
@@ -449,6 +468,7 @@ describe('Router', () => {
               path: 'bar',
               component: lazy(async () => {
                 await new Promise(resolve => setTimeout(resolve))
+
                 return Bar
               }),
             },
@@ -477,6 +497,7 @@ describe('Router', () => {
       expect(getHTML(result)).toBe('Bar')
     })
   })
+
   describe('optional path segment', () => {
     it('should work with strict params', async () => {
       await historyPush('/')
@@ -531,6 +552,7 @@ describe('Router', () => {
       expect(getHTML(result)).toBe('404')
     })
   })
+
   describe('params', () => {
     it('should provide params', async () => {
       await historyPush('/')
@@ -563,6 +585,7 @@ describe('Router', () => {
 
       expect(getHTML(result)).toBe('404')
     })
+
     it('should work with optional params', async () => {
       await historyPush('/')
 

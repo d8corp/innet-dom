@@ -1,5 +1,5 @@
 import { useProps } from '@innet/jsx'
-import classes, { type ClassesArgument } from 'html-classes'
+import { classes, type ClassesArgument } from 'html-classes'
 
 import { type HTMLProps } from '../../types'
 
@@ -19,6 +19,7 @@ export function getStyles<S extends Styles> (styles: S, props: any): S {
 
   if (typeof className !== 'object' || Array.isArray(className)) {
     const result = { ...styles }
+
     Object.defineProperty(result, 'root', {
       get () {
         return classes([styles.root, className])

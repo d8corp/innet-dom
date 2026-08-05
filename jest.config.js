@@ -2,6 +2,6 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   setupFiles: ['core-js'],
-  testPathIgnorePatterns: ['.*\.speed\.test\.ts$'],
+  testPathIgnorePatterns: ['.*.speed.test.ts$', 'speed-test'],
   coverageDirectory: 'docs/coverage',
 }

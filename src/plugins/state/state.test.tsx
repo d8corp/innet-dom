@@ -13,6 +13,7 @@ describe('state', () => {
 
     expect(getHTML(result)).toBe('test')
   })
+
   it('should render state value', () => {
     const state1 = new State()
     const state2 = new State('test')

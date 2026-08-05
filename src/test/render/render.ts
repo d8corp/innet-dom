@@ -1,4 +1,4 @@
-import innet from 'innet'
+import { innet } from 'innet'
 
 import { handler as defaultHandler } from '../../handler'
 import { setParent } from '../../utils'
@@ -9,5 +9,6 @@ export function render (app: any, handler = defaultHandler) {
   setParent(childrenHandler, parent)
 
   innet(app, childrenHandler)
+
   return parent
 }

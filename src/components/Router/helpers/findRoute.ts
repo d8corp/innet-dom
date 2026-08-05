@@ -20,6 +20,7 @@ export function findRoute (
       for (const item of routing.indexList) {
         if (item.permissions.isSubsetOf(permissions)) {
           setParams(path, item.params, params)
+
           return item
         }
       }
@@ -27,6 +28,7 @@ export function findRoute (
 
     if (routing.index) {
       setParams(path, routing.index.params, params)
+
       return routing.index
     }
 
@@ -34,6 +36,7 @@ export function findRoute (
       for (const item of routing.restList) {
         if (item.permissions.isSubsetOf(permissions)) {
           setParams(path, item.params, params)
+
           return item
         }
       }
@@ -41,6 +44,7 @@ export function findRoute (
 
     if (routing.rest) {
       setParams(path, routing.rest.params, params)
+
       return routing.rest
     }
 
@@ -67,6 +71,7 @@ export function findRoute (
 
   if (routing.rest) {
     setParams(path, routing.rest.params, params)
+
     return routing.rest
   }
 }

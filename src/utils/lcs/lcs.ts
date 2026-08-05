@@ -38,6 +38,7 @@ export function lcs <T> (before: T[], after: T[]): T[] {
 
     while (left < right) {
       const mid = (left + right) >> 1
+
       if (sequence[tailIndices[mid]] < x) {
         left = mid + 1
       } else {

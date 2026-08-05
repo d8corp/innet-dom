@@ -1,6 +1,6 @@
 import { GenericComponent } from '@innet/jsx'
 import { callHandler } from '@innet/utils'
-import innet, { type HandlerPlugin, NEXT, useApp, useHandler } from 'innet'
+import { type HandlerPlugin, innet, NEXT, useApp, useHandler } from 'innet'
 import { onDestroy, scope, Watch } from 'watch-state'
 
 import { clear, getComment } from '../../utils'
@@ -14,8 +14,9 @@ export const domIterable = (): HandlerPlugin => () => {
   const { app: apps, data } = genericComponent
 
   if (!(data instanceof Promise)) {
-    innet(data.value, handler)
-    innet(() => genericComponent.app.next(), callHandler)
+    innet(data.value, handler, 0, true)
+    innet(() => genericComponent.app.next(), callHandler, 0, true)
+
     return
   }
 
@@ -36,12 +37,12 @@ export const domIterable = (): HandlerPlugin => () => {
       clear(comment)
     }
 
-    watcher = new Watch(update => {
-      if (update) {
+    watcher = new Watch(() => {
+      if (scope.activeWatcher!.updated) {
         clear(comment)
       }
 
-      innet(app, childrenHandler)
+      innet(app, childrenHandler, 0, true)
     })
 
     scope.activeWatcher = undefined

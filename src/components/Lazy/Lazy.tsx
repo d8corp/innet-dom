@@ -1,10 +1,11 @@
-import { type Observable, State, Watch, type Watcher } from 'watch-state'
+import type { Observable, Reaction } from 'watch-state'
+import { State, Watch } from 'watch-state'
 
 import { type Component, type StateProp } from '../../types'
 import { type LazyResult, use } from '../../utils'
 
 export interface LazyProps<C extends Component = Component> {
-  component: Watcher<LazyResult<C> | C> | Observable<LazyResult<C> | C>
+  component: Reaction<LazyResult<C> | C> | Observable<LazyResult<C> | C>
   fallback?: JSX.Element
   show?: StateProp<boolean>
   render?: (Component: C) => JSX.Element
@@ -29,6 +30,7 @@ export function Lazy<C extends Component = Component> ({
 
     if (currentComponent instanceof Promise && !loadedComponents.has(currentComponent)) {
       loading.value = true
+
       currentComponent.then((component) => {
         loadedComponents.set(currentComponent, typeof component === 'function' ? component : component.default)
         loading.value = false

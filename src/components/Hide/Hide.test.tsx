@@ -1,7 +1,8 @@
-import { Cache, onDestroy, State } from 'watch-state'
+import { Compute, onDestroy, State } from 'watch-state'
+
+import { Hide } from './Hide'
 
 import { getHTML, render } from '../../test'
-import { Hide } from './Hide'
 
 describe('Hide', () => {
   it('should render with a state', () => {
@@ -19,10 +20,11 @@ describe('Hide', () => {
 
     expect(getHTML(result)).toBe('')
   })
+
   it('should render with a cache', () => {
     const hide1 = new State(false)
     const hide2 = new State(false)
-    const hide = new Cache(() => hide1.value && hide2.value)
+    const hide = new Compute(() => hide1.value && hide2.value)
 
     const result = render(
       <Hide when={hide}>
@@ -40,6 +42,7 @@ describe('Hide', () => {
 
     expect(getHTML(result)).toBe('')
   })
+
   it('should render with a function of state', () => {
     const hide = new State(false)
 
@@ -55,12 +58,14 @@ describe('Hide', () => {
 
     expect(getHTML(result)).toBe('')
   })
+
   it('should destroy content', () => {
     const fn = jest.fn()
     const hide = new State(false)
 
     function Test () {
       onDestroy(fn)
+
       return 'test'
     }
 
@@ -70,12 +75,13 @@ describe('Hide', () => {
       </Hide>,
     )
 
-    expect(fn).not.toBeCalled()
+    expect(fn).not.toHaveBeenCalled()
 
     hide.value = true
 
-    expect(fn).toBeCalled()
+    expect(fn).toHaveBeenCalled()
   })
+
   it('should render fallback', () => {
     const hide = new State(false)
 

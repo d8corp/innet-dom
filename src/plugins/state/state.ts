@@ -1,4 +1,4 @@
-import innet, { type HandlerPlugin, NEXT, useApp, useHandler } from 'innet'
+import { type HandlerPlugin, innet, NEXT, useApp, useHandler } from 'innet'
 import { Observable } from 'watch-state'
 
 export function state (): HandlerPlugin {
@@ -7,6 +7,6 @@ export function state (): HandlerPlugin {
 
     if (!(state instanceof Observable)) return NEXT
 
-    innet(() => state.value, useHandler())
+    innet(() => state.value, useHandler(), 0, true)
   }
 }

@@ -1,6 +1,6 @@
 import { historyPush, historyReplace, locationURL } from '@watch-state/history-api'
-import classes from 'html-classes'
-import { Cache } from 'watch-state'
+import { classes } from 'html-classes'
+import { Compute } from 'watch-state'
 
 import { getStyles, type HTMLStyleProps } from '../../hooks'
 import { use } from '../../utils'
@@ -27,7 +27,7 @@ export interface LinkProps extends HTMLStyleProps<HTMLAnchorElement, typeof defa
 
 export function Link (props: LinkProps) {
   const styles = getStyles(defaultLinkClass, props)
-  const { onclick, href, scroll, scrollTo, replace, exact, ...rest } = props
+  const { onclick, href, scroll = 'before', scrollTo, replace, exact, ...rest } = props
 
   if (!href || (typeof href === 'string' && href.startsWith('http'))) {
     return (
@@ -42,11 +42,12 @@ export function Link (props: LinkProps) {
     )
   }
 
-  const getHref = (update: boolean) => use(href, update) || ''
+  const getHref = () => use(href) || ''
 
   function createClassName () {
-    const regString = new Cache(update => {
-      const href = getHref(update)
+    const regString = new Compute(() => {
+      const href = getHref()
+
       const prefix = href.startsWith('?')
         ? '[^?]*'
         : href.startsWith('#')
@@ -56,9 +57,9 @@ export function Link (props: LinkProps) {
       return `^${prefix}${clearHref(href)}${exact ? '$' : ''}`
     })
 
-    const reg = new Cache(() => new RegExp(regString.value))
+    const reg = new Compute(() => new RegExp(regString.value))
 
-    return new Cache(() => {
+    return new Compute(() => {
       return classes([
         styles.root,
         reg.value.test(locationURL.value) && styles.active,
@@ -74,7 +75,7 @@ export function Link (props: LinkProps) {
       return onclick?.call(this, e)
     }
 
-    const href = getHref(false)
+    const href = getHref()
     let url = href
     const page = href?.startsWith('/')
 
@@ -89,10 +90,9 @@ export function Link (props: LinkProps) {
 
     e.preventDefault()
 
-    const { scrollTo = page ? 0 : -1, scroll = 'before', replace } = props
     const call = replace ? historyReplace : historyPush
 
-    call(url, scroll === 'none' ? -1 : scrollTo)
+    call(url, scroll === 'none' ? -1 : scrollTo ?? (page ? 0 : -1))
     // @ts-expect-error TODO: fix types
     onclick?.call(this, e)
   }

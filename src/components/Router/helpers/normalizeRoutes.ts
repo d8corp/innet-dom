@@ -39,6 +39,7 @@ export function normalizeRoutes (routes: Route[]): NormalizedRoute[] {
       splitPath.length === 1
     ) return route as NormalizedRoute
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { path, ...rest } = route
     let currentRoute: Route = rest
 

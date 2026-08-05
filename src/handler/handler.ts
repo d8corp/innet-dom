@@ -1,5 +1,4 @@
 import {
-  jsxComponent,
   type JSXElement,
 } from '@innet/jsx'
 import {
@@ -23,6 +22,7 @@ import {
   domJSX,
   domNode,
   domText,
+  jsxComponentDom,
   state,
 } from '../plugins'
 import { type HTMLProps } from '../types'
@@ -33,7 +33,7 @@ export const arrayPlugins = [
 
 export const objectPlugins = [
   state,
-  jsxComponent,
+  jsxComponentDom,
   domJSX,
   domIterable,
 ]
@@ -90,13 +90,14 @@ declare global {
       | undefined
       | void
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     interface ArrayElement extends Array<Element> {}
 
     type WatchElement = (update: boolean) => Element
     type PromiseElement = Promise<NonPromiseElement>
 
     interface ElementChildrenAttribute {
-      // eslint-disable-next-line @typescript-eslint/ban-types
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
       children: {}
     }
 

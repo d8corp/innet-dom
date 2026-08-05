@@ -1,4 +1,3 @@
-
 export interface PipeProps {
   deep?: number
   children: (children: JSX.Element, deep: number) => JSX.Element

@@ -1,5 +1,5 @@
 import { EMPTY } from '@innet/jsx'
-import innet, { useHandler } from 'innet'
+import { innet, useHandler } from 'innet'
 
 import type { TargetElements } from '../../types'
 import { getComment } from '../../utils'
@@ -13,7 +13,7 @@ export function Portal ({ parent = document.body, children }: PortalProps) {
   const handler = useHandler()
   const [childHandler] = getComment(handler, 'portal', false, parent)
 
-  innet(children, childHandler)
+  innet(children, childHandler, 0, true)
 
   return EMPTY
 }
