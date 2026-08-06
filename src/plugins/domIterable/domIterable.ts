@@ -3,6 +3,9 @@ import { callHandler } from '@innet/utils'
 import { type HandlerPlugin, innet, NEXT, useApp, useHandler } from 'innet'
 import { onDestroy, scope, Watch } from 'watch-state'
 
+import { watcherContext } from '../domFn'
+
+import { useContextWatcher } from '../../hooks'
 import { clear, getComment } from '../../utils'
 
 export const domIterable = (): HandlerPlugin => () => {
@@ -21,13 +24,15 @@ export const domIterable = (): HandlerPlugin => () => {
   }
 
   const [childrenHandler, comment] = getComment(handler, 'domIterable')
-  const { activeWatcher } = scope
+
+  const activeWatcher = useContextWatcher(() => {
+    onDestroy(() => {
+      deleted = true
+    })
+  })
+
   let watcher: Watch
   let deleted = false
-
-  onDestroy(() => {
-    deleted = true
-  })
 
   const call = (app: any) => {
     scope.activeWatcher = activeWatcher
@@ -38,8 +43,12 @@ export const domIterable = (): HandlerPlugin => () => {
     }
 
     watcher = new Watch(() => {
-      if (scope.activeWatcher!.updated) {
+      const watcher = scope.activeWatcher!
+
+      if (watcher.updated) {
         clear(comment)
+      } else {
+        watcherContext.set(childrenHandler, watcher)
       }
 
       innet(app, childrenHandler, 0, true)

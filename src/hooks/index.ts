@@ -1,3 +1,4 @@
+export * from './useContextWatcher'
 export * from './useParam'
 export * from './useParams'
 export * from './useParent'

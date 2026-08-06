@@ -1,18 +1,23 @@
 import { type HandlerPlugin, innet, useApp, useHandler } from 'innet'
+import type { Observer } from 'watch-state'
 import { onDestroy, scope, Watch } from 'watch-state'
 
+import { watcherContext } from '../domFn'
+
+import { useContextWatcher } from '../../hooks'
 import { clear, getComment } from '../../utils'
 
 export const domAsyncIterable = (): HandlerPlugin => () => {
   const handler = useHandler()
   const apps = useApp<AsyncIterable<any>>()
   const [childrenHandler, comment] = getComment(handler, 'asyncIterable')
-  const { activeWatcher } = scope
-  let watcher: Watch
+  let watcher: Observer
   let deleted = false
 
-  onDestroy(() => {
-    deleted = true
+  const activeWatcher = useContextWatcher(() => {
+    onDestroy(() => {
+      deleted = true
+    })
   })
 
   const run = async () => {
@@ -26,9 +31,13 @@ export const domAsyncIterable = (): HandlerPlugin => () => {
         clear(comment)
       }
 
-      watcher = new Watch(() => {
-        if (scope.activeWatcher!.updated) {
+      new Watch(() => {
+        watcher = scope.activeWatcher!
+
+        if (watcher.updated) {
           clear(comment)
+        } else {
+          watcherContext.set(childrenHandler, watcher)
         }
 
         innet(app, childrenHandler, 0, true)

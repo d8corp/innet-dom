@@ -1,14 +1,14 @@
-import { jsxComponent, useContext } from '@innet/jsx'
+import { jsxComponent } from '@innet/jsx'
 import type { HandlerPlugin } from 'innet'
 import { scope } from 'watch-state'
 
-import { watcherContext } from '../domFn'
+import { useContextWatcher } from '../../hooks'
 
 export function jsxComponentDom (): HandlerPlugin {
   const jsx = jsxComponent()
 
   return () => {
-    const watcher = useContext(watcherContext)
+    const watcher = useContextWatcher()
 
     if (watcher) {
       const prevObserver = scope.activeWatcher

@@ -1,6 +1,7 @@
 import { type HandlerPlugin, innet, useApp, useHandler } from 'innet'
-import { onDestroy, scope } from 'watch-state'
+import { onDestroy } from 'watch-state'
 
+import { useContextWatcher } from '../../hooks'
 import { getComment } from '../../utils'
 
 export function domAsync (): HandlerPlugin {
@@ -11,17 +12,15 @@ export function domAsync (): HandlerPlugin {
 
     let removed = false
 
-    onDestroy(() => {
-      removed = true
+    useContextWatcher(() => {
+      onDestroy(() => {
+        removed = true
+      })
     })
-
-    const { activeWatcher } = scope
 
     app.then(data => {
       if (!removed) {
-        scope.activeWatcher = activeWatcher
         innet(data, childHandler, 0, true)
-        scope.activeWatcher = undefined
       }
     })
   }

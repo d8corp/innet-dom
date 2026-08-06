@@ -1,8 +1,10 @@
 import { Context, EMPTY } from '@innet/jsx'
 import { innet, useHandler } from 'innet'
 import Timer from 'sync-timer'
-import { onDestroy, scope, State, Watch } from 'watch-state'
+import { onDestroy, State, Watch } from 'watch-state'
 
+import { useContextWatcher } from '../../hooks'
+import { watcherContext } from '../../plugins'
 import { getComment, type Ref } from '../../utils'
 import { REMOVE_DELAY } from '../../utils/dom/constants'
 
@@ -24,7 +26,9 @@ export function Delay ({ show = 0, hide = 0, ref, children }: DelayProps) {
 
   const [childHandler, comment] = getComment(handler, 'Delay', true)
 
-  const run = () => { innet(children, childHandler, 0, true) }
+  const run = () => {
+    innet(children, childHandler, 0, true)
+  }
 
   if (hide > 0) {
     const hideState = childHandler[delayContext.key] = new State(false)
@@ -35,43 +39,43 @@ export function Delay ({ show = 0, hide = 0, ref, children }: DelayProps) {
       ref.value = hideState
     }
 
-    const watcher = new Watch(() => {
-      if (show > 0) {
-        const watcher = scope.activeWatcher
-
-        setTimeout(() => {
-          if (!hideState.raw) {
-            scope.activeWatcher = watcher
-            run()
-            scope.activeWatcher = undefined
-          }
-        }, show)
-      } else {
-        run()
-      }
-    }, true)
-
-    onDestroy(() => {
-      hideState.value = true
-      new Timer(() => { watcher.destroy() }, hide)
+    useContextWatcher(() => {
+      onDestroy(() => {
+        hideState.value = true
+        new Timer(() => { watcher.destroy() }, hide)
+      })
     })
+
+    const watcher = new Watch(() => {}, true)
+    watcherContext.set(childHandler, watcher)
+
+    if (show > 0) {
+      new Timer(() => {
+        if (!hideState.raw) {
+          run()
+        }
+      }, show)
+    } else {
+      run()
+    }
 
     return
   }
 
   if (show > 0) {
     let destroyed = false
-    const { activeWatcher } = scope
 
-    onDestroy(() => {
-      destroyed = true
+    const activeWatcher = useContextWatcher(() => {
+      onDestroy(() => {
+        destroyed = true
+      })
     })
 
-    setTimeout(() => {
+    watcherContext.set(childHandler, activeWatcher)
+
+    new Timer(() => {
       if (!destroyed) {
-        scope.activeWatcher = activeWatcher
         run()
-        scope.activeWatcher = undefined
       }
     }, show)
 
