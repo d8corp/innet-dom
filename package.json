@@ -10,6 +10,7 @@
   "private": true,
   "scripts": {
     "build": "innetjs release",
+    "start": "innetjs start -i example/index",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "lint": "eslint src --ext .ts,.tsx",

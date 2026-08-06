@@ -3,8 +3,7 @@ import { innet, useHandler } from 'innet'
 import Timer from 'sync-timer'
 import { onDestroy, State, Watch } from 'watch-state'
 
-import { useContextWatcher } from '../../hooks'
-import { watcherContext } from '../../plugins'
+import { useContextWatcher, watcherContext } from '../../hooks'
 import { getComment, type Ref } from '../../utils'
 import { REMOVE_DELAY } from '../../utils/dom/constants'
 

@@ -1,0 +1,14 @@
+.root {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+@starting-style {
+  .root {
+    opacity: 0;
+  }
+}

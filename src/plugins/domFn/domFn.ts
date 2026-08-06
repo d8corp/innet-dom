@@ -1,12 +1,8 @@
-import { Context } from '@innet/jsx'
 import { type HandlerPlugin, innet, useApp, useHandler } from 'innet'
-import type { Observer } from 'watch-state'
 import { scope, Watch } from 'watch-state'
 
-import { useContextWatcher } from '../../hooks'
+import { useContextWatcher, watcherContext } from '../../hooks'
 import { clear, getComment } from '../../utils'
-
-export const watcherContext = new Context<Observer>()
 
 export function domFn (): HandlerPlugin {
   return () => {

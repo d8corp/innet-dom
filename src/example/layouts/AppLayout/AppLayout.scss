@@ -1,0 +1,24 @@
+.root {
+  color: #F7B756;
+  text-decoration: none;
+}
+
+.active {
+  color: white;
+  pointer-events: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-bottom: 100px;
+}

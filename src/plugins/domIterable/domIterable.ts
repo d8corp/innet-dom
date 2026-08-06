@@ -3,9 +3,7 @@ import { callHandler } from '@innet/utils'
 import { type HandlerPlugin, innet, NEXT, useApp, useHandler } from 'innet'
 import { onDestroy, scope, Watch } from 'watch-state'
 
-import { watcherContext } from '../domFn'
-
-import { useContextWatcher } from '../../hooks'
+import { useContextWatcher, watcherContext } from '../../hooks'
 import { clear, getComment } from '../../utils'
 
 export const domIterable = (): HandlerPlugin => () => {

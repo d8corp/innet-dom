@@ -1,8 +1,9 @@
+import { Context } from '@innet/jsx'
 import { useHandler } from 'innet'
-import type { Reaction } from 'watch-state'
+import type { Observer, Reaction } from 'watch-state'
 import { watchWithScope } from 'watch-state'
 
-import { watcherContext } from '../../plugins'
+export const watcherContext = new Context<Observer>()
 
 export function useContextWatcher (callback?: Reaction<any>) {
   const handler = useHandler()
