@@ -1,4 +1,4 @@
-import { Cache, State } from 'watch-state'
+import { Compute, State } from 'watch-state'
 
 import { Delay } from '../Delay'
 
@@ -167,7 +167,7 @@ describe('For', () => {
       const min = new State(1)
       const max = new State(2)
 
-      const data = new Cache(() => {
+      const data = new Compute(() => {
         const result = []
 
         for (let i = min.value; i < max.value; i++) {

@@ -2,6 +2,8 @@ import { EMPTY } from '@innet/jsx'
 import { type Handler, innet, useHandler } from 'innet'
 import { createEvent, onDestroy, scope, State, unwatch, Watch } from 'watch-state'
 
+import { forIndexContext, forValueContext } from './hoohs'
+
 import { type ContentElements, type StateProp } from '../../types'
 import {
   after,
@@ -15,8 +17,15 @@ import {
   statePropToWatchProp,
 } from '../../utils'
 
-export const FOR_VALUE = Symbol('FOR_VALUE') as unknown as string
-export const FOR_INDEX = Symbol('FOR_INDEX') as unknown as string
+/**
+ * @deprecated Use `forValueContext`
+ * */
+export const FOR_VALUE = forValueContext.key as unknown as string
+
+/**
+ * @deprecated Use `forIndexContext`
+ * */
+export const FOR_INDEX = forIndexContext.key
 
 const WATCHER_KEY = Symbol('WATCHER_KEY') as unknown as string
 
@@ -72,12 +81,15 @@ export function For<O extends StateProp<Iterable<any>>> ({
         keysList.push(valueKey)
 
         const [deepHandler] = getComment(childHandler, valueKey, true)
-        deepHandler[FOR_VALUE] = new State(value)
-        deepHandler[FOR_INDEX] = new State(index++)
+        const valueState = new State(value)
+        const indexState = new State(index++)
+
+        forValueContext.set(deepHandler, valueState)
+        forIndexContext.set(deepHandler, indexState)
         handlersMap.set(valueKey, deepHandler)
 
         deepHandler[WATCHER_KEY] = new Watch(() => {
-          innet(children(deepHandler[FOR_VALUE], deepHandler[FOR_INDEX]), deepHandler, 0, true)
+          innet(children(valueState as any, indexState as any), deepHandler, 0, true)
         }, true)
       }
 
@@ -105,8 +117,8 @@ export function For<O extends StateProp<Iterable<any>>> ({
         const deepHandler = handlersMap.get(valueKey) as Handler
 
         unwatch(createEvent(() => {
-          deepHandler[FOR_VALUE].value = value
-          deepHandler[FOR_INDEX].value = index
+          forValueContext.get(deepHandler)!.set(value)
+          forIndexContext.get(deepHandler)!.set(index)
         }))
 
         if (!keep) {
@@ -124,8 +136,11 @@ export function For<O extends StateProp<Iterable<any>>> ({
         const comment = document.createComment(valueKey)
         const deepHandler = Object.create(childHandler)
         setParent(deepHandler, comment)
-        deepHandler[FOR_VALUE] = new State(value)
-        deepHandler[FOR_INDEX] = new State(index)
+        const valueState = new State(value)
+        const indexState = new State(index)
+
+        forValueContext.set(deepHandler, valueState)
+        forIndexContext.set(deepHandler, indexState)
         handlersMap.set(valueKey, deepHandler)
 
         if (index) {
@@ -137,7 +152,7 @@ export function For<O extends StateProp<Iterable<any>>> ({
         }
 
         deepHandler[WATCHER_KEY] = new Watch(() => {
-          innet(children(deepHandler[FOR_VALUE], deepHandler[FOR_INDEX]), deepHandler, 0, true)
+          innet(children(valueState as any, indexState as any), deepHandler, 0, true)
         }, true)
       }
 
