@@ -12,7 +12,7 @@ export const forIndexContext = new Context<State<number>>()
 export function useForIndex () {
   const value = useContext(forIndexContext)
 
-  if (!value) throw new Error('useForValue must be used within dynamic list of For values')
+  if (!value) throw new Error('useForIndex must be used within dynamic list of For values')
 
   return value
 }
