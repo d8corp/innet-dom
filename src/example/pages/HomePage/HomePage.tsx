@@ -1,11 +1,11 @@
-import { Cache, State } from 'watch-state'
+import { Compute, State } from 'watch-state'
 
 import { Page } from '../../components'
 import styles from './HomePage.module.scss'
 import logo from './logo.svg'
 
 const name = new State('World')
-const world = new Cache(() => name.value ? `, ${name.value}` : '')
+const world = new Compute(() => name.value ? `, ${name.value}` : '')
 
 const handleInput = (e: Event) => {
   const target = e.target as HTMLInputElement
