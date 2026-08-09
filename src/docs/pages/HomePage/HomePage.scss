@@ -1,0 +1,49 @@
+.root {
+  text-align: center;
+  background: no-repeat radial-gradient(ellipse, rgba(247,183,86,0.12), transparent 70%) 0 -300px;
+}
+
+.content {
+  max-width: 800px;
+}
+
+.version {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(247,183,86,0.08);
+  border: 1px solid rgba(247,183,86,0.2);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #F7B756;
+  margin-bottom: 24px;
+}
+
+.title {
+  transform-origin: center center;
+}
+
+.description {
+  font-size: 20px;
+  color: #A0A0A0;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 36px;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.features {
+  margin-top: 40px;
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  color: #808080;
+  font-size: 14px;
+}

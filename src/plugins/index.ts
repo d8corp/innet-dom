@@ -1,3 +1,4 @@
+export * from './domArray'
 export * from './domAsync'
 export * from './domAsyncIterable'
 export * from './domFn'

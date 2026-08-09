@@ -37,6 +37,8 @@ export default defineConfig([
       globals: jest.environments.globals.globals,
     },
     rules: {
+      'react/jsx-key': 'off',
+      'react/jsx-no-target-blank': 'off',
       'react/no-children-prop': 'off',
       '@typescript-eslint/no-namespace': 'off',
       '@typescript-eslint/no-unsafe-function-type': 'off',

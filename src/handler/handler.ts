@@ -3,7 +3,6 @@ import {
 } from '@innet/jsx'
 import {
   array,
-  arraySync,
   fn,
   node,
   nullish,
@@ -16,6 +15,7 @@ import { createHandler } from 'innet'
 import { type Observable } from 'watch-state'
 
 import {
+  domArray,
   domAsync,
   domFn,
   domIterable,
@@ -28,7 +28,7 @@ import {
 import { type HTMLProps } from '../types'
 
 export const arrayPlugins = [
-  arraySync,
+  domArray,
 ]
 
 export const objectPlugins = [
@@ -101,28 +101,10 @@ declare global {
       children: {}
     }
 
-    interface IntrinsicElements {
-      a: HTMLProps<HTMLAnchorElement>
-      div: HTMLProps<HTMLDivElement>
-      span: HTMLProps<HTMLSpanElement>
-      h1: HTMLProps<HTMLHeadingElement>
-      h2: HTMLProps<HTMLHeadingElement>
-      h3: HTMLProps<HTMLHeadingElement>
-      h4: HTMLProps<HTMLHeadingElement>
-      h5: HTMLProps<HTMLHeadingElement>
-      h6: HTMLProps<HTMLHeadingElement>
-      ul: HTMLProps<HTMLUListElement>
-      ol: HTMLProps<HTMLOListElement>
-      li: HTMLProps<HTMLLIElement>
-      p: HTMLProps<HTMLParagraphElement>
-      button: HTMLProps<HTMLButtonElement>
-      form: HTMLProps<HTMLFormElement>
-      select: HTMLProps<HTMLSelectElement>
-      textarea: HTMLProps<HTMLTextAreaElement>
-      input: HTMLProps<HTMLInputElement>
-      img: HTMLProps<HTMLImageElement>
-      table: HTMLProps<HTMLTableElement>
-      [elemName: string]: any
+    type IntrinsicElements = {
+      [K in keyof HTMLElementTagNameMap]: HTMLProps<HTMLElementTagNameMap[K]>
+    } & {
+      [K in Exclude<keyof SVGElementTagNameMap, 'a'>]: HTMLProps<SVGElementTagNameMap[K] & HTMLElement>
     }
   }
 }

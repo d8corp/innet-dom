@@ -1,0 +1,145 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--secondary-color);
+  color: #e0e0e0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+:root {
+  --primary-color: #F7B756;
+  --secondary-color: #2B2B2B;
+  --bg-dark: #1a1a1a;
+  --bg-darker: #0d0d0d;
+  --text-primary: #A0A0A0FF;
+  --text-secondary: #a0a0a0;
+  --border-color: #333;
+  --code-bg: #2d2d2d;
+  --link-color: #F7B756;
+  --link-hover: #ffcc7a;
+  --success-color: #4ade80;
+  --error-color: #ef4444;
+  --header-size: 64px;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-color);
+
+  &:has(+ hr) {
+    margin-bottom: 0;
+  }
+}
+
+h2, h3, h4, h5, h6 {
+  & + hr {
+    margin-top: 0 !important;
+  }
+}
+
+h1 {
+  font-size: 56px;
+  margin: 0 0 20px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 36px;
+  margin: 0 0 12px;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 24px;
+  margin: 2em 0 0.5em;
+}
+
+h4, h5, h6 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+p {
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+pre, code {
+  font-family: "SF Mono", monospace;
+  padding: 0;
+  background: none;
+}
+
+code {
+  background: rgba(247, 183, 86, 0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  border: 1px solid rgba(247, 183, 86, 0.15);
+  color: var(--primary-color);
+}
+
+pre {
+  overflow-x: auto;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+blockquote {
+  display: block;
+  position: relative;
+  background: linear-gradient(135deg, rgba(247, 183, 86, 0.06), rgba(247, 183, 86, 0.03));
+  border: 1px solid rgba(247, 183, 86, 0.15);
+  border-radius: 12px;
+  padding: 20px 20px 20px 60px;
+  margin: 0 0 1em;
+  font-size: 14px;
+
+  & > :first-child {
+    margin-top: 0;
+  }
+
+  & > :last-child {
+    margin-bottom: 0;
+  }
+
+  &:before {
+    content: '💡';
+    display: flex;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: rgba(247, 183, 86, 0.15);
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 20px;
+    top: 24px;
+  }
+}

@@ -1,0 +1,20 @@
+.root {
+  --ui-flex: flex;
+  --ui-flex-flex: none;
+  --ui-flex-gap: none;
+  --ui-flex-wrap: nowrap;
+  --ui-flex-direction: row;
+  --ui-flex-align: unset;
+  --ui-flex-justify: unset;
+  --ui-flex-padding: 0;
+
+  box-sizing: border-box;
+  display: var(--ui-flex);
+  flex: var(--ui-flex-flex);
+  gap: var(--ui-flex-gap);
+  flex-wrap: var(--ui-flex-wrap);
+  flex-direction: var(--ui-flex-direction);
+  align-items: var(--ui-flex-align);
+  justify-content: var(--ui-flex-justify);
+  padding: var(--ui-flex-padding);
+}

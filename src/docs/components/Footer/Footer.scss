@@ -1,0 +1,18 @@
+.root {
+  border-top: 1px solid rgba(247,183,86,0.1);
+  padding: 40px 24px;
+  background: #2f2e2c;
+  color: #808080;
+  font-size: 14px;
+}
+
+.content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.link {
+  color: #808080;
+  text-decoration: none;
+  transition: color 0.2s;
+}

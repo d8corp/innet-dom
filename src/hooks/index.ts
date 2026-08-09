@@ -1,4 +1,5 @@
 export * from './useContextWatcher'
+export * from './useEffect'
 export * from './useParam'
 export * from './useParams'
 export * from './useParent'

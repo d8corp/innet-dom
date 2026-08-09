@@ -1,0 +1,25 @@
+.root {
+  border-radius: 50%;
+}
+
+.s {
+  width: 6px;
+  height: 6px;
+}
+
+.m {
+  width: 10px;
+  height: 10px;
+}
+
+.success {
+  background: var(--success-color);
+}
+
+.error {
+  background: var(--error-color);
+}
+
+.warning {
+  background: var(--primary-color);
+}

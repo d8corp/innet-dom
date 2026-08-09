@@ -1,0 +1,16 @@
+.root {
+  transition: all .2s;
+  opacity: 0;
+  max-width: 100%;
+  transform: translateY(-16px);
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hide {
+  opacity: 0;
+  transform: translateY(16px);
+}

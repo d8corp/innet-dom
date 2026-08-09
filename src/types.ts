@@ -24,9 +24,10 @@ export type ObservableProp <T> = T | Observable<T>
 export type Component<P extends Props = Props> = (props: P) => JSX.Element
 
 export type HTMLStyleKeys = keyof KeysToKebabCase<Omit<
-HTMLElement['style'],
-'getPropertyPriority' | 'getPropertyValue' | 'item' | 'removeProperty' | 'setProperty'
+  HTMLElement['style'],
+  'getPropertyPriority' | 'getPropertyValue' | 'item' | 'removeProperty' | 'setProperty'
 >> | `--${string}`
+
 export type HTMLStyleProp = Partial<Record<HTMLStyleKeys, StateProp<string>>>
 
 export interface ChildrenProps {

@@ -1,0 +1,158 @@
+$foreground: #a3b7c6;
+$comment: #808080;
+$selection: #214283;
+$lineHighlight: #323232;
+
+$orange: #cc7832;
+$yellow: #e8bf6a;
+$brightYellow: #bbb529;
+$green: #6a8759;
+$brightGreen: #a5c261;
+$purple: #9876aa;
+$blue: #6897bb;
+$brown: #8a653b;
+
+$tab-size: 4;
+
+pre,
+code,
+.token {
+    &[class*="language-"] {
+        color: $foreground;
+        text-shadow: none;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        tab-size: $tab-size;
+        hyphens: none;
+
+        ::selection,
+        &::selection {
+            text-shadow: none;
+            background-color: $selection;
+        }
+    }
+}
+
+// Colors!
+.token {
+    &.comment:not(.doc-comment) {
+        color: $comment;
+    }
+
+    &.keyword,
+    &.boolean,
+    &.constant,
+    &.null,
+    &.important,
+    &.rule {
+        color: $orange;
+    }
+
+
+    &.number {
+        color: $blue;
+    }
+
+    &.doctype,
+    &.function,
+    &.selector {
+        color: $yellow;
+    }
+
+    &.tag {
+        color: $yellow;
+
+        .attr-name {
+            color: $foreground;
+        }
+
+        .attr-value {
+            color: $brightGreen;
+        }
+    }
+
+    &.string,
+    &.regex,
+    &.char {
+        color: $green;
+    }
+
+    &.doc-comment {
+        color: $green;
+        font-style: italic;
+
+        .keyword {
+            color: $green;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .parameter {
+            color: $brown;
+        }
+    }
+
+    &.annotation {
+        color: $brightYellow;
+    }
+
+    &.constant {
+        color: $purple;
+    }
+
+    &.important {
+        font-weight: bold;
+    }
+
+    &.bold {
+        font-weight: bold;
+    }
+
+    &.italic {
+        font-style: italic;
+    }
+
+    &.entity {
+        cursor: help;
+    }
+}
+
+// Language-specific colors.
+
+   .language-css .token {
+       &.atrule {
+           .keyword {
+               color: $yellow;
+           }
+       }
+   }
+
+.language-json .token {
+    &.property {
+        color: $purple;
+    }
+
+    &.operator {
+        color: $orange;
+    }
+}
+
+.language-yaml .token {
+    color: $foreground;
+
+    &.comment {
+        color: $green;
+        font-style: italic;
+    }
+
+    &.key {
+        color: $orange;
+    }
+
+    &.string {
+        color: $green;
+    }
+}

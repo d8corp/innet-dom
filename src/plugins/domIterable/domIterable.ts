@@ -15,8 +15,8 @@ export const domIterable = (): HandlerPlugin => () => {
   const { app: apps, data } = genericComponent
 
   if (!(data instanceof Promise)) {
-    innet(data.value, handler, 0, true)
     innet(() => genericComponent.app.next(), callHandler, 0, true)
+    innet(data.value, handler, 0, true)
 
     return
   }
