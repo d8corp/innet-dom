@@ -12,11 +12,10 @@ export default function HomePage () {
           v{process.env.INNETJS_PACKAGE_VERSION} is now available
         </div>
         <Title title='@innet/dom — Frontend Framework' class={styles.title}>
-          Frontend Framework
+          Welcome stranger!
         </Title>
         <p class={styles.description}>
-          A lightweight frontend framework with fine-grained reactivity, JSX, and direct DOM manipulation. Build
-          faster apps with smaller bundles.
+          <code>@innet/dom</code> is a lightweight frontend framework with fine-grained reactivity, JSX, and direct DOM manipulation.
         </p>
         <div class={styles.buttons}>
           <Button element='a' size='l' href='/quick-start'>

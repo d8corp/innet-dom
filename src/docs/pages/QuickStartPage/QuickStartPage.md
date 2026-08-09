@@ -112,6 +112,18 @@ And the corresponding HTML file:
   </body>
 </html>
 ```
+### Run the project
+
+Start the development server using the command that matches your project setup: run `npm start` if you scaffolded the project with `innetjs init`, since the generated template already includes the dev server script in `package.json`;
+
+For custom or manually configured projects, run `innetjs start` directly — the CLI will handle the build pipeline, hot module replacement, and dev server automatically.
+
+```shell
+//! Project
+npm start
+//! CLI
+npx innetjs start
+```
 
 ## TypeScript Configuration
 ---
