@@ -38,3 +38,20 @@
   color: var(--primary-color);
   border-bottom-color: var(--primary-color);
 }
+
+.copy {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(247, 183, 86, 0.15);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color .2s;
+
+  &:hover {
+    background: rgba(247, 183, 86, 0.25);
+  }
+}

@@ -19,7 +19,7 @@ export default function HomePage () {
           faster apps with smaller bundles.
         </p>
         <div class={styles.buttons}>
-          <Button element='a' size='l' href='/installation'>
+          <Button element='a' size='l' href='/quick-start'>
             Get Started
           </Button>
           <Button

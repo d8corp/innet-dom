@@ -16,11 +16,6 @@ export const routing = createRouting([
         children: [
           {
             index: true,
-            path: 'installation',
-            component: lazy(() => import('./pages/InstallationPage')),
-          },
-          {
-            index: true,
             path: 'quick-start',
             component: lazy(() => import('./pages/QuickStartPage')),
           },

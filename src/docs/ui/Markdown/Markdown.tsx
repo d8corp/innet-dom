@@ -25,6 +25,7 @@ import { Divider } from '../Divider'
 import { Highlight } from '../Highlight'
 import { Title } from '../Title'
 
+import { Link } from '../../../components'
 import type { StateProp } from '../../../types'
 import { use } from '../../../utils'
 
@@ -42,7 +43,7 @@ const astMap: Partial<Record<ASTNodeTypes | string, (node: any) => JSX.Element>>
   }),
   Str: ({ value }: TxtTextNode) => value,
   Link: ({ url, children }: TxtLinkNode) => ({
-    type: 'a',
+    type: Link,
     props: {
       href: url,
       children: children?.map(ast2jsx),

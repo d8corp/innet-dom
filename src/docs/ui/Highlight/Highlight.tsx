@@ -24,6 +24,7 @@ export function Highlight<T extends FlexElement = 'div'> ({
 }: HighlightProps<T>) {
   const styles = useStyle()
   const ref = new Ref<HTMLPreElement>()
+  const copyIcon = new State('📋')
 
   const hasLand = lang in Prism.languages
 
@@ -53,6 +54,15 @@ export function Highlight<T extends FlexElement = 'div'> ({
         })
       }
 
+      const copy = () => {
+        navigator.clipboard.writeText(codeText)
+        copyIcon.value = '✅'
+
+        setTimeout(() => {
+          copyIcon.value = '📋'
+        }, 1000)
+      }
+
       return (
         <>
           <Flex padding={[12, 16]} class={() => styles.title} gap={12} align='center'>
@@ -61,7 +71,12 @@ export function Highlight<T extends FlexElement = 'div'> ({
               <Dot color='warning' />
               <Dot color='success' />
             </Flex>
-            {tabs.length === 1 ? tabs[0][0] : tabs[1][0]}
+            <Flex flex>
+              {tabs.length === 1 ? tabs[0][0] : tabs[1][0]}
+            </Flex>
+            <button class={styles.copy} onclick={copy}>
+              {copyIcon}
+            </button>
           </Flex>
           <pre class={() => classes([styles.code, `language-${lang}`])} ref={ref}>
             {!hasLand && codeText}
@@ -71,13 +86,23 @@ export function Highlight<T extends FlexElement = 'div'> ({
     }
 
     const tab = new State(0)
+    let fullCode = ''
+
+    const copy = () => {
+      navigator.clipboard.writeText(fullCode)
+      copyIcon.value = '✅'
+
+      setTimeout(() => {
+        copyIcon.value = '📋'
+      }, 1000)
+    }
 
     useEffect(() => {
       new Watch(() => {
         if (!ref.value) return
 
         const [, currentCode] = tabs[tab.value]
-        const fullCode = sharedCode ? `${sharedCode}${currentCode.trim()}` : currentCode.trim()
+        fullCode = sharedCode ? `${sharedCode}${currentCode.trim()}` : currentCode.trim()
 
         ref.value.innerHTML = hasLand ? Prism.highlight(fullCode, Prism.languages[lang], lang) : fullCode
       })
@@ -86,7 +111,7 @@ export function Highlight<T extends FlexElement = 'div'> ({
     return (
       <>
         <Flex padding={[12, 16]} class={() => styles.title} gap={12} align='center'>
-          <Flex class={() => styles.tabs}>
+          <Flex flex class={() => styles.tabs}>
             {tabs.map(([title], index) => (
               <span
                 class={() => classes([styles.tab, index === tab.value && styles.selected])}
@@ -96,6 +121,9 @@ export function Highlight<T extends FlexElement = 'div'> ({
               </span>
             ))}
           </Flex>
+          <button class={styles.copy} onclick={copy}>
+            {copyIcon}
+          </button>
         </Flex>
         <pre class={() => classes([styles.code, `language-${lang}`])} ref={ref} />
       </>

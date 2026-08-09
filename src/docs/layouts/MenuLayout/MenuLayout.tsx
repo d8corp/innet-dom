@@ -14,12 +14,12 @@ const menu: MenuItem[] = [
     title: 'Getting Started',
     children: [
       {
-        href: '/installation',
-        children: 'Installation',
-      },
-      {
         href: '/quick-start',
         children: 'Quick Start',
+      },
+      {
+        href: '/components',
+        children: 'Components',
       },
       {
         href: '/routing',
@@ -39,7 +39,7 @@ const menu: MenuItem[] = [
       },
       {
         href: '/state-management',
-        children: 'JSX State Management',
+        children: 'State Management',
       },
     ],
   },
