@@ -1,5 +1,4 @@
 # Quick Start
----
 
 `@innet/dom` offers a declarative and reactive approach to UI development without the overhead of virtual DOM diffing. It enables developers to write simple, composable components with direct DOM manipulation, resulting in faster rendering and smaller bundle sizes compared to traditional frameworks.
 
@@ -29,7 +28,6 @@ innet(app, handler)
 > #### Fine-grained reactivity
 > When `count.value` changes, only the text node updates. No component re-renders, no virtual DOM diffing.
 
-Key features include:
 - JSX support with full TypeScript integration
 - Fine-grained reactivity powered by [watch-state](https://github.com/d8corp/watch-state)
 - Built-in routing with flexible route definitions and permissions

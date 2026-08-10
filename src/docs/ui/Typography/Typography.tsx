@@ -4,10 +4,18 @@ import styles from './Typography.scss'
 
 const useStyle = style(styles)
 
-export type TypographyProps = HTMLProps <HTMLDivElement>
+export interface TypographyProps extends HTMLProps <HTMLDivElement> {
+  flex?: number | boolean
+}
 
-export function Typography (props: TypographyProps) {
+export function Typography ({ flex, style, ...props }: TypographyProps) {
   const styles = useStyle()
 
-  return <article {...props} class={styles.root} />
+  return (
+    <article
+      {...props}
+      style={{ '--ui-typography-flex': String(flex === true ? 1 : flex || ''), ...style }}
+      class={styles.root}
+    />
+  )
 }

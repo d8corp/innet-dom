@@ -1,4 +1,8 @@
 .root {
+  --ui-typography-flex: none;
+
+  flex: var(--ui-typography-flex);
+
   & > :first-child {
     margin-top: 0;
   }

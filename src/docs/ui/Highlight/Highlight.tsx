@@ -5,6 +5,8 @@ import { State, Watch } from 'watch-state'
 import { Dot } from '../Dot'
 import type { FlexElement, FlexProps } from '../Flex'
 import { Flex } from '../Flex'
+import { BaseMarkdown } from '../Markdown/BaseMarkdown'
+import { Typography } from '../Typography'
 
 import { style, useEffect } from '../../../hooks'
 import { Ref } from '../../../utils'
@@ -79,9 +81,9 @@ export function Highlight<T extends FlexElement = 'div'> ({
               <Dot color='warning' />
               <Dot color='success' />
             </Flex>
-            <Flex flex>
-              {tabs.length === 1 ? tabs[0][0] : tabs[1][0]}
-            </Flex>
+            <Typography flex>
+              <BaseMarkdown text={tabs.length === 1 ? tabs[0][0] : tabs[1][0]} />
+            </Typography>
             <button class={styles.copy} onclick={copy}>
               <IconCopy />
             </button>

@@ -15,6 +15,10 @@
 .submenu {
   width: 200px;
   padding-left: 8px;
+  position: sticky;
+  top: 88px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
 }
 
 .main {
