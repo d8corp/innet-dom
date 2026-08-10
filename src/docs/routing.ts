@@ -26,6 +26,11 @@ export const routing = createRouting([
           },
           {
             index: true,
+            path: 'state-management',
+            component: lazy(() => import('./pages/StateManagementPage')),
+          },
+          {
+            index: true,
             path: 'routing',
             component: lazy(() => import('./pages/RoutingPage')),
           },

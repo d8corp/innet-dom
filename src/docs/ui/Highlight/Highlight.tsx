@@ -75,18 +75,20 @@ export function Highlight<T extends FlexElement = 'div'> ({
 
       return (
         <>
-          <Flex padding={[12, 16]} class={() => styles.title} gap={12} align='center'>
-            <Flex gap={6}>
-              <Dot color='error' />
-              <Dot color='warning' />
-              <Dot color='success' />
+          <Flex vertical class={() => styles.header}>
+            <Flex padding={[12, 16]} class={() => styles.title} gap={12} align='center'>
+              <Flex gap={6}>
+                <Dot color='error' />
+                <Dot color='warning' />
+                <Dot color='success' />
+              </Flex>
+              <Typography flex>
+                <BaseMarkdown text={tabs.length === 1 ? tabs[0][0] : tabs[1][0]} />
+              </Typography>
+              <button class={styles.copy} onclick={copy}>
+                <IconCopy />
+              </button>
             </Flex>
-            <Typography flex>
-              <BaseMarkdown text={tabs.length === 1 ? tabs[0][0] : tabs[1][0]} />
-            </Typography>
-            <button class={styles.copy} onclick={copy}>
-              <IconCopy />
-            </button>
           </Flex>
           <pre class={() => classes([styles.code, `language-${lang}`])} ref={ref}>
             {!hasLand && codeText}
@@ -122,20 +124,22 @@ export function Highlight<T extends FlexElement = 'div'> ({
 
     return (
       <>
-        <Flex padding={[12, 16]} class={() => styles.title} gap={12} align='center'>
-          <Flex flex class={() => styles.tabs}>
-            {tabs.map(([title], index) => (
-              <span
-                class={() => classes([styles.tab, index === tab.value && styles.selected])}
-                onclick={() => tab.set(index)}
-              >
-                {title}
-              </span>
-            ))}
+        <Flex vertical class={() => styles.header}>
+          <Flex padding={[12, 16]} class={() => styles.title} gap={12} align='center'>
+            <Flex flex class={() => styles.tabs}>
+              {tabs.map(([title], index) => (
+                <span
+                  class={() => classes([styles.tab, index === tab.value && styles.selected])}
+                  onclick={() => tab.set(index)}
+                >
+                  {title}
+                </span>
+              ))}
+            </Flex>
+            <button class={styles.copy} onclick={copy}>
+              <IconCopy />
+            </button>
           </Flex>
-          <button class={styles.copy} onclick={copy}>
-            <IconCopy />
-          </button>
         </Flex>
         <pre class={() => classes([styles.code, `language-${lang}`])} ref={ref} />
       </>

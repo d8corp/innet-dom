@@ -1,22 +1,32 @@
 .root {
-  background: #1e1e1e;
-  border: 1px solid rgba(247, 183, 86, 0.1);
-  border-radius: 12px;
-  overflow: hidden;
   margin-bottom: 32px;
   color: #a9b7c6;
   font-size: 14px;
 }
 
+.header {
+  background: var(--secondary-color);
+  position: sticky;
+  top: var(--header-size);
+  padding-top: 10px;
+  margin-bottom: 56px;
+}
+
 .title {
   font-size: 12px;
   color: rgb(128, 128, 128);
-  border-bottom: 1px solid rgba(247, 183, 86, 0.08);
-  background: rgba(247, 183, 86, 0.03);
+  border: 1px solid rgba(247, 183, 86, 0.1);
+  background: #242320;
+  border-radius: 12px 12px 0 0;
 }
 
 .code {
   padding: 20px;
+  border: 1px solid rgba(247, 183, 86, 0.1);
+  border-top: none;
+  background: #1e1e1e;
+  border-radius: 0 0 12px 12px;
+  margin-top: -56px;
 }
 
 .tabs {
