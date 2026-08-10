@@ -104,7 +104,16 @@ declare global {
     type IntrinsicElements = {
       [K in keyof HTMLElementTagNameMap]: HTMLProps<HTMLElementTagNameMap[K]>
     } & {
-      [K in Exclude<keyof SVGElementTagNameMap, 'a'>]: HTMLProps<SVGElementTagNameMap[K] & HTMLElement>
+      [K in Exclude<keyof SVGElementTagNameMap, 'a'>]: HTMLProps<SVGElementTagNameMap[K]>
+    } & {
+      svg: {
+        xmlns?: string
+        fill?: string
+        stroke?: string
+      },
+      path: {
+        d?: string
+      }
     }
   }
 }

@@ -8,6 +8,7 @@ import { Flex } from '../Flex'
 
 import { style, useEffect } from '../../../hooks'
 import { Ref } from '../../../utils'
+import { CopyIcon, SuccessIcon } from '../../icons'
 import styles from './Highlight.scss'
 
 const useStyle = style(styles)
@@ -24,7 +25,8 @@ export function Highlight<T extends FlexElement = 'div'> ({
 }: HighlightProps<T>) {
   const styles = useStyle()
   const ref = new Ref<HTMLPreElement>()
-  const copyIcon = new State('📋')
+  const copied = new State(false)
+  let copyTimer: any
 
   const hasLand = lang in Prism.languages
 
@@ -42,6 +44,10 @@ export function Highlight<T extends FlexElement = 'div'> ({
 
   const hasTabs = Boolean(sharedCode) || Boolean(tabs.length > 1)
 
+  const IconCopy = () => () => {
+    return copied.value ? <SuccessIcon /> : <CopyIcon size={24} />
+  }
+
   const Content = () => {
     if (!hasTabs) {
       const codeText = tabs[0][1].trim()
@@ -56,10 +62,12 @@ export function Highlight<T extends FlexElement = 'div'> ({
 
       const copy = () => {
         navigator.clipboard.writeText(codeText)
-        copyIcon.value = '✅'
+        copied.value = true
 
-        setTimeout(() => {
-          copyIcon.value = '📋'
+        clearTimeout(copyTimer)
+
+        copyTimer = setTimeout(() => {
+          copied.value = false
         }, 1000)
       }
 
@@ -75,7 +83,7 @@ export function Highlight<T extends FlexElement = 'div'> ({
               {tabs.length === 1 ? tabs[0][0] : tabs[1][0]}
             </Flex>
             <button class={styles.copy} onclick={copy}>
-              {copyIcon}
+              <IconCopy />
             </button>
           </Flex>
           <pre class={() => classes([styles.code, `language-${lang}`])} ref={ref}>
@@ -90,10 +98,12 @@ export function Highlight<T extends FlexElement = 'div'> ({
 
     const copy = () => {
       navigator.clipboard.writeText(fullCode)
-      copyIcon.value = '✅'
+      copied.value = true
 
-      setTimeout(() => {
-        copyIcon.value = '📋'
+      clearTimeout(copyTimer)
+
+      copyTimer = setTimeout(() => {
+        copied.value = false
       }, 1000)
     }
 
@@ -122,7 +132,7 @@ export function Highlight<T extends FlexElement = 'div'> ({
             ))}
           </Flex>
           <button class={styles.copy} onclick={copy}>
-            {copyIcon}
+            <IconCopy />
           </button>
         </Flex>
         <pre class={() => classes([styles.code, `language-${lang}`])} ref={ref} />

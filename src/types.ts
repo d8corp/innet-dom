@@ -22,6 +22,7 @@ export type WatchProp <T> = T | Reaction<T>
 export type StateProp <T> = WatchProp<T> | Observable<T>
 export type ObservableProp <T> = T | Observable<T>
 export type Component<P extends Props = Props> = (props: P) => JSX.Element
+export type DomElement = HTMLElement | SVGElement
 
 export type HTMLStyleKeys = keyof KeysToKebabCase<Omit<
   HTMLElement['style'],
@@ -34,7 +35,7 @@ export interface ChildrenProps {
   children?: any
 }
 
-export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> extends ChildrenProps {
+export interface HTMLDefaultProps<E extends DomElement = HTMLElement> extends ChildrenProps {
   class?: StateProp<string | undefined>
   style?: HTMLStyleProp
   ref?: Ref<E>
@@ -42,11 +43,15 @@ export interface HTMLDefaultProps<E extends HTMLElement = HTMLElement> extends C
 
 export type HTMLDataProps = Record<`data-${string}`, StateProp<string>>
 
-export type HTMLProps<E extends HTMLElement = HTMLElement> = Omit<{
+type ExcludeKeys = symbol | keyof HTMLDefaultProps
+
+export type HTMLProps<E extends DomElement = HTMLElement> = {
   [K in Extract<keyof E, `on${string}`>]?: E[K];
 } & {
-  [K in Exclude<keyof E, symbol> as E[K] extends Function ? never : `${'' | '_' | '$'}${K}`]?: StateProp<E[K] | undefined>;
-}, keyof HTMLDefaultProps> & HTMLDefaultProps<E> & HTMLDataProps
+  [K in Exclude<keyof E, ExcludeKeys> as NonNullable<E[K]> extends Function ? never : K]?: StateProp<string | undefined | (E[K] extends number ? number : undefined)>;
+} & {
+  [K in Exclude<keyof E, ExcludeKeys> as NonNullable<E[K]> extends Function ? never : `${'_' | '$'}${K}`]?: StateProp<E[K] | undefined>;
+} & HTMLDefaultProps<E> & HTMLDataProps
 
 declare global {
   interface Comment {

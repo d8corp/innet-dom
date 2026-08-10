@@ -31,6 +31,7 @@ export const justifyMap = {
 } as const
 
 export type FlexElement = keyof HTMLElementTagNameMap
+
 export interface BaseFlexProps {
   vertical?: StateProp<boolean>
   align?: keyof typeof alignMap
@@ -68,7 +69,7 @@ export function Flex<T extends FlexElement = 'div', S extends FlexStyles = FlexS
     <Element
       {...props as any}
       style={{
-        ...style,
+        ...(style as any),
         '--ui-flex-justify': justify && justify !== 'start' ? justifyMap[justify] : '',
         '--ui-flex-align': align && align !== 'start' ? alignMap[align as keyof typeof alignMap] : '',
         '--ui-flex-wrap': wrap ? 'wrap' : '',
