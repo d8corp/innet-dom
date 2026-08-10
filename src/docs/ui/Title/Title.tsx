@@ -2,18 +2,30 @@ import { Compute } from 'watch-state'
 
 import { Flex, type FlexProps } from '../Flex'
 
-import { Show, useHidden } from '../../../components'
+import { Link, Show, useHidden } from '../../../components'
 import { style, useShow } from '../../../hooks'
 import type { StateProp } from '../../../types'
 import { use } from '../../../utils'
+import { LinkIcon } from '../../icons'
+import { slugify } from '../../utils'
 import styles from './Title.scss'
 
 const useStyle = style(styles)
+
+const linkSize: Record<1 | 2 | 3 | 4 | 5 | 6, number> = {
+  1: 32,
+  2: 24,
+  3: 14,
+  4: 12,
+  5: 12,
+  6: 12,
+}
 
 export interface TitleProps extends FlexProps<'h1'> {
   h?: 1 | 2 | 3 | 4 | 5 | 6
   title?: string
   subtitle?: StateProp<string>
+  link?: boolean
 }
 
 export function Title ({
@@ -21,6 +33,7 @@ export function Title ({
   title,
   subtitle,
   children = title,
+  link,
   ...props
 }: TitleProps = {}) {
   const show = useShow()
@@ -36,6 +49,7 @@ export function Title ({
     <Flex
       element={`h${h}`}
       wrap
+      id={title && link ? slugify(title) : undefined}
       {...props}
       class={() => [
         styles.root,
@@ -44,6 +58,9 @@ export function Title ({
       ]}
     >
       {children}
+      {title && link && (
+        <Link class={styles.link} href={`#${slugify(title)}`}><LinkIcon size={linkSize[h]} /></Link>
+      )}
       <Show when={showSubtitle}>
         <div class={() => styles.subTitle}>
           {subtitle}

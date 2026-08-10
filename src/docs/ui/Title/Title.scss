@@ -21,3 +21,26 @@
   text-transform: none;
   font-weight: normal;
 }
+
+.link {
+  margin-left: 6px;
+  margin-bottom: auto;
+  transition: opacity .2s;
+  opacity: 0;
+
+  .root:hover > & {
+    opacity: 1;
+  }
+
+  h1 > & {
+    margin-left: 16px;
+  }
+
+  h2 > & {
+    margin-left: 12px;
+  }
+
+  h3 > & {
+    margin-left: 10px;
+  }
+}
