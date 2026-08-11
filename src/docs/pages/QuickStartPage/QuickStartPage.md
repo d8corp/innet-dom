@@ -142,8 +142,6 @@ To work with JSX in TypeScript, add the following settings to your:
 ## What's Next?
 ---
 
-After successful installation, you can:
-
 - Explore [Components](/components) to create your first components
 - Set up [Routing](/routing) for a multi-page application
 - Learn about [Styling](/styling) components

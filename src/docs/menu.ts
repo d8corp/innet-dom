@@ -22,20 +22,12 @@ export const menu: MenuItem[] = [
         children: 'State Management',
       },
       {
-        href: '/routing',
-        children: 'Routing',
-      },
-      {
         href: '/lifecycle',
         children: 'Lifecycle',
       },
       {
         href: '/styling',
         children: 'Styling',
-      },
-      {
-        href: '/jsx-guide',
-        children: 'JSX Guide',
       },
     ],
   },

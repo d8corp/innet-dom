@@ -17,9 +17,7 @@ export function Header () {
         </Flex>
         <Flex element='nav' align='center' gap={28}>
           <Link href='/quick-start' class={styles.link}>Docs</Link>
-          <a href='#' class={styles.link}>API</a>
-          <a href='#' class={styles.link}>Examples</a>
-          <a href='#' class={styles.link}>Playground</a>
+          <a href='/examples' class={styles.link}>Examples</a>
           <Button element='a' href='https://github.com/d8corp/innet-dom' view='secondary'>
             GitHub
           </Button>

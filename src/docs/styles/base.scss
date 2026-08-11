@@ -140,12 +140,13 @@ blockquote {
   }
 
   &:before {
-    content: '💡';
+    content: '';
+    background: url("./lightbulb.svg") rgba(247, 183, 86, 0.15) no-repeat center center;
+    background-size: 14px;
     display: flex;
     width: 24px;
     height: 24px;
     border-radius: 6px;
-    background: rgba(247, 183, 86, 0.15);
     align-items: center;
     justify-content: center;
     position: absolute;
