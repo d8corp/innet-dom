@@ -50,11 +50,11 @@ The fastest way is using the `innetjs` CLI. It scaffolds a TypeScript + JSX proj
 ```shell
 npx innetjs init my-app -t fe
 cd my-app
-npm install
 npm start
 ```
 
-> The `-t fe` flag creates a frontend template. Open `http://localhost:3000` to see your app.
+> The `-t fe` flag creates a frontend template. `my-app` is work folder.
+> Open `http://localhost:3000` to see your app.
 
 After running these commands, you'll have a ready-to-use project with component examples, configured routing, and a basic application structure.
 
@@ -143,6 +143,6 @@ To work with JSX in TypeScript, add the following settings to your:
 ---
 
 - Explore [Components](/components) to create your first components
-- Set up [Routing](/routing) for a multi-page application
-- Learn about [Styling](/styling) components
 - Discover component [Lifecycle](/lifecycle)
+- Set up [Routing](/router) for a multi-page application
+- Learn about [Styling](/styling) components

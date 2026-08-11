@@ -14,9 +14,7 @@ import type {
   TxtNode,
   TxtParagraphNode,
   TxtStrongNode,
-  TxtTableCellNode,
   TxtTableNode,
-  TxtTableRowNode,
   TxtTextNode,
 } from '@textlint/ast-node-types'
 import { parse } from '@textlint/markdown-to-ast'
@@ -111,21 +109,44 @@ export function BaseMarkdown ({ text, map }: BaseMarkdownProps) {
         src: url,
       },
     }),
-    Table: ({ children }: TxtTableNode) => ({
+    Table: ({ children: [header, ...rows] }: TxtTableNode) => ({
       type: 'table',
-      props: { children: children?.map(ast2jsx) },
-    }),
-    TableHeader: ({ children }: TxtTableNode) => ({
-      type: 'th',
-      props: { children: children?.map(ast2jsx) },
-    }),
-    TableRow: ({ children }: TxtTableRowNode) => ({
-      type: 'tr',
-      props: { children: children?.map(ast2jsx) },
-    }),
-    TableCell: ({ children }: TxtTableCellNode) => ({
-      type: 'td',
-      props: { children: children?.map(ast2jsx) },
+      props: {
+        children: [
+          {
+            type: 'thead',
+            props: {
+              children: [{
+                type: 'tr',
+                props: {
+                  children: header.children.map(({ children }) => ({
+                    type: 'th',
+                    props: {
+                      children: children?.map(ast2jsx),
+                    },
+                  })),
+                },
+              }],
+            },
+          },
+          {
+            type: 'tbody',
+            props: {
+              children: rows?.map(({ children }) => ({
+                type: 'tr',
+                props: {
+                  children: children.map(({ children }) => ({
+                    type: 'td',
+                    props: {
+                      children: children?.map(ast2jsx),
+                    },
+                  })),
+                },
+              })),
+            },
+          },
+        ],
+      },
     }),
     ...map,
   }

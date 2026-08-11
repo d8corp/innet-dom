@@ -44,6 +44,11 @@ export const routing = createRouting([
             path: 'styling',
             component: lazy(() => import('./pages/StylingPage')),
           },
+          {
+            index: true,
+            path: 'portal',
+            component: lazy(() => import('./pages/PortalPage')),
+          },
         ],
       },
       {

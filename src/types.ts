@@ -12,9 +12,11 @@ type KeysToKebabCase<T> = {
   [K in keyof T as CamelToKebabCase<string & K>]: T[K]
 }
 
-export type ContentElements = TargetElements | Text
+/** @deprecated Use TargetElement */
 export type TargetElements = Element | Comment
-export type ParentElements = TargetElements | DocumentFragment
+export type TargetElement = TargetElements
+export type ContentElements = TargetElement | Text
+export type ParentElements = TargetElement | DocumentFragment
 
 export type UseComment = [Handler, Comment]
 

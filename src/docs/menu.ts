@@ -35,7 +35,7 @@ export const menu: MenuItem[] = [
     title: 'Components',
     children: [
       {
-        href: '/',
+        href: '/portal',
         exact: true,
         children: 'Portal',
       },
