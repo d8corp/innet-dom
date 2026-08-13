@@ -1,11 +1,13 @@
 .root {
   text-align: center;
   padding: 100px 20px;
+  min-height: calc(100vh - var(--header-size));
 }
 
 .h1 {
   font-size: 120px;
   color: #F7B756;
+  transform-origin: center center;
 }
 
 .h2 {

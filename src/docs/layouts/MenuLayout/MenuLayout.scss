@@ -7,8 +7,8 @@
 .menu {
   width: 260px;
   position: sticky;
-  top: 88px;
-  max-height: calc(100vh - 120px);
+  top: calc(40px + var(--header-size));
+  max-height: calc(100vh - var(--header-size) - 80px);
   overflow-y: auto;
 }
 
@@ -16,13 +16,17 @@
   width: 200px;
   padding-left: 8px;
   position: sticky;
-  top: 88px;
-  max-height: calc(100vh - 120px);
+  top: calc(40px + var(--header-size));
+  max-height: calc(100vh - var(--header-size) - 80px);
   overflow-y: auto;
 }
 
 .main {
   min-width: 0;
+
+  &:empty {
+    margin-bottom: 9999px;
+  }
 }
 
 .group {
@@ -30,7 +34,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #808080;
+  color: var(--white-color);
 }
 
 .item {

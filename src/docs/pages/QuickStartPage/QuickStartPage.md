@@ -142,7 +142,7 @@ To work with JSX in TypeScript, add the following settings to your:
 ## What's Next?
 ---
 
-- Explore [Components](/components#children) to create your first components
+- Explore [Components](/components) to create your first components
 - Discover component [Lifecycle](/lifecycle)
 - Set up [Routing](/router) for a multi-page application
 - Learn about [Styling](/styling) components
