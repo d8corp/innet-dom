@@ -7,7 +7,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hello innet</title>
     <script type="module" defer src="index.js?v=%INNETJS_PACKAGE_VERSION%"></script>
+    <style>
+        body {
+            padding: 0;
+            background: #2B2B2B;
+        }
+
+        #loading {
+            height: 9999px;
+            transition: opacity .2s;
+        }
+        #loading > img {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    </style>
 </head>
 <body>
+<div id="loading"><img src="loading.svg" /></div>
 </body>
 </html>

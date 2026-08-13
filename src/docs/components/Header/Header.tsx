@@ -1,12 +1,17 @@
+import { classes } from 'html-classes'
+
 import { Logo } from '../Logo'
 
 import { Link } from '../../../components'
+import { useShow } from '../../../hooks'
 import { Button, Flex } from '../../ui'
 import styles from './Header.scss'
 
 export function Header () {
+  const show = useShow()
+
   return (
-    <Flex element='header' class={styles.root}>
+    <Flex element='header' class={() => classes([styles.root, show.value && styles.show])}>
       <Flex flex padding={[0, 24]} align='center' justify='between' class={styles.content}>
         <Flex element='a' href='/' gap={12} align='center' class={styles.logo}>
           <Logo width={36} />

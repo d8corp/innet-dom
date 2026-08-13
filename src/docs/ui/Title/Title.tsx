@@ -53,6 +53,7 @@ export function Title ({
       {...props}
       class={() => [
         styles.root,
+        title && link && styles.withLink,
         show.value && styles.show,
         hide?.value && styles.hide,
       ]}

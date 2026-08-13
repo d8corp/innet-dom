@@ -1,16 +1,22 @@
 .root {
-  transition: all .2s;
+  transition: opacity .2s;
   opacity: 0;
   max-width: 100%;
-  transform: translateY(-16px);
+  margin-bottom: 9999px;
 }
 
 .show {
   opacity: 1;
-  transform: translateY(0);
+  margin-bottom: 0;
+  transition: opacity .2s, margin-bottom .3s;
+}
+
+.scrolling {
+  margin-bottom: 9999px;
 }
 
 .hide {
   opacity: 0;
-  transform: translateY(16px);
+  margin-bottom: 9999px;
+  transition: opacity .2s;
 }

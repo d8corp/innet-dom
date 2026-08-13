@@ -1,13 +1,15 @@
-import { locationHash } from '@watch-state/history-api'
+import { ContextProvider } from '@innet/jsx'
 import { classes } from 'html-classes'
-import { onDestroy } from 'watch-state'
-import { scrollTo } from 'web-scroll'
+import { State, Watch } from 'watch-state'
 
 import type { FlexProps, FlexStyles } from '../Flex'
 import { Flex } from '../Flex'
 
 import { Delay, useHidden } from '../../../components'
-import { style, useShow } from '../../../hooks'
+import { style, useEffect, useShow } from '../../../hooks'
+import type { PageUpdatedData } from '../../hooks'
+import { pageUpdated, usePageUpdated } from '../../hooks'
+import { scrolling } from '../../state'
 import styles from './Page.scss'
 
 const useStyle = style(styles)
@@ -25,46 +27,49 @@ export interface DelayPageProps extends PageProps {
 }
 
 export function DelayPage ({
-  show = 200,
+  show = usePageUpdated() ? 200 : 0,
   hide = 200,
-  children,
   ...props
 }: DelayPageProps = {}) {
   return (
     <Delay hide={hide} show={show}>
-      <Page {...props}>
-        {children}
-      </Page>
+      <Page {...props} />
     </Delay>
   )
 }
 
-export function Page (props: PageProps) {
+export function Page ({ ...props }: PageProps) {
   const styles = useStyle()
   const show = useShow()
   const hidden = useHidden()
+  const scrolled = new State(false)
 
-  const timer = setTimeout(() => {
-    const hash = locationHash.raw
-
-    if (hash) {
-      scrollTo(`#${hash}`)
+  new Watch(() => {
+    if (styles.show && !scrolling.value) {
+      scrolled.value = true
     }
-  }, 300)
+  })
 
-  onDestroy(() => clearTimeout(timer))
+  const updated: PageUpdatedData = { updated: false }
+
+  useEffect(() => {
+    updated.updated = true
+  })
 
   return (
-    <Flex
-      vertical
-      align='stretch'
-      flex
-      {...props}
-      class={() => classes([
-        styles.root,
-        show.value && styles.show,
-        hidden?.value && styles.hide,
-      ])}
-    />
+    <ContextProvider for={pageUpdated} set={updated}>
+      <Flex
+        vertical
+        align='stretch'
+        flex
+        {...props}
+        class={() => classes([
+          styles.root,
+          show.value && styles.show,
+          hidden?.value && styles.hide,
+          !scrolled.value && styles.scrolling,
+        ])}
+      />
+    </ContextProvider>
   )
 }

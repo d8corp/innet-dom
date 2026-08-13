@@ -1,6 +1,6 @@
 import { ContextProvider, useContext } from '@innet/jsx'
 import { locationPath } from '@watch-state/history-api'
-import { Cache, State } from 'watch-state'
+import { Compute, State } from 'watch-state'
 
 import { Lazy } from '../Lazy'
 import { Pipe } from '../Pipe'
@@ -21,7 +21,7 @@ const EMPTY_SET = new Set<string>()
 export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
   const params = useContext(paramsContext) || new State<Record<string, string>>({})
 
-  const route = new Cache(() => {
+  const route = new Compute(() => {
     const newParams: Record<string, string> = {}
     const route = findRoute(use(routing), locationPath.value.split('/').filter(Boolean), newParams, use(permissions))
     params.value = newParams
@@ -29,7 +29,7 @@ export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
     return route
   })
 
-  const components = new Cache(() => {
+  const components = new Compute(() => {
     const routeValue = route.value
     if (!routeValue) return []
 
@@ -50,9 +50,9 @@ export function Router ({ routing, permissions = EMPTY_SET }: RouterProps) {
       <Pipe>
         {(children, index) => (
           <Lazy
-            component={new Cache(() => components.value[index])}
-            fallback={new Cache(() => route.value?.fallback?.[index])}
-            show={new Cache(() => components.value.length > index)}
+            component={new Compute(() => components.value[index])}
+            fallback={new Compute(() => route.value?.fallback?.[index])}
+            show={new Compute(() => components.value.length > index)}
             render={(Component) => <Component children={children} />}
             loadedComponents={loadedComponents}
           />

@@ -1,0 +1,64 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none"
+     xmlns="http://www.w3.org/2000/svg"
+     role="status">
+    <circle cx="32" cy="12" r="6" fill="#F7B756" opacity=".22">
+        <animateTransform
+                attributeName="transform" type="rotate"
+                from="0 32 32" to="360 32 32" dur="1.8s" begin="-1.8s"
+                calcMode="spline" keyTimes="0;1" keySplines="0.6 0.1 0.1 0.9"
+                repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;.22;0" keyTimes="0;0.5;1"
+                 calcMode="spline" keySplines="0.6 0.1 0.1 0.6;0.6 0.1 0.1 0.6"
+                 dur="1.8s" begin="-1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="32" cy="12" r="3" fill="#F7B756" opacity="1">
+        <animateTransform
+                attributeName="transform" type="rotate"
+                from="0 32 32" to="360 32 32" dur="1.8s" begin="-1.8s"
+                calcMode="spline" keyTimes="0;1" keySplines="0.6 0.1 0.1 0.9"
+                repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.5;1"
+                 calcMode="spline" keySplines="0.6 0.1 0.1 0.6;0.6 0.1 0.1 0.6"
+                 dur="1.8s" begin="-1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="32" cy="12" r="2.5" fill="#F7B756" opacity=".55">
+        <animateTransform
+                attributeName="transform" type="rotate"
+                from="0 32 32" to="360 32 32" dur="1.8s" begin="-1.7s"
+                calcMode="spline" keyTimes="0;1" keySplines="0.6 0.1 0.1 0.9"
+                repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;.55;0" keyTimes="0;0.5;1"
+                 calcMode="spline" keySplines="0.6 0.1 0.1 0.6;0.6 0.1 0.1 0.6"
+                 dur="1.8s" begin="-1.7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="32" cy="12" r="2" fill="#F7B756" opacity=".35">
+        <animateTransform
+                attributeName="transform" type="rotate"
+                from="0 32 32" to="360 32 32" dur="1.8s" begin="-1.6s"
+                calcMode="spline" keyTimes="0;1" keySplines="0.6 0.1 0.1 0.9"
+                repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;.35;0" keyTimes="0;0.5;1"
+                 calcMode="spline" keySplines="0.6 0.1 0.1 0.6;0.6 0.1 0.1 0.6"
+                 dur="1.8s" begin="-1.6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="32" cy="12" r="1.5" fill="#F7B756" opacity=".2">
+        <animateTransform
+                attributeName="transform" type="rotate"
+                from="0 32 32" to="360 32 32" dur="1.8s" begin="-1.5s"
+                calcMode="spline" keyTimes="0;1" keySplines="0.6 0.1 0.1 0.9"
+                repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;.2;0" keyTimes="0;0.5;1"
+                 calcMode="spline" keySplines="0.6 0.1 0.1 0.6;0.6 0.1 0.1 0.6"
+                 dur="1.8s" begin="-1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="32" cy="12" r="1" fill="#F7B756" opacity=".1">
+        <animateTransform
+                attributeName="transform" type="rotate"
+                from="0 32 32" to="360 32 32" dur="1.8s" begin="-1.4s"
+                calcMode="spline" keyTimes="0;1" keySplines="0.6 0.1 0.1 0.9"
+                repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;.1;0" keyTimes="0;0.5;1"
+                 calcMode="spline" keySplines="0.6 0.1 0.1 0.6;0.6 0.1 0.1 0.6"
+                 dur="1.8s" begin="-1.4s" repeatCount="indefinite"/>
+    </circle>
+</svg>

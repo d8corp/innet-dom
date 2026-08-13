@@ -1,4 +1,5 @@
 import { type HandlerPlugin, innet, useApp, useHandler } from 'innet'
+import { queueNanotask } from 'queue-nano-task'
 import { scope, Watch } from 'watch-state'
 
 import { useContextWatcher, watcherContext } from '../../hooks'
@@ -18,9 +19,19 @@ export function domFn (): HandlerPlugin {
           clear(comment)
         } else {
           watcherContext.set(childrenHandler, watcher)
+
+          queueNanotask(() => {
+            watcher.updated = true
+          })
         }
 
         innet(fn(), childrenHandler, 0, true)
+
+        if (!watcher.updated) {
+          queueNanotask(() => {
+            watcher.updated = false
+          }, 0, true)
+        }
       })
     })
   }

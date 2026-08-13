@@ -1,6 +1,7 @@
 .root {
   text-align: center;
   background: no-repeat radial-gradient(ellipse, rgba(247,183,86,0.12), transparent 70%) 0 -300px;
+  min-height: calc(100vh - var(--header-size));
 }
 
 .content {

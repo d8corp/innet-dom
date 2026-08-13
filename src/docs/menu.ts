@@ -40,32 +40,32 @@ export const menu: MenuItem[] = [
         children: 'Portal',
       },
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'ContextProvider',
       },
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'Show / Hide',
       },
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'For',
       },
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'Router',
       },
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'Link',
       },
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'Delay',
       },
@@ -75,17 +75,17 @@ export const menu: MenuItem[] = [
     title: 'Hooks',
     children: [
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'useParam',
       },
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'useParams',
       },
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'useParent',
       },
@@ -95,17 +95,17 @@ export const menu: MenuItem[] = [
     title: 'Utils',
     children: [
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'Ref',
       },
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'Context',
       },
       {
-        href: '/',
+        href: '/404',
         exact: true,
         children: 'style',
       },

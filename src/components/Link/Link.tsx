@@ -1,6 +1,7 @@
-import { historyPush, historyReplace, locationURL } from '@watch-state/history-api'
+import { locationURL, pushHistory, replaceHistory } from '@watch-state/history-api'
 import { classes } from 'html-classes'
 import { Compute } from 'watch-state'
+import { scrollTo as scrollToFn } from 'web-scroll'
 
 import { getStyles, type HTMLStyleProps } from '../../hooks'
 import { use } from '../../utils'
@@ -90,9 +91,16 @@ export function Link (props: LinkProps) {
 
     e.preventDefault()
 
-    const call = replace ? historyReplace : historyPush
+    const call = replace ? replaceHistory : pushHistory
 
-    call(url, scroll === 'none' ? -1 : scrollTo ?? (page ? 0 : -1))
+    call(url)
+
+    if (scroll !== 'none') {
+      scrollToFn(scrollTo ?? (page ? 0 : href?.startsWith('#') ? href : -1), {
+        block: 'start',
+      })
+    }
+
     // @ts-expect-error TODO: fix types
     onclick?.call(this, e)
   }

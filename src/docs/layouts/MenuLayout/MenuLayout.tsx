@@ -29,12 +29,11 @@ export function MenuLayout ({ children }: ChildrenProps) {
           On this page
         </div>
         <Flex vertical gap={8} class={styles.submenuContent}>
-          <Link href='/' class={styles.subItem}>Installation</Link>
-          <Link href='/' class={styles.subItem}>Quick Start</Link>
-          <Link href='/' class={styles.subItem}>Components</Link>
-          <Link href='/' class={styles.subItem}>Router</Link>
-          <Link href='/' class={styles.subItem}>Lifecycle</Link>
-          <Link href='/' class={styles.subItem}>Styling</Link>
+          <Link href='#quick-start' class={styles.subItem}>Quick Start</Link>
+          <Link href='#installation' class={styles.subItem}>Installation</Link>
+          <Link href='#hello-world' class={styles.subItem}>Hello World</Link>
+          <Link href='#typescript-configuration' class={styles.subItem}>TypeScript Configuration</Link>
+          <Link href='#whats-next' class={styles.subItem}>What's Next?</Link>
         </Flex>
       </aside>
     </DelayPage>

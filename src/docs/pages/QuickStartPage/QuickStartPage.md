@@ -9,7 +9,7 @@ No virtual DOM — just direct, fine-grained updates.
 //! src/index.tsx
 import { innet } from 'innet'
 import { handler } from '@innet/dom'
-import { State } from'watch-state'
+import { State } from 'watch-state'
 
 const count = new State(0)
 
@@ -53,7 +53,7 @@ cd my-app
 npm start
 ```
 
-> The `-t fe` flag creates a frontend template. `my-app` is work folder.
+> The `-t fe` flag creates a frontend template, and `my-app` is the working folder.
 > Open `http://localhost:3000` to see your app.
 
 After running these commands, you'll have a ready-to-use project with component examples, configured routing, and a basic application structure.
@@ -112,7 +112,7 @@ And the corresponding HTML file:
 ```
 ### Run the project
 
-Start the development server using the command that matches your project setup: run `npm start` if you scaffolded the project with `innetjs init`, since the generated template already includes the dev server script in `package.json`;
+Start the development server using the command that matches your project setup. Run `npm start` if you scaffolded the project with `innetjs init` — the generated template already includes the dev server script in `package.json`.
 
 For custom or manually configured projects, run `innetjs start` directly — the CLI will handle the build pipeline, hot module replacement, and dev server automatically.
 

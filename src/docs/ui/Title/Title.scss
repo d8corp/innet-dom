@@ -22,6 +22,10 @@
   font-weight: normal;
 }
 
+.withLink {
+  scroll-margin-top: var(--scroll-top);
+}
+
 .link {
   margin-left: 6px;
   margin-bottom: auto;
