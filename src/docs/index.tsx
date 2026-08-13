@@ -9,20 +9,13 @@ import './styles/external.global.scss'
 import './styles/base.scss'
 
 import { innet } from 'innet'
-import Timer from 'sync-timer'
 
 import { Router } from '../components'
 import { handler } from '../handler'
+import { removeLoading, scrollToHash } from './helpers'
 import { routing } from './routing'
 
-const loading = document.getElementById('loading')
-
-if (loading) {
-  loading.style.opacity = '0'
-
-  new Timer(() => {
-    loading.remove()
-  }, 300)
-}
+removeLoading()
+scrollToHash()
 
 innet(<Router routing={routing} />, handler)

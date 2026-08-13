@@ -1,10 +1,10 @@
-import { locationURL, pushHistory, replaceHistory } from '@watch-state/history-api'
+import { locationURL } from '@watch-state/history-api'
 import { classes } from 'html-classes'
 import { Compute } from 'watch-state'
-import { scrollTo as scrollToFn } from 'web-scroll'
 
 import { getStyles, type HTMLStyleProps } from '../../hooks'
-import { use } from '../../utils'
+import type { LinkToParams } from '../../utils'
+import { linkTo, use } from '../../utils'
 
 export const defaultLinkClass = {
   root: undefined,
@@ -17,11 +17,8 @@ function clearHref (url: string) {
   return url.replace(CLEAR_HREF, '')
 }
 
-export interface LinkProps extends HTMLStyleProps<HTMLAnchorElement, typeof defaultLinkClass> {
+export interface LinkProps extends HTMLStyleProps<HTMLAnchorElement, typeof defaultLinkClass>, LinkToParams {
   target?: '_blank' | '_parent' | '_self' | '_top'
-  scroll?: 'after' | 'before' | 'none'
-  scrollTo?: number | string
-  replace?: boolean
   exact?: boolean
   children?: JSX.Element
 }
@@ -76,30 +73,9 @@ export function Link (props: LinkProps) {
       return onclick?.call(this, e)
     }
 
-    const href = getHref()
-    let url = href
-    const page = href?.startsWith('/')
-
-    if (href?.startsWith('?')) {
-      url = location.pathname + (href === '?' ? '' : href)
-    } else if (href?.startsWith('#')) {
-      url = location.pathname + location.search + (href === '#' ? '' : href)
-    } else if (!page) {
-      // @ts-expect-error TODO: fix types
-      return onclick?.call(this, e)
-    }
+    if (!linkTo(getHref(), { scroll, replace, scrollTo })) return
 
     e.preventDefault()
-
-    const call = replace ? replaceHistory : pushHistory
-
-    call(url)
-
-    if (scroll !== 'none') {
-      scrollToFn(scrollTo ?? (page ? 0 : href?.startsWith('#') ? href : -1), {
-        block: 'start',
-      })
-    }
 
     // @ts-expect-error TODO: fix types
     onclick?.call(this, e)
