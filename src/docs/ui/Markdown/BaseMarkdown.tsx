@@ -70,7 +70,7 @@ export function BaseMarkdown ({ text, map }: BaseMarkdownProps) {
 
       return ({
         type: Title,
-        props: { h: depth, title: text, children: text ? undefined : jsxChildren, link: true },
+        props: { h: depth, title: text, children: text ? undefined : jsxChildren, link: depth < 3 },
       })
     },
     HorizontalRule: () => ({

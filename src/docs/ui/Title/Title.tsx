@@ -1,4 +1,4 @@
-import { Compute } from 'watch-state'
+import { Compute, onDestroy, State } from 'watch-state'
 
 import { Flex, type FlexProps } from '../Flex'
 
@@ -21,11 +21,30 @@ const linkSize: Record<1 | 2 | 3 | 4 | 5 | 6, number> = {
   6: 12,
 }
 
+export interface TitleLink {
+  id: string
+  title?: string
+}
+
+export const titleLinks = new State(new Set<TitleLink>())
+let updateLinks: symbol
+
+const updateTitleLinks = () => {
+  const id = updateLinks = Symbol('')
+
+  queueMicrotask(() => {
+    if (id === updateLinks) {
+      titleLinks.update()
+    }
+  })
+}
+
 export interface TitleProps extends FlexProps<'h1'> {
   h?: 1 | 2 | 3 | 4 | 5 | 6
   title?: string
   subtitle?: StateProp<string>
   link?: boolean
+  id?: string
 }
 
 export function Title ({
@@ -34,6 +53,7 @@ export function Title ({
   subtitle,
   children = title,
   link,
+  id = title && link ? slugify(title) : undefined,
   ...props
 }: TitleProps = {}) {
   const show = useShow()
@@ -45,12 +65,23 @@ export function Title ({
     document.title = title
   }
 
+  if (id) {
+    const link: TitleLink = { id, title }
+    titleLinks.raw.add(link)
+
+    onDestroy(() => {
+      titleLinks.raw.delete(link)
+    })
+
+    updateTitleLinks()
+  }
+
   return (
     <Flex
       element={`h${h}`}
       wrap
-      id={title && link ? slugify(title) : undefined}
       {...props}
+      id={id}
       class={() => [
         styles.root,
         title && link && styles.withLink,
