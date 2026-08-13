@@ -45,9 +45,14 @@ export const menu: MenuItem[] = [
         children: 'ContextProvider',
       },
       {
-        href: '/404',
+        href: '/show',
         exact: true,
-        children: 'Show / Hide',
+        children: 'Show',
+      },
+      {
+        href: '/hide',
+        exact: true,
+        children: 'Hide',
       },
       {
         href: '/for',

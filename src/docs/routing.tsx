@@ -88,6 +88,18 @@ export const routing = createRouting([
             fallback: <LoadingPage />,
             component: lazy(() => import('./pages/DelayPage')),
           },
+          {
+            index: true,
+            path: 'show',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/ShowPage')),
+          },
+          {
+            index: true,
+            path: 'hide',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/HidePage')),
+          },
         ],
       },
       {
