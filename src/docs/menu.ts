@@ -80,17 +80,17 @@ export const menu: MenuItem[] = [
     title: 'Hooks',
     children: [
       {
-        href: '/404',
+        href: '/use-param',
         exact: true,
         children: 'useParam',
       },
       {
-        href: '/404',
+        href: '/use-params',
         exact: true,
         children: 'useParams',
       },
       {
-        href: '/404',
+        href: '/use-parent',
         exact: true,
         children: 'useParent',
       },
@@ -100,17 +100,17 @@ export const menu: MenuItem[] = [
     title: 'Utils',
     children: [
       {
-        href: '/404',
+        href: '/ref',
         exact: true,
         children: 'Ref',
       },
       {
-        href: '/404',
+        href: '/context',
         exact: true,
         children: 'Context',
       },
       {
-        href: '/404',
+        href: '/style',
         exact: true,
         children: 'style',
       },

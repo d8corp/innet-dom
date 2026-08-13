@@ -111,10 +111,10 @@ const classes = { root: 'link', active: 'active' }
 
 export const Content = () => (
   <div>
-    <Link href='/' exact classes={classes}>
+    <Link href='/' exact class={classes}>
       home
     </Link>
-    <Link href="/test" classes={classes}>
+    <Link href="/test" class={classes}>
       test
     </Link>
   </div>

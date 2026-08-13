@@ -604,7 +604,7 @@ You can pass a value from a parent element through any children to the place you
 
 Modify `Content.tsx`
 ```typescript jsx
-import { Context, useContext } from '@innet/dom'
+import { Context, useContext } from '@innet/jsx'
 
 export const color = new Context('blue')
 

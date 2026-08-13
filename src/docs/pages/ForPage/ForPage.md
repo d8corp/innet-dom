@@ -42,7 +42,7 @@ export default (
 )
 ```
 
-Use `key` property to improve `DOM` changes when you use an array of objects with some uniq field, like id.
+Use `key` property to improve `DOM` changes when you use an array of objects with some unique field, like id.
 
 ```tsx
 import { For } from '@innet/dom'
@@ -60,7 +60,7 @@ export default (
       {(user, index) => (
         <li>
           #{index}:
-          {() => user.value.name}
+          {() => user.value.text}
         </li>
       )}
     </For>

@@ -100,6 +100,30 @@ export const routing = createRouting([
             fallback: <LoadingPage />,
             component: lazy(() => import('./pages/HidePage')),
           },
+          {
+            index: true,
+            path: 'use-param',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/UseParamPage')),
+          },
+          {
+            index: true,
+            path: 'use-params',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/UseParamsPage')),
+          },
+          {
+            index: true,
+            path: 'use-parent',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/UseParentPage')),
+          },
+          {
+            index: true,
+            path: 'ref',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/RefPage')),
+          },
         ],
       },
       {

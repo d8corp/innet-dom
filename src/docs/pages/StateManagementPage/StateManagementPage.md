@@ -41,7 +41,7 @@ const darkMode = new State(false)
 const modeClass = new Compute(() => darkMode.value ? 'dark' : 'light')
 
 const handleChange = (e: Event) => {
-  darkMode.value = e.target.checked
+  darkMode.value = (e.target as HTMLInputElement).checked
 }
 
 const app = (
