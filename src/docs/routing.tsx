@@ -20,11 +20,7 @@ export const routing = createRouting([
             index: true,
             path: 'quick-start',
             fallback: <LoadingPage />,
-            component: lazy(async () => {
-              // await new Promise(resolve => setTimeout(resolve, 100000))
-
-              return await import('./pages/QuickStartPage')
-            }),
+            component: lazy(() => import('./pages/QuickStartPage')),
           },
           {
             index: true,
@@ -61,6 +57,36 @@ export const routing = createRouting([
             path: 'portal',
             fallback: <LoadingPage />,
             component: lazy(() => import('./pages/PortalPage')),
+          },
+          {
+            index: true,
+            path: 'context-provider',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/ContextProviderPage')),
+          },
+          {
+            index: true,
+            path: 'for',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/ForPage')),
+          },
+          {
+            index: true,
+            path: 'router',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/RouterPage')),
+          },
+          {
+            index: true,
+            path: 'link',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/LinkPage')),
+          },
+          {
+            index: true,
+            path: 'delay',
+            fallback: <LoadingPage />,
+            component: lazy(() => import('./pages/DelayPage')),
           },
         ],
       },

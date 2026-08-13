@@ -1,5 +1,4 @@
 # Styling
----
 
 You can style components with `style` function.
 The function returns `useStyle` hook.

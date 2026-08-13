@@ -40,7 +40,7 @@ export const menu: MenuItem[] = [
         children: 'Portal',
       },
       {
-        href: '/404',
+        href: '/context-provider',
         exact: true,
         children: 'ContextProvider',
       },
@@ -50,22 +50,22 @@ export const menu: MenuItem[] = [
         children: 'Show / Hide',
       },
       {
-        href: '/404',
+        href: '/for',
         exact: true,
         children: 'For',
       },
       {
-        href: '/404',
+        href: '/router',
         exact: true,
         children: 'Router',
       },
       {
-        href: '/404',
+        href: '/link',
         exact: true,
         children: 'Link',
       },
       {
-        href: '/404',
+        href: '/delay',
         exact: true,
         children: 'Delay',
       },

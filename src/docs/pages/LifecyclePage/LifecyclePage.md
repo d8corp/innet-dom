@@ -1,5 +1,4 @@
 # Lifecycle
----
 
 Simple, predictable lifecycle hooks. Components render once — effects run inline.
 
