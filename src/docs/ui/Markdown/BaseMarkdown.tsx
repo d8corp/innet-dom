@@ -19,6 +19,7 @@ import type {
 } from '@textlint/ast-node-types'
 import { parse } from '@textlint/markdown-to-ast'
 
+import { Code } from '../Code'
 import { Divider } from '../Divider'
 import { Title } from '../Title'
 
@@ -93,7 +94,7 @@ export function BaseMarkdown ({ text, map }: BaseMarkdownProps) {
       props: { children: children?.map(ast2jsx) },
     }),
     Code: ({ value }: TxtCodeNode) => ({
-      type: 'code',
+      type: Code,
       props: { children: value },
     }),
     CodeBlock: ({ value }: TxtCodeBlockNode) => ({
@@ -108,6 +109,9 @@ export function BaseMarkdown ({ text, map }: BaseMarkdownProps) {
         alt,
         src: url,
       },
+    }),
+    Break: () => ({
+      type: 'br',
     }),
     Table: ({ children: [header, ...rows] }: TxtTableNode) => ({
       type: 'table',

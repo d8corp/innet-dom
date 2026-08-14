@@ -53,7 +53,7 @@ cd my-app
 npm start
 ```
 
-> The `-t fe` flag creates a frontend template, and `my-app` is the working folder.
+> The `-t fe` flag creates a frontend template, and `my-app` is the working folder.  
 > Open `http://localhost:3000` to see your app.
 
 After running these commands, you'll have a ready-to-use project with component examples, configured routing, and a basic application structure.
