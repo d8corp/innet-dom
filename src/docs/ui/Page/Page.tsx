@@ -2,24 +2,17 @@ import { ContextProvider } from '@innet/jsx'
 import { classes } from 'html-classes'
 import { State, Watch } from 'watch-state'
 
-import type { FlexProps, FlexStyles } from '../Flex'
+import type { FlexProps } from '../Flex'
 import { Flex } from '../Flex'
 
 import { Delay, useHidden } from '../../../components'
-import { style, useEffect, useShow } from '../../../hooks'
+import { useEffect, useShow, useStyles } from '../../../hooks'
 import type { PageUpdatedData } from '../../hooks'
 import { pageUpdated, usePageUpdated } from '../../hooks'
 import { scrolling } from '../../state'
-import styles from './Page.scss'
+import classNames from './Page.module.scss'
 
-const useStyle = style(styles)
-
-export interface PageStyles extends FlexStyles {
-  hide: string
-  show: string
-}
-
-export type PageProps = FlexProps<'div', PageStyles>
+export type PageProps = FlexProps<'div', typeof classNames>
 
 export interface DelayPageProps extends PageProps {
   show?: number
@@ -39,7 +32,7 @@ export function DelayPage ({
 }
 
 export function Page ({ ...props }: PageProps) {
-  const styles = useStyle()
+  const styles = useStyles(classNames)
   const show = useShow()
   const hidden = useHidden()
   const scrolled = new State(false)

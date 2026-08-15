@@ -8,14 +8,12 @@ import { Flex } from '../Flex'
 import { BaseMarkdown } from '../Markdown/BaseMarkdown'
 import { Typography } from '../Typography'
 
-import { style, useEffect } from '../../../hooks'
-import { Ref } from '../../../utils'
+import { useEffect, useStyles } from '../../../hooks'
+import { inject, injectAll, Ref } from '../../../utils'
 import { CopyIcon, SuccessIcon } from '../../icons'
-import styles from './Highlight.scss'
+import classNames from './Highlight.module.scss'
 
-const useStyle = style(styles)
-
-export type HighlightProps<T extends FlexElement = 'div'> = FlexProps<T> & {
+export type HighlightProps<T extends FlexElement = 'div'> = FlexProps<T, typeof classNames> & {
   code: string
   lang: string
 }
@@ -25,7 +23,7 @@ export function Highlight<T extends FlexElement = 'div'> ({
   lang,
   ...props
 }: HighlightProps<T>) {
-  const styles = useStyle()
+  const styles = useStyles(classNames)
   const ref = new Ref<HTMLPreElement>()
   const copied = new State(false)
   let copyTimer: any
@@ -75,8 +73,8 @@ export function Highlight<T extends FlexElement = 'div'> ({
 
       return (
         <>
-          <Flex vertical class={() => styles.header}>
-            <Flex padding={[12, 16]} class={() => styles.title} gap={12} align='center'>
+          <Flex vertical class={styles.header}>
+            <Flex padding={[12, 16]} class={styles.title} gap={12} align='center'>
               <Flex gap={6}>
                 <Dot color='error' />
                 <Dot color='warning' />
@@ -90,7 +88,10 @@ export function Highlight<T extends FlexElement = 'div'> ({
               </button>
             </Flex>
           </Flex>
-          <pre class={() => classes([styles.code, `language-${lang}`])} ref={ref}>
+          <pre
+            class={injectAll([styles.code, inject(lang, lang => `language-${lang}`)], classes)}
+            ref={ref}
+          >
             {!hasLand && codeText}
           </pre>
         </>
@@ -124,9 +125,9 @@ export function Highlight<T extends FlexElement = 'div'> ({
 
     return (
       <>
-        <Flex vertical class={() => styles.header}>
-          <Flex padding={[12, 16]} class={() => styles.title} gap={12} align='center'>
-            <Flex flex class={() => styles.tabs}>
+        <Flex vertical class={styles.header}>
+          <Flex padding={[12, 16]} class={styles.title} gap={12} align='center'>
+            <Flex flex class={styles.tabs}>
               {tabs.map(([title], index) => (
                 <span
                   class={() => classes([styles.tab, index === tab.value && styles.selected])}
@@ -141,13 +142,13 @@ export function Highlight<T extends FlexElement = 'div'> ({
             </button>
           </Flex>
         </Flex>
-        <pre class={() => classes([styles.code, `language-${lang}`])} ref={ref} />
+        <pre class={injectAll([styles.code, inject(lang, lang => `language-${lang}`)], classes)} ref={ref} />
       </>
     )
   }
 
   return (
-    <Flex<T> vertical {...(props as any)} class={() => styles.root}>
+    <Flex<T> vertical {...(props as any)} class={styles.root}>
       <Content />
     </Flex>
   )

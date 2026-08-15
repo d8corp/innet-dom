@@ -1,15 +1,13 @@
-import { style } from '../../../hooks'
-import type { HTMLProps } from '../../../types'
-import styles from './Typography.scss'
+import type { HTMLStyleProps } from '../../../hooks'
+import { useStyles } from '../../../hooks'
+import classNames from './Typography.module.scss'
 
-const useStyle = style(styles)
-
-export interface TypographyProps extends HTMLProps <HTMLDivElement> {
+export interface TypographyProps extends HTMLStyleProps <HTMLDivElement, typeof classNames> {
   flex?: number | boolean
 }
 
 export function Typography ({ flex, style, ...props }: TypographyProps) {
-  const styles = useStyle()
+  const styles = useStyles(classNames)
 
   return (
     <article
