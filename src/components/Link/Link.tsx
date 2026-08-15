@@ -2,13 +2,13 @@ import { locationURL } from '@watch-state/history-api'
 import { classes } from 'html-classes'
 import { Compute } from 'watch-state'
 
-import { getStyles, type HTMLStyleProps } from '../../hooks'
+import { type HTMLStyleProps, useStyles } from '../../hooks'
 import type { LinkToParams } from '../../utils'
 import { linkTo, use } from '../../utils'
 
 export const defaultLinkClass = {
-  root: undefined,
-  active: undefined,
+  root: '',
+  active: '',
 }
 
 const CLEAR_HREF = /([?#].*)?$/
@@ -24,14 +24,14 @@ export interface LinkProps extends HTMLStyleProps<HTMLAnchorElement, typeof defa
 }
 
 export function Link (props: LinkProps) {
-  const styles = getStyles(defaultLinkClass, props)
+  const styles = useStyles(defaultLinkClass)
   const { onclick, href, scroll = 'before', scrollTo, replace, exact, ...rest } = props
 
   if (!href || (typeof href === 'string' && href.startsWith('http'))) {
     return (
       <a
         {...rest}
-        class={() => styles.root}
+        class={styles.root}
         href={href}
         rel={rest.rel ?? (href ? 'noopener noreferrer nofollow' : undefined)}
         target={rest.target ?? (href ? '_blank' : undefined)}

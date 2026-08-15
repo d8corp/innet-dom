@@ -5,5 +5,5 @@ import classNames from './Link.module.scss'
 export function Link (props: LinkProps) {
   const styles = useStyles(classNames)
 
-  return <LinkOrigin {...props} class={styles.root} />
+  return <LinkOrigin {...props} class={styles} />
 }

@@ -17,7 +17,7 @@ export function Header () {
   return (
     <Flex element='header' class={() => classes([styles.root, show.value && styles.show])}>
       <Flex flex padding={[0, 24]} align='center' justify='between' class={styles.content}>
-        <Flex element='a' href='/' gap={12} align='center' class={styles.logo}>
+        <Flex element='a' exact href='/' gap={12} align='center' class={styles.logo}>
           <Logo width={36} />
           <div>
             <span class={styles.innet}>innet</span>

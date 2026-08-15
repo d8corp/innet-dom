@@ -64,7 +64,7 @@ export function useStyles<S extends Record<string, string>> (styles: S): { [K in
   if (!props) return styles
 
   const classNames = typeof props.class === 'object' ? props.class : { root: props.class }
-  const result: S = {} as S
+  const result: S = { ...classNames } as S
 
   for (const key in styles) {
     const className = classNames[key]

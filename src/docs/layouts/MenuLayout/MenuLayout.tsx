@@ -2,13 +2,13 @@ import { classes } from 'html-classes'
 import type { State } from 'watch-state'
 import { Compute } from 'watch-state'
 
-import { Delay, For, Link, Show } from '../../../components'
+import { Delay, For, Show } from '../../../components'
 import { useShow } from '../../../hooks'
 import type { ChildrenProps } from '../../../types'
 import { Ref } from '../../../utils'
 import { usePageUpdated } from '../../hooks'
 import { menu } from '../../menu'
-import { DelayPage, Flex, titleLinks } from '../../ui'
+import { DelayPage, Flex, Link, titleLinks } from '../../ui'
 import styles from './MenuLayout.scss'
 
 export function MenuLayout ({ children }: ChildrenProps) {
