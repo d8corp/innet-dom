@@ -8,6 +8,7 @@
   transform: translateY(-30px);
   transition: opacity .2s, transform .2s;
   height: 64px;
+  z-index: 1;
 }
 
 .show {

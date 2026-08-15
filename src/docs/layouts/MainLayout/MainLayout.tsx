@@ -7,11 +7,11 @@ import styles from './MainLayout.scss'
 export function MainLayout ({ children }: ChildrenProps) {
   return (
     <Flex vertical flex>
-      <Flex vertical reverse flex class={styles.wrapper}>
+      <Flex vertical flex class={styles.wrapper}>
+        <Header />
         <Flex flex vertical class={styles.content}>
           {children}
         </Flex>
-        <Header />
       </Flex>
       <Footer />
     </Flex>

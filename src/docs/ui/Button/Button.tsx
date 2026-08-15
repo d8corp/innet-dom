@@ -1,21 +1,14 @@
 import { classes } from 'html-classes'
 
-import type { FlexProps, FlexStyles } from '../Flex'
+import type { FlexProps } from '../Flex'
 import { Flex } from '../Flex'
 
-import { style } from '../../../hooks'
+import { useStyles } from '../../../hooks'
 import type { ObservableProp } from '../../../types'
-import { inject } from '../../../utils'
-import styles from './Button.scss'
+import { inject, injectAll } from '../../../utils'
+import styles from './Button.module.scss'
 
-export interface ButtonStyles extends FlexStyles {
-  primary: string
-  secondary: string
-  m: string
-  l: string
-}
-
-const useStyle = style(styles)
+export type ButtonStyles = typeof styles
 
 export type ButtonView = 'primary' | 'secondary'
 export type ButtonSize = 'm' | 'l'
@@ -30,7 +23,13 @@ export function Button<T extends keyof HTMLElementTagNameMap = 'button', S exten
   view = 'primary',
   ...props
 }: ButtonProps<T, S>) {
-  const styles = useStyle()
+  const style = useStyles(styles)
+
+  const root = injectAll([
+    style.root,
+    inject(view, view => styles[view]),
+    inject(size, size => styles[size || 'm']),
+  ], classes)
 
   return (
     <Flex
@@ -39,11 +38,7 @@ export function Button<T extends keyof HTMLElementTagNameMap = 'button', S exten
       align='center'
       element='button'
       {...props as any}
-      class={() => classes([
-        styles.root,
-        inject(view, view => styles[view]),
-        inject(size, size => styles[size || 'm']),
-      ])}
+      class={root}
     />
   )
 }

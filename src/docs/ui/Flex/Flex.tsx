@@ -1,16 +1,13 @@
+import { Link } from '../Link'
+
 import type { LinkProps } from '../../../components'
-import { Link } from '../../../components'
 import type { HTMLStyleProps } from '../../../hooks'
-import { style } from '../../../hooks'
+import { useStyles } from '../../../hooks'
 import type { StateProp } from '../../../types'
 import { inject } from '../../../utils'
-import styles from './Flex.scss'
+import classNames from './Flex.module.scss'
 
-export interface FlexStyles {
-  root: string
-}
-
-const useStyle = style(styles)
+export type FlexStyles = typeof classNames
 
 export const alignJustifyMap = {
   start: 'flex-start',
@@ -62,7 +59,7 @@ export function Flex<T extends FlexElement = 'div', S extends FlexStyles = FlexS
   element = 'div' as T,
   ...props
 }: FlexProps<T, S>) {
-  const styles = useStyle()
+  const styles = useStyles(classNames)
   const Element = element === 'a' ? Link as any : element as string
 
   return (
@@ -79,7 +76,7 @@ export function Flex<T extends FlexElement = 'div', S extends FlexStyles = FlexS
         '--ui-flex-padding': !padding ? '' : Array.isArray(padding) ? `${padding.join('px ')}px` : `${padding}px`,
         '--ui-flex-gap': !gap ? '' : Array.isArray(gap) ? `${gap[0]}px ${gap[1]}px` : `${gap}px`,
       }}
-      class={() => styles.root}
+      class={styles.root}
     />
   )
 }

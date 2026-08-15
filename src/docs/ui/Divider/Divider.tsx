@@ -1,14 +1,12 @@
 import { classes } from 'html-classes'
 
 import type { HTMLStyleProps } from '../../../hooks'
-import { style } from '../../../hooks'
+import { useStyles } from '../../../hooks'
 import type { StateProp } from '../../../types'
-import { use } from '../../../utils'
-import styles from './Divider.scss'
+import { inject, injectAll } from '../../../utils'
+import classNames from './Divider.module.scss'
 
-const useStyles = style(styles)
-
-interface DividerPros extends HTMLStyleProps<HTMLHRElement> {
+interface DividerPros extends HTMLStyleProps<HTMLHRElement, typeof classNames> {
   vertical?: StateProp<boolean>
 }
 
@@ -17,28 +15,22 @@ export function Divider ({
   children,
   ...props
 }: DividerPros = {}) {
-  const styles = useStyles()
+  const styles = useStyles(classNames)
+
+  const root = injectAll([
+    styles.root,
+    inject(vertical, vertical => vertical && styles.vertical),
+  ], classes)
 
   if (!children) {
     return (
-      <hr
-        {...props}
-        class={() => classes([
-          styles.root,
-          use(vertical) && styles.vertical,
-        ])}
-      />
+      <hr {...props} class={root} />
     )
   }
 
   return (
-    <fieldset
-      class={() => classes([
-        styles.root,
-        use(vertical) && styles.vertical,
-      ])}
-    >
-      <legend class={() => styles.legend}>
+    <fieldset class={root}>
+      <legend class={styles.legend}>
         {children}
       </legend>
     </fieldset>

@@ -2,15 +2,13 @@ import { classes } from 'html-classes'
 import { State } from 'watch-state'
 
 import type { HTMLStyleProps } from '../../../hooks'
-import { style } from '../../../hooks'
-import styles from './Code.scss'
-
-const useStyles = style(styles)
+import { useStyles } from '../../../hooks'
+import classNames from './Code.module.scss'
 
 export type CodeProps = HTMLStyleProps
 
 export function Code ({ onclick, ...props }: CodeProps) {
-  const styles = useStyles()
+  const styles = useStyles(classNames)
   const copied = new State(false)
   let copyTimer: any
 
@@ -28,5 +26,13 @@ export function Code ({ onclick, ...props }: CodeProps) {
     onclick?.(e)
   }
 
-  return <code {...props} class={() => classes([styles.root, copied.value && styles.copied])} onclick={handleClick} />
+  const root = () => classes([styles.root, copied.value && styles.copied])
+
+  return (
+    <code
+      {...props}
+      class={root}
+      onclick={handleClick}
+    />
+  )
 }

@@ -1,14 +1,18 @@
 import { classes } from 'html-classes'
+import { Compute } from 'watch-state'
 
 import { Logo } from '../Logo'
 
-import { Link } from '../../../components'
+import { Hide, Show } from '../../../components'
 import { useShow } from '../../../hooks'
-import { Button, Flex } from '../../ui'
+import { pageWidth } from '../../state'
+import { Button, Flex, Link } from '../../ui'
 import styles from './Header.scss'
 
 export function Header () {
   const show = useShow()
+
+  const hideMenu = new Compute(() => pageWidth.value < 480)
 
   return (
     <Flex element='header' class={() => classes([styles.root, show.value && styles.show])}>
@@ -21,11 +25,18 @@ export function Header () {
           </div>
         </Flex>
         <Flex element='nav' align='center' gap={28}>
-          <Link href='/quick-start' class={styles.link}>Docs</Link>
-          <a href='/examples' class={styles.link}>Examples</a>
-          <Button element='a' href='https://github.com/d8corp/innet-dom' view='secondary'>
-            GitHub
-          </Button>
+          <Hide when={hideMenu}>
+            <Link href='/quick-start' class={styles.link}>Docs</Link>
+            <Link href='/examples' class={styles.link}>Examples</Link>
+            <Button element='a' href='https://github.com/d8corp/innet-dom' view='secondary'>
+              GitHub
+            </Button>
+          </Hide>
+          <Show when={hideMenu}>
+            <Button element='a' href='https://github.com/d8corp/innet-dom' view='secondary'>
+              GitHub
+            </Button>
+          </Show>
         </Flex>
       </Flex>
     </Flex>

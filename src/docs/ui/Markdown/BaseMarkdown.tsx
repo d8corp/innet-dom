@@ -21,9 +21,9 @@ import { parse } from '@textlint/markdown-to-ast'
 
 import { Code } from '../Code'
 import { Divider } from '../Divider'
+import { Link } from '../Link'
 import { Title } from '../Title'
 
-import { Link } from '../../../components'
 import type { StateProp } from '../../../types'
 import { use } from '../../../utils'
 
