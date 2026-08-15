@@ -2,23 +2,20 @@ import { classes } from 'html-classes'
 import type { State } from 'watch-state'
 
 import { Delay } from '../../../components'
-import type { Style } from '../../../hooks'
+import type { HTMLStyleProps } from '../../../hooks'
 import { useStyles } from '../../../hooks'
-import type { ChildrenProps } from '../../../types'
 import { Ref } from '../../../utils'
-import classNames from './Page.module.scss'
+import $styles from './Page.module.scss'
 
-export interface PageProps extends ChildrenProps, Style {}
+export type PageProps = HTMLStyleProps<HTMLDivElement, typeof $styles>
 
-export function Page ({ children }: PageProps) {
+export function Page (props: PageProps) {
   const hidden = new Ref<State<boolean>>()
-  const styles = useStyles(classNames)
+  const styles = useStyles($styles)
 
   return (
     <Delay show={300} hide={300} ref={hidden}>
-      <div class={() => classes([styles.root, hidden.value?.value && styles.hidden])}>
-        {children}
-      </div>
+      <div {...props} class={() => classes([styles.root, hidden.value?.value && styles.hidden])} />
     </Delay>
   )
 }

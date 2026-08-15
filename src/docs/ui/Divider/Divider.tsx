@@ -4,9 +4,9 @@ import type { HTMLStyleProps } from '../../../hooks'
 import { useStyles } from '../../../hooks'
 import type { StateProp } from '../../../types'
 import { inject, injectAll } from '../../../utils'
-import classNames from './Divider.module.scss'
+import $styles from './Divider.module.scss'
 
-interface DividerPros extends HTMLStyleProps<HTMLHRElement, typeof classNames> {
+interface DividerPros extends HTMLStyleProps<HTMLHRElement, typeof $styles> {
   vertical?: StateProp<boolean>
 }
 
@@ -15,7 +15,7 @@ export function Divider ({
   children,
   ...props
 }: DividerPros = {}) {
-  const styles = useStyles(classNames)
+  const styles = useStyles($styles)
 
   const root = injectAll([
     styles.root,

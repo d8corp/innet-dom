@@ -10,9 +10,9 @@ import { useEffect, useShow, useStyles } from '../../../hooks'
 import type { PageUpdatedData } from '../../hooks'
 import { pageUpdated, usePageUpdated } from '../../hooks'
 import { scrolling } from '../../state'
-import classNames from './Page.module.scss'
+import $styles from './Page.module.scss'
 
-export type PageProps = FlexProps<'div', typeof classNames>
+export type PageProps = FlexProps<'div', typeof $styles>
 
 export interface DelayPageProps extends PageProps {
   show?: number
@@ -32,7 +32,7 @@ export function DelayPage ({
 }
 
 export function Page ({ ...props }: PageProps) {
-  const styles = useStyles(classNames)
+  const styles = useStyles($styles)
   const show = useShow()
   const hidden = useHidden()
   const scrolled = new State(false)

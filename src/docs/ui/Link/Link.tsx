@@ -1,9 +1,9 @@
 import { Link as LinkOrigin, type LinkProps } from '../../../components'
 import { useStyles } from '../../../hooks'
-import classNames from './Link.module.scss'
+import $styles from './Link.module.scss'
 
 export function Link (props: LinkProps) {
-  const styles = useStyles(classNames)
+  const styles = useStyles($styles)
 
   return <LinkOrigin {...props} class={styles} />
 }

@@ -11,9 +11,9 @@ import { Typography } from '../Typography'
 import { useEffect, useStyles } from '../../../hooks'
 import { inject, injectAll, Ref } from '../../../utils'
 import { CopyIcon, SuccessIcon } from '../../icons'
-import classNames from './Highlight.module.scss'
+import $styles from './Highlight.module.scss'
 
-export type HighlightProps<T extends FlexElement = 'div'> = FlexProps<T, typeof classNames> & {
+export type HighlightProps<T extends FlexElement = 'div'> = FlexProps<T, typeof $styles> & {
   code: string
   lang: string
 }
@@ -23,7 +23,7 @@ export function Highlight<T extends FlexElement = 'div'> ({
   lang,
   ...props
 }: HighlightProps<T>) {
-  const styles = useStyles(classNames)
+  const styles = useStyles($styles)
   const ref = new Ref<HTMLPreElement>()
   const copied = new State(false)
   let copyTimer: any

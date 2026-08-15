@@ -9,7 +9,7 @@ import type { StateProp } from '../../../types'
 import { use } from '../../../utils'
 import { LinkIcon } from '../../icons'
 import { slugify } from '../../utils'
-import classNames from './Title.module.scss'
+import $styles from './Title.module.scss'
 
 const linkSize: Record<1 | 2 | 3 | 4 | 5 | 6, number> = {
   1: 32,
@@ -57,7 +57,7 @@ export function Title ({
 }: TitleProps = {}) {
   const show = useShow()
   const hide = useHidden()
-  const styles = useStyles(classNames)
+  const styles = useStyles($styles)
   const showSubtitle = subtitle ? new Compute(() => Boolean(use(subtitle))) : null
 
   if (h === 1 && title !== undefined) {

@@ -5,9 +5,9 @@ import type { HTMLStyleProps } from '../../../hooks'
 import { useStyles } from '../../../hooks'
 import type { StateProp } from '../../../types'
 import { inject } from '../../../utils'
-import classNames from './Flex.module.scss'
+import $styles from './Flex.module.scss'
 
-export type FlexStyles = typeof classNames
+export type FlexStyles = typeof $styles
 
 export const alignJustifyMap = {
   start: 'flex-start',
@@ -59,7 +59,7 @@ export function Flex<T extends FlexElement = 'div', S extends FlexStyles = FlexS
   element = 'div' as T,
   ...props
 }: FlexProps<T, S>) {
-  const styles = useStyles(classNames)
+  const styles = useStyles($styles)
   const Element = element === 'a' ? Link as any : element as string
 
   return (

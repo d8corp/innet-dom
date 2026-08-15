@@ -8,15 +8,15 @@ import { classes } from 'html-classes'
 
 import type { ObservableProp } from '../../../types'
 import { inject, injectAll } from '../../../utils'
-import classNames from './Dot.module.scss'
+import $styles from './Dot.module.scss'
 
-export interface DotProps extends HTMLStyleProps<HTMLSpanElement, typeof classNames> {
+export interface DotProps extends HTMLStyleProps<HTMLSpanElement, typeof $styles> {
   size?: ObservableProp<DotSize>
   color?: ObservableProp<DotColor>
 }
 
 export function Dot ({ size = 'm', color = 'warning', ...props }: DotProps) {
-  const styles = useStyles(classNames)
+  const styles = useStyles($styles)
 
   return (
     <span

@@ -3,12 +3,12 @@ import { State } from 'watch-state'
 
 import type { HTMLStyleProps } from '../../../hooks'
 import { useStyles } from '../../../hooks'
-import classNames from './Code.module.scss'
+import $styles from './Code.module.scss'
 
-export type CodeProps = HTMLStyleProps
+export type CodeProps = HTMLStyleProps<HTMLElement, typeof $styles>
 
 export function Code ({ onclick, ...props }: CodeProps) {
-  const styles = useStyles(classNames)
+  const styles = useStyles($styles)
   const copied = new State(false)
   let copyTimer: any
 
