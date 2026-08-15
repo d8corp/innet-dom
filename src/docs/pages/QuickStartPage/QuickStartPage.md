@@ -2,7 +2,7 @@
 
 `@innet/dom` offers a declarative and reactive approach to UI development without the overhead of virtual DOM diffing. It enables developers to write simple, composable components with direct DOM manipulation, resulting in faster rendering and smaller bundle sizes compared to traditional frameworks.
 
-Create your first reactive web-application in seconds.
+**Create your first reactive web application in seconds.**  
 No virtual DOM — just direct, fine-grained updates.
 
 ```tsx
@@ -14,12 +14,9 @@ import { State } from 'watch-state'
 const count = new State(0)
 
 const app = (
-  <>
-    <h3>Count: {count}</h3>
-    <button onclick={() => count.value++}>
-      Click Me
-    </button>
-  </>
+  <button onclick={() => count.value++}>
+    Count: {count}
+  </button>
 )
 
 innet(app, handler)
@@ -110,7 +107,8 @@ And the corresponding HTML file:
   </body>
 </html>
 ```
-### Run the project
+
+### Running the Development Server
 
 Start the development server using the command that matches your project setup. Run `npm start` if you scaffolded the project with `innetjs init` — the generated template already includes the dev server script in `package.json`.
 
@@ -133,8 +131,7 @@ To work with JSX in TypeScript, add the following settings to your:
 {
   "compilerOptions": {
     "jsx": "react-jsxdev",
-    "jsxImportSource": "@innet/jsx-runtime",
-    ...
+    "jsxImportSource": "@innet/jsx-runtime"
   }
 }
 ```
