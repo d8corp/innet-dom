@@ -51,9 +51,6 @@ export default defineConfig([
         exceptAfterSingleLine: true,
       }],
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
-      'import/no-unused-modules': ['warn', {
-        unusedExports: true,
-      }],
       '@stylistic/padding-line-between-statements': [
         'error',
         { blankLine: 'always', prev: '*', next: [...MULTILINE_STATEMENTS, 'return'] },

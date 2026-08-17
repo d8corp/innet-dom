@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "rootDir": "src",
     "target": "ES2018",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
+    "types": ["node", "jest"],
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "allowJs": true,
-    "downlevelIteration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "strict": true,
     "declaration": true,
