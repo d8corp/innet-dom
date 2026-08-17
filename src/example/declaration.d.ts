@@ -1,1 +1,0 @@
-import 'innetjs/declaration'
