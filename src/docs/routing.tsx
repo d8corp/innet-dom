@@ -1,11 +1,13 @@
 import { createRouting } from '../components'
 import { lazy } from '../utils'
+import { BASE_URL } from './constants'
 import { MainLayout } from './layouts/MainLayout'
 import { MenuLayout } from './layouts/MenuLayout'
 import { LoadingPage } from './pages/LoadingPage'
 
 export const routing = createRouting([
   {
+    path: BASE_URL,
     component: MainLayout,
     children: [
       {
