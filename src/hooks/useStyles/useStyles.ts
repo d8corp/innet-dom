@@ -63,7 +63,7 @@ export function useStyles<S extends Record<string, string>> (styles: S): { [K in
   const props = useProps()
   if (!props) return styles
 
-  const classNames = typeof props.class === 'object' ? props.class : { root: props.class }
+  const classNames = typeof props.class === 'object' && !Array.isArray(props.class) ? props.class : { root: props.class }
   const result: S = { ...classNames } as S
 
   for (const key in styles) {
@@ -72,7 +72,7 @@ export function useStyles<S extends Record<string, string>> (styles: S): { [K in
     result[key] = inject(className, className => classes([
       styles[key],
       className,
-    ])) as any
+    ]) || undefined) as any
   }
 
   return result
