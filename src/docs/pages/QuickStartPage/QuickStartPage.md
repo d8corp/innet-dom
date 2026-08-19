@@ -162,7 +162,6 @@ Next, look at `public/index.html`. This is the shell that hosts your app:
 </html>
 ```
 
-*Notice the empty <body> tag.*
 By default, `@innet/dom` attaches your application directly to `document.body`.
 If you prefer to mount your app inside a specific wrapper (like `<div id="root">`), you can easily do so using the built-in [Portal](/portal) component.
 

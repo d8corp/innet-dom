@@ -22,10 +22,6 @@ export const menu: MenuItem[] = [
         children: 'State Management',
       },
       {
-        href: '/lifecycle',
-        children: 'Lifecycle',
-      },
-      {
         href: '/styling',
         children: 'Styling',
       },

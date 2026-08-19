@@ -44,12 +44,6 @@ export const routing = createRouting([
           },
           {
             index: true,
-            path: 'lifecycle',
-            fallback: <LoadingPage />,
-            component: lazy(() => import('./pages/LifecyclePage')),
-          },
-          {
-            index: true,
             path: 'styling',
             fallback: <LoadingPage />,
             component: lazy(() => import('./pages/StylingPage')),
