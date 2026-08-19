@@ -2,6 +2,7 @@ import { type JSXElement, useChildren } from '@innet/jsx'
 import { type HandlerPlugin, innet, NEXT, useApp, useHandler } from 'innet'
 import { scope, Watch } from 'watch-state'
 
+import { useContextWatcher } from '../../hooks'
 import { setParent, statePropToWatchProp } from '../../utils'
 
 export const NAMESPACE_URI = Symbol('NAMESPACE_URI') as unknown as string
@@ -24,82 +25,84 @@ export function domJSX (): HandlerPlugin {
       : document.createElement(type)
 
     if (props) {
-      for (let key in props) {
-        if (key === 'children') continue
+      useContextWatcher(() => {
+        for (let key in props) {
+          if (key === 'children') continue
 
-        if (key === 'ref') {
-          if (props.ref) {
-            props.ref.value = element
-          }
-
-          continue
-        }
-
-        let value = props[key]
-
-        if (key === 'style') {
-          for (const property in value) {
-            const rawValue = statePropToWatchProp(value[property])
-
-            if (typeof rawValue === 'function') {
-              new Watch(() => {
-                element.style.setProperty(property, rawValue())
-              })
-            } else {
-              element.style.setProperty(property, rawValue)
-            }
-          }
-
-          continue
-        }
-
-        if (key.startsWith('on')) {
-          // @ts-expect-error TODO: fix types
-          element[key] = value
-          continue
-        }
-
-        const bothSet = key[0] === '$'
-        const fieldSet = bothSet || key[0] === '_'
-        const attributeSet = bothSet || !fieldSet
-
-        if (fieldSet) {
-          key = key.slice(1)
-        }
-
-        value = statePropToWatchProp(value)
-
-        if (typeof value === 'function') {
-          new Watch(() => {
-            const result = value()
-
-            // @ts-expect-error TODO: fix types
-            if (fieldSet && element[key] !== result) {
-              // @ts-expect-error TODO: fix types
-              element[key] = result
+          if (key === 'ref') {
+            if (props.ref) {
+              props.ref.value = element
             }
 
-            if (attributeSet) {
-              if (result === undefined || result === false) {
-                if (scope.activeWatcher?.updated) {
-                  element.removeAttribute(key)
-                }
+            continue
+          }
+
+          let value = props[key]
+
+          if (key === 'style') {
+            for (const property in value) {
+              const rawValue = statePropToWatchProp(value[property])
+
+              if (typeof rawValue === 'function') {
+                new Watch(() => {
+                  element.style.setProperty(property, rawValue())
+                })
               } else {
-                element.setAttribute(key, result === true ? '' : result)
+                element.style.setProperty(property, rawValue)
               }
             }
-          })
-        } else {
-          if (fieldSet) {
-            // @ts-expect-error TODO: fix types
-            element[key] = value
+
+            continue
           }
 
-          if (attributeSet && value !== undefined) {
-            element.setAttribute(key, value)
+          if (key.startsWith('on')) {
+            // @ts-expect-error TODO: fix types
+            element[key] = value
+            continue
+          }
+
+          const bothSet = key[0] === '$'
+          const fieldSet = bothSet || key[0] === '_'
+          const attributeSet = bothSet || !fieldSet
+
+          if (fieldSet) {
+            key = key.slice(1)
+          }
+
+          value = statePropToWatchProp(value)
+
+          if (typeof value === 'function') {
+            new Watch(() => {
+              const result = value()
+
+              // @ts-expect-error TODO: fix types
+              if (fieldSet && element[key] !== result) {
+                // @ts-expect-error TODO: fix types
+                element[key] = result
+              }
+
+              if (attributeSet) {
+                if (result === undefined || result === false) {
+                  if (scope.activeWatcher?.updated) {
+                    element.removeAttribute(key)
+                  }
+                } else {
+                  element.setAttribute(key, result === true ? '' : result)
+                }
+              }
+            })
+          } else {
+            if (fieldSet) {
+              // @ts-expect-error TODO: fix types
+              element[key] = value
+            }
+
+            if (attributeSet && value !== undefined) {
+              element.setAttribute(key, value)
+            }
           }
         }
-      }
+      })
     }
 
     innet(element, handler, 0, true)

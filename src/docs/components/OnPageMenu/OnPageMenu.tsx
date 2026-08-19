@@ -48,7 +48,7 @@ export function OnPageMenu () {
         On this page
       </div>
       {() => (
-        <Delay show={scope.activeWatcher?.updated ? 300 : 0} hide={300}>
+        <Delay show={scope.activeWatcher?.updated ? 200 : 0} hide={200}>
           <Content links={titleLinks.value} />
         </Delay>
       )}

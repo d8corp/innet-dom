@@ -5,6 +5,24 @@
   top: calc(40px + var(--header-size));
   max-height: calc(100vh - var(--header-size) - 80px);
   overflow-y: auto;
+  transition: .1s;
+  margin-right: -224px;
+
+  &.show {
+    margin-right: 0;
+  }
+
+  &.hide {
+    margin-right: -224px;
+  }
+
+  @media (max-width: 1024px) {
+    position: fixed;
+    top: calc(var(--header-size) + 40px);
+    right: 24px;
+    bottom: 0;
+    background: var(--secondary-color);
+  }
 }
 
 .title {
@@ -29,7 +47,6 @@
 
 .hide {
   opacity: 0;
-  background: red;
 }
 
 .item {

@@ -29,8 +29,9 @@ export function MenuLayout ({ children }: ChildrenProps) {
       <Flex element='main' flex class={styles.main}>
         {children}
       </Flex>
+
       <Show when={isShowOnPageMenu}>
-        <Delay hide={300}>
+        <Delay hide={100}>
           <OnPageMenu />
         </Delay>
       </Show>
