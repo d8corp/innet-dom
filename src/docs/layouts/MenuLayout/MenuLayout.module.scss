@@ -12,15 +12,6 @@
   overflow-y: auto;
 }
 
-.submenu {
-  width: 200px;
-  padding-left: 8px;
-  position: sticky;
-  top: calc(40px + var(--header-size));
-  max-height: calc(100vh - var(--header-size) - 80px);
-  overflow-y: auto;
-}
-
 .main {
   min-width: 0;
 
@@ -50,36 +41,4 @@
 .itemSelected {
   background: rgba(247, 183, 86, 0.1);
   color: var(--primary-color);
-}
-
-.submenuTitle {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #808080;
-  margin-bottom: 12px;
-}
-
-.submenuContent {
-  border-left: 1px solid rgba(247,183,86,0.1);
-  padding-left: 12px;
-  opacity: 0;
-  transition: .3s;
-}
-
-.submenuShow {
-  opacity: 1;
-}
-
-.submenuHide {
-  opacity: 0;
-}
-
-.subItem {
-  color: #A0A0A0;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-  transition: color 0.2s;
 }

@@ -1,19 +1,17 @@
-import { classes } from 'html-classes'
-import type { State } from 'watch-state'
 import { Compute } from 'watch-state'
 
-import { Delay, For, Show } from '../../../components'
-import { useShow } from '../../../hooks'
+import { Delay, Show } from '../../../components'
 import type { ChildrenProps } from '../../../types'
-import { Ref } from '../../../utils'
-import { usePageUpdated } from '../../hooks'
+import { OnPageMenu } from '../../components'
 import { menu } from '../../menu'
+import { isLaptop } from '../../state'
 import { DelayPage, Flex, Link, titleLinks } from '../../ui'
-import styles from './MenuLayout.scss'
+import styles from './MenuLayout.module.scss'
+
+const isShowOnPageMenu = new Compute(() => !isLaptop.value && titleLinks.value.size > 1)
 
 export function MenuLayout ({ children }: ChildrenProps) {
   const itemClass = { root: styles.item, active: styles.itemSelected }
-  const updated = usePageUpdated()
 
   return (
     <DelayPage class={styles.root} padding={[40, 24]} gap={24} vertical={false}>
@@ -31,43 +29,10 @@ export function MenuLayout ({ children }: ChildrenProps) {
       <Flex element='main' flex class={styles.main}>
         {children}
       </Flex>
-
-      <Show when={new Compute(() => titleLinks.value.size > 1)}>
-        <aside class={styles.submenu}>
-          <div class={styles.submenuTitle}>
-            On this page
-          </div>
-          {() => {
-            const hidden = new Ref<State<boolean>>()
-            const list = titleLinks.value
-
-            function Content () {
-              const show = useShow()
-
-              return (
-                <Flex
-                  vertical gap={8} class={() => classes([
-                    styles.submenuContent,
-                    show.value && styles.submenuShow,
-                    hidden.value?.value && styles.submenuHide,
-                  ])}
-                >
-                  <For of={list} key='id'>
-                    {(value) => (
-                      <Link href={`#${value.id}`} class={styles.subItem}>{value.title}</Link>
-                    )}
-                  </For>
-                </Flex>
-              )
-            }
-
-            return (
-              <Delay ref={hidden} show={updated ? 300 : 0} hide={300}>
-                <Content />
-              </Delay>
-            )
-          }}
-        </aside>
+      <Show when={isShowOnPageMenu}>
+        <Delay hide={300}>
+          <OnPageMenu />
+        </Delay>
       </Show>
     </DelayPage>
   )
