@@ -90,8 +90,6 @@ my-app/
 └── package.json
 ```
 
-Once the server starts, open http://localhost:3000 to see your app running.
-
 ### Option 2: Add to Existing Project
 
 If you prefer to integrate **innet**[/dom](/) into your own build setup, install the core packages:
