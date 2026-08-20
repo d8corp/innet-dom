@@ -42,3 +42,27 @@
   background: rgba(247, 183, 86, 0.1);
   color: var(--primary-color);
 }
+
+.button {
+  position: fixed;
+  right: 8px;
+  top: calc(var(--header-size) + 24px);
+  background: var(--border-color);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+
+  &:hover {
+    color: var(--white-color);
+  }
+
+  &:active {
+    background: var(--secondary-color);
+  }
+}

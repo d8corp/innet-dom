@@ -23,7 +23,7 @@
 }
 
 .withLink {
-  scroll-margin-top: var(--scroll-top);
+  scroll-margin-top: calc(var(--scroll-top) + 16px);
 }
 
 .link {

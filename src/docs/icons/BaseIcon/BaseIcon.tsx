@@ -2,10 +2,10 @@ import type { HTMLProps, StateProp } from '../../../types'
 import { inject } from '../../../utils'
 
 export interface BaseIconProps extends HTMLProps<SVGSVGElement> {
-  size?: StateProp<number>
+  size?: StateProp<number | string>
 }
 
-export function BaseIcon ({ size, ...props }: BaseIconProps) {
+export function BaseIcon ({ size = '1em', ...props }: BaseIconProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

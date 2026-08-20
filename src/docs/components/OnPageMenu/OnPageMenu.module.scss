@@ -5,7 +5,7 @@
   top: calc(40px + var(--header-size));
   max-height: calc(100vh - var(--header-size) - 80px);
   overflow-y: auto;
-  transition: .1s;
+  transition: margin-right .1s, opacity .1s;
   margin-right: -224px;
 
   &.show {
@@ -18,10 +18,13 @@
 
   @media (max-width: 1023px) {
     position: fixed;
-    top: calc(var(--header-size) + 40px);
+    top: var(--header-size);
+    padding-top: 40px;
     right: 24px;
     bottom: 0;
+    max-height: none;
     background: var(--secondary-color);
+    border-left: 1px solid var(--border-color);
   }
 }
 
@@ -38,7 +41,11 @@
   border-left: 1px solid rgba(247,183,86,0.1);
   padding-left: 12px;
   opacity: 0;
-  transition: .3s;
+  transition: opacity .3s;
+
+  @media (max-width: 1023px) {
+    border-left: none;
+  }
 }
 
 .show {

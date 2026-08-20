@@ -5,7 +5,8 @@ import { Logo } from '../Logo'
 
 import { Hide, Show } from '../../../components'
 import { useShow } from '../../../hooks'
-import { pageWidth } from '../../state'
+import { SidebarIcon } from '../../icons'
+import { isMobile, pageWidth } from '../../state'
 import { Button, Flex, Link } from '../../ui'
 import styles from './Header.scss'
 
@@ -27,14 +28,17 @@ export function Header () {
         <Flex element='nav' align='center' gap={28}>
           <Hide when={hideMenu}>
             <Link href='/quick-start' class={styles.link}>Docs</Link>
-            <Link href='/examples' class={styles.link}>Examples</Link>
-            <Button element='a' href='https://github.com/d8corp/innet-dom' view='secondary'>
-              GitHub
-            </Button>
+            <Link href='https://github.com/d8corp/innet-dom' class={styles.link}>GitHub</Link>
+            <Link href='https://www.npmjs.com/package/@innet/dom' class={styles.link}>NPM</Link>
+            <Show when={isMobile}>
+              <Button view='secondary'>
+                <SidebarIcon />
+              </Button>
+            </Show>
           </Hide>
           <Show when={hideMenu}>
-            <Button element='a' href='https://github.com/d8corp/innet-dom' view='secondary'>
-              GitHub
+            <Button view='secondary'>
+              <SidebarIcon />
             </Button>
           </Show>
         </Flex>
