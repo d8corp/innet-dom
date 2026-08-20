@@ -28,19 +28,23 @@
     border-left: 1px solid var(--border-color);
 
     & > .background {
-      content: '';
-      position: absolute;
-      width: calc(100vw - 100%);
+      width: 100vw;
       right: 100%;
       top: 0;
       bottom: 0;
-      cursor: pointer;
+      background: rgba(43, 43, 43, 0.5);
     }
   }
 }
 
+.background {
+  position: absolute;
+  cursor: pointer;
+}
+
 .scrollbar {
   overflow-y: auto;
+  padding-bottom: 80px;
 }
 
 .title {

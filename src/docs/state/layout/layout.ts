@@ -16,10 +16,6 @@ export const isShowSide = new Compute(() => isMobile.value ? isShowSideMobile.va
 export const isShowAside = new Compute(() => isLaptop.value ? isShowAsideMobile.value : isShowAsideDesktop.value)
 export const hasTitleLinks = new Compute(() => titleLinks.value.size > 1)
 
-export const toggleIsShowSide = () => {
-  isShowSideMobile.value = !isShowSideMobile.value
-}
-
 export const hideSide = () => {
   isShowSideMobile.value = false
 }
@@ -30,7 +26,14 @@ export const hideAside = () => {
   }
 }
 
-export const toggleOnPageMenu = createEvent(() => {
+export const toggleIsShowSide = createEvent(() => {
+  hideAside()
+  isShowSideMobile.value = !isShowSideMobile.value
+})
+
+export const toggleIsShowAside = createEvent(() => {
+  hideSide()
+
   if (isLaptop.raw) {
     isShowAsideMobile.value = !isShowAsideMobile.raw
   } else {

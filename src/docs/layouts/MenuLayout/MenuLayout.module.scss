@@ -13,8 +13,41 @@
   }
 }
 
+.buttons {
+  position: sticky;
+  bottom: 12px;
+  margin: 0 auto;
+  background: rgba(43, 43, 43, 0.5);
+  backdrop-filter: blur(12px);
+  padding: 12px;
+  border-radius: 32px;
+}
+
+.button {
+  font-size: 24px;
+  padding: 8px;
+}
+
+.button,
+.asideButton,
 .sideButton {
-  left: 8px;
+  background: var(--border-color);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: var(--white-color);
+  }
+
+  &:active {
+    background: var(--secondary-color);
+  }
 }
 
 .asideButton {
@@ -25,22 +58,5 @@
 .sideButton {
   position: fixed;
   top: calc(var(--header-size) + 24px);
-  background: var(--border-color);
-  border: none;
-  border-radius: 50%;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: .2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 5px;
-
-  &:hover {
-    color: var(--white-color);
-  }
-
-  &:active {
-    background: var(--secondary-color);
-  }
 }
