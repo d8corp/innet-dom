@@ -1,4 +1,4 @@
-import { Compute, onDestroy, State } from 'watch-state'
+import { Compute, onDestroy } from 'watch-state'
 
 import { Flex, type FlexProps } from '../Flex'
 import { Link } from '../Link'
@@ -8,6 +8,8 @@ import { useShow, useStyles } from '../../../hooks'
 import type { StateProp } from '../../../types'
 import { use } from '../../../utils'
 import { LinkIcon } from '../../icons'
+import type { TitleLink } from '../../state'
+import { titleLinks } from '../../state'
 import { slugify } from '../../utils'
 import $styles from './Title.module.scss'
 
@@ -20,12 +22,6 @@ const linkSize: Record<1 | 2 | 3 | 4 | 5 | 6, number> = {
   6: 12,
 }
 
-export interface TitleLink {
-  id: string
-  title?: string
-}
-
-export const titleLinks = new State(new Set<TitleLink>())
 let updateLinks: symbol
 
 const updateTitleLinks = () => {

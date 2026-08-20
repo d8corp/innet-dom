@@ -3,9 +3,10 @@ import { scope } from 'watch-state'
 
 import { Delay, For, useHidden } from '../../../components'
 import { useShow } from '../../../hooks'
-import type { TitleLink } from '../../ui'
-import { Flex, Link, titleLinks } from '../../ui'
-import styles from './OnPageMenu.module.scss'
+import type { TitleLink } from '../../state'
+import { hideAside, titleLinks } from '../../state'
+import { Flex, Link } from '../../ui'
+import styles from './Aside.module.scss'
 
 interface ContentProps {
   links: Set<TitleLink>
@@ -25,33 +26,38 @@ function Content ({ links }: ContentProps) {
     >
       <For of={links} key='id'>
         {(value) => (
-          <Link href={`#${value.id}`} class={styles.item}>{value.title}</Link>
+          <Link onclick={hideAside} href={`#${value.id}`} class={styles.item}>{value.title}</Link>
         )}
       </For>
     </Flex>
   )
 }
 
-export function OnPageMenu () {
+export function Aside () {
   const show = useShow()
   const hidden = useHidden()
 
   return (
-    <aside
+    <Flex
+      element='aside'
+      vertical
       class={() => classes([
         styles.root,
         show.value && styles.show,
         hidden?.value && styles.hide,
       ])}
     >
-      <div class={styles.title}>
-        On this page
-      </div>
-      {() => (
-        <Delay show={scope.activeWatcher?.updated ? 200 : 0} hide={200}>
-          <Content links={titleLinks.value} />
-        </Delay>
-      )}
-    </aside>
+      <div class={styles.background} onclick={hideAside} />
+      <Flex flex vertical gap={12} class={styles.scrollbar}>
+        <div class={styles.title}>
+          On this page
+        </div>
+        {() => (
+          <Delay show={scope.activeWatcher?.updated ? 200 : 0} hide={200}>
+            <Content links={titleLinks.value} />
+          </Delay>
+        )}
+      </Flex>
+    </Flex>
   )
 }

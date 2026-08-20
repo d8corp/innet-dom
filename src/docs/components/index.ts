@@ -1,4 +1,5 @@
+export * from './Aside'
 export * from './Footer'
 export * from './Header'
 export * from './Logo'
-export * from './OnPageMenu'
+export * from './Side'

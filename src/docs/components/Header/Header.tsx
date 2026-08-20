@@ -3,17 +3,16 @@ import { Compute } from 'watch-state'
 
 import { Logo } from '../Logo'
 
-import { Hide, Show } from '../../../components'
+import { Hide } from '../../../components'
 import { useShow } from '../../../hooks'
-import { SidebarIcon } from '../../icons'
-import { isMobile, pageWidth } from '../../state'
+import { pageWidth } from '../../state'
 import { Button, Flex, Link } from '../../ui'
 import styles from './Header.scss'
 
 export function Header () {
   const show = useShow()
 
-  const hideMenu = new Compute(() => pageWidth.value < 480)
+  const hideMenu = new Compute(() => pageWidth.value < 420)
 
   return (
     <Flex element='header' class={() => classes([styles.root, show.value && styles.show])}>
@@ -28,19 +27,9 @@ export function Header () {
         <Flex element='nav' align='center' gap={28}>
           <Hide when={hideMenu}>
             <Link href='/quick-start' class={styles.link}>Docs</Link>
-            <Link href='https://github.com/d8corp/innet-dom' class={styles.link}>GitHub</Link>
             <Link href='https://www.npmjs.com/package/@innet/dom' class={styles.link}>NPM</Link>
-            <Show when={isMobile}>
-              <Button view='secondary'>
-                <SidebarIcon />
-              </Button>
-            </Show>
           </Hide>
-          <Show when={hideMenu}>
-            <Button view='secondary'>
-              <SidebarIcon />
-            </Button>
-          </Show>
+          <Button view='secondary' element='a' href='https://github.com/d8corp/innet-dom'>GitHub</Button>
         </Flex>
       </Flex>
     </Flex>

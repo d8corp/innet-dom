@@ -1,10 +1,10 @@
 .root {
   width: 200px;
   padding-left: 8px;
+  padding-top: 18px;
   position: sticky;
   top: calc(40px + var(--header-size));
   max-height: calc(100vh - var(--header-size) - 80px);
-  overflow-y: auto;
   transition: margin-right .1s, opacity .1s;
   margin-right: -224px;
 
@@ -19,13 +19,28 @@
   @media (max-width: 1023px) {
     position: fixed;
     top: var(--header-size);
-    padding-top: 40px;
-    right: 24px;
+    padding: 58px 24px 0 8px;
+    right: 0;
     bottom: 0;
+    width: 224px;
     max-height: none;
     background: var(--secondary-color);
     border-left: 1px solid var(--border-color);
+
+    & > .background {
+      content: '';
+      position: absolute;
+      width: calc(100vw - 100%);
+      right: 100%;
+      top: 0;
+      bottom: 0;
+      cursor: pointer;
+    }
   }
+}
+
+.scrollbar {
+  overflow-y: auto;
 }
 
 .title {
@@ -34,7 +49,6 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #808080;
-  margin-bottom: 12px;
 }
 
 .content {

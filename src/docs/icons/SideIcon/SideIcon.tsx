@@ -1,9 +1,9 @@
 import type { BaseIconProps } from '../BaseIcon'
 import { BaseIcon } from '../BaseIcon'
 
-export type SidebarIconProps = BaseIconProps
+export type SideIconProps = BaseIconProps
 
-export function SidebarIcon (props: SidebarIconProps) {
+export function SideIcon (props: SideIconProps) {
   return (
     <BaseIcon {...props}>
       <rect x='3' y='3' width='18' height='18' rx='2' ry='2' />
