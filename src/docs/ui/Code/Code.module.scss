@@ -2,7 +2,7 @@
   &:after {
     content: 'copied';
     display: block;
-    position: fixed;
+    position: absolute;
     background: var(--secondary-color);
     border: 1px solid var(--border-color);
     border-radius: 5px;
@@ -12,12 +12,12 @@
     padding: 4px 8px;
     transform: translateX(-50%) translateY(-100%);
 
-    left: var(--click-x);
-    top: var(--click-y);
+    left: var(--ui-code-x);
+    top: var(var(--ui-code-y) + var(--scroll));
   }
 }
 
 .copied:after {
   opacity: 1;
-  transform: translateX(-50%) translateY(-110%);
+  transform: translateX(-50%) translateY(-130%);
 }
