@@ -1,4 +1,25 @@
-# ContextProvider
+# Context
+
+You can pass a value from a parent element through any children to the place you need.
+
+```tsx
+//! src/Content.tsx
+import { Context, useContext } from '@innet/jsx'
+
+export const color = new Context('blue')
+
+export function Content () {
+  const currentColor = useContext(color)
+
+  return (
+    <h1 style={{ color: currentColor }}>
+      {children}
+    </h1>
+  )
+}
+```
+
+## ContextProvider
 
 | Prop            | Type                           | Description                                                     |
 |-----------------|--------------------------------|-----------------------------------------------------------------|
@@ -8,12 +29,14 @@
 
 Use `ContextProvider` from [@innet/jsx](https://www.npmjs.com/package/innet-jsx) to provide context value into children.
 
-Modify `app.tsx`
 ```tsx
+//! src/index.tsx
+import { innet } from 'innet'
+import { handler } from '@innet/dom'
 import { ContextProvider } from '@innet/jsx'
 import { Content, color } from './Content'
 
-export default (
+const app = (
   <>
     <Content>
       Without context
@@ -25,4 +48,6 @@ export default (
     </ContextProvider>
   </>
 )
+
+innet(app, handler)
 ```

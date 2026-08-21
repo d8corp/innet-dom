@@ -1,7 +1,7 @@
 import { DelayPage, Markdown, Typography } from '../../ui'
-import description from './ContextProviderPage.md'
+import description from './ContextPage.md'
 
-export default function ContextProviderPage () {
+export default function ContextPage () {
   return (
     <DelayPage>
       <Typography>

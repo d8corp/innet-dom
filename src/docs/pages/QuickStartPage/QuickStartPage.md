@@ -239,6 +239,6 @@ Now that you have a working `@innet/dom` application, explore more advanced feat
 
 ### Advanced Topics
 
-- **[Context](/context-provider)** — Share state across component trees without prop drilling.
+- **[Context](/context)** — Share state across component trees without prop drilling.
 - **[Styling](/styling)** — CSS Modules, dynamic styles, and theming patterns.
 - **[Ref](/ref)** — Access DOM elements directly.

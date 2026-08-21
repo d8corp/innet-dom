@@ -12,10 +12,11 @@ import { innet } from 'innet'
 
 import { Router } from '../components'
 import { handler } from '../handler'
-import { removeLoading, scrollToHash } from './helpers'
+import { clickPosition, removeLoading, scrollToHash } from './helpers'
 import { routing } from './routing'
 
 removeLoading()
 scrollToHash()
+clickPosition()
 
 innet(<Router routing={routing} />, handler)

@@ -56,9 +56,9 @@ export const routing = createRouting([
           },
           {
             index: true,
-            path: 'context-provider',
+            path: 'context',
             fallback: <LoadingPage />,
-            component: lazy(() => import('./pages/ContextProviderPage')),
+            component: lazy(() => import('./pages/ContextPage')),
           },
           {
             index: true,

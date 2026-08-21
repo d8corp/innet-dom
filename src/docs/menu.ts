@@ -25,6 +25,11 @@ export const menu: MenuItem[] = [
         href: '/styling',
         children: 'Styling',
       },
+      {
+        href: '/context',
+        exact: true,
+        children: 'Context',
+      },
     ],
   },
   {
@@ -34,11 +39,6 @@ export const menu: MenuItem[] = [
         href: '/portal',
         exact: true,
         children: 'Portal',
-      },
-      {
-        href: '/context-provider',
-        exact: true,
-        children: 'ContextProvider',
       },
       {
         href: '/show',
